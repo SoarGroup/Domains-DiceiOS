@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
+		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
+		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
+		CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64D13BB9E450005A182 /* CoreData.framework */; };
+		CD86D65413BB9E460005A182 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CD86D65213BB9E460005A182 /* InfoPlist.strings */; };
+		CD86D65713BB9E460005A182 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD86D65613BB9E460005A182 /* main.m */; };
+		CD86D65A13BB9E460005A182 /* Lair_s_DiceAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CD86D65913BB9E460005A182 /* Lair_s_DiceAppDelegate.m */; };
+		CD86D65D13BB9E460005A182 /* Lair_s_Dice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD86D65B13BB9E460005A182 /* Lair_s_Dice.xcdatamodeld */; };
+		CD86D66113BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = CD86D66013BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.m */; };
+		CD86D66413BB9E460005A182 /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD86D66213BB9E460005A182 /* MainWindow_iPhone.xib */; };
+		CD86D66813BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = CD86D66713BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.m */; };
+		CD86D66B13BB9E460005A182 /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD86D66913BB9E460005A182 /* MainWindow_iPad.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CD86D64313BB9E450005A182 /* Lair's Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lair's Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CD86D64913BB9E450005A182 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CD86D64B13BB9E450005A182 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CD86D64D13BB9E450005A182 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		CD86D65113BB9E450005A182 /* Lair's Dice-Info.plist */ = {isa = PBXFileReference; path = "Lair's Dice-Info.plist"; sourceTree = "<group>"; };
+		CD86D65313BB9E460005A182 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CD86D65513BB9E460005A182 /* Lair's Dice-Prefix.pch */ = {isa = PBXFileReference; path = "Lair's Dice-Prefix.pch"; sourceTree = "<group>"; };
+		CD86D65613BB9E460005A182 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CD86D65813BB9E460005A182 /* Lair_s_DiceAppDelegate.h */ = {isa = PBXFileReference; path = Lair_s_DiceAppDelegate.h; sourceTree = "<group>"; };
+		CD86D65913BB9E460005A182 /* Lair_s_DiceAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lair_s_DiceAppDelegate.m; sourceTree = "<group>"; };
+		CD86D65C13BB9E460005A182 /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
+		CD86D65F13BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.h */ = {isa = PBXFileReference; name = Lair_s_DiceAppDelegate_iPhone.h; path = iPhone/Lair_s_DiceAppDelegate_iPhone.h; sourceTree = "<group>"; };
+		CD86D66013BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Lair_s_DiceAppDelegate_iPhone.m; path = iPhone/Lair_s_DiceAppDelegate_iPhone.m; sourceTree = "<group>"; };
+		CD86D66313BB9E460005A182 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPhone/en.lproj/MainWindow_iPhone.xib; sourceTree = "<group>"; };
+		CD86D66613BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.h */ = {isa = PBXFileReference; name = Lair_s_DiceAppDelegate_iPad.h; path = iPad/Lair_s_DiceAppDelegate_iPad.h; sourceTree = "<group>"; };
+		CD86D66713BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Lair_s_DiceAppDelegate_iPad.m; path = iPad/Lair_s_DiceAppDelegate_iPad.m; sourceTree = "<group>"; };
+		CD86D66A13BB9E460005A182 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = iPad/en.lproj/MainWindow_iPad.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CD86D64013BB9E450005A182 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */,
+				CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */,
+				CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */,
+				CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CD86D63813BB9E450005A182 = {
+			isa = PBXGroup;
+			children = (
+				CD86D64F13BB9E450005A182 /* Lair's Dice */,
+				CD86D64613BB9E450005A182 /* Frameworks */,
+				CD86D64413BB9E450005A182 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CD86D64413BB9E450005A182 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D64313BB9E450005A182 /* Lair's Dice.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CD86D64613BB9E450005A182 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D64713BB9E450005A182 /* UIKit.framework */,
+				CD86D64913BB9E450005A182 /* Foundation.framework */,
+				CD86D64B13BB9E450005A182 /* CoreGraphics.framework */,
+				CD86D64D13BB9E450005A182 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD86D64F13BB9E450005A182 /* Lair's Dice */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D65813BB9E460005A182 /* Lair_s_DiceAppDelegate.h */,
+				CD86D65913BB9E460005A182 /* Lair_s_DiceAppDelegate.m */,
+				CD86D65B13BB9E460005A182 /* Lair_s_Dice.xcdatamodeld */,
+				CD86D65E13BB9E460005A182 /* iPhone */,
+				CD86D66513BB9E460005A182 /* iPad */,
+				CD86D65013BB9E450005A182 /* Supporting Files */,
+			);
+			path = "Lair's Dice";
+			sourceTree = "<group>";
+		};
+		CD86D65013BB9E450005A182 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D65113BB9E450005A182 /* Lair's Dice-Info.plist */,
+				CD86D65213BB9E460005A182 /* InfoPlist.strings */,
+				CD86D65513BB9E460005A182 /* Lair's Dice-Prefix.pch */,
+				CD86D65613BB9E460005A182 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD86D65E13BB9E460005A182 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D65F13BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.h */,
+				CD86D66013BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.m */,
+				CD86D66213BB9E460005A182 /* MainWindow_iPhone.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		CD86D66513BB9E460005A182 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				CD86D66613BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.h */,
+				CD86D66713BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.m */,
+				CD86D66913BB9E460005A182 /* MainWindow_iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CD86D64213BB9E450005A182 /* Lair's Dice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD86D66E13BB9E460005A182 /* Build configuration list for PBXNativeTarget "Lair's Dice" */;
+			buildPhases = (
+				CD86D63F13BB9E450005A182 /* Sources */,
+				CD86D64013BB9E450005A182 /* Frameworks */,
+				CD86D64113BB9E450005A182 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Lair's Dice";
+			productName = "Lair's Dice";
+			productReference = CD86D64313BB9E450005A182 /* Lair's Dice.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CD86D63A13BB9E450005A182 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "Lair's Dice" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CD86D63813BB9E450005A182;
+			productRefGroup = CD86D64413BB9E450005A182 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CD86D64213BB9E450005A182 /* Lair's Dice */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD86D64113BB9E450005A182 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD86D65413BB9E460005A182 /* InfoPlist.strings in Resources */,
+				CD86D66413BB9E460005A182 /* MainWindow_iPhone.xib in Resources */,
+				CD86D66B13BB9E460005A182 /* MainWindow_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CD86D63F13BB9E450005A182 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD86D65713BB9E460005A182 /* main.m in Sources */,
+				CD86D65A13BB9E460005A182 /* Lair_s_DiceAppDelegate.m in Sources */,
+				CD86D65D13BB9E460005A182 /* Lair_s_Dice.xcdatamodeld in Sources */,
+				CD86D66113BB9E460005A182 /* Lair_s_DiceAppDelegate_iPhone.m in Sources */,
+				CD86D66813BB9E460005A182 /* Lair_s_DiceAppDelegate_iPad.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CD86D65213BB9E460005A182 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD86D65313BB9E460005A182 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CD86D66213BB9E460005A182 /* MainWindow_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD86D66313BB9E460005A182 /* en */,
+			);
+			name = MainWindow_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		CD86D66913BB9E460005A182 /* MainWindow_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD86D66A13BB9E460005A182 /* en */,
+			);
+			name = MainWindow_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CD86D66C13BB9E460005A182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD86D66D13BB9E460005A182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD86D66F13BB9E460005A182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lair's Dice/Lair's Dice-Prefix.pch";
+				INFOPLIST_FILE = "Lair's Dice/Lair's Dice-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CD86D67013BB9E460005A182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lair's Dice/Lair's Dice-Prefix.pch";
+				INFOPLIST_FILE = "Lair's Dice/Lair's Dice-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "Lair's Dice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD86D66C13BB9E460005A182 /* Debug */,
+				CD86D66D13BB9E460005A182 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD86D66E13BB9E460005A182 /* Build configuration list for PBXNativeTarget "Lair's Dice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD86D66F13BB9E460005A182 /* Debug */,
+				CD86D67013BB9E460005A182 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CD86D65B13BB9E460005A182 /* Lair_s_Dice.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CD86D65C13BB9E460005A182 /* Lair_s_Dice.xcdatamodel */,
+			);
+			currentVersion = CD86D65C13BB9E460005A182 /* Lair_s_Dice.xcdatamodel */;
+			path = Lair_s_Dice.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = CD86D63A13BB9E450005A182 /* Project object */;
+}
