@@ -9,16 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface Lair_s_DiceAppDelegate : NSObject <UIApplicationDelegate> {
-
+    UIWindow *window;
+    UIViewController *mainViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-
-@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
 
 @end
