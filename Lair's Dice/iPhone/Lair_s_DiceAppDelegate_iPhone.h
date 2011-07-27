@@ -9,8 +9,33 @@
 #import <UIKit/UIKit.h>
 #import "Lair_s_DiceAppDelegate.h"
 
-@interface Lair_s_DiceAppDelegate_iPhone : Lair_s_DiceAppDelegate {
+#import "Peer.h"
+
+#import "NetworkParser.h"
+
+@class iPhoneViewController;
+@class iPhoneMainMenu;
+
+@interface Lair_s_DiceAppDelegate_iPhone : Lair_s_DiceAppDelegate <ClientProtocol> {    
+    iPhoneViewController *viewController;
+    iPhoneMainMenu *mainMenuViewController;
     
+    BOOL isMyTurn;
+    
+    outputToSendToClient temporaryInput;
+        
+    Peer *peer;
+    
+    NSString *serverID;
+    
+    BOOL hasData;
+    
+    BOOL connectedToServer;
 }
+
+- (void)endTurn;
+
+- (void)goToMainGame;
+- (void)goToMainMenu;
 
 @end

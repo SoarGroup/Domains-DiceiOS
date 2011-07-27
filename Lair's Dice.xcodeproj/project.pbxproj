@@ -30,7 +30,6 @@
 		4DC720D213E08C8200D5484F /* iPadHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC720D013E08C8200D5484F /* iPadHelp.xib */; };
 		CD07ACB013BCE93700FB8DC8 /* Dice.png in Resources */ = {isa = PBXBuildFile; fileRef = CD07ACAF13BCE93700FB8DC8 /* Dice.png */; };
 		CD07ACCD13BCF2AB00FB8DC8 /* Dice.png in Resources */ = {isa = PBXBuildFile; fileRef = CD07ACCC13BCF2AB00FB8DC8 /* Dice.png */; };
-		CD548D3113C6128C00D70176 /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = CD548D3013C6128C00D70176 /* Client.m */; };
 		CD548D3313C612B700D70176 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD548D3213C612B700D70176 /* GameKit.framework */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
 		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
@@ -74,7 +73,6 @@
 		CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */; };
 		CD96574613C39D4B00F79BB4 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = CD96574413C39D4B00F79BB4 /* MainMenu.m */; };
 		CD96574713C39D4B00F79BB4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD96574513C39D4B00F79BB4 /* MainMenu.xib */; };
-		CDCC456D13C4B02E002B4996 /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCC456C13C4B02E002B4996 /* Server.m */; };
 		CDCC457B13C4C92C002B4996 /* NetworkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCC457A13C4C92C002B4996 /* NetworkParser.m */; };
 		CDCC457F13C4E828002B4996 /* iPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCC457D13C4E828002B4996 /* iPhoneViewController.m */; };
 		CDCC458013C4E828002B4996 /* iPhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDCC457E13C4E828002B4996 /* iPhoneViewController.xib */; };
@@ -117,8 +115,6 @@
 		4DC720D013E08C8200D5484F /* iPadHelp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadHelp.xib; path = iPad/iPadHelp.xib; sourceTree = "<group>"; };
 		CD07ACAF13BCE93700FB8DC8 /* Dice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice.png; path = Assets/Textures/Dice.png; sourceTree = "<group>"; };
 		CD07ACCC13BCF2AB00FB8DC8 /* Dice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice.png; path = Assets/Textures/Dice.png; sourceTree = "<group>"; };
-		CD548D2F13C6128C00D70176 /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = Networking/Client.h; sourceTree = "<group>"; };
-		CD548D3013C6128C00D70176 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Client.m; path = Networking/Client.m; sourceTree = "<group>"; };
 		CD548D3213C612B700D70176 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CD86D64313BB9E450005A182 /* Lair's Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lair's Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -251,8 +247,6 @@
 		CD96574313C39D4B00F79BB4 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = iPad/MainMenu.h; sourceTree = "<group>"; };
 		CD96574413C39D4B00F79BB4 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = iPad/MainMenu.m; sourceTree = "<group>"; };
 		CD96574513C39D4B00F79BB4 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = iPad/MainMenu.xib; sourceTree = "<group>"; };
-		CDCC456B13C4B02D002B4996 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = Networking/Server.h; sourceTree = "<group>"; };
-		CDCC456C13C4B02E002B4996 /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Server.m; path = Networking/Server.m; sourceTree = "<group>"; };
 		CDCC457913C4C92C002B4996 /* NetworkParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkParser.h; path = "Logic Engine/Player Abstraction/Network Player Abstraction/NetworkParser.h"; sourceTree = "<group>"; };
 		CDCC457A13C4C92C002B4996 /* NetworkParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkParser.m; path = "Logic Engine/Player Abstraction/Network Player Abstraction/NetworkParser.m"; sourceTree = "<group>"; };
 		CDCC457C13C4E828002B4996 /* iPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhoneViewController.h; path = iPhone/iPhoneViewController.h; sourceTree = "<group>"; };
@@ -613,10 +607,6 @@
 		CDCC456F13C4B041002B4996 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				CDCC456B13C4B02D002B4996 /* Server.h */,
-				CDCC456C13C4B02E002B4996 /* Server.m */,
-				CD548D2F13C6128C00D70176 /* Client.h */,
-				CD548D3013C6128C00D70176 /* Client.m */,
 				4D87542213C76CEE00D1586B /* Peer.h */,
 				4D87542313C76CEE00D1586B /* Peer.m */,
 			);
@@ -747,10 +737,8 @@
 				CD86D70613BBA37C0005A182 /* Agent.mm in Sources */,
 				CD86D70F13BBA3870005A182 /* NetworkPlayer.m in Sources */,
 				CD96574613C39D4B00F79BB4 /* MainMenu.m in Sources */,
-				CDCC456D13C4B02E002B4996 /* Server.m in Sources */,
 				CDCC457B13C4C92C002B4996 /* NetworkParser.m in Sources */,
 				CDCC457F13C4E828002B4996 /* iPhoneViewController.m in Sources */,
-				CD548D3113C6128C00D70176 /* Client.m in Sources */,
 				4D87542413C76CEE00D1586B /* Peer.m in Sources */,
 				4DB74E1013D4A06000B68673 /* iPhoneMainMenu.m in Sources */,
 				4DC720D113E08C8200D5484F /* iPadHelp.m in Sources */,
