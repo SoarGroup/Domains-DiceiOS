@@ -342,6 +342,19 @@
     [self send:output];
 }
 
+- (void)reroll:(NSArray *)arrayOfDice
+{
+    NSString *output = @"RDICE";
+    
+    for (Die *die in arrayOfDice)
+    {
+        if ([die isKindOfClass:[Die class]])
+            output = [output stringByAppendingFormat:@"_%i", [die dieValue]];
+    }
+    
+    [self send:output];
+}
+
 - (void)clientData:(NSString *)data
 {
     temporaryInput = [NetworkParser parseInput:data withPlayerID:playerID];

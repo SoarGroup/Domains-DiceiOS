@@ -16,6 +16,8 @@
 
 #import "Die.h"
 
+#import "HistoryItem.h"
+
 @implementation Arguments
 
 - (int)dieNumber
@@ -232,6 +234,11 @@ static NSUInteger random_below(NSUInteger n) {
     [mainViewController performSelectorOnMainThread:@selector(logToConsole:) withObject:stringToOutputToConsole waitUntilDone:NO];
 }
 
+- (void)logToActions:(NSString *)stringToOutputToActions
+{
+    [(iPadServerViewController *)mainViewController lastAction].text = stringToOutputToActions;
+}
+
 - (void)updateActionWithPush:(NSArray *)diceNumbersPushed withPlayer:(id <Player>)player withPlayerID:(int)playerID
 {
     NSString *string = @"";
@@ -244,7 +251,7 @@ static NSUInteger random_below(NSUInteger n) {
             if ((i + 1) < [diceNumbersPushed count])
                 string = [string stringByAppendingFormat:@"Die %i,", [number intValue]];
             else
-                string = [string stringByAppendingFormat:@"and Die %i,", [number intValue]];
+                string = [string stringByAppendingFormat:@"and Die %i", [number intValue]];
             
             if ((i + 1) < [diceNumbersPushed count])
                 string = [string stringByAppendingString:@" "];
@@ -267,11 +274,28 @@ static NSUInteger random_below(NSUInteger n) {
     
     
     [self logToConsole:[NSString stringWithFormat:@"%@ pushed by %@", string, [player name]]];
+    
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"%@\nPUSH %@", [(iPadServerViewController *)mainViewController lastAction].text, string] waitUntilDone:NO];
 }
 
-- (void)updateActionWithBid:(Bid *) bid withPlayer:(id <Player>)player
+- (void)updateActionWithBid:(   Bid *) bid withPlayer:(id <Player>)player
 {
     [self logToConsole:[NSString stringWithFormat:@"%@ bid %i %is", [player name], bid.numberOfDice, bid.rankOfDie]];
+    
+    NSString *secondPart = @"";
+    
+    if ([[(iPadServerViewController *)mainViewController lastAction].text hasSuffix:@"Pass"] && [[(iPadServerViewController *)mainViewController lastAction].text rangeOfString:@"Second To Last Action ("].length == NSNotFound)
+    {
+        NSString *lastActionText = [(iPadServerViewController *)mainViewController lastAction].text;
+        NSArray *componentsOfLastAction = [lastActionText componentsSeparatedByString:@")"];
+        NSString *firstComponent = [componentsOfLastAction objectAtIndex:0];
+        NSArray *componentsOfTheFirstComponent = [firstComponent componentsSeparatedByString:@"("];
+        NSString *nameOfSecondToLastPlayer = [componentsOfTheFirstComponent objectAtIndex:1];
+        
+        secondPart = [NSString stringWithFormat:@"Second To Last Action (%@): Pass", nameOfSecondToLastPlayer];
+    }
+    
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\nBid %i %i%@\n%@", [player name], bid.numberOfDice, bid.rankOfDie, (bid.rankOfDie > 1 ? @"s" : @""), secondPart] waitUntilDone:NO];
 }
 
 - (void)updateActionWithExact:(id <Player>)player andWasTheExactRight:(BOOL *)wasTheExactRight withPlayerID:(int)playerID
@@ -282,6 +306,8 @@ static NSUInteger random_below(NSUInteger n) {
         [self logToConsole:[NSString stringWithFormat:@"%@ was right!", [player name]]];
     else
         [self logToConsole:[NSString stringWithFormat:@"%@ was wrong!", [player name]]];
+    
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Exact! (%@)", [player name], (*wasTheExactRight ? @"Right!" : @"Wrong!")] waitUntilDone:NO];
     
     if ([mainViewController isKindOfClass:[iPadServerViewController class]])
     {
@@ -305,6 +331,8 @@ static NSUInteger random_below(NSUInteger n) {
 - (void)updateActionWithPass:(id <Player>)player
 {
     [self logToConsole:[NSString stringWithFormat:@"%@ passed", [player name]]];
+    
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Pass", [player name]] waitUntilDone:NO];
 }
 
 - (void)updateActionWithChallenge:(id <Player>)firstPlayer against:(id <Player>)secondPlayer ofType:(Type)type withDidTheChallengerWin:(BOOL *)didTheChallengerWin withPlayerID:(int)playerID
@@ -318,6 +346,8 @@ static NSUInteger random_below(NSUInteger n) {
         [self logToConsole:[NSString stringWithFormat:@"%@ won!", [firstPlayer name]]];
     else
         [self logToConsole:[NSString stringWithFormat:@"%@ lost!", [firstPlayer name]]];
+    
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Challenge against %@! (%@)", [firstPlayer name], [secondPlayer name], (*didTheChallengerWin ? @"Right!" : @"Wrong!")] waitUntilDone:NO];
     
     if ([mainViewController isKindOfClass:[iPadServerViewController class]])
     {
@@ -336,12 +366,22 @@ static NSUInteger random_below(NSUInteger n) {
 
 - (void)someoneWonTheGame:(NSString *)playerName
 {
+    playerName = [[playerName componentsSeparatedByString:@"-"] objectAtIndex:0];
+    
+    [self showAll:[diceEngine diceGameState]];
+    
     [self logToConsole:[NSString stringWithFormat:@"%@ won!", playerName]];
+    
+    [(iPadServerViewController *)mainViewController gameOver:playerName];
 }
 
 - (void)specialRulesAreInEffect
 {
     [self logToConsole:@"Special Rules are Now In Effect"];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Special Rules" message:@"Special Rules are now in effect.  Click the help button at the main menu for more information." delegate:mainViewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+        
+    [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
 }
 
 - (void)clientConnected:(NSString *)clientName
@@ -496,6 +536,74 @@ static NSUInteger random_below(NSUInteger n) {
         [diceEngine doneShowAll];
         [(iPadServerViewController *)mainViewController performSelectorOnMainThread:@selector(clearAll) withObject:nil waitUntilDone:NO];
     }
+}
+
+- (void)tappedArea:(int)area
+{
+    area -= 1;
+    
+    NSString *content = @"";
+
+    NSArray *roundHistory = [[diceEngine diceGameState] history];
+    roundHistory = [roundHistory reversedArray];
+    
+    BOOL hasPlayer = NO;
+    
+    int i = 0;
+    for (HistoryItem *item in roundHistory)
+    {
+        if ([item isKindOfClass:[HistoryItem class]])
+        {
+            if ([[diceEngine diceGameState] playerIDByPlayerName:[[item player] playerName]] == area)
+            {
+                //Got the player
+                hasPlayer = YES;
+                BOOL wasPush = NO;
+                
+                NSString *name = [[[[item player] playerName] componentsSeparatedByString:@"-"] objectAtIndex:0];
+                
+                switch ([item type]) {
+                    case PUSH:
+                    {
+                        content = [NSString stringWithFormat:@"\nAlso pushed"];
+                        wasPush = YES;
+                    }
+                        break;
+                    case BID:
+                    {
+                        content = [NSString stringWithFormat:@"%@:\nBid %@ %@%@.%@", name, [NSString stringWithFormat:@"%i", [[item bid] numberOfDice]], [NSString stringWithFormat:@"%i", [[item bid] rankOfDie]], ([[item bid] numberOfDice] > 1 ? @"s" : @""), content];
+                    }
+                        break;
+                    case PASS:
+                    {
+                        content = [NSString stringWithFormat:@"%@:\nPass", name];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+                
+                if (!wasPush)
+                    break;
+            }
+        }
+        i++;
+    }
+    
+    if (!hasPlayer)
+    {
+        content = @"This player has not played this round yet.";
+    }
+    
+    [(iPadServerViewController *)mainViewController showPopOverFor:area withContents:content];
+}
+
+- (void)newTurn:(int)player
+{
+    intStruct integer;
+    integer.integer = player;
+    NSValue *value = [NSValue value:&integer withObjCType:@encode(intStruct)];
+    [(iPadServerViewController *)mainViewController performSelectorOnMainThread:@selector(setCurrentTurn:) withObject:value waitUntilDone:NO];
 }
 
 @end

@@ -247,7 +247,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Liar's Dice v1.0 Alpha 3</string>
+						<string key="IBUIText">Liar's Dice v1.0 Beta 1</string>
 						<reference key="IBUIFont" ref="329943527"/>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>

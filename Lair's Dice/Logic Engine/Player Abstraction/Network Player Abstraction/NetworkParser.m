@@ -339,7 +339,7 @@
 
 + (NSArray *)parseNewRound:(NSString *)input
 {
-    if ([input hasPrefix:@"NDICE_"])
+    if ([input hasPrefix:@"NDICE_"] || [input hasPrefix:@"RDICE_"])
     {
         NSArray *numbers = [input componentsSeparatedByString:@"_"];
         NSMutableArray *numbersAsNSNumbers = [NSMutableArray array];

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "Lair_s_DiceAppDelegate_iPad.h"
+#import "PopoverViewController.h"
 
 typedef struct {
     int dieNumber;
@@ -16,11 +17,10 @@ typedef struct {
     int die;
 } Args;
 
-@interface iPadServerViewController : UIViewController {
+@interface iPadServerViewController : UIViewController <UIAlertViewDelegate> {
     UITextView *console;
     
     UITextView *lastAction;
-    UITextView *secondToLastAction;
     
     UIButton *toggleButton;
     
@@ -31,14 +31,19 @@ typedef struct {
     Lair_s_DiceAppDelegate_iPad *appDelegate;
     
     int playerNumbers;
+    
+    UIPopoverController *popOverController;
+    
+    UIAlertView *gameOverAlert;
 }
 
 @property (nonatomic, retain) IBOutlet UITextView *console;
 
 @property (nonatomic, retain) IBOutlet UITextView *lastAction;
-@property (nonatomic, retain) IBOutlet UITextView *secondToLastAction;
 
 @property (nonatomic, retain) IBOutlet UIButton *toggleButton;
+
+@property (nonatomic, assign) UIAlertView *gameOverAlert;
 
 @property (nonatomic, assign) Lair_s_DiceAppDelegate_iPad *appDelegate;
 
@@ -48,14 +53,21 @@ typedef struct {
 
 - (void)dieWasPushed:(Arguments*)args;
 
-- (void)clearPushedDice:(Arguments*)didWin;
+- (void)clearPushedDice:(id)didWin;
 
 - (void)clearAll;
 - (void)showAll:(NSArray *)dice;
 
 - (IBAction)didEndGame:(UIButton *)sender;
 - (IBAction)toggleDebugConsole:(UIButton *)sender;
+- (IBAction)tappedArea:(UIButton *)sender;
+
+- (void)showPopOverFor:(int)playerNumber withContents:(NSString *)content;
 
 - (void)setPlayerName:(NSString *)name forPlayer:(int)player;
+
+- (void)gameOver:(NSString *)winner;
+
+- (void)setCurrentTurn:(NSValue *)player;
 
 @end

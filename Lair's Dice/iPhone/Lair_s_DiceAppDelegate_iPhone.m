@@ -15,6 +15,25 @@
 
 #import "iPhoneViewController.h"
 #import "iPhoneMainMenu.h"
+#import "iPhoneHelp.h"
+
+@interface UIButton (ButtonTitleUtils)
+
+- (void)setTitle:(NSString *)title;
+
+@end
+
+@implementation UIButton (ButtonTitleUtils)
+
+- (void)setTitle:(NSString *)title
+{
+    [self setTitle:title forState:UIControlStateNormal];
+    [self setTitle:title forState:UIControlStateHighlighted];
+    [self setTitle:title forState:UIControlStateSelected];
+    [self setTitle:title forState:UIControlStateDisabled];
+}
+
+@end
 
 @interface Lair_s_DiceAppDelegate_iPhone()
 
@@ -68,7 +87,7 @@
 - (void)endTurn
 {
     if (hasData && isMyTurn)
-    {
+    {   
         switch (viewController->action) {
             case A_PUSH: // Never should be called
             {
@@ -93,7 +112,7 @@
                     [viewController->diceToPush removeAllObjects];
                     [viewController disableAllButtons];
                     
-                    viewController.textView.text = @"Please wait till it's your turn!";
+                    viewController.textView.text = @"Please wait untill it's your turn!";
                 }
                 else
                 {
@@ -179,7 +198,7 @@
                     isMyTurn = NO;
                     [viewController->diceToPush removeAllObjects];
                     
-                    viewController.textView.text = @"Please wait till it's your turn!";
+                    viewController.textView.text = @"Please wait untill it's your turn!";
                     
                     [viewController disableAllButtons];
                     viewController->continueWithAction = NO;
@@ -198,7 +217,7 @@
                 isMyTurn = NO;
                 [viewController->diceToPush removeAllObjects];
                 
-                viewController.textView.text = @"Please wait till it's your turn!";
+                viewController.textView.text = @"Please wait untill it's your turn!";
                 
                 [viewController disableAllButtons];
             }
@@ -214,7 +233,7 @@
                 isMyTurn = NO;
                 [viewController->diceToPush removeAllObjects];
                 
-                viewController.textView.text = @"Please wait till it's your turn!";
+                viewController.textView.text = @"Please wait untill it's your turn!";
                 
                 [viewController disableAllButtons];
             }
@@ -300,6 +319,13 @@
         return;
     }
     
+    if ([data hasPrefix:@"RDICE"])
+    {
+        [viewController updateDice:[NetworkParser parseNewRound:data] withNewRound:NO];
+        
+        return;
+    }
+    
     if ([data hasPrefix:@"NDICE"])
     {
         if ([viewController updateDice:[NetworkParser parseNewRound:data] withNewRound:YES])
@@ -319,11 +345,17 @@
             return;
         }
         
-        [viewController.pushDie1 setEnabled:YES];
-        [viewController.pushDie2 setEnabled:YES];
-        [viewController.pushDie3 setEnabled:YES];
-        [viewController.pushDie4 setEnabled:YES];
-        [viewController.pushDie5 setEnabled:YES];
+        [viewController.pushDie1 setEnabled:NO];
+        [viewController.pushDie2 setEnabled:NO];
+        [viewController.pushDie3 setEnabled:NO];
+        [viewController.pushDie4 setEnabled:NO];
+        [viewController.pushDie5 setEnabled:NO];
+        
+        [viewController.pushDie1 setTitle:@"Push"];
+        [viewController.pushDie2 setTitle:@"Push"];
+        [viewController.pushDie3 setTitle:@"Push"];
+        [viewController.pushDie4 setTitle:@"Push"];
+        [viewController.pushDie5 setTitle:@"Push"];
         
         [viewController.pass setEnabled:NO];
         [viewController.exact setEnabled:NO];
@@ -414,8 +446,10 @@
     
     temporaryInput = [NetworkParser parseInputFromServer:data];
     
-    if ([viewController.textView.text isEqualToString:@"Please wait till it's your turn!"])
+    if ([viewController.textView.text isEqualToString:@"Please wait untill it's your turn!"])
         viewController.textView.text = @"It's your turn!";
+    else
+        viewController.textView.text = [NSString stringWithFormat:@"It's your turn!\n%@", viewController.textView.text];
     
     [viewController.pass setEnabled:NO];
     [viewController.exact setEnabled:NO];
@@ -466,7 +500,7 @@
     [self goToMainMenu];
 }
 
-- (void)goToMainGame
+- (void)goToMainGame:(NSString *)name
 {
     [mainMenuViewController.view removeFromSuperview];
     [mainMenuViewController release];
@@ -479,17 +513,39 @@
     
     [window makeKeyAndVisible];
     
-    [(iPhoneViewController *)mainViewController textView].text = @"Please wait till it's your turn!";
+    [(iPhoneViewController *)mainViewController textView].text = @"Please wait untill it's your turn!";
+    
+    if (![name isEqualToString:@""])
+        peer.displayName = name;
     
     [peer startPicker];
 }
 
 - (void)goToMainMenu
 {
-    [viewController.view removeFromSuperview];
-    [viewController release];
+    if (mainMenuViewController)
+    {
+        if ([mainMenuViewController view])
+            [[mainMenuViewController view] removeFromSuperview];
+        [mainMenuViewController release];
+    }
     
     mainMenuViewController = [[iPhoneMainMenu alloc] initWithNibName:@"iPhoneMainMenu" bundle:nil];
+    [mainMenuViewController setDelegate:self];
+    
+    [window addSubview:mainMenuViewController.view];
+    
+    mainViewController = mainMenuViewController;
+    
+    [window makeKeyAndVisible];
+}
+
+- (void)goToHelp
+{
+    [mainMenuViewController.view removeFromSuperview];
+    [mainMenuViewController release];
+    
+    mainMenuViewController = [[iPhoneHelp alloc] initWithNibName:@"iPhoneHelp" bundle:nil];
     [mainMenuViewController setDelegate:self];
     
     [window addSubview:mainMenuViewController.view];

@@ -10,17 +10,21 @@
 
 #import "Lair_s_DiceAppDelegate_iPhone.h"
 
-@interface iPhoneMainMenu : UIViewController {
+@interface iPhoneMainMenu : UIViewController <UITextFieldDelegate> {
     Lair_s_DiceAppDelegate_iPhone *delegate;
     
     UIButton *searchForGames;
     UIButton *help;
+    
+    UITextField *name;
 }
 
 @property (nonatomic, assign) Lair_s_DiceAppDelegate_iPhone *delegate;
 
 @property (nonatomic, retain) IBOutlet UIButton *searchForGames;
 @property (nonatomic, retain) IBOutlet UIButton *help;
+
+@property (nonatomic, retain) IBOutlet UITextField *name;
 
 - (IBAction)buttonClicked:(UIButton *)sender;
 

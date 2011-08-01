@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D12A10F13E1A6B8005E6F62 /* iPhoneHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12A10D13E1A6B8005E6F62 /* iPhoneHelp.m */; };
+		4D12A11013E1A6B8005E6F62 /* iPhoneHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12A10E13E1A6B8005E6F62 /* iPhoneHelp.xib */; };
+		4D33AD7513E1BCE4006A9203 /* PopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D33AD7413E1BCE4006A9203 /* PopoverViewController.m */; };
+		4D33AD7D13E1F998006A9203 /* DiceiPhoneScroller.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7713E1F998006A9203 /* DiceiPhoneScroller.png */; };
+		4D33AD7E13E1F998006A9203 /* DiceiPhoneScroller2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7813E1F998006A9203 /* DiceiPhoneScroller2.png */; };
+		4D33AD7F13E1F998006A9203 /* DiceiPhoneScroller3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7913E1F998006A9203 /* DiceiPhoneScroller3.png */; };
+		4D33AD8013E1F998006A9203 /* DiceiPhoneScroller4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7A13E1F998006A9203 /* DiceiPhoneScroller4.png */; };
+		4D33AD8113E1F998006A9203 /* DiceiPhoneScroller5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7B13E1F998006A9203 /* DiceiPhoneScroller5.png */; };
+		4D33AD8213E1F998006A9203 /* DiceiPhoneScroller6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7C13E1F998006A9203 /* DiceiPhoneScroller6.png */; };
 		4D84DDC013CF701900F924B2 /* Dice2Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBA13CF701900F924B2 /* Dice2Pushed.png */; };
 		4D84DDC113CF701900F924B2 /* Dice3Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBB13CF701900F924B2 /* Dice3Pushed.png */; };
 		4D84DDC213CF701900F924B2 /* Dice4Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBC13CF701900F924B2 /* Dice4Pushed.png */; };
@@ -89,6 +98,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D12A10C13E1A6B8005E6F62 /* iPhoneHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPhoneHelp.h; path = iPhone/iPhoneHelp.h; sourceTree = "<group>"; };
+		4D12A10D13E1A6B8005E6F62 /* iPhoneHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPhoneHelp.m; path = iPhone/iPhoneHelp.m; sourceTree = "<group>"; };
+		4D12A10E13E1A6B8005E6F62 /* iPhoneHelp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneHelp.xib; path = iPhone/iPhoneHelp.xib; sourceTree = "<group>"; };
+		4D33AD7313E1BCE4006A9203 /* PopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopoverViewController.h; path = iPad/PopoverViewController.h; sourceTree = "<group>"; };
+		4D33AD7413E1BCE4006A9203 /* PopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopoverViewController.m; path = iPad/PopoverViewController.m; sourceTree = "<group>"; };
+		4D33AD7713E1F998006A9203 /* DiceiPhoneScroller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller.png; path = Assets/Textures/DiceiPhoneScroller.png; sourceTree = "<group>"; };
+		4D33AD7813E1F998006A9203 /* DiceiPhoneScroller2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller2.png; path = Assets/Textures/DiceiPhoneScroller2.png; sourceTree = "<group>"; };
+		4D33AD7913E1F998006A9203 /* DiceiPhoneScroller3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller3.png; path = Assets/Textures/DiceiPhoneScroller3.png; sourceTree = "<group>"; };
+		4D33AD7A13E1F998006A9203 /* DiceiPhoneScroller4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller4.png; path = Assets/Textures/DiceiPhoneScroller4.png; sourceTree = "<group>"; };
+		4D33AD7B13E1F998006A9203 /* DiceiPhoneScroller5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller5.png; path = Assets/Textures/DiceiPhoneScroller5.png; sourceTree = "<group>"; };
+		4D33AD7C13E1F998006A9203 /* DiceiPhoneScroller6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller6.png; path = Assets/Textures/DiceiPhoneScroller6.png; sourceTree = "<group>"; };
 		4D84DDBA13CF701900F924B2 /* Dice2Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice2Pushed.png; path = Assets/Textures/Dice2Pushed.png; sourceTree = "<group>"; };
 		4D84DDBB13CF701900F924B2 /* Dice3Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice3Pushed.png; path = Assets/Textures/Dice3Pushed.png; sourceTree = "<group>"; };
 		4D84DDBC13CF701900F924B2 /* Dice4Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice4Pushed.png; path = Assets/Textures/Dice4Pushed.png; sourceTree = "<group>"; };
@@ -294,6 +314,12 @@
 		CD07ACAD13BCE91C00FB8DC8 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				4D33AD7713E1F998006A9203 /* DiceiPhoneScroller.png */,
+				4D33AD7813E1F998006A9203 /* DiceiPhoneScroller2.png */,
+				4D33AD7913E1F998006A9203 /* DiceiPhoneScroller3.png */,
+				4D33AD7A13E1F998006A9203 /* DiceiPhoneScroller4.png */,
+				4D33AD7B13E1F998006A9203 /* DiceiPhoneScroller5.png */,
+				4D33AD7C13E1F998006A9203 /* DiceiPhoneScroller6.png */,
 				4D84DDD313CF774A00F924B2 /* Launch-Image-iPad.png */,
 				4D84DDD413CF774A00F924B2 /* Launch-Image-iPhone.png */,
 				4D84DDCB13CF751000F924B2 /* Logo-iPhone.png */,
@@ -404,6 +430,9 @@
 				4DB74E0D13D4A06000B68673 /* iPhoneMainMenu.h */,
 				4DB74E0E13D4A06000B68673 /* iPhoneMainMenu.m */,
 				4DB74E0F13D4A06000B68673 /* iPhoneMainMenu.xib */,
+				4D12A10C13E1A6B8005E6F62 /* iPhoneHelp.h */,
+				4D12A10D13E1A6B8005E6F62 /* iPhoneHelp.m */,
+				4D12A10E13E1A6B8005E6F62 /* iPhoneHelp.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -424,6 +453,8 @@
 				4DC720CE13E08C8200D5484F /* iPadHelp.h */,
 				4DC720CF13E08C8200D5484F /* iPadHelp.m */,
 				4DC720D013E08C8200D5484F /* iPadHelp.xib */,
+				4D33AD7313E1BCE4006A9203 /* PopoverViewController.h */,
+				4D33AD7413E1BCE4006A9203 /* PopoverViewController.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -712,6 +743,13 @@
 				4D84DDDA13CF775A00F924B2 /* Default.png in Resources */,
 				4DB74E1113D4A06000B68673 /* iPhoneMainMenu.xib in Resources */,
 				4DC720D213E08C8200D5484F /* iPadHelp.xib in Resources */,
+				4D12A11013E1A6B8005E6F62 /* iPhoneHelp.xib in Resources */,
+				4D33AD7D13E1F998006A9203 /* DiceiPhoneScroller.png in Resources */,
+				4D33AD7E13E1F998006A9203 /* DiceiPhoneScroller2.png in Resources */,
+				4D33AD7F13E1F998006A9203 /* DiceiPhoneScroller3.png in Resources */,
+				4D33AD8013E1F998006A9203 /* DiceiPhoneScroller4.png in Resources */,
+				4D33AD8113E1F998006A9203 /* DiceiPhoneScroller5.png in Resources */,
+				4D33AD8213E1F998006A9203 /* DiceiPhoneScroller6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +780,8 @@
 				4D87542413C76CEE00D1586B /* Peer.m in Sources */,
 				4DB74E1013D4A06000B68673 /* iPhoneMainMenu.m in Sources */,
 				4DC720D113E08C8200D5484F /* iPadHelp.m in Sources */,
+				4D12A10F13E1A6B8005E6F62 /* iPhoneHelp.m in Sources */,
+				4D33AD7513E1BCE4006A9203 /* PopoverViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,17 +1,17 @@
 //
-//  iPhoneMainMenu.m
+//  iPhoneHelp.m
 //  Lair's Dice
 //
-//  Created by Alex Turner on 7/18/11.
+//  Created by Alex Turner on 7/28/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "iPhoneMainMenu.h"
+#import "iPhoneHelp.h"
 
 
-@implementation iPhoneMainMenu
+@implementation iPhoneHelp
 
-@synthesize delegate, searchForGames, help, name;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,8 +41,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    name.placeholder = [[UIDevice currentDevice] name];
 }
 
 - (void)viewDidUnload
@@ -55,25 +53,13 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+            interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
-- (IBAction)buttonClicked:(UIButton *)sender
+- (void)goToMainMenu
 {
-    if ([sender.titleLabel.text isEqualToString:@"Search For Games"])
-    {
-        [delegate goToMainGame:name.text];
-    }
-    else if ([sender.titleLabel.text isEqualToString:@"Help"])
-    {
-        //Help Menu
-        [delegate goToHelp];
-    }
-}
-
-- (BOOL)textFieldShouldReturn: (UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
+    [delegate goToMainMenu];
 }
 
 @end

@@ -47,6 +47,8 @@ typedef enum {
     NSMutableDictionary    *lastHeartbeatDates;
     
     id delegate;
+    
+    NSString *displayName;
 }
 
 - (id)init:(BOOL)server;
@@ -64,5 +66,6 @@ typedef enum {
 @property(nonatomic, retain) NSMutableDictionary *lastHeartbeatDates;
 @property(nonatomic, retain) NSMutableDictionary *namesToPeerIDs;
 @property(nonatomic, retain) NSMutableDictionary *peerIDsToName;
+@property(nonatomic, retain) NSString *displayName;
 
 @end

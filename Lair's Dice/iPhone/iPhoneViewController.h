@@ -87,6 +87,7 @@ typedef struct {
     ActionsAbleToSend action;
     
     NSMutableArray *diceToPush;
+    int diceAlreadyPushed;
     
     challengeWhichOne challengeWhich; // NO = first YES = second
     

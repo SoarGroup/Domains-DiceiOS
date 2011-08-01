@@ -78,6 +78,7 @@
         
         numberOfDiceToBid = 1;
         rankOfDiceToBid = 1;
+        diceAlreadyPushed = 0;
         
         challengeWhich = None;
         
@@ -201,16 +202,55 @@
         return 6;
 }
 
-- (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    NSString *returnString = @"";
-    
-    if (thePickerView.tag == 0) //Agent selector
-        returnString = [(NSNumber *)[maxNumberOfDice objectAtIndex:row] stringValue];
+    if (pickerView.tag == 1)
+    {
+        return 50.0;
+    }
     else
-        returnString = [(NSNumber *)[numberOfSidesOnADice objectAtIndex:row] stringValue];
+    {
+        return 50.0;
+    }
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    if (pickerView.tag == 0)
+    {
+        NSString *returnString = @"";
+        returnString = [(NSNumber *)[maxNumberOfDice objectAtIndex:row] stringValue];
+        
+        UILabel *label = [[[UILabel alloc] init] autorelease];
+        label.text = returnString;
+        label.textColor = [UIColor blackColor];
+        label.backgroundColor = [UIColor whiteColor];
+        
+        label.font = [UIFont fontWithName:@"Helvetica" size:25];
     
-    return returnString;
+        label.frame = CGRectMake(0.0, 0, 50.0, 50.0);
+        
+        label.textAlignment = UITextAlignmentCenter;
+        
+        return label;
+    }
+    else
+    {
+        NSString *dieNumber = @"";
+        
+        if ([(NSNumber *)[numberOfSidesOnADice objectAtIndex:row] intValue] != 1)
+            dieNumber = [(NSNumber *)[numberOfSidesOnADice objectAtIndex:row] stringValue];
+        
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:[@"DiceiPhoneScroller" stringByAppendingFormat:@"%@", dieNumber]  ofType:@"png"];
+        UIImage *die = [UIImage imageWithContentsOfFile:filePath];
+        
+        UIImageView *dieImageView = [[[UIImageView alloc] initWithImage:die] autorelease];
+        
+        dieImageView.frame = CGRectMake(0, 0, 40, 40);
+                
+        return dieImageView;
+    }
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
@@ -340,7 +380,7 @@
             {
                 if (!pushedDie1)
                 {
-                    if ([diceToPush count] < ([self numberOfDice] - 1))
+                    if (diceAlreadyPushed < ([self numberOfDice] - 1))
                     {
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
                         pushedDie1 = YES;
@@ -348,13 +388,14 @@
                         die1.image = [self imageForDieNumber:[self dieNumber:die1.image] wasPushed:pushedDie1];
                         
                         [pushDie1 setTitle:@"Pull"];
+                        diceAlreadyPushed++;
                     }
                     else
                     {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Push" message:@"You can only push at most 4 of your dice! You can't push all of them. Pull at least one of your dice to be able to push this one." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
                         confirmationAlert = alert;
                         [alert show];
-                        [alert release]; 
+                        [alert release];
                     }
                 }
                 else
@@ -362,20 +403,21 @@
                     pushedDie1 = NO;
                     
                     [diceToPush removeAllObjects];
-                    if (pushedDie1)
+                    if (pushedDie1 && !previousPushed.pushedDice1)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
-                    if (pushedDie2)
+                    if (pushedDie2 && !previousPushed.pushedDice2)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
-                    if (pushedDie3)
+                    if (pushedDie3 && !previousPushed.pushedDice3)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
-                    if (pushedDie4)
+                    if (pushedDie4 && !previousPushed.pushedDice4)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
-                    if (pushedDie5)
+                    if (pushedDie5 && !previousPushed.pushedDice5)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                     
                     die1.image = [self imageForDieNumber:[self dieNumber:die1.image] wasPushed:pushedDie1];
                     
                     [pushDie1 setTitle:@"Push"];
+                    diceAlreadyPushed--;
                 }
             }
                 break;
@@ -383,7 +425,7 @@
             {
                 if (!pushedDie2)
                 {
-                    if ([diceToPush count] < ([self numberOfDice] - 1))
+                    if (diceAlreadyPushed < ([self numberOfDice] - 1))
                     {
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
                         pushedDie2 = YES;
@@ -391,7 +433,7 @@
                         die2.image = [self imageForDieNumber:[self dieNumber:die2.image] wasPushed:pushedDie2];
                         
                         [pushDie2 setTitle:@"Pull"];
-                        
+                        diceAlreadyPushed++;
                     }
                     else
                     {
@@ -406,20 +448,21 @@
                     pushedDie2 = NO;
                     
                     [diceToPush removeAllObjects];
-                    if (pushedDie1)
+                    if (pushedDie1 && !previousPushed.pushedDice1)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
-                    if (pushedDie2)
+                    if (pushedDie2 && !previousPushed.pushedDice2)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
-                    if (pushedDie3)
+                    if (pushedDie3 && !previousPushed.pushedDice3)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
-                    if (pushedDie4)
+                    if (pushedDie4 && !previousPushed.pushedDice4)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
-                    if (pushedDie5)
+                    if (pushedDie5 && !previousPushed.pushedDice5)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                     
                     die2.image = [self imageForDieNumber:[self dieNumber:die2.image] wasPushed:pushedDie2];
                     
                     [pushDie2 setTitle:@"Push"];
+                    diceAlreadyPushed--;
                 }
             }
                 break;
@@ -427,7 +470,7 @@
             {
                 if (!pushedDie3)
                 {
-                    if ([diceToPush count] < ([self numberOfDice] - 1))
+                    if (diceAlreadyPushed < ([self numberOfDice] - 1))
                     {
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
                         pushedDie3 = YES;
@@ -435,6 +478,7 @@
                         die3.image = [self imageForDieNumber:[self dieNumber:die3.image] wasPushed:pushedDie3];
                         
                         [pushDie3 setTitle:@"Pull"];
+                        diceAlreadyPushed++;
                     }
                     else
                     {
@@ -449,20 +493,21 @@
                     pushedDie3 = NO;
                     
                     [diceToPush removeAllObjects];
-                    if (pushedDie1)
+                    if (pushedDie1 && !previousPushed.pushedDice1)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
-                    if (pushedDie2)
+                    if (pushedDie2 && !previousPushed.pushedDice2)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
-                    if (pushedDie3)
+                    if (pushedDie3 && !previousPushed.pushedDice3)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
-                    if (pushedDie4)
+                    if (pushedDie4 && !previousPushed.pushedDice4)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
-                    if (pushedDie5)
+                    if (pushedDie5 && !previousPushed.pushedDice5)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                     
                     die3.image = [self imageForDieNumber:[self dieNumber:die3.image] wasPushed:pushedDie3];
                     
                     [pushDie3 setTitle:@"Push"];
+                    diceAlreadyPushed--;
                 }
             }
                 break;
@@ -470,7 +515,7 @@
             {
                 if (!pushedDie4)
                 {
-                    if ([diceToPush count] < ([self numberOfDice] - 1))
+                    if (diceAlreadyPushed < ([self numberOfDice] - 1))
                     {
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
                         pushedDie4 = YES;
@@ -478,6 +523,7 @@
                         die4.image = [self imageForDieNumber:[self dieNumber:die4.image] wasPushed:pushedDie4];
                         
                         [pushDie4 setTitle:@"Pull"];
+                        diceAlreadyPushed++;
                     }
                     else
                     {
@@ -492,20 +538,21 @@
                     pushedDie4 = NO;
                     
                     [diceToPush removeAllObjects];
-                    if (pushedDie1)
+                    if (pushedDie1 && !previousPushed.pushedDice1)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
-                    if (pushedDie2)
+                    if (pushedDie2 && !previousPushed.pushedDice2)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
-                    if (pushedDie3)
+                    if (pushedDie3 && !previousPushed.pushedDice3)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
-                    if (pushedDie4)
+                    if (pushedDie4 && !previousPushed.pushedDice4)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
-                    if (pushedDie5)
+                    if (pushedDie5 && !previousPushed.pushedDice5)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                     
                     die4.image = [self imageForDieNumber:[self dieNumber:die4.image] wasPushed:pushedDie4];
                     
                     [pushDie4 setTitle:@"Push"];
+                    diceAlreadyPushed--;
                 }
             }
                 break;
@@ -513,7 +560,7 @@
             {
                 if (!pushedDie5)
                 {
-                    if ([diceToPush count] < ([self numberOfDice] - 1))
+                    if (diceAlreadyPushed < ([self numberOfDice] - 1))
                     {
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                         pushedDie5 = YES;
@@ -521,6 +568,7 @@
                         die5.image = [self imageForDieNumber:[self dieNumber:die5.image] wasPushed:pushedDie5];
                         
                         [pushDie5 setTitle:@"Pull"];
+                        diceAlreadyPushed++;
                     }
                     else
                     {
@@ -535,20 +583,21 @@
                     pushedDie5 = NO;
                     
                     [diceToPush removeAllObjects];
-                    if (pushedDie1)
+                    if (pushedDie1 && !previousPushed.pushedDice1)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die1.image]]];
-                    if (pushedDie2)
+                    if (pushedDie2 && !previousPushed.pushedDice2)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die2.image]]];
-                    if (pushedDie3)
+                    if (pushedDie3 && !previousPushed.pushedDice3)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die3.image]]];
-                    if (pushedDie4)
+                    if (pushedDie4 && !previousPushed.pushedDice4)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die4.image]]];
-                    if (pushedDie5)
+                    if (pushedDie5 && !previousPushed.pushedDice5)
                         [diceToPush addObject:[NSNumber numberWithInt:[self dieNumber:die5.image]]];
                     
                     die5.image = [self imageForDieNumber:[self dieNumber:die5.image] wasPushed:pushedDie5];
                     
                     [pushDie5 setTitle:@"Push"];
+                    diceAlreadyPushed--;
                 }
             }
                 break;
@@ -614,7 +663,7 @@
         
         NSString *message = [[@"Are you sure you want to bid " stringByAppendingFormat:@"%i %i", numberOfDiceToBid, rankOfDiceToBid] stringByAppendingString:(numberOfDiceToBid > 1 ? @"s" : @"")];
         
-        if (pushedDie1 || pushedDie2 || pushedDie3 || pushedDie4 || pushedDie5)
+        if ([diceToPush count])
         {
             message = [message stringByAppendingString:@" and push"];
             
@@ -630,7 +679,7 @@
                 
                 if ((i + 1) < [diceToPush count])
                     message = [message stringByAppendingString:@","];
-                
+                    
                 i++;
             }
         }
@@ -657,9 +706,14 @@
             previousPushed.pushedDice5 = pushedDie5;
             
             [delegate endTurn];
+            
+            [diceToPush removeAllObjects];
         }
         else
+        {
             [self undo];
+            [diceToPush removeAllObjects];
+        }
         
         continueWithAction = NO;
     }
@@ -674,6 +728,12 @@
         pushedDie3 = NO;
         pushedDie4 = NO;
         pushedDie5 = NO;
+        
+        previousPushed.pushedDice1 = NO;
+        previousPushed.pushedDice2 = NO;
+        previousPushed.pushedDice3 = NO;
+        previousPushed.pushedDice4 = NO;
+        previousPushed.pushedDice5 = NO;
     }
     
     for (int i = 0;i < [diceAsNumbers count];i++)
@@ -798,6 +858,21 @@
     [pushDie3 setEnabled:(previousPushed.pushedDice3 ? NO : YES)];
     [pushDie4 setEnabled:(previousPushed.pushedDice4 ? NO : YES)];
     [pushDie5 setEnabled:(previousPushed.pushedDice5 ? NO : YES)];
+    
+    if (previousPushed.pushedDice1 == NO && pushedDie1 == YES)
+        diceAlreadyPushed--;
+    
+    if (previousPushed.pushedDice2 == NO && pushedDie2 == YES)
+        diceAlreadyPushed--;
+    
+    if (previousPushed.pushedDice3 == NO && pushedDie3 == YES)
+        diceAlreadyPushed--;
+    
+    if (previousPushed.pushedDice4 == NO && pushedDie4 == YES)
+        diceAlreadyPushed--;
+    
+    if (previousPushed.pushedDice5 == NO && pushedDie5 == YES)
+        diceAlreadyPushed--;
     
     pushedDie1 = previousPushed.pushedDice1;
     pushedDie2 = previousPushed.pushedDice2;

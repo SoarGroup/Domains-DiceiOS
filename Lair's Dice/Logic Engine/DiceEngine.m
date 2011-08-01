@@ -19,7 +19,7 @@
 - (BOOL)checkPlayerName:(NSString *)playerName againstListOfPlayerIDs:(NSArray *)playerIDs;
 - (id <Player>)playerByPlayerName:(NSString *)playerName;
 
-- (void)roundEnded;
+- (void)roundEnded:(id <AppDelegateProtocol>)caller;
 
 @end
 
@@ -27,6 +27,8 @@
 
 //synthesize our variable
 @synthesize playersInTheGame;
+
+@synthesize diceGameState;
 
 //Initialize ourself
 - (id)initWithPlayers:(NSArray *)playersWhichImplementPlayerProtocol
@@ -198,7 +200,8 @@
     }
     
     BOOL announcedSpecialRules = NO;
-    
+    BOOL announcedNewTurn = NO;
+        
     //The main loop
     while (!isGameOver)
     {
@@ -221,7 +224,7 @@
         int errors = 0;
         
         int pass = 0;
-                
+        
         //For each player give them a turn and then parse the results
         while(i < [playersInTheGame count])
         {
@@ -246,12 +249,7 @@
                 
                 if (![self checkPlayerName:[[playersInTheGame objectAtIndex:i] name] againstListOfPlayerIDs:droppedPlayerIDs])
                 {
-                    if (![diceGameState isGameInProgress] && [diceGameState gameWinner])
-                    {
-                        break;
-                        //test
-                        i = i;
-                    }
+                    
                     
                     {
                         BOOL didAdd = NO;
@@ -290,6 +288,12 @@
                     
                     id <Player> playerInTheGame = (id <Player>)[playersInTheGame objectAtIndex:i];
                     
+                    if (!announcedNewTurn)
+                    {
+                        [caller newTurn:i];
+                        announcedNewTurn = YES;
+                    }
+                        
                     turnInformationToSendToClient info;
                     info.roundHistory = [diceGameState history];
                     
@@ -414,6 +418,8 @@
                             [array release];
                             
                             [caller updateActionWithPush:arrayOfDiceValues withPlayer:playerInTheGame withPlayerID:info.playerID];
+                            
+                            [playerInTheGame reroll:[(PlayerState *)[diceGameState player:i] arrayOfDice]];
                         }
                         else
                         {
@@ -473,6 +479,8 @@
                         {
                             errors = 0;
                             
+                            [self roundEnded:caller];
+                            
                             if (*didTheChallengerWin)
                             {
                                 [caller updateActionWithChallenge:playerInTheGame against:[self playerByPlayerName:clientReturnInfo.targetOfChallenge] ofType:A_CHALLENGE_PASS withDidTheChallengerWin:didTheChallengerWin withPlayerID:[diceGameState playerIDByPlayerName:clientReturnInfo.targetOfChallenge]];
@@ -489,7 +497,7 @@
                                 lost = YES;
                             }
                             
-                            [self roundEnded:caller];
+                            announcedNewTurn = NO;
                             
                             break;
                         } else {
@@ -510,6 +518,8 @@
                         {
                             errors = 0;
                             
+                            [self roundEnded:caller];
+                            
                             if (*didTheChallengerWin)
                             {
                                 [caller updateActionWithChallenge:playerInTheGame against:[self playerByPlayerName:clientReturnInfo.targetOfChallenge] ofType:A_CHALLENGE_BID withDidTheChallengerWin:didTheChallengerWin withPlayerID:[diceGameState playerIDByPlayerName:clientReturnInfo.targetOfChallenge]];
@@ -525,7 +535,7 @@
                                 lost = YES;
                             }
                             
-                            [self roundEnded:caller];
+                            announcedNewTurn = NO;
                             
                             break;
                         } else {
@@ -544,6 +554,8 @@
                         {
                             errors = 0;
                             
+                            [self roundEnded:caller];
+                            
                             if (*wasExactRight)
                             {
                                 [caller updateActionWithExact:playerInTheGame andWasTheExactRight:wasExactRight withPlayerID:info.playerID];
@@ -559,7 +571,7 @@
                                 lost = YES;
                             }
                             
-                            [self roundEnded:caller];
+                            announcedNewTurn = NO;
                             
                             break;
                         } else {
@@ -577,6 +589,8 @@
                         errors = 0;
                         
                         roundEnded = NO;
+                        
+                        announcedNewTurn = NO;
                         continue;
                     } else { //unknown action, say so
                         errors++;

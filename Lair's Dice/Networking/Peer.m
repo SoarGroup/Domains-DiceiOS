@@ -26,7 +26,7 @@ typedef enum {
 
 @implementation Peer
 
-@synthesize gamePeerIds, gameSession, lastHeartbeatDates, namesToPeerIDs, peerIDsToName;
+@synthesize gamePeerIds, gameSession, lastHeartbeatDates, namesToPeerIDs, peerIDsToName, displayName;
 
 - (id)init:(BOOL)server
 {
@@ -41,6 +41,8 @@ typedef enum {
         peerIDsToName = [[NSMutableDictionary alloc] init];
         
         gameUniqueID = (server ? 10 : 0);
+        
+        displayName = [[NSString alloc] initWithString:[[UIDevice currentDevice] name]];
     }
     return self;
 }
@@ -57,6 +59,7 @@ typedef enum {
     [namesToPeerIDs release];
     [gamePeerIds release];
     [peerIDsToName release];
+    [displayName release];
     [lastHeartbeatDates release];
     [super dealloc];
 }
@@ -108,7 +111,7 @@ typedef enum {
 // Provide a custom session that has a custom session ID. This is also an opportunity to provide a session with a custom display name.
 //
 - (GKSession *)peerPickerController:(GKPeerPickerController *)picker sessionForConnectionType:(GKPeerPickerConnectionType)type { 
-	GKSession *session = [[GKSession alloc] initWithSessionID:@"liarsdice" displayName:[[UIDevice currentDevice] name] sessionMode:GKSessionModePeer]; 
+	GKSession *session = [[GKSession alloc] initWithSessionID:@"liarsdice" displayName:displayName sessionMode:GKSessionModePeer];
     
     if (gameUniqueID == 10)
         session.available = NO;

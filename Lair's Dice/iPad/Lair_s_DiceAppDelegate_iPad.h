@@ -50,6 +50,70 @@
 
 @end
 
+@interface UIButton (ButtonTitleUtils)
+
+- (void)setTitle:(NSString *)title;
+
+@end
+
+@implementation UIButton (ButtonTitleUtils)
+
+- (void)setTitle:(NSString *)title
+{
+    [self setTitle:title forState:UIControlStateNormal];
+    [self setTitle:title forState:UIControlStateHighlighted];
+    [self setTitle:title forState:UIControlStateSelected];
+    [self setTitle:title forState:UIControlStateDisabled];
+}
+
+@end
+
+@interface NSArray (Reverse)
+
+- (NSArray *)reversedArray;
+
+@end
+
+@interface NSMutableArray (Reverse)
+
+- (void)reverse;
+
+@end
+
+@implementation NSArray (Reverse)
+
+- (NSArray *)reversedArray {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:[self count]];
+    NSEnumerator *enumerator = [self reverseObjectEnumerator];
+    for (id element in enumerator) {
+        [array addObject:element];
+    }
+    return array;
+}
+
+@end
+
+@implementation NSMutableArray (Reverse)
+
+- (void)reverse {
+    NSUInteger i = 0;
+    NSUInteger j = [self count] - 1;
+    while (i < j) {
+        [self exchangeObjectAtIndex:i
+                  withObjectAtIndex:j];
+        
+        i++;
+        j--;
+    }
+}
+
+@end
+
+typedef struct {
+    int integer;
+    int secondInteger;
+} intStruct;
+
 @interface Lair_s_DiceAppDelegate_iPad : Lair_s_DiceAppDelegate <AppDelegateProtocol, ServerProtocol> {
     DiceEngine *diceEngine;
     NSMutableArray *players;
@@ -81,5 +145,9 @@
 - (void)setPlayerNames;
 
 - (void)showAll:(DiceGameState *)gameState;
+
+- (void)tappedArea:(int)area;
+
+- (void)newTurn:(int)player;
 
 @end

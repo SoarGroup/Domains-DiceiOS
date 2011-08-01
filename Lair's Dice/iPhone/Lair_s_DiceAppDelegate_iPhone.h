@@ -35,7 +35,8 @@
 
 - (void)endTurn;
 
-- (void)goToMainGame;
+- (void)goToMainGame:(NSString *)name;
 - (void)goToMainMenu;
+- (void)goToHelp;
 
 @end

@@ -306,7 +306,7 @@ typedef enum {
 - (DiceSMLData *)GameStateToWM:(DiceGameState *)game withInputLink:(sml::Identifier *)inputLink andMyPlayerIDIs:(int) playerID
 {
     using namespace sml;
-    
+        
     Identifier *idState = NULL;
     Identifier *idPlayers = NULL;
     Identifier *idAffordances = NULL;
@@ -324,9 +324,11 @@ typedef enum {
     
     std::map<int, void*> playerMap;
     int victorID = -1;
-    if ([game hasAPlayerWonTheGame])
-        victorID = [[game gameWinner] playerID];
     
+    BOOL playerHasWon = [game hasAPlayerWonTheGame];
+    if (playerHasWon)
+        victorID = [[game gameWinner] playerID];
+        
     char * status;
     
     switch ([game playerStatus:playerID]) {
@@ -927,7 +929,11 @@ typedef enum {
         }
     }
     
-    *info = information;
+    info->action = information.action;
+    info->bid = information.bid;
+    info->diceToPush = information.diceToPush;
+    info->errorString = information.errorString;
+    info->targetOfChallenge = information.targetOfChallenge;
     
     return agentSlept;
 }
@@ -938,6 +944,11 @@ typedef enum {
 }
 
 - (void)showPublicInformation:(DiceGameState *)gameState
+{
+    
+}
+
+- (void)reroll:(NSArray *)arrayOfDice
 {
     
 }

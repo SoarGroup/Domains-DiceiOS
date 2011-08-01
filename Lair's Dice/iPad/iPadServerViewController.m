@@ -8,6 +8,8 @@
 
 #import "iPadServerViewController.h"
 
+#import "PlayerState.h"
+
 typedef enum {
     QuestionMark = 0,
     One = 1,
@@ -46,13 +48,14 @@ typedef struct {
 - (GUIPoint)diePoint:(int)playerNumber withDieNumber:(int)dieNumber withNumberOfPlayers:(int)players;
 - (GUIDie)newDie:(int)playerNumber withDieNumber:(int)dieNumber withNumberOfPlayers:(int)players;
 - (UILabel *)newLabel:(int)playerNumber withNumberOfPlayers:(int)players;
+- (UIButton *)newTapButton:(int)playerNumber withNumberOfPlayers:(int)players;
 - (NSMutableArray *)newArea:(int)playerNumber andNumberOfPlayers:(int)players;
 
 @end
 
 @implementation iPadServerViewController
 
-@synthesize console, appDelegate, lastAction, secondToLastAction, toggleButton;
+@synthesize console, appDelegate, lastAction, toggleButton, gameOverAlert;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withPlayers:(int)numberOfPlayers
 {
@@ -82,6 +85,32 @@ typedef struct {
         console.hidden = NO;
     else
         console.hidden = YES;
+}
+
+- (IBAction)tappedArea:(UIButton *)sender
+{
+    [appDelegate tappedArea:[sender tag]];
+}
+
+- (void)showPopOverFor:(int)playerNumber withContents:(NSString *)contents
+{
+    [popOverController release];
+    popOverController = nil;
+    popOverController = [[UIPopoverController alloc] initWithContentViewController:[[[PopoverViewController alloc] initWithContents:contents] autorelease]];
+    
+    if ([Players count] >= playerNumber)
+    {
+        NSMutableArray *player = [Players objectAtIndex:playerNumber];
+        
+        if ([player count] >= 7)
+        {
+            if ([[player objectAtIndex:6] isKindOfClass:[UIButton class]])
+            {
+                UIButton *button = [player objectAtIndex:6];
+                [popOverController presentPopoverFromRect:button.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }
+        }
+    }
 }
 
 - (GUIPoint)diePoint:(int)playerNumber withDieNumber:(int)dieNumber withNumberOfPlayers:(int)players
@@ -317,6 +346,23 @@ typedef struct {
     float yCoord;
     CGAffineTransform transform = CGAffineTransformMakeRotation(0);
     
+#pragma mark Undefs to use again
+    
+#undef X_FarLeft
+#undef X_Left
+#undef X_Right
+#undef X_FarRight
+#undef X_Center
+#undef X_LeftRotationOffset
+#undef X_RightRotationOffset
+#undef Y_VeryTop
+#undef Y_Top
+#undef Y_Bottom
+#undef Y_VeryBottom
+#undef Y_Center
+#undef Y_TopRotationOffset
+#undef Y_BottomRotationOffset
+    
 #pragma mark Pound Defines for Areas
     
 #define X_FarLeft 70
@@ -328,11 +374,261 @@ typedef struct {
     
 #define X_LeftRotationOffset -100
 #define X_RightRotationOffset 100
-
+    
 #define Y_VeryTop 78
 #define Y_Top 107
 #define Y_Bottom 619
 #define Y_VeryBottom 648
+    
+#define Y_Center 172
+    
+#define Y_TopRotationOffset 121
+#define Y_BottomRotationOffset -81
+    
+#pragma mark End of Pound Defines for Areas
+    
+    switch (playerNumber)
+    {
+        case 1:
+        {
+            if (players < 5)
+            {
+                xCoord = X_Right;
+                xCoord -= X_Center;
+            }
+            else
+                xCoord = X_Right;
+            
+            yCoord = Y_VeryBottom;
+        }
+            break;
+        case 2:
+        {
+            if (players > 4)
+            {
+                xCoord = X_Left;
+                yCoord = Y_VeryBottom;
+            }
+            else if (players == 2)
+            {
+                xCoord = X_Right;
+                xCoord -= X_Center;
+                
+                yCoord = Y_VeryTop;
+                
+                transform = CGAffineTransformMakeRotation(3.14);
+            }
+            else if (players == 3 || players == 4)
+            {
+                xCoord = X_FarLeft;
+                
+                xCoord += X_LeftRotationOffset;
+                
+                yCoord = Y_Bottom + Y_BottomRotationOffset - Y_Center;
+                
+                transform = CGAffineTransformMakeRotation(3.14/2);
+            }
+        }
+            break;
+        case 3:
+        {
+            if (players == 3 || players == 4)
+            {
+                xCoord = X_Right;
+                xCoord -= X_Center;
+                
+                yCoord = Y_VeryTop;
+                
+                transform = CGAffineTransformMakeRotation(3.14);
+            }
+            else if (players >= 5)
+            {
+                xCoord = X_FarLeft;
+                
+                xCoord += X_LeftRotationOffset;
+                
+                yCoord = Y_Bottom + Y_BottomRotationOffset;
+                
+                if (players == 5 || players == 6)
+                    yCoord -= Y_Center;
+                
+                transform = CGAffineTransformMakeRotation(3.14/2);
+            }
+        }
+            break;
+        case 4:
+        {
+            if (players == 4)
+            {
+                xCoord = X_FarRight;
+                xCoord += X_RightRotationOffset;
+                
+                yCoord = Y_Bottom + Y_BottomRotationOffset - Y_Center;
+                
+                transform = CGAffineTransformMakeRotation(-3.14/2);
+            }
+            else if (players == 5 || players == 6)
+            {
+                if (players == 5)
+                    xCoord = X_Right - X_Center;
+                else if (players == 6)
+                    xCoord = X_Left;
+                
+                yCoord = Y_VeryTop;
+                
+                transform = CGAffineTransformMakeRotation(3.14);
+            }
+            else if (players > 6)
+            {
+                xCoord = X_FarLeft;
+                xCoord += X_LeftRotationOffset;
+                
+                yCoord = Y_Top + Y_TopRotationOffset;
+                
+                transform = CGAffineTransformMakeRotation(3.14/2);
+            }
+        }
+            break;
+        case 5:
+        {
+            if (players == 5)
+            {
+                xCoord = X_FarRight;
+                xCoord += X_RightRotationOffset;
+                
+                yCoord = Y_Bottom - Y_Center + Y_BottomRotationOffset;
+                
+                transform = CGAffineTransformMakeRotation(-3.14/2);
+            }
+            else if (players >= 6)
+            {
+                if (players == 6)
+                    xCoord = X_Right;
+                else
+                    xCoord = X_Left;
+                
+                yCoord = Y_VeryTop;
+                
+                transform = CGAffineTransformMakeRotation(3.14);
+            }
+        }
+            break;
+        case 6:
+        {
+            if (players == 6)
+            {
+                xCoord = X_FarRight;
+                xCoord += X_RightRotationOffset;
+                yCoord = Y_Bottom + Y_BottomRotationOffset - Y_Center;
+                
+                transform = CGAffineTransformMakeRotation(-3.14/2);
+            }
+            else if (players > 6)
+            {
+                xCoord = X_Right;
+                yCoord = Y_VeryTop;
+                
+                transform = CGAffineTransformMakeRotation(3.14);
+            }
+        }
+            break;
+        case 7:
+        {
+            if (players == 7)
+            {
+                xCoord = X_FarRight;
+                yCoord = Y_Bottom + Y_BottomRotationOffset - Y_Center;
+            }
+            else if (players > 7)
+            {
+                xCoord = X_FarRight;
+                yCoord = Y_Top + Y_TopRotationOffset;
+            }
+            
+            xCoord += X_RightRotationOffset;
+            
+            transform = CGAffineTransformMakeRotation(-3.14/2);
+        }
+            break;
+        case 8:
+        {
+            xCoord = X_FarRight;
+            yCoord = Y_Bottom + Y_BottomRotationOffset;
+            
+            xCoord += X_RightRotationOffset;
+            
+            transform = CGAffineTransformMakeRotation(-3.14/2);
+        }
+            break;
+    }
+    
+    UILabel *label = [[UILabel alloc] init];
+    
+    CGRect frame;
+    frame.origin.x = xCoord;
+    frame.origin.y = yCoord;
+    
+    CGSize size;
+    size.width = 242;
+    size.height = 21;
+    
+    frame.size = size;
+    
+    label.frame = frame;
+    
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor blackColor];
+    
+    label.transform = transform;
+    
+    label.textAlignment = UITextAlignmentCenter;
+    
+    label.font = [UIFont boldSystemFontOfSize:20];
+    
+    [label autorelease];
+    
+    return label;
+}
+
+- (UIButton *)newTapButton:(int)playerNumber withNumberOfPlayers:(int)players
+{
+    float xCoord;
+    float yCoord;
+    CGAffineTransform transform = CGAffineTransformMakeRotation(0);
+    
+#pragma mark Undefs to use again
+    
+#undef X_FarLeft
+#undef X_Left
+#undef X_Right
+#undef X_FarRight
+#undef X_Center
+#undef X_LeftRotationOffset
+#undef X_RightRotationOffset
+#undef Y_VeryTop
+#undef Y_Top
+#undef Y_Bottom
+#undef Y_VeryBottom
+#undef Y_Center
+#undef Y_TopRotationOffset
+#undef Y_BottomRotationOffset
+    
+#pragma mark Pound Defines for Areas
+    
+#define X_FarLeft 10
+#define X_Left 105
+#define X_Right 660
+#define X_FarRight 745
+    
+#define X_Center 270
+    
+#define X_LeftRotationOffset -100
+#define X_RightRotationOffset 100
+    
+#define Y_VeryTop 16
+#define Y_Top 100
+#define Y_Bottom 600
+#define Y_VeryBottom 685
     
 #define Y_Center 172
     
@@ -516,31 +812,31 @@ typedef struct {
             break;
     }
     
-    UILabel *label = [[UILabel alloc] init];
+    UIButton *button = [[UIButton alloc] init];
     
     CGRect frame;
-    frame.origin.x = xCoord;
-    frame.origin.y = yCoord;
+    frame.origin.x = xCoord - 5;
+    frame.origin.y = yCoord - 5;
     
     CGSize size;
-    size.width = 242;
-    size.height = 21;
+    size.width = 280;
+    size.height = 60;
     
     frame.size = size;
     
-    label.frame = frame;
+    button.frame = frame;
     
-    label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor blackColor];
+    button.transform = transform;
     
-    label.transform = transform;
+    button.tag = playerNumber;
     
-    label.textAlignment = UITextAlignmentCenter;
+    [button addTarget:self action:@selector(tappedArea:) forControlEvents:UIControlEventTouchUpInside];
     
-    [label autorelease];
+    [button autorelease];
     
-    return label;
+    return button;
 }
+
 
 - (NSMutableArray *)newArea:(int)playerNumber andNumberOfPlayers:(int)players
 {
@@ -566,6 +862,11 @@ typedef struct {
     [self.view addSubview:label];
     
     [area addObject:label];
+    
+    UIButton *button = [self newTapButton:playerNumber withNumberOfPlayers:players];
+    [self.view addSubview:button];
+    
+    [area addObject:button];
     
     [area autorelease];
     
@@ -621,7 +922,7 @@ typedef struct {
 	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
-- (void)clearPushedDice:(Arguments*)didWin
+- (void)clearPushedDice:(id)didWin
 {
     UIImage *questionMark = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QuestionMark" ofType:@"png"]];
     
@@ -653,13 +954,29 @@ typedef struct {
 
 - (void)dieWasPushed:(Arguments*)args
 {
+    int positionInVDice = 0;
+    
+    for (NSValue *value in [Players objectAtIndex:args.playerNumber - 1])
+    {
+        if ([value isKindOfClass:[NSValue class]])
+        {
+            GUIDie dieInArray;
+            
+            [value getValue:&dieInArray];
+            
+            if (dieInArray.dieValue == QuestionMark)
+                break;
+            positionInVDice++;
+        }
+    }
+    
     NSString *dieNumber = [[NSNumber numberWithInt:args.die] stringValue];
     if ([dieNumber isEqualToString:@"1"])
         dieNumber = @"";
     NSString *resource = [NSString stringWithFormat:@"Dice%@", dieNumber];
     UIImage *die = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:resource ofType:@"png"]];
     
-    NSValue *value = [[Players objectAtIndex:args.playerNumber - 1] objectAtIndex:(args.dieNumber - 1)];
+    NSValue *value = [[Players objectAtIndex:args.playerNumber - 1] objectAtIndex:positionInVDice];
     if ([value isKindOfClass:[NSValue class]])
     {
         GUIDie dieInArray;
@@ -668,7 +985,7 @@ typedef struct {
         dieInArray.die.image = die;
         dieInArray.dieValue = args.die;
         NSValue *newValue = [[NSValue alloc] initWithBytes:&dieInArray objCType:@encode(GUIDie)];
-        [[Players objectAtIndex:args.playerNumber - 1] replaceObjectAtIndex:(args.dieNumber - 1) withObject:newValue];
+        [[Players objectAtIndex:args.playerNumber - 1] replaceObjectAtIndex:positionInVDice withObject:newValue];
     }
 }
 
@@ -726,6 +1043,46 @@ typedef struct {
         }
         
         i++;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView == gameOverAlert)
+    {
+        if (buttonIndex == 0)
+        {
+            [appDelegate goToMainMenu];
+        }
+    }
+}
+
+- (void)gameOver:(NSString *)winner
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Gameover" message:[NSString stringWithFormat:@"%@ won.  Would you like to return to the main menu?", winner] delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
+    
+    gameOverAlert = alert;
+    
+    [alert show];
+}
+
+- (void)setCurrentTurn:(NSValue *)playerStruct
+{
+    intStruct integer;
+    [playerStruct getValue:&integer];
+    
+    int player = integer.integer;
+    
+    for (int i = 0;i < [Players count];i++)
+    {
+        UILabel *playerLabel = [[Players objectAtIndex:i] objectAtIndex:5];
+        playerLabel.textColor = [UIColor whiteColor];
+    }
+    
+    if ([Players count] >= player + 1)
+    {
+        UILabel *playerLabel = [[Players objectAtIndex:player] objectAtIndex:5];
+        playerLabel.textColor = [UIColor redColor];
     }
 }
 

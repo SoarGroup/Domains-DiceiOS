@@ -64,6 +64,8 @@ typedef struct turnInformationToSendToClient_ {
 
 - (void)newRound:(NSArray *)arrayOfDice;
 
+- (void)reroll:(NSArray *)arrayOfDice;
+
 - (void)showPublicInformation:(DiceGameState *)gameState;
 
 @end
@@ -82,6 +84,8 @@ typedef struct turnInformationToSendToClient_ {
 
 - (void)showAll:(DiceGameState *)gameState;
 
+- (void)newTurn:(int)player;
+
 @end
 
 @interface DiceEngine : NSObject {
@@ -95,6 +99,7 @@ typedef struct turnInformationToSendToClient_ {
 }
 
 @property (nonatomic, readonly) NSArray *playersInTheGame;
+@property (nonatomic, retain) DiceGameState *diceGameState;
 
 - (id)initWithPlayers:(NSArray *)playersWhichImplementPlayerProtocol;
 - (void)dealloc;
