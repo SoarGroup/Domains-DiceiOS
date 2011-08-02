@@ -82,9 +82,15 @@ typedef struct {
 - (IBAction)toggleDebugConsole:(UIButton *)sender
 {
     if (console.hidden)
+    {
         console.hidden = NO;
+        lastAction.hidden = YES;
+    }
     else
+    {
         console.hidden = YES;
+        lastAction.hidden = NO;
+    }
 }
 
 - (IBAction)tappedArea:(UIButton *)sender
@@ -946,6 +952,7 @@ typedef struct {
                 }
                 
                 dieInArray.die.image = questionMark;
+                dieInArray.dieValue = QuestionMark;
             }
         }
         playerNumber++;
@@ -970,11 +977,17 @@ typedef struct {
         }
     }
     
+    NSLog(@"Die pushing! %i", positionInVDice);
+    
     NSString *dieNumber = [[NSNumber numberWithInt:args.die] stringValue];
     if ([dieNumber isEqualToString:@"1"])
         dieNumber = @"";
     NSString *resource = [NSString stringWithFormat:@"Dice%@", dieNumber];
+    NSLog(@"resource:%@", resource);
+    NSLog(@"Path:%@", [[NSBundle mainBundle] pathForResource:resource ofType:@"png"]);
     UIImage *die = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:resource ofType:@"png"]];
+    
+    NSLog(@"positionInVDice:%i", positionInVDice);
     
     NSValue *value = [[Players objectAtIndex:args.playerNumber - 1] objectAtIndex:positionInVDice];
     if ([value isKindOfClass:[NSValue class]])
@@ -982,13 +995,16 @@ typedef struct {
         GUIDie dieInArray;
         
         [value getValue:&dieInArray];
+                
         dieInArray.die.image = die;
+        NSLog(@"Hidden:%i", dieInArray.die.hidden);
+        
         dieInArray.dieValue = args.die;
         NSValue *newValue = [[NSValue alloc] initWithBytes:&dieInArray objCType:@encode(GUIDie)];
         [[Players objectAtIndex:args.playerNumber - 1] replaceObjectAtIndex:positionInVDice withObject:newValue];
     }
 }
-
+ 
 - (void)removeNetworkPlayer:(NSString *)player
 {
     
@@ -1016,14 +1032,21 @@ typedef struct {
                 GUIDie dieInArray;
                 [value getValue:&dieInArray];
                 dieInArray.die.image = questionMark;
+                dieInArray.dieValue = QuestionMark;
+                
+                NSValue *newValue = [[NSValue alloc] initWithBytes:&dieInArray objCType:@encode(GUIDie)];
+                [[Players objectAtIndex:playerNumber] replaceObjectAtIndex:i withObject:newValue];
             }
         }
+        
         playerNumber++;
     }
 }
 
 - (void)showAll:(NSArray *)dice
 {
+    [self clearAll];
+    
     int i = 0;
     for (NSMutableArray *array in dice)
     {
@@ -1034,6 +1057,8 @@ typedef struct {
             args.die = [dieValue intValue];
             args.dieNumber = dieNumber;
             args.playerNumber = i + 1;
+            
+            NSLog(@"Die Value:%i\nDie Number:%i\nPlayer Number:%i", args.die, args.dieNumber, args.playerNumber);
             
             [self performSelectorOnMainThread:@selector(dieWasPushed:) withObject:args waitUntilDone:NO];
             

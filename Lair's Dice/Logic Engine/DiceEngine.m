@@ -479,8 +479,6 @@
                         {
                             errors = 0;
                             
-                            [self roundEnded:caller];
-                            
                             if (*didTheChallengerWin)
                             {
                                 [caller updateActionWithChallenge:playerInTheGame against:[self playerByPlayerName:clientReturnInfo.targetOfChallenge] ofType:A_CHALLENGE_PASS withDidTheChallengerWin:didTheChallengerWin withPlayerID:[diceGameState playerIDByPlayerName:clientReturnInfo.targetOfChallenge]];
@@ -496,6 +494,8 @@
                                 playerToStartAt = info.playerID;
                                 lost = YES;
                             }
+                            
+                            [self roundEnded:caller];
                             
                             announcedNewTurn = NO;
                             
@@ -518,8 +518,6 @@
                         {
                             errors = 0;
                             
-                            [self roundEnded:caller];
-                            
                             if (*didTheChallengerWin)
                             {
                                 [caller updateActionWithChallenge:playerInTheGame against:[self playerByPlayerName:clientReturnInfo.targetOfChallenge] ofType:A_CHALLENGE_BID withDidTheChallengerWin:didTheChallengerWin withPlayerID:[diceGameState playerIDByPlayerName:clientReturnInfo.targetOfChallenge]];
@@ -534,6 +532,8 @@
                                 playerToStartAt = info.playerID;
                                 lost = YES;
                             }
+                            
+                            [self roundEnded:caller];
                             
                             announcedNewTurn = NO;
                             
@@ -553,9 +553,7 @@
                         if ([diceGameState handleExact:[diceGameState playerIDByPlayerName:[playerInTheGame name]] andWasTheExactRight:wasExactRight])
                         {
                             errors = 0;
-                            
-                            [self roundEnded:caller];
-                            
+                                                        
                             if (*wasExactRight)
                             {
                                 [caller updateActionWithExact:playerInTheGame andWasTheExactRight:wasExactRight withPlayerID:info.playerID];
@@ -570,6 +568,8 @@
                                 playerToStartAt = info.playerID;
                                 lost = YES;
                             }
+                            
+                            [self roundEnded:caller];
                             
                             announcedNewTurn = NO;
                             
