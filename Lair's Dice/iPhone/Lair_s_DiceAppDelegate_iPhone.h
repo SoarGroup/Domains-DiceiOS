@@ -17,8 +17,7 @@
 @class iPhoneMainMenu;
 
 @interface Lair_s_DiceAppDelegate_iPhone : Lair_s_DiceAppDelegate <ClientProtocol> {    
-    iPhoneViewController *viewController;
-    iPhoneMainMenu *mainMenuViewController;
+    UIViewController *viewController;
     
     BOOL isMyTurn;
     

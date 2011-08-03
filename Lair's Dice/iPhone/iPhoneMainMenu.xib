@@ -141,7 +141,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Liar's Dice v1.0 Beta 2</string>
+						<string key="IBUIText">Liar's Dice v1.0 Beta 3</string>
 						<object class="NSFont" key="IBUIFont" id="904691939">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">17</double>

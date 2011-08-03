@@ -225,7 +225,7 @@
         UILabel *label = [[[UILabel alloc] init] autorelease];
         label.text = returnString;
         label.textColor = [UIColor blackColor];
-        label.backgroundColor = [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
         
         label.font = [UIFont fontWithName:@"Helvetica" size:25];
     
@@ -625,6 +625,9 @@
         if (continueWithAction)
             [delegate endTurn];
         
+        [self undo];
+        [diceToPush removeAllObjects];
+        
         continueWithAction = NO;
     }
     else if ([sender.titleLabel.text hasPrefix:@"Exact!"])
@@ -647,12 +650,17 @@
         if (continueWithAction)
             [delegate endTurn];
         
+        [self undo];
+        [diceToPush removeAllObjects];
+        
         continueWithAction = NO;
     }
     else if ([sender.titleLabel.text hasPrefix:@"Challenge!"])
     {
         action = A_CHALLENGE_BID;
         
+        [self undo];
+        [diceToPush removeAllObjects];
         [delegate endTurn];
     }
     else if ([sender.titleLabel.text hasPrefix:@"Bid!"])
@@ -709,11 +717,6 @@
             
             [diceToPush removeAllObjects];
         }
-        else
-        {
-            [self undo];
-            [diceToPush removeAllObjects];
-        }
         
         continueWithAction = NO;
     }
@@ -734,6 +737,8 @@
         previousPushed.pushedDice3 = NO;
         previousPushed.pushedDice4 = NO;
         previousPushed.pushedDice5 = NO;
+        
+        diceAlreadyPushed = 0;
     }
     
     for (int i = 0;i < [diceAsNumbers count];i++)
@@ -795,11 +800,13 @@
             
         case 1:
         {
+            die1.hidden = NO;
             die2.hidden = YES;
             die3.hidden = YES;
             die4.hidden = YES;
             die5.hidden = YES;
             
+            pushDie1.hidden = NO;
             pushDie2.hidden = YES;
             pushDie3.hidden = YES;
             pushDie4.hidden = YES;
@@ -808,10 +815,14 @@
             break;
         case 2:
         {
+            die1.hidden = NO;
+            die2.hidden = NO;
             die3.hidden = YES;
             die4.hidden = YES;
             die5.hidden = YES;
             
+            pushDie1.hidden = NO;
+            pushDie2.hidden = NO;
             pushDie3.hidden = YES;
             pushDie4.hidden = YES;
             pushDie5.hidden = YES;
@@ -819,23 +830,47 @@
             break;
         case 3:
         {
+            die1.hidden = NO;
+            die2.hidden = NO;
+            die3.hidden = NO;
             die4.hidden = YES;
             die5.hidden = YES;
             
+            pushDie1.hidden = NO;
+            pushDie2.hidden = NO;
+            pushDie3.hidden = NO;
             pushDie4.hidden = YES;
             pushDie5.hidden = YES;
         }
             break;
         case 4:
         {
+            die1.hidden = NO;
+            die2.hidden = NO;
+            die3.hidden = NO;
+            die4.hidden = NO;
             die5.hidden = YES;
             
+            pushDie1.hidden = NO;
+            pushDie2.hidden = NO;
+            pushDie3.hidden = NO;
+            pushDie4.hidden = NO;
             pushDie5.hidden = YES;
         }
             break;
         case 5:
         {
+            die1.hidden = NO;
+            die2.hidden = NO;
+            die3.hidden = NO;
+            die4.hidden = NO;
+            die5.hidden = NO;
             
+            pushDie1.hidden = NO;
+            pushDie2.hidden = NO;
+            pushDie3.hidden = NO;
+            pushDie4.hidden = NO;
+            pushDie5.hidden = NO;
         }
             break;
         default:
@@ -885,6 +920,18 @@
     [pushDie3 setTitle:(pushedDie3 ? @"Pull" : @"Push")];
     [pushDie4 setTitle:(pushedDie4 ? @"Pull" : @"Push")];
     [pushDie5 setTitle:(pushedDie5 ? @"Pull" : @"Push")];
+    
+    die1.image = [self imageForDieNumber:[self dieNumber:die1.image] wasPushed:pushedDie1];
+    die2.image = [self imageForDieNumber:[self dieNumber:die2.image] wasPushed:pushedDie2];
+    die3.image = [self imageForDieNumber:[self dieNumber:die3.image] wasPushed:pushedDie3];
+    die4.image = [self imageForDieNumber:[self dieNumber:die4.image] wasPushed:pushedDie4];
+    die5.image = [self imageForDieNumber:[self dieNumber:die5.image] wasPushed:pushedDie5];
+    
+    diceAlreadyPushed = (pushedDie1 ? 1 : 0) +
+                        (pushedDie1 ? 1 : 0) +
+                        (pushedDie1 ? 1 : 0) +
+                        (pushedDie1 ? 1 : 0) +
+                        (pushedDie1 ? 1 : 0);
     
     [diceToPush removeAllObjects];
 }

@@ -120,6 +120,11 @@ typedef struct {
     NSThread *mainLoop;
     
     Peer *peer;
+    
+    BOOL wasChallenge;
+    BOOL wasExact;
+    BOOL shouldLoseDieExact;
+    int playerID;
 }
 
 - (id)init;

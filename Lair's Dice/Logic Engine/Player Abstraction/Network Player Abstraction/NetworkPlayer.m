@@ -55,7 +55,10 @@
         previousAction = A_BID;
     
     if ([[gameState history] count] >= 2)
-        secondToLastAction = [[[gameState history] objectAtIndex:[[gameState history] count] - 2] type];
+    {
+        HistoryItem *item = [[gameState history] objectAtIndex:[[gameState history] count] - 2];
+        secondToLastAction = [item type];
+    }
     
     
     NSString *info;
@@ -141,7 +144,7 @@
             
             HistoryItem *secondToLastItem = [[turnInfo.gameState history] objectAtIndex:[[turnInfo.gameState history] count] - 2];
             
-            if ([secondToLastItem type] == A_PUSH || [secondToLastItem type] == A_BID)
+            if (([secondToLastItem type] == A_PUSH || [secondToLastItem type] == A_BID) && [[secondToLastItem player] playerID] != playerID)
             {
                 {
                     NSString *targetName = [[secondToLastItem player] playerName];

@@ -54,6 +54,8 @@
         peer = [[Peer alloc] init:NO];
         [peer setDelegate:self];
         
+        viewController = nil;
+        
         [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
     }
     return self;
@@ -86,9 +88,10 @@
 
 - (void)endTurn
 {
+    iPhoneViewController *iphoneViewController = (iPhoneViewController *)self->viewController;
     if (hasData && isMyTurn)
     {   
-        switch (viewController->action) {
+        switch (iphoneViewController->action) {
             case A_PUSH: // Never should be called
             {
                 return;
@@ -96,37 +99,36 @@
                 break;
             case A_BID:
             {
-                Bid *tempBid = [[Bid alloc] initWithPlayerID:-1 andThereBeing:viewController->numberOfDiceToBid eachBeing:viewController->rankOfDiceToBid];
+                Bid *tempBid = [[Bid alloc] initWithPlayerID:-1 andThereBeing:iphoneViewController->numberOfDiceToBid eachBeing:iphoneViewController->rankOfDiceToBid];
                 if ([tempBid isLegalRaise:temporaryInput.previousBid specialRules:temporaryInput.specialRules])
                 {
                     inputFromClient toSend;
-                    toSend.action = viewController->action;
+                    toSend.action = iphoneViewController->action;
                     toSend.bidOfThePlayer = tempBid;
-                    toSend.diceToPush = viewController->diceToPush;
+                    toSend.diceToPush = iphoneViewController->diceToPush;
                     
                     NSString *dataToSend = [NetworkParser parseInputFromClient:toSend];
                     [self send:dataToSend];
                     
                     hasData = NO;
                     isMyTurn = NO;
-                    [viewController->diceToPush removeAllObjects];
-                    [viewController disableAllButtons];
+                    [iphoneViewController->diceToPush removeAllObjects];
+                    [iphoneViewController disableAllButtons];
                     
-                    viewController.textView.text = @"Please wait untill it's your turn!";
+                    iphoneViewController.textView.text = @"Please wait until it's your turn!";
                 }
                 else
                 {
-                    viewController.textView.text = [NSString stringWithFormat:@"Invalid Bid!\n%@", viewController.textView.text];
-                    [viewController.textView scrollRangeToVisible:NSMakeRange([viewController.textView.text length], 0)];
+                    iphoneViewController.textView.text = [NSString stringWithFormat:@"Invalid Bid!\n%@", iphoneViewController.textView.text];
+                    [iphoneViewController.textView scrollRangeToVisible:NSMakeRange([iphoneViewController.textView.text length], 0)];
                 }
-                
             }
                 break;
             case A_CHALLENGE_BID:
             case A_CHALLENGE_PASS:
             {
                 inputFromClient toSend;
-                toSend.action = viewController->action;
+                toSend.action = iphoneViewController->action;
                 
                 if ([temporaryInput.validChallengeTargets count] > 1)
                 {
@@ -143,24 +145,24 @@
                                           nil];
                     [alert show];
                     
-                    while (viewController->challengeWhich == None)
+                    while (iphoneViewController->challengeWhich == None)
                     {
                         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
                     }
                     
                     [alert release];
                     
-                    if (viewController->challengeWhich == First)
+                    if (iphoneViewController->challengeWhich == First)
                     {
                         toSend.targetOfChallenge = [temporaryInput.validChallengeTargets objectAtIndex:0];
                     }
-                    else if (viewController->challengeWhich == Second)
+                    else if (iphoneViewController->challengeWhich == Second)
                     {
                         toSend.targetOfChallenge = [temporaryInput.validChallengeTargets objectAtIndex:1];
                     }
                     else
                     {
-                        viewController->challengeWhich = None;
+                        iphoneViewController->challengeWhich = None;
                         return;
                     }
                 }
@@ -170,19 +172,19 @@
                     message = [message stringByAppendingFormat:@"%@'s %@", [temporaryInput.validChallengeTargets objectAtIndex:0], ([(NSNumber *)[temporaryInput.corespondingChallengTypes objectAtIndex:0] intValue] == A_BID ? @"bid." : @"pass.")];
                     
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Challenge" message:message delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
-                    viewController->confirmationAlert = alert;
+                    iphoneViewController->confirmationAlert = alert;
                     [alert show];
                     
-                    while (!viewController->confirmed)
+                    while (!iphoneViewController->confirmed)
                     {
                         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
                     }
                     
-                    viewController->confirmed = NO;
+                    iphoneViewController->confirmed = NO;
                     
                     [alert release];
                     
-                    if (viewController->continueWithAction)
+                    if (iphoneViewController->continueWithAction)
                     {
                         toSend.targetOfChallenge = [temporaryInput.validChallengeTargets objectAtIndex:0];
                     }
@@ -190,52 +192,52 @@
                         return;
                 }
                 
-                if (viewController->continueWithAction || viewController->challengeWhich != None)
+                if (iphoneViewController->continueWithAction || iphoneViewController->challengeWhich != None)
                 {
                     [self send:[NetworkParser parseInputFromClient:toSend]];
                     
                     hasData = NO;
                     isMyTurn = NO;
-                    [viewController->diceToPush removeAllObjects];
+                    [iphoneViewController->diceToPush removeAllObjects];
                     
-                    viewController.textView.text = @"Please wait untill it's your turn!";
+                    iphoneViewController.textView.text = @"Please wait until it's your turn!";
                     
-                    [viewController disableAllButtons];
-                    viewController->continueWithAction = NO;
-                    viewController->challengeWhich = None;
+                    [iphoneViewController disableAllButtons];
+                    iphoneViewController->continueWithAction = NO;
+                    iphoneViewController->challengeWhich = None;
                 }
             }
                 break;
             case A_PASS:
             {
                 inputFromClient toSend;
-                toSend.action = viewController->action;
+                toSend.action = iphoneViewController->action;
                 
                 [self send:[NetworkParser parseInputFromClient:toSend]];
                 
                 hasData = NO;
                 isMyTurn = NO;
-                [viewController->diceToPush removeAllObjects];
+                [iphoneViewController->diceToPush removeAllObjects];
                 
-                viewController.textView.text = @"Please wait untill it's your turn!";
+                iphoneViewController.textView.text = @"Please wait until it's your turn!";
                 
-                [viewController disableAllButtons];
+                [iphoneViewController disableAllButtons];
             }
                 break;
             case A_EXACT:
             {
                 inputFromClient toSend;
-                toSend.action = viewController->action;
+                toSend.action = iphoneViewController->action;
                 
                 [self send:[NetworkParser parseInputFromClient:toSend]];
                 
                 hasData = NO;
                 isMyTurn = NO;
-                [viewController->diceToPush removeAllObjects];
+                [iphoneViewController->diceToPush removeAllObjects];
                 
-                viewController.textView.text = @"Please wait untill it's your turn!";
+                iphoneViewController.textView.text = @"Please wait until it's your turn!";
                 
-                [viewController disableAllButtons];
+                [iphoneViewController disableAllButtons];
             }
                 break;
             default:
@@ -258,24 +260,27 @@
 
 - (void)disconnectedFromServer:(NSString *)serverName
 {
+    iPhoneViewController *iphoneViewController = (iPhoneViewController *)viewController;
     connectedToServer = NO;
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Disconnected" message:@"You have been disconnected from the server.  You will now return to the main menu." delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-    viewController->confirmationAlert = alert;
+    iphoneViewController->confirmationAlert = alert;
     [alert show];
     
-    while (!viewController->confirmed)
+    while (!iphoneViewController->confirmed)
     {
         [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
     }
     
-    viewController->confirmed = NO;
+    iphoneViewController->confirmed = NO;
     
     [self goToMainMenu];
 }
 
 - (void)serverSentData:(NSString *)data
 {
+    iPhoneViewController *iphoneViewController = (iPhoneViewController *)viewController;
+    
     if ([data hasPrefix:@"C:"])
     {
         return;
@@ -284,15 +289,15 @@
     if ([data isEqualToString:[NSString stringWithFormat:@"%@:CLEANUP", [[UIDevice currentDevice] name]]])
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Gameover" message:@"The server has terminated the game." delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        viewController->confirmationAlert = alert;
+        iphoneViewController->confirmationAlert = alert;
         [alert show];
         
-        while (!viewController->confirmed)
+        while (!iphoneViewController->confirmed)
         {
             [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
         }
         
-        viewController->confirmed = NO;
+        iphoneViewController->confirmed = NO;
         
         [self goToMainMenu];
         return;
@@ -305,62 +310,64 @@
     if ([data hasPrefix:@"SHOWALL"])
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Show all" message:@"The last action ended the round.  All the dice from the previous round are showing, are you ready to continue?" delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Yes", nil];
-        viewController->confirmationAlert = alert;
+        iphoneViewController->confirmationAlert = alert;
         [alert show];
         
-        while (!viewController->confirmed)
+        while (!iphoneViewController->confirmed)
         {
             [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
         }
         
-        viewController->confirmed = NO;
+        iphoneViewController->confirmed = NO;
         
         [self send:@"C:DONESHOWALL"];
+        
+        iphoneViewController.textView.text = @"Please wait until it's your turn!";
         return;
     }
     
     if ([data hasPrefix:@"RDICE"])
     {
-        [viewController updateDice:[NetworkParser parseNewRound:data] withNewRound:NO];
+        [iphoneViewController updateDice:[NetworkParser parseNewRound:data] withNewRound:NO];
         
         return;
     }
     
     if ([data hasPrefix:@"NDICE"])
     {
-        if ([viewController updateDice:[NetworkParser parseNewRound:data] withNewRound:YES])
+        if ([iphoneViewController updateDice:[NetworkParser parseNewRound:data] withNewRound:YES])
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Gameover" message:@"You have lost all your dice and in turn, lost the game." delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-            viewController->confirmationAlert = alert;
+            iphoneViewController->confirmationAlert = alert;
             [alert show];
             
-            while (!viewController->confirmed)
+            while (!iphoneViewController->confirmed)
             {
                 [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.25]];
             }
             
-            viewController->confirmed = NO;
+            iphoneViewController->confirmed = NO;
             
             [self goToMainMenu];
             return;
         }
         
-        [viewController.pushDie1 setEnabled:NO];
-        [viewController.pushDie2 setEnabled:NO];
-        [viewController.pushDie3 setEnabled:NO];
-        [viewController.pushDie4 setEnabled:NO];
-        [viewController.pushDie5 setEnabled:NO];
+        [iphoneViewController.pushDie1 setEnabled:NO];
+        [iphoneViewController.pushDie2 setEnabled:NO];
+        [iphoneViewController.pushDie3 setEnabled:NO];
+        [iphoneViewController.pushDie4 setEnabled:NO];
+        [iphoneViewController.pushDie5 setEnabled:NO];
         
-        [viewController.pushDie1 setTitle:@"Push"];
-        [viewController.pushDie2 setTitle:@"Push"];
-        [viewController.pushDie3 setTitle:@"Push"];
-        [viewController.pushDie4 setTitle:@"Push"];
-        [viewController.pushDie5 setTitle:@"Push"];
+        [iphoneViewController.pushDie1 setTitle:@"Push"];
+        [iphoneViewController.pushDie2 setTitle:@"Push"];
+        [iphoneViewController.pushDie3 setTitle:@"Push"];
+        [iphoneViewController.pushDie4 setTitle:@"Push"];
+        [iphoneViewController.pushDie5 setTitle:@"Push"];
         
-        [viewController.pass setEnabled:NO];
-        [viewController.exact setEnabled:NO];
-        [viewController.challenge setEnabled:NO];
-        [viewController.bid setEnabled:NO];
+        [iphoneViewController.pass setEnabled:NO];
+        [iphoneViewController.exact setEnabled:NO];
+        [iphoneViewController.challenge setEnabled:NO];
+        [iphoneViewController.bid setEnabled:NO];
         
         return;
     }
@@ -422,23 +429,23 @@
                 if ([[parts objectAtIndex:1] intValue] > 0)
                 {
                     lastAction
-                        = [[parts objectAtIndex:1] intValue];
+                    = [[parts objectAtIndex:1] intValue];
                 }
             }
         }
         
         if (lastAction == A_PASS)
         {
-            viewController.textView.text = [NSString stringWithFormat:@"Last Action:\nPASS\n"];
+            iphoneViewController.textView.text = [NSString stringWithFormat:@"Last Action:\nPASS\n"];
             
             if (secondToLastAction == A_BID)
             {
-                viewController.textView.text = [viewController.textView.text stringByAppendingFormat:@"\nSecond To Last Action:\n Bid %i %i%@", previousBid.numberOfDice, previousBid.rankOfDie, (previousBid.numberOfDice > 1 ? @"s" : @"")];
+                iphoneViewController.textView.text = [iphoneViewController.textView.text stringByAppendingFormat:@"\nSecond To Last Action:\n Bid %i %i%@", previousBid.numberOfDice, previousBid.rankOfDie, (previousBid.numberOfDice > 1 ? @"s" : @"")];
             }
         }
         else if (lastAction == A_BID)
         {
-            viewController.textView.text = [NSString stringWithFormat:@"Last Action:\n Bid %i %i%@\n", previousBid.numberOfDice, previousBid.rankOfDie, (previousBid.numberOfDice > 1 ? @"s" : @"")];
+            iphoneViewController.textView.text = [NSString stringWithFormat:@"Last Action:\n Bid %i %i%@\n", previousBid.numberOfDice, previousBid.rankOfDie, (previousBid.numberOfDice > 1 ? @"s" : @"")];
         }
         
         return;
@@ -446,42 +453,42 @@
     
     temporaryInput = [NetworkParser parseInputFromServer:data];
     
-    if ([viewController.textView.text isEqualToString:@"Please wait untill it's your turn!"])
-        viewController.textView.text = @"It's your turn!";
+    if ([iphoneViewController.textView.text isEqualToString:@"Please wait until it's your turn!"])
+        iphoneViewController.textView.text = @"It's your turn!";
     else
-        viewController.textView.text = [NSString stringWithFormat:@"It's your turn!\n%@", viewController.textView.text];
+        iphoneViewController.textView.text = [NSString stringWithFormat:@"It's your turn!\n%@", iphoneViewController.textView.text];
     
-    [viewController.pass setEnabled:NO];
-    [viewController.exact setEnabled:NO];
-    [viewController.challenge setEnabled:NO];
-    [viewController.bid setEnabled:NO];
+    [iphoneViewController.pass setEnabled:NO];
+    [iphoneViewController.exact setEnabled:NO];
+    [iphoneViewController.challenge setEnabled:NO];
+    [iphoneViewController.bid setEnabled:NO];
     
     for (NSNumber *number in temporaryInput.actions)
     {
         switch ([number intValue]) {
             case A_PASS:
             {
-                [viewController.pass setEnabled:YES];
+                [iphoneViewController.pass setEnabled:YES];
             }
                 break;
             case A_CHALLENGE_BID:
             {
-                [viewController.challenge setEnabled:YES];
+                [iphoneViewController.challenge setEnabled:YES];
             }
                 break;
             case A_CHALLENGE_PASS:
             {
-                [viewController.challenge setEnabled:YES];
+                [iphoneViewController.challenge setEnabled:YES];
             }
                 break;
             case A_BID:
             {
-                [viewController.bid setEnabled:YES];
+                [iphoneViewController.bid setEnabled:YES];
             }
                 break;
             case A_EXACT:
             {
-                [viewController.exact setEnabled:YES];
+                [iphoneViewController.exact setEnabled:YES];
             }
                 break;  
             default:
@@ -489,7 +496,7 @@
         }
     }
     
-    [viewController updateDice:temporaryInput.playersDice withNewRound:NO];
+    [iphoneViewController updateDice:temporaryInput.playersDice withNewRound:NO];
     
     hasData = YES;
     isMyTurn = YES;
@@ -502,8 +509,9 @@
 
 - (void)goToMainGame:(NSString *)name
 {
-    [mainMenuViewController.view removeFromSuperview];
-    [mainMenuViewController release];
+    [viewController.view removeFromSuperview];
+    [viewController release];
+    viewController = nil;
     
     viewController = [[iPhoneViewController alloc] initWithNibName:@"iPhoneViewController" bundle:nil];
     mainViewController = viewController;
@@ -513,44 +521,47 @@
     
     [window makeKeyAndVisible];
     
-    [(iPhoneViewController *)mainViewController textView].text = @"Please wait untill it's your turn!";
+    [(iPhoneViewController *)mainViewController textView].text = @"Please wait until it's your turn!";
     
     if (![name isEqualToString:@""])
+    {
+        name = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         peer.displayName = name;
+    }
     
     [peer startPicker];
 }
 
 - (void)goToMainMenu
 {
-    if (mainMenuViewController)
-    {
-        if ([mainMenuViewController view])
-            [[mainMenuViewController view] removeFromSuperview];
-        [mainMenuViewController release];
-    }
+    [viewController.view removeFromSuperview];
+    [viewController release];
+    viewController = nil;
     
-    mainMenuViewController = [[iPhoneMainMenu alloc] initWithNibName:@"iPhoneMainMenu" bundle:nil];
-    [mainMenuViewController setDelegate:self];
+    iPhoneMainMenu *menuViewController = [[iPhoneMainMenu alloc] initWithNibName:@"iPhoneMainMenu" bundle:nil];
+    [menuViewController setDelegate:self];
     
-    [window addSubview:mainMenuViewController.view];
+    [window addSubview:menuViewController.view];
     
-    mainViewController = mainMenuViewController;
+    viewController = menuViewController;
+    mainViewController = menuViewController;
     
     [window makeKeyAndVisible];
 }
 
 - (void)goToHelp
 {
-    [mainMenuViewController.view removeFromSuperview];
-    [mainMenuViewController release];
+    [viewController.view removeFromSuperview];
+    [viewController release];
+    viewController = nil;
     
-    mainMenuViewController = [[iPhoneHelp alloc] initWithNibName:@"iPhoneHelp" bundle:nil];
-    [mainMenuViewController setDelegate:self];
+    iPhoneHelp *menuViewController = [[iPhoneHelp alloc] initWithNibName:@"iPhoneHelp" bundle:nil];
+    [menuViewController setDelegate:self];
     
-    [window addSubview:mainMenuViewController.view];
+    [window addSubview:menuViewController.view];
     
-    mainViewController = mainMenuViewController;
+    viewController = menuViewController;
+    mainViewController = menuViewController;
     
     [window makeKeyAndVisible];
 }

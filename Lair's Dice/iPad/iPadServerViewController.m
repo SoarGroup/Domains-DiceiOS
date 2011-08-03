@@ -928,7 +928,7 @@ typedef struct {
 	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
-- (void)clearPushedDice:(id)didWin
+- (void)clearPushedDice:(Arguments *)didWin
 {
     UIImage *questionMark = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QuestionMark" ofType:@"png"]];
     
@@ -936,6 +936,8 @@ typedef struct {
     for (NSMutableArray *arrayOfDice in Players)
     {
         BOOL hidden = NO;
+        BOOL added = NO;
+        
         for (int i = [arrayOfDice count] - 1;i >= 0;--i)
         {
             NSValue *value = [arrayOfDice objectAtIndex:i];
@@ -947,8 +949,17 @@ typedef struct {
                 
                 if (!dieInArray.die.hidden && !hidden && playerNumber == [didWin playerNumber])
                 {
-                    dieInArray.die.hidden = YES;
-                    hidden = YES;
+                    if ((didWin.wasExact && didWin.shouldLoseDiceExact) || didWin.wasChallenge)
+                    {
+                        dieInArray.die.hidden = YES;
+                        hidden = YES;
+                    }
+                }
+                
+                if (didWin.wasExact && !didWin.shouldLoseDiceExact && dieInArray.die.hidden && !added && playerNumber == [didWin playerNumber])
+                {
+                    dieInArray.die.hidden = NO;
+                    added = YES;
                 }
                 
                 dieInArray.die.image = questionMark;
@@ -1107,7 +1118,7 @@ typedef struct {
     if ([Players count] >= player + 1)
     {
         UILabel *playerLabel = [[Players objectAtIndex:player] objectAtIndex:5];
-        playerLabel.textColor = [UIColor redColor];
+        playerLabel.textColor = [UIColor yellowColor];
     }
 }
 

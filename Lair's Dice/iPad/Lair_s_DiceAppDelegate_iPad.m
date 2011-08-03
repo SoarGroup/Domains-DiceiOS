@@ -239,7 +239,7 @@ static NSUInteger random_below(NSUInteger n) {
     [(iPadServerViewController *)mainViewController lastAction].text = stringToOutputToActions;
 }
 
-- (void)updateActionWithPush:(NSArray *)diceNumbersPushed withPlayer:(id <Player>)player withPlayerID:(int)playerID
+- (void)updateActionWithPush:(NSArray *)diceNumbersPushed withPlayer:(id <Player>)player withPlayerID:(int)playerIdentifier
 {
     NSString *string = @"";
     
@@ -262,7 +262,7 @@ static NSUInteger random_below(NSUInteger n) {
                 
                 Arguments *args = [[Arguments alloc] init];
                 args.dieNumber = (i + 1);
-                args.playerNumber = (playerID + 1);
+                args.playerNumber = (playerIdentifier + 1);
                 args.die = [number intValue];
                 [args autorelease];
                 [controller performSelectorOnMainThread:@selector(dieWasPushed:) withObject:args waitUntilDone:YES];
@@ -298,7 +298,7 @@ static NSUInteger random_below(NSUInteger n) {
     [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\nBid %i %i%@\n%@", [player name], bid.numberOfDice, bid.rankOfDie, (bid.rankOfDie > 1 ? @"s" : @""), secondPart] waitUntilDone:NO];
 }
 
-- (void)updateActionWithExact:(id <Player>)player andWasTheExactRight:(BOOL *)wasTheExactRight withPlayerID:(int)playerID
+- (void)updateActionWithExact:(id <Player>)player andWasTheExactRight:(BOOL *)wasTheExactRight withPlayerID:(int)playerIdentifier
 {
     [self logToConsole:[NSString stringWithFormat:@"%@ exacted", [player name]]];
     
@@ -307,23 +307,16 @@ static NSUInteger random_below(NSUInteger n) {
     else
         [self logToConsole:[NSString stringWithFormat:@"%@ was wrong!", [player name]]];
     
-    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Exact! (%@)", [player name], (*wasTheExactRight ? @"Right!" : @"Wrong!")] waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Exact! (%@)", [player name], (*wasTheExactRight ? @"Success!" : @"Fail!")] waitUntilDone:NO];
     
-    if ([mainViewController isKindOfClass:[iPadServerViewController class]])
-    {
-        iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
-        
-        Arguments *arguments = [[Arguments alloc] init];
-        arguments.wasExact = YES;
-        arguments.wasChallenge = NO;
-        arguments.playerNumber = playerID;
-        if (*wasTheExactRight)
-            arguments.shouldLoseDiceExact = NO;
-        else
-            arguments.shouldLoseDiceExact = YES;
-        
-        [controller performSelectorOnMainThread:@selector(clearPushedDice:) withObject:arguments waitUntilDone:YES];
-    }
+    wasChallenge = NO;
+    wasExact = YES;
+    
+    self->playerID = playerIdentifier;
+    if (*wasTheExactRight)
+        shouldLoseDieExact = NO;
+    else
+        shouldLoseDieExact = YES;
     
     free(wasTheExactRight);
 }
@@ -335,7 +328,7 @@ static NSUInteger random_below(NSUInteger n) {
     [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Pass", [player name]] waitUntilDone:NO];
 }
 
-- (void)updateActionWithChallenge:(id <Player>)firstPlayer against:(id <Player>)secondPlayer ofType:(Type)type withDidTheChallengerWin:(BOOL *)didTheChallengerWin withPlayerID:(int)playerID
+- (void)updateActionWithChallenge:(id <Player>)firstPlayer against:(id <Player>)secondPlayer ofType:(Type)type withDidTheChallengerWin:(BOOL *)didTheChallengerWin withPlayerID:(int)playerIdentifier
 {
     if (type == A_CHALLENGE_BID)
         [self logToConsole:[NSString stringWithFormat:@"%@ challenged %@'s bid!", [firstPlayer name], [secondPlayer name]]];
@@ -349,17 +342,9 @@ static NSUInteger random_below(NSUInteger n) {
     
     [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Challenge against %@! (%@)", [firstPlayer name], [secondPlayer name], (*didTheChallengerWin ? @"Right!" : @"Wrong!")] waitUntilDone:NO];
     
-    if ([mainViewController isKindOfClass:[iPadServerViewController class]])
-    {
-        iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
-        
-        Arguments *arguments = [[Arguments alloc] init];
-        arguments.wasChallenge = YES;
-        arguments.wasExact = NO;
-        arguments.playerNumber = playerID;
-        
-        [controller performSelectorOnMainThread:@selector(clearPushedDice:) withObject:arguments waitUntilDone:YES];
-    }
+    wasChallenge = YES;
+    wasExact = NO;
+    self->playerID = playerIdentifier;
     
     free(didTheChallengerWin);
 }
@@ -380,7 +365,7 @@ static NSUInteger random_below(NSUInteger n) {
     [self logToConsole:@"Special Rules are Now In Effect"];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Special Rules" message:@"Special Rules are now in effect.  Click the help button at the main menu for more information." delegate:mainViewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-        
+    
     [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
 }
 
@@ -441,8 +426,20 @@ static NSUInteger random_below(NSUInteger n) {
                 }
             }
             
+            iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
+            
+            Arguments *arguments = [[Arguments alloc] init];
+            arguments.wasChallenge = wasChallenge;
+            arguments.wasExact = wasExact;
+            arguments.playerNumber = playerID;
+            arguments.shouldLoseDiceExact = shouldLoseDieExact;
+            
+            [controller performSelectorOnMainThread:@selector(clearPushedDice:) withObject:arguments waitUntilDone:YES];
+            
             [diceEngine doneShowAll];
             [(iPadServerViewController *)mainViewController clearAll];
+            
+            [(iPadServerViewController *)mainViewController lastAction].text = @"";
         }
         
         return;
@@ -526,13 +523,30 @@ static NSUInteger random_below(NSUInteger n) {
     {
         if ([player isKindOfClass:[NetworkPlayer class]])
         {
-            networkPlayers = YES;
-            [self sendData:@"SHOWALL" toPlayer:[player name]];
+            if (![(PlayerState *)[gameState player:[gameState playerIDByPlayerName:[player name]]] hasThePlayerLost])
+            {
+                networkPlayers = YES;
+                [self sendData:@"SHOWALL" toPlayer:[player name]];
+            }
+            else
+            {
+                player.doneShowAll = YES;
+            }
         }
     }
     
     if (!networkPlayers)
     {
+        iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
+        
+        Arguments *arguments = [[Arguments alloc] init];
+        arguments.wasChallenge = wasChallenge;
+        arguments.wasExact = wasExact;
+        arguments.playerNumber = playerID;
+        arguments.shouldLoseDiceExact = shouldLoseDieExact;
+        
+        [controller performSelectorOnMainThread:@selector(clearPushedDice:) withObject:arguments waitUntilDone:YES];
+        
         [diceEngine doneShowAll];
         [(iPadServerViewController *)mainViewController performSelectorOnMainThread:@selector(clearAll) withObject:nil waitUntilDone:NO];
     }
@@ -543,7 +557,7 @@ static NSUInteger random_below(NSUInteger n) {
     area -= 1;
     
     NSString *content = @"";
-
+    
     NSArray *roundHistory = [[diceEngine diceGameState] history];
     roundHistory = [roundHistory reversedArray];
     

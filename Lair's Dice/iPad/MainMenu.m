@@ -108,9 +108,9 @@
         agents = [(NSNumber *)[arrayOfNumbers objectAtIndex:row] intValue];
 }
 
-- (IBAction)didPressStartButton:(UIButton *)startButton
+- (IBAction)didPressStartButton:(UIButton *)sender
 {
-    if ([startButton.titleLabel.text isEqualToString:@"Help"])
+    if ([sender.titleLabel.text isEqualToString:@"Help"])
     {
         [appDelegate goToHelp];
         return;

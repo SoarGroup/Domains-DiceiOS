@@ -79,9 +79,23 @@
 {
     doneShowAll = NO;
     
-    [caller showAll:diceGameState];
+    BOOL gameOver = NO;
     
-    while (!doneShowAll) {}
+    for (int i = 0; i < [[diceGameState players] count];i++)
+    {
+        PlayerState *player = [[diceGameState players] objectAtIndex:i];
+        if ([player hasThePlayerLost])
+            gameOver = YES;
+        else
+            gameOver = NO;
+    }
+    
+    if (!gameOver)
+    {
+        [caller showAll:diceGameState];
+    
+        while (!doneShowAll) {}
+    }
     
     [diceGameState createNewRound];
     
@@ -280,13 +294,16 @@
                         if (didAdd)
                         {
                             i = [diceGameState currentPlayerID];
+                            
+                            if (![diceGameState isGameInProgress] && [diceGameState gameWinner])
+                                
                             continue;
                         }
                     }
                     
                     NSLog(@"Turn: %d", i);
                     
-                    id <Player> playerInTheGame = (id <Player>)[playersInTheGame objectAtIndex:i];
+                    id <Player, NSObject> playerInTheGame = (id <Player, NSObject>)[playersInTheGame objectAtIndex:i];
                     
                     if (!announcedNewTurn)
                     {
