@@ -956,16 +956,31 @@ typedef struct {
                     }
                 }
                 
-                if (didWin.wasExact && !didWin.shouldLoseDiceExact && dieInArray.die.hidden && !added && playerNumber == [didWin playerNumber])
-                {
-                    dieInArray.die.hidden = NO;
-                    added = YES;
-                }
-                
                 dieInArray.die.image = questionMark;
                 dieInArray.dieValue = QuestionMark;
             }
         }
+        
+        if (didWin.wasExact && !didWin.shouldLoseDiceExact)
+        {
+            for (int i = 0;i < [arrayOfDice count];i++)
+            {
+                NSValue *value = [arrayOfDice objectAtIndex:i];
+                
+                if ([value isKindOfClass:[NSValue class]])
+                {
+                    GUIDie dieInArray;
+                    [value getValue:&dieInArray];
+                    
+                    if (dieInArray.die.hidden && !added)
+                    {
+                        dieInArray.die.hidden = NO;
+                        added = YES;
+                    }
+                }
+            }
+        }
+        
         playerNumber++;
     }
 }
@@ -1006,7 +1021,7 @@ typedef struct {
         GUIDie dieInArray;
         
         [value getValue:&dieInArray];
-                
+        
         dieInArray.die.image = die;
         NSLog(@"Hidden:%i", dieInArray.die.hidden);
         
@@ -1015,7 +1030,7 @@ typedef struct {
         [[Players objectAtIndex:args.playerNumber - 1] replaceObjectAtIndex:positionInVDice withObject:newValue];
     }
 }
- 
+
 - (void)removeNetworkPlayer:(NSString *)player
 {
     
