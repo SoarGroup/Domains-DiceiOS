@@ -86,6 +86,8 @@ typedef struct turnInformationToSendToClient_ {
 
 - (void)newTurn:(int)player;
 
+- (void)synchronize;
+
 @end
 
 @interface DiceEngine : NSObject {

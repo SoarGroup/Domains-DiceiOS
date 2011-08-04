@@ -124,4 +124,6 @@ typedef struct {
 
 - (void)disableAllButtons;
 
+- (void)undo;
+
 @end

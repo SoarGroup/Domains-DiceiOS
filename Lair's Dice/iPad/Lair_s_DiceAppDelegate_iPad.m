@@ -89,6 +89,30 @@
 
 @end
 
+typedef enum {
+    QuestionMark = 0,
+    One = 1,
+    Two = 2,
+    Three = 3,
+    Four = 4,
+    Five = 5,
+    Six = 6
+} Value;
+
+typedef enum {
+    Up,
+    Down,
+    Left,
+    Right
+} Orientation;
+
+typedef struct {
+    UIImageView *die;
+    Value dieValue;
+    
+    Orientation orient;
+} GUIDie;
+
 @implementation Lair_s_DiceAppDelegate_iPad
 
 - (id) init
@@ -248,7 +272,7 @@ static NSUInteger random_below(NSUInteger n) {
     {
         if ([number isKindOfClass:[NSNumber class]])
         {
-            if ((i + 1) < [diceNumbersPushed count])
+            if ((i + 1) < [diceNumbersPushed count] || (i + 1) == 1)
                 string = [string stringByAppendingFormat:@"Die %i,", [number intValue]];
             else
                 string = [string stringByAppendingFormat:@"and Die %i", [number intValue]];
@@ -325,7 +349,7 @@ static NSUInteger random_below(NSUInteger n) {
 {
     [self logToConsole:[NSString stringWithFormat:@"%@ passed", [player name]]];
     
-    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Pass", [player name]] waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\nPass", [player name]] waitUntilDone:NO];
 }
 
 - (void)updateActionWithChallenge:(id <Player>)firstPlayer against:(id <Player>)secondPlayer ofType:(Type)type withDidTheChallengerWin:(BOOL *)didTheChallengerWin withPlayerID:(int)playerIdentifier
@@ -615,6 +639,47 @@ static NSUInteger random_below(NSUInteger n) {
     integer.integer = player;
     NSValue *value = [NSValue value:&integer withObjCType:@encode(intStruct)];
     [(iPadServerViewController *)mainViewController performSelectorOnMainThread:@selector(setCurrentTurn:) withObject:value waitUntilDone:NO];
+}
+
+- (void)synchronize
+{
+    DiceGameState *gameState = [diceEngine diceGameState];
+    
+    for (int i = 0;i < [players count];i++)
+    {
+        id <Player, NSObject> player = [players objectAtIndex:i];
+        if ([player conformsToProtocol:@protocol(Player)])
+        {
+            iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
+            
+            NSMutableArray *Players = [controller Players];
+            
+            NSMutableArray *playerObjects = [Players objectAtIndex:i];
+            
+            for (int j = [playerObjects count] - 1;j >= 0;--j)
+            {
+                NSValue *value = [playerObjects objectAtIndex:j];
+                
+                if ([value isKindOfClass:[NSValue class]])
+                {
+                    GUIDie dieInArray;
+                    [value getValue:&dieInArray];
+                    
+                    if (j > [[gameState player:[gameState playerIDByPlayerName:[player name]]] numberOfDice])
+                    {
+                        dieInArray.die.hidden = YES;
+                        
+                        NSLog(@"Player:%@ J:%i Hidden:%i", [player name], j, dieInArray.die.hidden);
+                        
+                        dieInArray.dieValue = QuestionMark;
+                        
+                        NSValue *newValue = [[NSValue alloc] initWithBytes:&dieInArray objCType:@encode(GUIDie)];
+                        [[Players objectAtIndex:i] replaceObjectAtIndex:j withObject:newValue];
+                    }
+                }
+            }
+        }
+    }
 }
 
 @end

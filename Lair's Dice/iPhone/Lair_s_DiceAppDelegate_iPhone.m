@@ -199,6 +199,7 @@
                     hasData = NO;
                     isMyTurn = NO;
                     [iphoneViewController->diceToPush removeAllObjects];
+                    [iphoneViewController undo];
                     
                     iphoneViewController.textView.text = @"Please wait until it's your turn!";
                     

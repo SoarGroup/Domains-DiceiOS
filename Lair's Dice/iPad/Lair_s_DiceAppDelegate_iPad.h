@@ -155,4 +155,6 @@ typedef struct {
 
 - (void)newTurn:(int)player;
 
+- (void)synchronize;
+
 @end

@@ -252,6 +252,8 @@
                 break;
             }
             
+            [caller synchronize];
+            
             if ([[playersInTheGame objectAtIndex:i] conformsToProtocol:@protocol(Player)])
             {
                 if ([diceGameState usingSpecialRules] && !announcedSpecialRules)
@@ -266,6 +268,7 @@
                 
                 if (![self checkPlayerName:[[playersInTheGame objectAtIndex:i] name] againstListOfPlayerIDs:droppedPlayerIDs])
                 {
+                    
                     {
                         BOOL didAdd = NO;
                         

@@ -55,7 +55,7 @@ typedef struct {
 
 @implementation iPadServerViewController
 
-@synthesize console, appDelegate, lastAction, toggleButton, gameOverAlert;
+@synthesize console, appDelegate, lastAction, toggleButton, gameOverAlert, Players;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withPlayers:(int)numberOfPlayers
 {

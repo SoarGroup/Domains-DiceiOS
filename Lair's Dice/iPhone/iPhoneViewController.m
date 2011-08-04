@@ -11,7 +11,6 @@
 @interface iPhoneViewController()
 
 - (int)dieNumber:(UIImage*)imageToCheck;
-- (void)undo;
 - (UIImage *)imageForDieNumber:(int)dieNumber wasPushed:(BOOL)pushed;
 
 - (int)numberOfDice;
@@ -659,8 +658,6 @@
     {
         action = A_CHALLENGE_BID;
         
-        [self undo];
-        [diceToPush removeAllObjects];
         [delegate endTurn];
     }
     else if ([sender.titleLabel.text hasPrefix:@"Bid!"])
