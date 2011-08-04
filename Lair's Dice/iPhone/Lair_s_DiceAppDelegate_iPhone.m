@@ -279,6 +279,11 @@
 
 - (void)serverSentData:(NSString *)data
 {
+    if (!connectedToServer)
+    {
+        return;
+    }
+    
     iPhoneViewController *iphoneViewController = (iPhoneViewController *)viewController;
     
     if ([data hasPrefix:@"C:"])
@@ -547,6 +552,8 @@
     mainViewController = menuViewController;
     
     [window makeKeyAndVisible];
+    
+    connectedToServer = NO;
 }
 
 - (void)goToHelp

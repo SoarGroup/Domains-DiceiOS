@@ -141,7 +141,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Liar's Dice v1.0 Beta 3</string>
+						<string key="IBUIText">Liar's Dice v1.0 Beta 4</string>
 						<object class="NSFont" key="IBUIFont" id="904691939">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">17</double>
@@ -303,9 +303,9 @@
 							<reference ref="1040412784"/>
 							<reference ref="77783862"/>
 							<reference ref="883094798"/>
-							<reference ref="71753919"/>
 							<reference ref="10224301"/>
 							<reference ref="209083723"/>
+							<reference ref="71753919"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>

@@ -408,11 +408,6 @@ static NSUInteger random_below(NSUInteger n) {
                 
                 if (name == client)
                     player.doneShowAll = YES;
-                else
-                {
-                    if (!player.doneShowAll)
-                        doneShowAll = NO;
-                }
             }
         }
         

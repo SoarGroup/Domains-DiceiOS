@@ -223,7 +223,10 @@
             break;
         
         if (![diceGameState isGameInProgress] && [diceGameState gameWinner])
+        {
             isGameOver = YES;
+            break;
+        }
         
         int i;
         
@@ -263,8 +266,6 @@
                 
                 if (![self checkPlayerName:[[playersInTheGame objectAtIndex:i] name] againstListOfPlayerIDs:droppedPlayerIDs])
                 {
-                    
-                    
                     {
                         BOOL didAdd = NO;
                         
