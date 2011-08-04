@@ -335,6 +335,8 @@
     {
         [iphoneViewController updateDice:[NetworkParser parseNewRound:data] withNewRound:NO];
         
+        [iphoneViewController disableAllButtons];
+        
         return;
     }
     
@@ -357,22 +359,7 @@
             return;
         }
         
-        [iphoneViewController.pushDie1 setEnabled:NO];
-        [iphoneViewController.pushDie2 setEnabled:NO];
-        [iphoneViewController.pushDie3 setEnabled:NO];
-        [iphoneViewController.pushDie4 setEnabled:NO];
-        [iphoneViewController.pushDie5 setEnabled:NO];
-        
-        [iphoneViewController.pushDie1 setTitle:@"Push"];
-        [iphoneViewController.pushDie2 setTitle:@"Push"];
-        [iphoneViewController.pushDie3 setTitle:@"Push"];
-        [iphoneViewController.pushDie4 setTitle:@"Push"];
-        [iphoneViewController.pushDie5 setTitle:@"Push"];
-        
-        [iphoneViewController.pass setEnabled:NO];
-        [iphoneViewController.exact setEnabled:NO];
-        [iphoneViewController.challenge setEnabled:NO];
-        [iphoneViewController.bid setEnabled:NO];
+        [iphoneViewController disableAllButtons];
         
         return;
     }

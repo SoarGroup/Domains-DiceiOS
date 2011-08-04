@@ -961,7 +961,7 @@ typedef struct {
             }
         }
         
-        if (didWin.wasExact && !didWin.shouldLoseDiceExact)
+        if (didWin.wasExact && !didWin.shouldLoseDiceExact && didWin.playerNumber == playerNumber)
         {
             for (int i = 0;i < [arrayOfDice count];i++)
             {

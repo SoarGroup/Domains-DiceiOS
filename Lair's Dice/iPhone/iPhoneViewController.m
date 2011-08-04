@@ -981,6 +981,12 @@
     [pushDie4 setEnabled:NO];
     [pushDie5 setEnabled:NO];
     
+    [pushDie1 setTitle:@"Push"];
+    [pushDie2 setTitle:@"Push"];
+    [pushDie3 setTitle:@"Push"];
+    [pushDie4 setTitle:@"Push"];
+    [pushDie5 setTitle:@"Push"];
+    
     [pass setEnabled:NO];
     [exact setEnabled:NO];
     [challenge setEnabled:NO];

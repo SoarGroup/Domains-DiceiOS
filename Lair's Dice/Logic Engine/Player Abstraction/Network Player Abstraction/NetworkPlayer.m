@@ -228,7 +228,7 @@
         
     output.validChallengeTargets = targets;
     output.corespondingChallengTypes = challengeTypes;
-    output.specialRules = [[turnInfo.gameState player:turnInfo.playerID] isInSpecialRules];
+    output.specialRules = [turnInfo.gameState usingSpecialRules];
     
     [self send:[NetworkParser parseOutput:output]];
     

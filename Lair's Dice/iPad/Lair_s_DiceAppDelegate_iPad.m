@@ -340,7 +340,7 @@ static NSUInteger random_below(NSUInteger n) {
     else
         [self logToConsole:[NSString stringWithFormat:@"%@ lost!", [firstPlayer name]]];
     
-    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Challenge against %@! (%@)", [firstPlayer name], [secondPlayer name], (*didTheChallengerWin ? @"Right!" : @"Wrong!")] waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(logToActions:) withObject:[NSString stringWithFormat:@"Last Action (%@):\n Challenge against %@! (%@)", [firstPlayer name], [secondPlayer name], (*didTheChallengerWin ? @"Success!" : @"Fail!")] waitUntilDone:NO];
     
     wasChallenge = YES;
     wasExact = NO;
@@ -408,6 +408,8 @@ static NSUInteger random_below(NSUInteger n) {
                 
                 if (name == client)
                     player.doneShowAll = YES;
+                else if (!player.doneShowAll)
+                    doneShowAll = NO;
             }
         }
         

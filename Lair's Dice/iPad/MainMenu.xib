@@ -238,7 +238,7 @@
 					<object class="IBUILabel" id="49607461">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{821, 707}, {183, 21}}</string>
+						<string key="NSFrame">{{821, 707}, {188, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -247,7 +247,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">Liar's Dice v1.0 Beta 4</string>
+						<string key="IBUIText">Liar's Dice v1.0 Beta 5</string>
 						<reference key="IBUIFont" ref="329943527"/>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
