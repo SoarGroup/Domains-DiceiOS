@@ -368,6 +368,8 @@ static NSUInteger random_below(NSUInteger n) {
     
     wasChallenge = YES;
     wasExact = NO;
+    shouldLoseDieExact = NO;
+    
     self->playerID = playerIdentifier;
     
     free(didTheChallengerWin);
@@ -518,6 +520,10 @@ static NSUInteger random_below(NSUInteger n) {
 
 - (void)showAll:(DiceGameState *)gameState
 {
+    static int calls = 0;
+    calls++;
+    NSLog(@"CALLS:%i", calls);
+    
     NSMutableArray *array = [[NSMutableArray alloc] init];
     
     for (PlayerState *newPlayer in [gameState players])
@@ -641,45 +647,9 @@ static NSUInteger random_below(NSUInteger n) {
     [(iPadServerViewController *)mainViewController performSelectorOnMainThread:@selector(setCurrentTurn:) withObject:value waitUntilDone:NO];
 }
 
-- (void)synchronize
+- (void)hideAllDice:(int)playerId
 {
-    DiceGameState *gameState = [diceEngine diceGameState];
     
-    for (int i = 0;i < [players count];i++)
-    {
-        id <Player, NSObject> player = [players objectAtIndex:i];
-        if ([player conformsToProtocol:@protocol(Player)])
-        {
-            iPadServerViewController *controller = (iPadServerViewController *)mainViewController;
-            
-            NSMutableArray *Players = [controller Players];
-            
-            NSMutableArray *playerObjects = [Players objectAtIndex:i];
-            
-            for (int j = [playerObjects count] - 1;j >= 0;--j)
-            {
-                NSValue *value = [playerObjects objectAtIndex:j];
-                
-                if ([value isKindOfClass:[NSValue class]])
-                {
-                    GUIDie dieInArray;
-                    [value getValue:&dieInArray];
-                    
-                    if (j > [[gameState player:[gameState playerIDByPlayerName:[player name]]] numberOfDice])
-                    {
-                        dieInArray.die.hidden = YES;
-                        
-                        NSLog(@"Player:%@ J:%i Hidden:%i", [player name], j, dieInArray.die.hidden);
-                        
-                        dieInArray.dieValue = QuestionMark;
-                        
-                        NSValue *newValue = [[NSValue alloc] initWithBytes:&dieInArray objCType:@encode(GUIDie)];
-                        [[Players objectAtIndex:i] replaceObjectAtIndex:j withObject:newValue];
-                    }
-                }
-            }
-        }
-    }
 }
 
 @end

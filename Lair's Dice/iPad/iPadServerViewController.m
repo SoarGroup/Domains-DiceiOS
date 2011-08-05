@@ -930,6 +930,10 @@ typedef struct {
 
 - (void)clearPushedDice:(Arguments *)didWin
 {
+    static int numberOfCalls = 0;
+    numberOfCalls++;
+    NSLog(@"Number of calls:%i", numberOfCalls);
+    
     UIImage *questionMark = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"QuestionMark" ofType:@"png"]];
     
     int playerNumber = 0;
@@ -958,6 +962,9 @@ typedef struct {
                 
                 dieInArray.die.image = questionMark;
                 dieInArray.dieValue = QuestionMark;
+                
+                if (hidden)
+                    break;
             }
         }
         
@@ -975,8 +982,12 @@ typedef struct {
                     if (dieInArray.die.hidden && !added)
                     {
                         dieInArray.die.hidden = NO;
+                        numberOfCalls--;
                         added = YES;
                     }
+                    
+                    if (added)
+                        break;
                 }
             }
         }
@@ -999,6 +1010,7 @@ typedef struct {
             
             if (dieInArray.dieValue == QuestionMark)
                 break;
+            
             positionInVDice++;
         }
     }

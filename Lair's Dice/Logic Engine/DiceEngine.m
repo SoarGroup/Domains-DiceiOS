@@ -90,10 +90,10 @@
             gameOver = NO;
     }
     
+    [caller showAll:diceGameState];
+    
     if (!gameOver)
     {
-        [caller showAll:diceGameState];
-    
         while (!doneShowAll) {}
     }
     
@@ -252,8 +252,6 @@
                 break;
             }
             
-            [caller synchronize];
-            
             if ([[playersInTheGame objectAtIndex:i] conformsToProtocol:@protocol(Player)])
             {
                 if ([diceGameState usingSpecialRules] && !announcedSpecialRules)
@@ -290,6 +288,7 @@
                                 if (!found)
                                 {
                                     [droppedPlayerIDs addObject:playerID];
+                                    [caller hideAllDice:[playerID intValue]];
                                     didAdd = YES;
                                 }
                             }
@@ -300,7 +299,8 @@
                             i = [diceGameState currentPlayerID];
                             
                             if (![diceGameState isGameInProgress] && [diceGameState gameWinner])
-                                
+                                break;
+                            
                             continue;
                         }
                     }
@@ -636,8 +636,15 @@
         }
     }
     
-    [droppedPlayerIDs release];
+    for (int i = 0;i < [playersInTheGame count];i++)
+    {
+        id <Player, NSObject> player = [playersInTheGame objectAtIndex:i];
+        
+        if ([self checkPlayerName:[player name] againstListOfPlayerIDs:droppedPlayerIDs])
+            [caller hideAllDice:[diceGameState playerIDByPlayerName:[player name]]];
+    }
     
+    [droppedPlayerIDs release];
     
     if (![[NSThread currentThread] isCancelled])
         [caller someoneWonTheGame:[[diceGameState gameWinner] playerName]]; //Someone won the game, lets update the diplay with this

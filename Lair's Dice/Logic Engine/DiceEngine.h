@@ -86,7 +86,7 @@ typedef struct turnInformationToSendToClient_ {
 
 - (void)newTurn:(int)player;
 
-- (void)synchronize;
+- (void)hideAllDice:(int)playerID;
 
 @end
 

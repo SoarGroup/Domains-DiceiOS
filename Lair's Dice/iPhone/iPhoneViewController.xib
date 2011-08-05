@@ -54,9 +54,9 @@
 						<reference key="NSNextKeyView" ref="199413110"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage" id="117738439">
+						<object class="NSCustomResource" key="IBUIImage" id="1047293905">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">Dice.png</string>
+							<string key="NSResourceName">QuestionMark.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="199413110">
@@ -68,7 +68,7 @@
 						<reference key="NSNextKeyView" ref="585434510"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="117738439"/>
+						<reference key="IBUIImage" ref="1047293905"/>
 					</object>
 					<object class="IBUIImageView" id="585434510">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -79,7 +79,7 @@
 						<reference key="NSNextKeyView" ref="428519294"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="117738439"/>
+						<reference key="IBUIImage" ref="1047293905"/>
 					</object>
 					<object class="IBUIImageView" id="324322327">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -90,7 +90,7 @@
 						<reference key="NSNextKeyView" ref="4134213"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="117738439"/>
+						<reference key="IBUIImage" ref="1047293905"/>
 					</object>
 					<object class="IBUIImageView" id="428519294">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -101,7 +101,7 @@
 						<reference key="NSNextKeyView" ref="324322327"/>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="117738439"/>
+						<reference key="IBUIImage" ref="1047293905"/>
 					</object>
 					<object class="IBUIPickerView" id="876334462">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -130,6 +130,7 @@
 						<string key="NSFrame">{{310, 244}, {150, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIEnabled">NO</bool>
@@ -1009,7 +1010,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">Dice.png</string>
+			<string key="NS.key.0">QuestionMark.png</string>
 			<string key="NS.object.0">{72, 72}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">301</string>
