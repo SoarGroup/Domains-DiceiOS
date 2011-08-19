@@ -49,6 +49,7 @@ typedef struct {
 
 @property (nonatomic, retain) NSMutableArray *Players;
 
+
 - (void)logToConsole:(NSString *)message;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withPlayers:(int)players;

@@ -6,9 +6,15 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#ifndef PEER_H
+#define PEER_H
+
 #import <Foundation/Foundation.h>
 
 #import <GameKit/Gamekit.h>
+
+#import "WifiServer.h"
+#import "WifiClient.h"
 
 typedef enum {
 	NETWORK_ACK,					// no packet
@@ -24,6 +30,11 @@ typedef enum {
 - (void)clientSentData:(NSString *)data client:(NSString *)client;
 
 - (BOOL)canAcceptConnections;
+
+- (void)showAlert:(NSString *)title withContents:(NSString *)contents;
+
+- (void)showWifi:(BOOL)enabled;
+- (void)showBluetooth:(BOOL)enabled;
 @end
 
 @protocol ClientProtocol <NSObject>
@@ -36,7 +47,7 @@ typedef enum {
 - (void)canceledPeerPicker;
 @end
 
-@interface Peer : NSObject <GKPeerPickerControllerDelegate, GKSessionDelegate> {
+@interface Peer : NSObject <GKPeerPickerControllerDelegate, GKSessionDelegate, WifiServerProtocol, WifiClientProtocol, WifiConnectionDelegate> {
     GKSession		*gameSession;
 	int				gameUniqueID;
 	int				gamePacketNumber;
@@ -49,8 +60,17 @@ typedef enum {
     id delegate;
     
     NSString *displayName;
+	
+	//Wifi Stuff
+	WifiServer *wifiServer;
+	WifiClient *wifiClient;
+	
+	NSMutableArray *wifiConnections;
+	
+	BOOL usingWifi;
 }
 
+- (id)init:(BOOL)server delegate:(id)delegateForPeer;
 - (id)init:(BOOL)server;
 
 - (void)invalidateSession:(GKSession *)session;
@@ -59,7 +79,9 @@ typedef enum {
 
 - (void)startPicker;
 
-- (void)setDelegate:(id)delegate;
+- (void) goToMainMenu;
+
+@property(nonatomic, assign) id <NSObject> delegate;
 
 @property(nonatomic, retain) GKSession	  *gameSession;
 @property(nonatomic, copy)	 NSMutableArray *gamePeerIds;
@@ -69,3 +91,5 @@ typedef enum {
 @property(nonatomic, retain) NSString *displayName;
 
 @end
+
+#endif

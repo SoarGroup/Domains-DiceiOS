@@ -16,6 +16,9 @@
 		4D33AD8013E1F998006A9203 /* DiceiPhoneScroller4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7A13E1F998006A9203 /* DiceiPhoneScroller4.png */; };
 		4D33AD8113E1F998006A9203 /* DiceiPhoneScroller5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7B13E1F998006A9203 /* DiceiPhoneScroller5.png */; };
 		4D33AD8213E1F998006A9203 /* DiceiPhoneScroller6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D33AD7C13E1F998006A9203 /* DiceiPhoneScroller6.png */; };
+		4D51F37113F9AEE70040D09C /* WifiServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D51F37013F9AEE70040D09C /* WifiServer.m */; };
+		4D51F37413F9AEF20040D09C /* WifiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D51F37313F9AEF20040D09C /* WifiClient.m */; };
+		4D51F37713F9B9410040D09C /* WifiConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D51F37613F9B9410040D09C /* WifiConnection.m */; };
 		4D84DDC013CF701900F924B2 /* Dice2Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBA13CF701900F924B2 /* Dice2Pushed.png */; };
 		4D84DDC113CF701900F924B2 /* Dice3Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBB13CF701900F924B2 /* Dice3Pushed.png */; };
 		4D84DDC213CF701900F924B2 /* Dice4Pushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D84DDBC13CF701900F924B2 /* Dice4Pushed.png */; };
@@ -37,7 +40,13 @@
 		4DB74E1113D4A06000B68673 /* iPhoneMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DB74E0F13D4A06000B68673 /* iPhoneMainMenu.xib */; };
 		4DC720D113E08C8200D5484F /* iPadHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC720CF13E08C8200D5484F /* iPadHelp.m */; };
 		4DC720D213E08C8200D5484F /* iPadHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC720D013E08C8200D5484F /* iPadHelp.xib */; };
-		CD07ACB013BCE93700FB8DC8 /* Dice.png in Resources */ = {isa = PBXBuildFile; fileRef = CD07ACAF13BCE93700FB8DC8 /* Dice.png */; };
+		4DDA885613FD9BAF008D3900 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA885513FD9BAF008D3900 /* Reachability.m */; };
+		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
+		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
+		4DEAE53413FC42050044FF11 /* BluetoothDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DEAE53013FC42050044FF11 /* BluetoothDisabled.png */; };
+		4DEAE53513FC42050044FF11 /* BluetoothEnabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DEAE53113FC42050044FF11 /* BluetoothEnabled.png */; };
+		4DEAE53613FC42050044FF11 /* WifiEnabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DEAE53213FC42050044FF11 /* WifiEnabled.png */; };
+		4DEAE53713FC42050044FF11 /* WifiDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DEAE53313FC42050044FF11 /* WifiDisabled.png */; };
 		CD07ACCD13BCF2AB00FB8DC8 /* Dice.png in Resources */ = {isa = PBXBuildFile; fileRef = CD07ACCC13BCF2AB00FB8DC8 /* Dice.png */; };
 		CD548D3313C612B700D70176 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD548D3213C612B700D70176 /* GameKit.framework */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
@@ -109,6 +118,12 @@
 		4D33AD7A13E1F998006A9203 /* DiceiPhoneScroller4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller4.png; path = Assets/Textures/DiceiPhoneScroller4.png; sourceTree = "<group>"; };
 		4D33AD7B13E1F998006A9203 /* DiceiPhoneScroller5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller5.png; path = Assets/Textures/DiceiPhoneScroller5.png; sourceTree = "<group>"; };
 		4D33AD7C13E1F998006A9203 /* DiceiPhoneScroller6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DiceiPhoneScroller6.png; path = Assets/Textures/DiceiPhoneScroller6.png; sourceTree = "<group>"; };
+		4D51F36F13F9AEE70040D09C /* WifiServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WifiServer.h; path = Networking/WifiServer.h; sourceTree = "<group>"; };
+		4D51F37013F9AEE70040D09C /* WifiServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WifiServer.m; path = Networking/WifiServer.m; sourceTree = "<group>"; };
+		4D51F37213F9AEF20040D09C /* WifiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WifiClient.h; path = Networking/WifiClient.h; sourceTree = "<group>"; };
+		4D51F37313F9AEF20040D09C /* WifiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WifiClient.m; path = Networking/WifiClient.m; sourceTree = "<group>"; };
+		4D51F37513F9B9410040D09C /* WifiConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WifiConnection.h; path = Networking/WifiConnection.h; sourceTree = "<group>"; };
+		4D51F37613F9B9410040D09C /* WifiConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WifiConnection.m; path = Networking/WifiConnection.m; sourceTree = "<group>"; };
 		4D84DDBA13CF701900F924B2 /* Dice2Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice2Pushed.png; path = Assets/Textures/Dice2Pushed.png; sourceTree = "<group>"; };
 		4D84DDBB13CF701900F924B2 /* Dice3Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice3Pushed.png; path = Assets/Textures/Dice3Pushed.png; sourceTree = "<group>"; };
 		4D84DDBC13CF701900F924B2 /* Dice4Pushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice4Pushed.png; path = Assets/Textures/Dice4Pushed.png; sourceTree = "<group>"; };
@@ -133,7 +148,14 @@
 		4DC720CE13E08C8200D5484F /* iPadHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPadHelp.h; path = iPad/iPadHelp.h; sourceTree = "<group>"; };
 		4DC720CF13E08C8200D5484F /* iPadHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPadHelp.m; path = iPad/iPadHelp.m; sourceTree = "<group>"; };
 		4DC720D013E08C8200D5484F /* iPadHelp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadHelp.xib; path = iPad/iPadHelp.xib; sourceTree = "<group>"; };
-		CD07ACAF13BCE93700FB8DC8 /* Dice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice.png; path = Assets/Textures/Dice.png; sourceTree = "<group>"; };
+		4DDA885413FD9BAF008D3900 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Networking/Reachability.h; sourceTree = "<group>"; };
+		4DDA885513FD9BAF008D3900 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Networking/Reachability.m; sourceTree = "<group>"; };
+		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4DEAE53013FC42050044FF11 /* BluetoothDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BluetoothDisabled.png; path = Assets/Textures/BluetoothDisabled.png; sourceTree = "<group>"; };
+		4DEAE53113FC42050044FF11 /* BluetoothEnabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BluetoothEnabled.png; path = Assets/Textures/BluetoothEnabled.png; sourceTree = "<group>"; };
+		4DEAE53213FC42050044FF11 /* WifiEnabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WifiEnabled.png; path = Assets/Textures/WifiEnabled.png; sourceTree = "<group>"; };
+		4DEAE53313FC42050044FF11 /* WifiDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = WifiDisabled.png; path = Assets/Textures/WifiDisabled.png; sourceTree = "<group>"; };
 		CD07ACCC13BCF2AB00FB8DC8 /* Dice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dice.png; path = Assets/Textures/Dice.png; sourceTree = "<group>"; };
 		CD548D3213C612B700D70176 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CD86D64313BB9E450005A182 /* Lair's Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lair's Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +311,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
+				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
 				CD548D3313C612B700D70176 /* GameKit.framework in Frameworks */,
 				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,
 				CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */,
@@ -305,7 +329,6 @@
 		CD07ACAC13BCE91500FB8DC8 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				CD07ACAE13BCE92500FB8DC8 /* Models */,
 				CD07ACAD13BCE91C00FB8DC8 /* Textures */,
 			);
 			name = Assets;
@@ -314,6 +337,10 @@
 		CD07ACAD13BCE91C00FB8DC8 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				4DEAE53013FC42050044FF11 /* BluetoothDisabled.png */,
+				4DEAE53113FC42050044FF11 /* BluetoothEnabled.png */,
+				4DEAE53213FC42050044FF11 /* WifiEnabled.png */,
+				4DEAE53313FC42050044FF11 /* WifiDisabled.png */,
 				4D33AD7713E1F998006A9203 /* DiceiPhoneScroller.png */,
 				4D33AD7813E1F998006A9203 /* DiceiPhoneScroller2.png */,
 				4D33AD7913E1F998006A9203 /* DiceiPhoneScroller3.png */,
@@ -341,14 +368,6 @@
 				CDF1A11913BE4BAF009AB116 /* Dice6.png */,
 			);
 			name = Textures;
-			sourceTree = "<group>";
-		};
-		CD07ACAE13BCE92500FB8DC8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				CD07ACAF13BCE93700FB8DC8 /* Dice.png */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		CD86D63813BB9E450005A182 = {
@@ -379,6 +398,8 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */,
+				4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */,
 				CD548D3213C612B700D70176 /* GameKit.framework */,
 				CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */,
 				CD86D71C13BBB1B60005A182 /* OpenGLES.framework */,
@@ -640,6 +661,14 @@
 			children = (
 				4D87542213C76CEE00D1586B /* Peer.h */,
 				4D87542313C76CEE00D1586B /* Peer.m */,
+				4D51F36F13F9AEE70040D09C /* WifiServer.h */,
+				4D51F37013F9AEE70040D09C /* WifiServer.m */,
+				4D51F37213F9AEF20040D09C /* WifiClient.h */,
+				4D51F37313F9AEF20040D09C /* WifiClient.m */,
+				4D51F37513F9B9410040D09C /* WifiConnection.h */,
+				4D51F37613F9B9410040D09C /* WifiConnection.m */,
+				4DDA885413FD9BAF008D3900 /* Reachability.h */,
+				4DDA885513FD9BAF008D3900 /* Reachability.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -711,7 +740,6 @@
 				CD86D69D13BBA2F80005A182 /* improvements.soar in Resources */,
 				CD86D6E913BBA3070005A182 /* stlsoft in Resources */,
 				CD86D6EA13BBA3070005A182 /* unixstl in Resources */,
-				CD07ACB013BCE93700FB8DC8 /* Dice.png in Resources */,
 				CD07ACCD13BCF2AB00FB8DC8 /* Dice.png in Resources */,
 				CDF1A11A13BE4BAF009AB116 /* Dice2.png in Resources */,
 				CDF1A11B13BE4BAF009AB116 /* Dice3.png in Resources */,
@@ -750,6 +778,10 @@
 				4D33AD8013E1F998006A9203 /* DiceiPhoneScroller4.png in Resources */,
 				4D33AD8113E1F998006A9203 /* DiceiPhoneScroller5.png in Resources */,
 				4D33AD8213E1F998006A9203 /* DiceiPhoneScroller6.png in Resources */,
+				4DEAE53413FC42050044FF11 /* BluetoothDisabled.png in Resources */,
+				4DEAE53513FC42050044FF11 /* BluetoothEnabled.png in Resources */,
+				4DEAE53613FC42050044FF11 /* WifiEnabled.png in Resources */,
+				4DEAE53713FC42050044FF11 /* WifiDisabled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,6 +814,10 @@
 				4DC720D113E08C8200D5484F /* iPadHelp.m in Sources */,
 				4D12A10F13E1A6B8005E6F62 /* iPhoneHelp.m in Sources */,
 				4D33AD7513E1BCE4006A9203 /* PopoverViewController.m in Sources */,
+				4D51F37113F9AEE70040D09C /* WifiServer.m in Sources */,
+				4D51F37413F9AEF20040D09C /* WifiClient.m in Sources */,
+				4D51F37713F9B9410040D09C /* WifiConnection.m in Sources */,
+				4DDA885613FD9BAF008D3900 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

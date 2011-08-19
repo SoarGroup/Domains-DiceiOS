@@ -123,6 +123,9 @@ typedef struct {
         int seed = arc4random() % RAND_MAX;
         srand(seed);    
         NSLog(@"Seed:%i", seed);
+		
+		wifi = YES;
+		bluetooth = YES;
     }
     return self;
 }
@@ -237,11 +240,17 @@ static NSUInteger random_below(NSUInteger n) {
      server.delegate = self;
      [server startServer];*/
     
-    peer = [[Peer alloc] init:YES];
-    [peer setDelegate:self];
-    [peer startPicker];
-    
     [self goToMainMenu];
+	
+	peer = [[Peer alloc] init:YES delegate:self];
+    [peer startPicker];
+	
+	if ([mainViewController isKindOfClass:[MainMenu class]])
+	{
+		MainMenu *menu = (MainMenu *)mainViewController;
+		
+		[menu setEnabled];
+	}
     
     return YES;
 }
@@ -650,6 +659,39 @@ static NSUInteger random_below(NSUInteger n) {
 - (void)hideAllDice:(int)playerId
 {
     
+}
+
+- (void)showWifi:(BOOL)enabled
+{
+	if (![mainViewController isKindOfClass:[MainMenu class]])
+		return;
+	
+	MainMenu *menu = (MainMenu *)mainViewController;
+	
+	[menu setWifi:enabled];
+}
+
+- (void)showBluetooth:(BOOL)enabled
+{
+	if (![mainViewController isKindOfClass:[MainMenu class]])
+		return;
+	
+	MainMenu *menu = (MainMenu *)mainViewController;
+	
+	[menu setBluetooth:enabled];
+}
+
+- (void)showAlert:(NSString *)title withContents:(NSString *)contents
+{
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:contents delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	[alert show];
+	[alert release];
+	alert = nil;
+}
+
+- (void)synchronize
+{
+	
 }
 
 @end

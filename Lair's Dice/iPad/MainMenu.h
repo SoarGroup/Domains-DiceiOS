@@ -25,6 +25,12 @@
     
     int agents;
     int players;
+	
+	UIImageView *wifiLogo;
+	UIImageView *bluetoothLogo;
+	
+	BOOL wifiEnabled;
+	BOOL bluetoothEnabled;
 }
 
 @property (nonatomic, retain) IBOutlet UIPickerView *agentSelector;
@@ -34,11 +40,19 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *startButton;
 
+@property (nonatomic, retain) IBOutlet UIImageView *wifiLogo;
+@property (nonatomic, retain) IBOutlet UIImageView *bluetoothLogo;
+
 - (IBAction)didPressStartButton:(UIButton *)startButton;
 
 @property (nonatomic, assign) Lair_s_DiceAppDelegate_iPad *appDelegate;
 
 - (void)addNetworkPlayer:(NSString *)name;
 - (void)removeNetworkPlayer:(NSString *)name;
+
+- (void)setWifi:(BOOL)wifi;
+- (void)setBluetooth:(BOOL)bluetooth;
+
+- (void)setEnabled;
 
 @end

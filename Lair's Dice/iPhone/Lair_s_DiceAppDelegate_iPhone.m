@@ -561,4 +561,9 @@
     [window makeKeyAndVisible];
 }
 
+- (void)showBluetooth:(BOOL)bluetoothEnabled
+{
+	// Do nothing we don't handle this PeerPicker Does in the client
+}
+
 @end

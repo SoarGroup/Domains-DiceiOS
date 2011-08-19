@@ -125,6 +125,9 @@ typedef struct {
     BOOL wasExact;
     BOOL shouldLoseDieExact;
     int playerID;
+	
+	BOOL wifi;
+	BOOL bluetooth;
 }
 
 - (id)init;
@@ -156,5 +159,9 @@ typedef struct {
 - (void)newTurn:(int)player;
 
 - (void)synchronize;
+
+//Sets the wifi logo & bluetooth logo to the enabled and disabled versions based on the BOOL
+- (void)showWifi:(BOOL)enabled;
+- (void)showBluetooth:(BOOL)enabled;
 
 @end

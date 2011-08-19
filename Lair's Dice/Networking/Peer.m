@@ -8,6 +8,13 @@
 
 #import "Peer.h"
 
+#import "Reachability.h"
+
+#import <CoreFoundation/CoreFoundation.h>
+
+#define isServer 10
+#define isClient 0
+
 typedef enum {
 	kStateStartGame,
 	kStatePicker,
@@ -24,9 +31,71 @@ typedef enum {
 	kClient
 } gameNetwork;
 
+@interface Peer ()
+
+- (void)bluetoothAvailabilityChanged:(NSNotification *)notification;
+-(BOOL)reachable;
+
+@end
+
 @implementation Peer
 
-@synthesize gamePeerIds, gameSession, lastHeartbeatDates, namesToPeerIDs, peerIDsToName, displayName;
+@synthesize gamePeerIds, gameSession, lastHeartbeatDates, namesToPeerIDs, peerIDsToName, displayName, delegate;
+
+-(BOOL)reachable
+{
+    Reachability *r = [Reachability reachabilityForLocalWiFi];
+    NetworkStatus internetStatus = [r currentReachabilityStatus];
+    if(internetStatus != ReachableViaWiFi) {
+        return NO;
+    }
+    return YES;
+}
+
+- (id)init:(BOOL)server delegate:(id)delegateForPeer
+{
+	self = [super init];
+    if (self)
+    {
+		delegate = delegateForPeer;
+		
+        gameSession = nil;
+        
+        lastHeartbeatDates = [[NSMutableDictionary alloc] init];
+        gamePeerIds = [[NSMutableArray alloc] init];
+        namesToPeerIDs = [[NSMutableDictionary alloc] init];
+        peerIDsToName = [[NSMutableDictionary alloc] init];
+        
+        gameUniqueID = (server ? isServer : isClient);
+		
+		wifiServer = nil;
+		wifiClient = nil;
+		
+		usingWifi = NO;
+		
+		if (gameUniqueID == isServer)
+		{
+			usingWifi = YES;
+			
+			wifiServer = [[WifiServer alloc] init];
+			wifiServer.serverDelegate = self;
+			
+			BOOL reachable = [self reachable];
+			
+			[delegate showWifi:reachable];
+		}
+		
+		wifiConnections = [[NSMutableArray alloc] init];
+        
+        displayName = [[NSString alloc] initWithString:[[UIDevice currentDevice] name]];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(bluetoothAvailabilityChanged:)
+													 name:@"BluetoothAvailabilityChangedNotification"
+												   object:nil];
+    }
+    return self;
+}
 
 - (id)init:(BOOL)server
 {
@@ -40,9 +109,33 @@ typedef enum {
         namesToPeerIDs = [[NSMutableDictionary alloc] init];
         peerIDsToName = [[NSMutableDictionary alloc] init];
         
-        gameUniqueID = (server ? 10 : 0);
+        gameUniqueID = (server ? isServer : isClient);
+		
+		wifiServer = nil;
+		wifiClient = nil;
+		
+		usingWifi = NO;
+		
+		if (gameUniqueID == isServer)
+		{
+			usingWifi = YES;
+			
+			wifiServer = [[WifiServer alloc] init];
+			wifiServer.serverDelegate = self;
+			
+			BOOL reachable = [self reachable];
+			
+			[delegate showWifi:reachable];
+		}
+		
+		wifiConnections = [[NSMutableArray alloc] init];
         
         displayName = [[NSString alloc] initWithString:[[UIDevice currentDevice] name]];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(bluetoothAvailabilityChanged:)
+													 name:@"BluetoothAvailabilityChangedNotification"
+												   object:nil];
     }
     return self;
 }
@@ -53,7 +146,7 @@ typedef enum {
     
     if (gameUniqueID == 10)
         [gameSession release];
-    
+		
     gameSession = nil;
     
     [namesToPeerIDs release];
@@ -61,18 +154,35 @@ typedef enum {
     [peerIDsToName release];
     [displayName release];
     [lastHeartbeatDates release];
+	
+	for (WifiConnection *connection in wifiConnections)
+	{
+		if ([connection isKindOfClass:[WifiConnection class]])
+		{
+			[connection release];
+			connection = nil;
+		}
+	}
+	
+	[wifiConnections release];
+	
+	if (gameUniqueID != isServer)
+		[wifiClient release];
+	else
+		[wifiServer release];
+	
     [super dealloc];
 }
 
 -(void)startPicker {
-	if (gameUniqueID != 10)
+	if (gameUniqueID != isServer)
     {
         
         GKPeerPickerController*		picker;
         
         picker = [[GKPeerPickerController alloc] init]; // note: picker is released in various picker delegate methods when picker use is done.
         picker.delegate = self;
-        picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
+        picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby | GKPeerPickerConnectionTypeOnline;
         [picker show]; // show the Peer Picker
     }
     else
@@ -83,7 +193,7 @@ typedef enum {
         [gameSession setDataReceiveHandler:self withContext:NULL];
         gameSession.available = YES;
         gameSession.disconnectTimeout = 500;
-    }
+	}
 }
 
 - (void)peerPickerControllerDidCancel:(GKPeerPickerController *)picker { 
@@ -102,6 +212,11 @@ typedef enum {
     [delegate canceledPeerPicker];
 }
 
+- (void) goToMainMenu
+{
+	[delegate goToMainMenu];
+}
+
 /*
  *	Note: No need to implement -peerPickerController:didSelectConnectionType: delegate method since this app does not support multiple connection types.
  *		- see reference documentation for this delegate method and the GKPeerPickerController's connectionTypesMask property.
@@ -112,10 +227,10 @@ typedef enum {
 //
 - (GKSession *)peerPickerController:(GKPeerPickerController *)picker sessionForConnectionType:(GKPeerPickerConnectionType)type { 
 	GKSession *session = [[GKSession alloc] initWithSessionID:@"liarsdice" displayName:displayName sessionMode:GKSessionModePeer];
-    
-    if (gameUniqueID == 10)
-        session.available = NO;
-    
+	
+	if (gameUniqueID == 10)
+		session.available = NO;
+	
 	return [session autorelease]; // peer picker retains a reference, so autorelease ours so we don't leak.
 }
 
@@ -134,6 +249,29 @@ typedef enum {
 	[picker dismiss];
 	picker.delegate = nil;
 	[picker autorelease];
+}
+
+- (void)peerPickerController:(GKPeerPickerController *)picker didSelectConnectionType:(GKPeerPickerConnectionType)type
+{
+	if (type != GKPeerPickerConnectionTypeNearby)
+		usingWifi = YES;
+	
+	if (usingWifi)
+	{
+		picker.delegate = nil;
+        [picker dismiss];
+        [picker autorelease];
+		
+		wifiClient = [[WifiClient alloc] init];
+		
+		gameSession = nil;
+		
+		wifiClient.delegate = self;
+		
+		[wifiClient start];
+		
+		[wifiClient showAlert];
+	}
 }
 
 #pragma mark -
@@ -235,7 +373,31 @@ typedef enum {
      */
     if ([(id)data isKindOfClass:[NSMutableData class]] || [(id)data isKindOfClass:[NSData class]])
     {
-        NSLog(@"Data Mutable: %i\nData Not Mutable: %i", [(id)data isKindOfClass:[NSMutableData class]], [(id)data isKindOfClass:[NSData class]]);
+		if (usingWifi)
+		{
+			BOOL found = NO;
+			
+			for (WifiConnection *connection in wifiConnections)
+			{
+				if ([connection isKindOfClass:[WifiConnection class]])
+				{
+					NSString *name = [connection host];
+					
+					if ([name isEqualToString:peerID] || gameUniqueID != isServer)
+					{
+						found = YES;
+						[connection sendNetworkPacket:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]]];
+						
+						if (gameUniqueID != isServer)
+							break;
+					}
+				}
+			}
+			
+			if (found)
+				return;
+		}
+		
         if(howtosend == YES) { 
             if (gameUniqueID != 10)
             {
@@ -252,7 +414,7 @@ typedef enum {
             }
             else
             {
-                [session sendData:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]] toPeers:[NSArray arrayWithObjects:peerID, nil] withDataMode:GKSendDataReliable error:nil];
+                [session sendData:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]] toPeers:[NSArray arrayWithObjects:peerID, nil] withDataMode:GKSendDataUnreliable error:nil];
             }
         }
     }
@@ -309,6 +471,121 @@ typedef enum {
         return;
     
     delegate = class;
+}
+
+- (void)serverFailed:(id)server reason:(NSString*)reason
+{
+	if (server != wifiServer)
+		return;
+	
+	NSLog(@"Could not enable wifi client.  Is Wifi off?");
+	
+	[delegate showWifi:NO];
+}
+
+- (void)clientFailed:(id)client reason:(NSString *)reason
+{
+	if (client != wifiClient)
+		return;
+	
+	NSLog(@"Could not enable server.  Is Wifi off?");
+	
+	[delegate showAlert:@"Wifi Client" withContents:@"Could not enable a wifi connection.  Is Wifi Off? If it is please turn on wifi and restart the application"];
+}
+
+- (void)handleNewConnection:(id)connection
+{
+	if (!usingWifi)
+		return;
+	
+	if (![connection isKindOfClass:[WifiConnection class]])
+		return;
+	
+	[connection setConnectionDelegate:self];
+	[wifiConnections addObject:connection];
+		
+	if (gameUniqueID != isServer)
+		[delegate connectedToServer:[connection host]];
+	else
+		[delegate clientConnected:[connection host]];
+}
+
+- (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error {
+	NSLog(@"%@",error);
+}
+
+- (void)session:(GKSession *)session didFailWithError:(NSError *)error {
+	
+}
+
+- (void) connectionAttemptFailed:(id)connection
+{
+	if (!usingWifi)
+		return;
+	
+	if (![wifiConnections containsObject:connection])
+		return;
+	
+	NSString *serverName = [connection host];
+	
+	[connection release];
+	
+	[wifiConnections removeObject:connection];
+	connection = nil;
+	
+	if (gameUniqueID != isServer)
+		[delegate disconnectedFromServer:serverName];
+}
+
+- (void) connectionTerminated:(id)connection
+{
+	if (!usingWifi)
+		return;
+	
+	if (![wifiConnections containsObject:connection])
+		return;
+	
+	NSString *serverName = [connection host];
+	
+	if (gameUniqueID != isServer)
+		[delegate disconnectedFromServer:serverName];
+	else
+		[delegate clientDisconnected:[connection host]];
+	
+	[connection close];
+	[connection release];
+	
+	[wifiConnections removeObject:connection];
+	connection = nil;
+}
+
+- (void) receivedNetworkPacket:(NSData *)message via:(id)connection
+{
+	if (![wifiConnections containsObject:connection] || ![connection isKindOfClass:[WifiConnection class]])
+		return;
+	
+	if ([message isKindOfClass:[NSMutableData class]] || [message isKindOfClass:[NSData class]])
+    {
+        NSKeyedUnarchiver *archiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:message];
+        NSString *newMessage = (NSString *)[archiver decodeObject];
+        [archiver release];
+        
+        if ([newMessage isEqualToString:@"HEARTBEAT"])
+            return;
+        
+        if (gameUniqueID == 10)
+            [delegate clientSentData:newMessage client:[connection host]];
+        else
+            [delegate serverSentData:newMessage];
+    }
+}
+
+- (void)bluetoothAvailabilityChanged:(NSNotification *)notification
+{
+    if ([[notification name] isEqualToString:@"BluetoothAvailabilityChangedNotification"])
+	{
+		[delegate showBluetooth:(BOOL)[notification object]];
+	}
 }
 
 @end

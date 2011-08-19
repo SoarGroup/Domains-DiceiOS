@@ -12,7 +12,7 @@
 
 @implementation MainMenu
 
-@synthesize agentSelector, textView, startButton, appDelegate, networkPlayers;
+@synthesize agentSelector, textView, startButton, appDelegate, networkPlayers, wifiLogo, bluetoothLogo;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -128,6 +128,48 @@
 {
     NSString *newText = [networkPlayers.text stringByReplacingOccurrencesOfString:[name stringByAppendingString:@"\n"] withString:@""];
     networkPlayers.text = newText;
+}
+
+- (void)setWifi:(BOOL)wifi
+{
+	wifiEnabled = wifi;
+}
+
+- (void)setBluetooth:(BOOL)bluetooth
+{
+	bluetoothEnabled = bluetooth;
+}
+
+- (void)setEnabled
+{
+	if (wifiEnabled)
+	{
+		UIImage *wifiLogoEnabled = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"WifiEnabled" ofType:@"png"]];
+		[wifiLogo performSelectorOnMainThread:@selector(setImage:) withObject:wifiLogoEnabled waitUntilDone:NO];
+	}
+	else
+	{
+		UIImage *wifiLogoEnabled = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"WifiDisabled" ofType:@"png"]];
+		[wifiLogo performSelectorOnMainThread:@selector(setImage:) withObject:wifiLogoEnabled waitUntilDone:NO];
+	}
+	
+	if (bluetoothEnabled)
+	{
+		UIImage *wifiLogoEnabled = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BluetoothEnabled" ofType:@"png"]];
+		[bluetoothLogo performSelectorOnMainThread:@selector(setImage:) withObject:wifiLogoEnabled waitUntilDone:NO];
+	}
+	else
+	{
+		UIImage *wifiLogoEnabled = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BluetoothDisabled" ofType:@"png"]];
+		[bluetoothLogo performSelectorOnMainThread:@selector(setImage:) withObject:wifiLogoEnabled waitUntilDone:NO];
+	}
+	
+	if (!bluetoothEnabled && !wifiEnabled)
+	{
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server" message:@"Neither a Bluetooth Server nor a Wifi Server could not be enabled.  Please make sure at least one (Bluetooth or Wifi) is enabled to be able to play the game against Soar Agents." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+		
+		[alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
+	}
 }
 
 @end
