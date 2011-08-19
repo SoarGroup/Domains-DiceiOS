@@ -81,6 +81,7 @@
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [archiver encodeObject:message];
     [archiver finishEncoding];
+	[archiver release];
     
     [peer sendNetworkPacket:[peer gameSession] packetID:NETWORK_OTHER withData:data ofLength:[data length] reliable:YES withPeerID:serverID];
 }
@@ -244,6 +245,9 @@
             default:
                 break;
         }
+		
+		[temporaryInput.validChallengeTargets release];
+		[temporaryInput.previousBid release];
     }
 }
 
@@ -287,14 +291,14 @@
     
     iPhoneViewController *iphoneViewController = (iPhoneViewController *)viewController;
     
-    if ([data hasPrefix:@"C:"])
+    if ([data hasPrefix:Proto_ClientCommand])
     {
         return;
     }
     
-    if ([data isEqualToString:[NSString stringWithFormat:@"%@:CLEANUP", [[UIDevice currentDevice] name]]])
+    if ([data hasSuffix:@":CLEANUP"])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Gameover" message:@"The server has terminated the game." delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Gameover" message:@"The server has terminated the game." delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
         iphoneViewController->confirmationAlert = alert;
         [alert show];
         
@@ -308,12 +312,8 @@
         [self goToMainMenu];
         return;
     }
-    else if ([data hasSuffix:@":CLEANUP"])
-    {
-        return;
-    }
     
-    if ([data hasPrefix:@"SHOWALL"])
+    if ([data hasPrefix:Proto_ShowAll])
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Show all" message:@"The last action ended the round.  All the dice from the previous round are showing, are you ready to continue?" delegate:viewController cancelButtonTitle:nil otherButtonTitles:@"Yes", nil];
         iphoneViewController->confirmationAlert = alert;
@@ -326,13 +326,13 @@
         
         iphoneViewController->confirmed = NO;
         
-        [self send:@"C:DONESHOWALL"];
+        [self send:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, Proto_DoneShowAll]];
         
         iphoneViewController.textView.text = @"Please wait until it's your turn!";
         return;
     }
     
-    if ([data hasPrefix:@"RDICE"])
+    if ([data hasPrefix:Proto_ReRollDice])
     {
         [iphoneViewController updateDice:[NetworkParser parseNewRound:data] withNewRound:NO];
         
@@ -341,7 +341,7 @@
         return;
     }
     
-    if ([data hasPrefix:@"NDICE"])
+    if ([data hasPrefix:Proto_NewDice])
     {
         if ([iphoneViewController updateDice:[NetworkParser parseNewRound:data] withNewRound:YES])
         {
@@ -365,9 +365,9 @@
         return;
     }
     
-    if ([data hasPrefix:@"LACTION"])
+    if ([data hasPrefix:Proto_LastAction])
     {
-        NSArray *components = [data componentsSeparatedByString:@"\n"];
+        NSArray *components = [data componentsSeparatedByString:Proto_CommandDelimiter];
         
         Bid *previousBid = nil;
         ActionsAbleToSend lastAction = 0;
@@ -377,20 +377,20 @@
         {
             for (NSString *string in components)
             {
-                if ([string hasPrefix:@"LACTION"])
+                if ([string hasPrefix:Proto_LastAction])
                 {
-                    NSArray *parts = [string componentsSeparatedByString:@"_"];
+                    NSArray *parts = [string componentsSeparatedByString:Proto_Seperator];
                     
                     if ([[parts objectAtIndex:1] intValue] > 0)
                     {
                         lastAction = [[parts objectAtIndex:1] intValue];
                     }
                 }
-                else if ([string hasPrefix:@"PBID"])
+                else if ([string hasPrefix:Proto_PreviousBid])
                 {
                     secondToLastAction = A_BID;
                     
-                    NSArray *parts = [string componentsSeparatedByString:@"_"];
+                    NSArray *parts = [string componentsSeparatedByString:Proto_Seperator];
                     
                     int numberOfDice = 0;
                     int rankOfDice = 0;
@@ -415,9 +415,9 @@
         }
         else
         {
-            if ([data hasPrefix:@"LACTION"])
+            if ([data hasPrefix:Proto_LastAction])
             {
-                NSArray *parts = [data componentsSeparatedByString:@"_"];
+                NSArray *parts = [data componentsSeparatedByString:Proto_Seperator];
                 
                 if ([[parts objectAtIndex:1] intValue] > 0)
                 {

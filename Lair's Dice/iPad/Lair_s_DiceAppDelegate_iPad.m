@@ -202,6 +202,17 @@ static NSUInteger random_below(NSUInteger n) {
     [mainViewController.view removeFromSuperview];
     [mainViewController release];
     
+	
+	if ([players count] > 0)
+	{
+		for (id <Player, NSObject> player in players)
+		{
+			if ([player conformsToProtocol:@protocol(Player)])
+			{
+				[player cleanup];
+			}
+		}
+	}
     [players release];
     players = [[NSMutableArray alloc] init];
     
@@ -429,7 +440,7 @@ static NSUInteger random_below(NSUInteger n) {
 
 - (void)clientSentData:(NSString *)data client:(NSString *)client
 {
-    if ([data isEqualToString:@"C:DONESHOWALL"])
+    if ([data isEqualToString:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, Proto_DoneShowAll]])
     {
         BOOL doneShowAll = YES;
         
@@ -562,7 +573,7 @@ static NSUInteger random_below(NSUInteger n) {
             if (![(PlayerState *)[gameState player:[gameState playerIDByPlayerName:[player name]]] hasThePlayerLost])
             {
                 networkPlayers = YES;
-                [self sendData:@"SHOWALL" toPlayer:[player name]];
+                [self sendData:Proto_ShowAll toPlayer:[player name]];
             }
             else
             {

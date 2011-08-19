@@ -501,6 +501,16 @@ typedef enum {
 	if (![connection isKindOfClass:[WifiConnection class]])
 		return;
 	
+	if (gameUniqueID == isServer)
+	{
+		if (![delegate canAcceptConnections])
+		{
+			[connection close];
+			[connection release];
+			return;
+		}
+	}
+	
 	[connection setConnectionDelegate:self];
 	[wifiConnections addObject:connection];
 		

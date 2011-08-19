@@ -64,9 +64,9 @@
     NSString *info;
     
     if (previousAction == A_BID || secondToLastAction == A_BID)
-        info = [NSString stringWithFormat:@"LACTION_%i_%i\nPBID_%i_%i", previousAction, secondToLastAction, [[gameState previousBid] numberOfDice], [[gameState previousBid] rankOfDie]];
+        info = [NSString stringWithFormat:@"%@%@%i%@%i%@%@%@%i%@%i", Proto_LastAction, Proto_Seperator, previousAction, Proto_Seperator, secondToLastAction, Proto_CommandDelimiter, Proto_PreviousBid, Proto_Seperator, [[gameState previousBid] numberOfDice], Proto_Seperator, [[gameState previousBid] rankOfDie]];
     else
-        info = [NSString stringWithFormat:@"LACTION_%i_%i", previousAction, secondToLastAction];
+        info = [NSString stringWithFormat:@"%@%@%i%@%i", Proto_LastAction, Proto_Seperator, previousAction, Proto_Seperator, secondToLastAction];
     
     if (previousAction != 0)
         [self send:info];
@@ -334,12 +334,12 @@
 
 - (void)newRound:(NSArray *)arrayOfDice
 {
-    NSString *output = @"NDICE";
+    NSString *output = Proto_NewDice;
     
     for (Die *die in arrayOfDice)
     {
         if ([die isKindOfClass:[Die class]])
-            output = [output stringByAppendingFormat:@"_%i", [die dieValue]];
+            output = [output stringByAppendingFormat:@"%@%i", Proto_Seperator, [die dieValue]];
     }
     
     [self send:output];
@@ -347,12 +347,12 @@
 
 - (void)reroll:(NSArray *)arrayOfDice
 {
-    NSString *output = @"RDICE";
+    NSString *output = Proto_ReRollDice;
     
     for (Die *die in arrayOfDice)
     {
         if ([die isKindOfClass:[Die class]])
-            output = [output stringByAppendingFormat:@"_%i", [die dieValue]];
+            output = [output stringByAppendingFormat:@"%@%i", Proto_Seperator, [die dieValue]];
     }
     
     [self send:output];

@@ -25,7 +25,7 @@
      EXACT
      PASS
      */
-    NSArray *array = [inputString componentsSeparatedByString:@"_"];
+    NSArray *array = [inputString componentsSeparatedByString:Proto_Seperator];
     
     
     inputFromClient input;
@@ -33,7 +33,7 @@
     
     for (NSString *string in array)
     {
-        if ([string hasPrefix:@"C:BID"])
+        if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, @"BID"]])
         {
             if ([array count] < 3)
                 break;
@@ -74,7 +74,7 @@
             
             break;
         }
-        else if ([string hasPrefix:@"C:CHALLENGE"])
+        else if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, @"CHALLENGE"]])
         {
             //Handles the challenges
             input.action = A_CHALLENGE_BID;
@@ -82,13 +82,13 @@
             [input.targetOfChallenge retain];
             break;
         }
-        else if ([string hasPrefix:@"C:EXACT"])
+        else if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, @"EXACT"]])
         {
             //Handles the exact
             input.action = A_EXACT;
             break;
         }
-        else if ([string hasPrefix:@"C:PASS"])
+        else if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_ClientCommand, @"PASS"]])
         {
             //Handles the passes
             input.action = A_PASS;
@@ -101,12 +101,12 @@
 
 + (NSString *)parseOutput:(outputToSendToClient)output
 {
-    NSString *finalOutput = @"SDICE";
+    NSString *finalOutput = Proto_Dice;
     
     for (NSNumber *die in output.playersDice)
-        finalOutput = [NSString stringWithFormat:@"%@_%i", finalOutput, [die intValue]];
+        finalOutput = [NSString stringWithFormat:@"%@%@%i", finalOutput, Proto_Seperator, [die intValue]];
     
-    finalOutput = [NSString stringWithFormat:@"%@\n", finalOutput];
+    finalOutput = [NSString stringWithFormat:@"%@%@", finalOutput, Proto_CommandDelimiter];
     
     BOOL challenge = NO;
     
@@ -143,11 +143,11 @@
         i++;
     }
     
-    finalOutput = [finalOutput stringByAppendingFormat:@"\nPBID_%i_%i", output.previousBid.numberOfDice, output.previousBid.rankOfDie];
+    finalOutput = [finalOutput stringByAppendingFormat:@"%@%@%@%i%@%i", Proto_CommandDelimiter, Proto_PreviousBid, Proto_Seperator, output.previousBid.numberOfDice, Proto_Seperator, output.previousBid.rankOfDie];
     
     if (challenge)
     {
-        finalOutput = [NSString stringWithFormat:@"%@\n", finalOutput];
+        finalOutput = [NSString stringWithFormat:@"%@%@", finalOutput, Proto_CommandDelimiter];
         
         int i = 0;
         for (NSString *target in output.validChallengeTargets)
@@ -167,7 +167,7 @@
     
     if (output.specialRules)
     {
-        finalOutput = [NSString stringWithFormat:@"%@\nSRULES", finalOutput];
+        finalOutput = [NSString stringWithFormat:@"%@%@%@", finalOutput, Proto_CommandDelimiter, Proto_SpecialRules];
     }
     
     return finalOutput;
@@ -177,7 +177,7 @@
 {
     NSString *serverInput = input;
     
-    NSArray *serverSplit = [serverInput componentsSeparatedByString:@"\n"];
+    NSArray *serverSplit = [serverInput componentsSeparatedByString:Proto_CommandDelimiter];
     
     if ([serverSplit count] >= 2)
     {
@@ -191,9 +191,9 @@
         int i = 0;
         for (NSString *string in serverSplit)
         {
-            if ([string hasPrefix:@"SDICE_"])
+            if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_Dice, Proto_Seperator]])
             {
-                NSArray *numbers = [string componentsSeparatedByString:@"_"];
+                NSArray *numbers = [string componentsSeparatedByString:Proto_Seperator];
                 NSMutableArray *numbersAsNSNumbers = [NSMutableArray array];
                 
                 for (NSString *string in numbers)
@@ -231,7 +231,7 @@
             }
             else if (i == 2)
             {
-                NSArray *previousBidAsStrings = [string componentsSeparatedByString:@"_"];
+                NSArray *previousBidAsStrings = [string componentsSeparatedByString:Proto_Seperator];
                 NSNumber *rankOfDie = nil;
                 NSNumber *numberOfDice = nil;
                 
@@ -258,8 +258,8 @@
             if (challenge && i == 3)
             {
                 NSArray *targets = [string componentsSeparatedByString:@","];
-                NSMutableArray *finalTargets = [[NSMutableArray alloc] init];
-                NSMutableArray *finalTypes = [[NSMutableArray alloc] init];
+                NSMutableArray *finalTargets = [[[NSMutableArray alloc] init] autorelease];
+                NSMutableArray *finalTypes = [[[NSMutableArray alloc] init] autorelease];
                 
                 for (NSString *target in targets)
                 {
@@ -272,14 +272,14 @@
                     else
                         [finalTypes addObject:[NSNumber numberWithInt:A_PASS]];
                 }
-                
+				
                 output.validChallengeTargets = [[NSArray alloc] initWithArray:finalTargets];
                 output.corespondingChallengTypes = [[NSArray alloc] initWithArray:finalTypes];
             }
             
             if (i == 4)
             {
-                if ([string hasPrefix:@"SRULES"])
+                if ([string hasPrefix:Proto_SpecialRules])
                 {
                     output.specialRules = YES;
                 }
@@ -307,28 +307,28 @@
     switch (input.action) {
         case A_PUSH:
         case A_BID:
-            finalOutput = [NSString stringWithFormat:@"C:BID_%i_%i", input.bidOfThePlayer.numberOfDice, input.bidOfThePlayer.rankOfDie];
+            finalOutput = [NSString stringWithFormat:@"%@BID%@%i%@%i", Proto_ClientCommand, Proto_Seperator, input.bidOfThePlayer.numberOfDice, Proto_Seperator, input.bidOfThePlayer.rankOfDie];
             
             if ([input.diceToPush count])
             {
-                finalOutput = [finalOutput stringByAppendingString:@"_PUSH"];
+                finalOutput = [finalOutput stringByAppendingString:[NSString stringWithFormat:@"%@PUSH", Proto_Seperator]];
                 
                 for (NSNumber *number in input.diceToPush)
                 {
                     if ([number isKindOfClass:[NSNumber class]])
-                        finalOutput = [finalOutput stringByAppendingFormat:@"_%i", [number intValue]];
+                        finalOutput = [finalOutput stringByAppendingFormat:@"%@%i", Proto_Seperator, [number intValue]];
                 }
             }
             break;
         case A_CHALLENGE_BID:
         case A_CHALLENGE_PASS:
-            finalOutput = [@"C:CHALLENGE" stringByAppendingFormat:@",%@", input.targetOfChallenge];
+            finalOutput = [[NSString stringWithFormat:@"%@CHALLENGE", Proto_Seperator] stringByAppendingFormat:@",%@", input.targetOfChallenge];
             break;
         case A_EXACT:
-            finalOutput = @"C:EXACT";
+            finalOutput = [NSString stringWithFormat:@"%@EXACT", Proto_Seperator];
             break;
         case A_PASS:
-            finalOutput = @"C:PASS";
+            finalOutput = [NSString stringWithFormat:@"%@PASS", Proto_Seperator];
             break;
         default:
             break;
@@ -339,9 +339,9 @@
 
 + (NSArray *)parseNewRound:(NSString *)input
 {
-    if ([input hasPrefix:@"NDICE_"] || [input hasPrefix:@"RDICE_"])
+    if ([input hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_NewDice, Proto_Seperator]] || [input hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_ReRollDice, Proto_Seperator]])
     {
-        NSArray *numbers = [input componentsSeparatedByString:@"_"];
+        NSArray *numbers = [input componentsSeparatedByString:Proto_Seperator];
         NSMutableArray *numbersAsNSNumbers = [NSMutableArray array];
         
         for (NSString *string in numbers)

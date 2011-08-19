@@ -423,7 +423,6 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 	NSLog(@"%@", [errorDict description]);	
 	
 	[connectionDelegate connectionAttemptFailed:self];
-	[self close];
 }
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender
