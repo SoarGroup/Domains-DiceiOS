@@ -15,6 +15,8 @@
 #define isServer 10
 #define isClient 0
 
+static int peerIdentifier = 0;
+
 typedef enum {
 	kStateStartGame,
 	kStatePicker,
@@ -52,7 +54,7 @@ typedef enum {
     return YES;
 }
 
-- (id)init:(BOOL)server delegate:(id)delegateForPeer
+- (id)init:(BOOL)server delegate:(id)delegateForPeer connectToLocalhost:(BOOL)connectToLocalhost
 {
 	self = [super init];
     if (self)
@@ -93,6 +95,8 @@ typedef enum {
 												 selector:@selector(bluetoothAvailabilityChanged:)
 													 name:@"BluetoothAvailabilityChangedNotification"
 												   object:nil];
+		
+		localhost = connectToLocalhost;
     }
     return self;
 }
@@ -146,7 +150,7 @@ typedef enum {
     
     if (gameUniqueID == 10)
         [gameSession release];
-		
+	
     gameSession = nil;
     
     [namesToPeerIDs release];
@@ -177,13 +181,27 @@ typedef enum {
 -(void)startPicker {
 	if (gameUniqueID != isServer)
     {
+        if (localhost)
+		{
+			usingWifi = YES;
+			
+			WifiConnection *connection = [[WifiConnection alloc] initWhileFakingData];
+			
+			[connection setFakeConnectionDelegate:self];
+			
+			[connection connect];
+			
+			[self handleNewConnection:connection];
+		}
+		else
+		{
+			GKPeerPickerController*		picker;
         
-        GKPeerPickerController*		picker;
-        
-        picker = [[GKPeerPickerController alloc] init]; // note: picker is released in various picker delegate methods when picker use is done.
-        picker.delegate = self;
-        picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby | GKPeerPickerConnectionTypeOnline;
-        [picker show]; // show the Peer Picker
+			picker = [[GKPeerPickerController alloc] init]; // note: picker is released in various picker delegate methods when picker use is done.
+			picker.delegate = self;
+			picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby | GKPeerPickerConnectionTypeOnline;
+			[picker show]; // show the Peer Picker
+		}
     }
     else
     {
@@ -193,6 +211,17 @@ typedef enum {
         [gameSession setDataReceiveHandler:self withContext:NULL];
         gameSession.available = YES;
         gameSession.disconnectTimeout = 500;
+		
+		sleep(1);
+		
+		NSError *error;
+		if (![gameSession sendDataToAllPeers:[NSData dataWithBytes:@"TEST" length:[@"TEST" length]] withDataMode:GKSendDataReliable error:&error])
+		{
+			NSLog(@"Error:%i", [error code]);
+			[delegate showBluetooth:NO];
+		}
+		else
+			[delegate showBluetooth:YES];
 	}
 }
 
@@ -296,81 +325,54 @@ typedef enum {
  * We set ourselves as the receive data handler in the -peerPickerController:didConnectPeer:toSession: method.
  */
 - (void)receiveData:(NSData *)data fromPeer:(NSString *)peer inSession:(GKSession *)session context:(void *)context { 
-	/*static int lastPacketTime = -1;
-     unsigned char *incomingPacket = (unsigned char *)[data bytes];
-     int *pIntData = (int *)&incomingPacket[0];
-     //
-     // developer  check the network time and make sure packers are in order
-     //
-     int packetTime = pIntData[0];
-     int packetID = pIntData[1];
-     if(packetTime < lastPacketTime && packetID != NETWORK_COINTOSS) {
-     return;	
-     }
-     
-     lastPacketTime = packetTime;
-     switch( packetID ) {
-     case NETWORK_COINTOSS:
-     {
-     // coin toss to determine roles of the two players
-     int coinToss = pIntData[2];
-     // if other player's coin is higher than ours then that player is the server
-     if(coinToss > gameUniqueID) {
-     NSLog(@"CLIENT!");
-     }
-     else
-     {
-     NSLog(@"SERVER!");
-     }
-     }
-     break;
-     case NETWORK_OTHER:
-     {
-     // received a missile fire event from other player, update other player's firing status*/
     if ([data isKindOfClass:[NSMutableData class]] || [data isKindOfClass:[NSData class]])
     {
         NSKeyedUnarchiver *archiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         NSString *newMessage = (NSString *)[archiver decodeObject];
         [archiver release];
         
-        if ([newMessage isEqualToString:@"HEARTBEAT"])
-            return;
-        
         if (gameUniqueID == 10)
-            [delegate clientSentData:newMessage client:peer];
+		{
+			NSArray *messageParts = [newMessage componentsSeparatedByString:Proto_PeerIDSeperator];
+			int peerID = [[messageParts objectAtIndex:0] intValue];
+			NSString *message = [messageParts objectAtIndex:1];
+			User userStruct;
+			userStruct.uniqueID = peerID;
+			userStruct.name = peer;
+			
+			if (peerID == 0)
+			{
+				NSMutableData *message = [[NSMutableData alloc] init];
+				NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:message];
+				[archiver encodeObject:[@"UNIQUEID:" stringByAppendingFormat:@"%i", [[peerIDsToUniqueIDs objectForKey:peer] intValue]]];
+				[archiver finishEncoding];
+				[archiver release];
+				[message autorelease];
+				
+				[self sendNetworkPacket:session packetID:NETWORK_OTHER withData:message ofLength:[message length] reliable:YES withPeerID:peer andUniqueID:[[peerIDsToUniqueIDs objectForKey:peer] intValue]];
+			}
+			else
+				[delegate clientSentData:message client:userStruct];
+		}
         else
-            [delegate serverSentData:newMessage];
+		{
+			if ([delegate uniqueID] == 0)
+			{
+				if ([newMessage hasPrefix:@"UNIQUEID:"])
+				{
+					[delegate setUniqueID:[[[newMessage componentsSeparatedByString:@":"] objectAtIndex:1] intValue]];
+					return;
+				}
+				else
+					return; //Do nothing since we can't send a message 'til we have a uniqueID
+			}
+			else
+				[delegate serverSentData:newMessage];
+		}
     }
-    /*}
-     break;
-     case NETWORK_HEARTBEAT:
-     {
-     // Received heartbeat data with other player's position, destination, and firing status.
-     // update heartbeat timestamp
-     
-     [lastHeartbeatDates removeObjectForKey:peer];
-     [lastHeartbeatDates setObject:[NSDate date] forKey:peer];
-     }
-     break;
-     default:
-     // error
-     break;
-     }*/
 }
 
-- (void)sendNetworkPacket:(GKSession *)session packetID:(int)packetID withData:(void *)data ofLength:(int)length reliable:(BOOL)howtosend withPeerID:(NSString *)peerID {
-	/*// the packet we'll send is resued
-     static unsigned char networkPacket[1024];
-     const unsigned int packetHeaderSize = 2 * sizeof(int); // we have two "ints" for our header
-     
-     if(length < (1024 - packetHeaderSize)) { // our networkPacket buffer size minus the size of the header info
-     int *pIntData = (int *)&networkPacket[0];
-     // header info
-     pIntData[0] = gamePacketNumber++;
-     pIntData[1] = packetID;
-     // copy data in after the header
-     memcpy( &networkPacket[packetHeaderSize], data, length ); 
-     */
+- (void)sendNetworkPacket:(GKSession *)session packetID:(int)packetID withData:(void *)data ofLength:(int)length reliable:(BOOL)howtosend withPeerID:(NSString *)peerID andUniqueID:(int)uniqueID {
     if ([(id)data isKindOfClass:[NSMutableData class]] || [(id)data isKindOfClass:[NSData class]])
     {
 		if (usingWifi)
@@ -383,10 +385,13 @@ typedef enum {
 				{
 					NSString *name = [connection host];
 					
-					if ([name isEqualToString:peerID] || gameUniqueID != isServer)
+					if (([name isEqualToString:peerID] && [connection uniqueID] == uniqueID) || gameUniqueID != isServer)
 					{
 						found = YES;
-						[connection sendNetworkPacket:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]]];
+						if (localhost)
+							[connection sendFakeNetworkPacket:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]]];
+						else
+							[connection sendNetworkPacket:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]]];
 						
 						if (gameUniqueID != isServer)
 							break;
@@ -398,7 +403,7 @@ typedef enum {
 				return;
 		}
 		
-        if(howtosend == YES) { 
+        if(howtosend == YES) {
             if (gameUniqueID != 10)
             {
                 [session sendDataToAllPeers:[NSData dataWithBytes:[(NSData *)data bytes] length:[(NSData *)data length]] withDataMode:GKSendDataReliable error:nil];
@@ -418,7 +423,6 @@ typedef enum {
             }
         }
     }
-	/*}*/
 }
 
 #pragma mark GKSessionDelegate Methods
@@ -431,11 +435,18 @@ typedef enum {
 	
     if (state == GKPeerStateConnected)
     {
-        [namesToPeerIDs setObject:[session displayNameForPeer:peerID] forKey:peerID];
         [peerIDsToName setObject:peerID forKey:[session displayNameForPeer:peerID]];
         
         if (gameUniqueID == 10)
-            [delegate clientConnected:peerID];
+		{
+			User userStruct;
+			userStruct.uniqueID = ++peerIdentifier;
+			userStruct.name = peerID;
+			
+			[uniqueIDsToPeerIDs setObject:peerID forKey:[NSNumber numberWithInt:peerIdentifier]];
+			[peerIDsToUniqueIDs setObject:[NSNumber numberWithInt:peerIdentifier] forKey:peerID];
+            [delegate clientConnected:userStruct];
+		}
         else
             [delegate connectedToServer:peerID];
     }
@@ -443,10 +454,14 @@ typedef enum {
 	if(state == GKPeerStateDisconnected) {
 		// We've been disconnected from the other peer.
         if (gameUniqueID == 10)
-            [delegate clientDisconnected:peerID];
+		{
+			User userStruct;
+			userStruct.name = peerID;
+            [delegate clientDisconnected:userStruct];
+		}
         else
             [delegate disconnectedFromServer:peerID];
-	} 
+	}
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
@@ -513,11 +528,9 @@ typedef enum {
 	
 	[connection setConnectionDelegate:self];
 	[wifiConnections addObject:connection];
-		
+	
 	if (gameUniqueID != isServer)
 		[delegate connectedToServer:[connection host]];
-	else
-		[delegate clientConnected:[connection host]];
 }
 
 - (void)session:(GKSession *)session connectionWithPeerFailed:(NSString *)peerID withError:(NSError *)error {
@@ -560,7 +573,11 @@ typedef enum {
 	if (gameUniqueID != isServer)
 		[delegate disconnectedFromServer:serverName];
 	else
-		[delegate clientDisconnected:[connection host]];
+	{
+		User userStruct;
+		userStruct.name = [connection host];
+		[delegate clientDisconnected:userStruct];
+	}
 	
 	[connection close];
 	[connection release];
@@ -580,13 +597,77 @@ typedef enum {
         NSString *newMessage = (NSString *)[archiver decodeObject];
         [archiver release];
         
-        if ([newMessage isEqualToString:@"HEARTBEAT"])
-            return;
-        
-        if (gameUniqueID == 10)
-            [delegate clientSentData:newMessage client:[connection host]];
+        if (gameUniqueID == isServer)
+		{
+			NSArray *messageParts = [newMessage componentsSeparatedByString:Proto_PeerIDSeperator];
+			int peerID = [[messageParts objectAtIndex:0] intValue];
+			NSString *message = [messageParts objectAtIndex:1];
+			User userStruct;
+			userStruct.uniqueID = peerID;
+			userStruct.name = [connection host];
+			
+			if ([message hasPrefix:@"HEARTBEAT:"])
+			{
+				NSArray *components = [message componentsSeparatedByString:@":"];
+				if ([components count] == 2)
+				{
+					NSString *name = [components objectAtIndex:1];	
+					
+					if (![[connection host] isEqualToString:name] && [connection uniqueID] == 0)
+					{
+						[connection setHost:name];
+						
+						User userStruct;
+						userStruct.uniqueID = ++peerIdentifier;
+						userStruct.name = [connection host];
+						
+						[connection setUniqueID:peerIdentifier];
+						
+						NSMutableData *message = [[NSMutableData alloc] init];
+						NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:message];
+						[archiver encodeObject:[@"UNIQUEID:" stringByAppendingFormat:@"%i", [connection uniqueID]]];
+						[archiver finishEncoding];
+						[archiver release];
+						[message autorelease];					
+						[self sendNetworkPacket:nil packetID:NETWORK_OTHER withData:message ofLength:[message length] reliable:YES withPeerID:[connection host] andUniqueID:[connection uniqueID]];
+						
+						[delegate clientConnected:userStruct];
+					}
+				}
+				else
+					return; // invalid
+			}
+			else
+			{
+				if (peerID == 0)
+				{
+					NSMutableData *message = [[NSMutableData alloc] init];
+					NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:message];
+					[archiver encodeObject:[@"UNIQUEID:" stringByAppendingFormat:@"%i", [connection uniqueID]]];
+					[archiver finishEncoding];
+					[archiver release];
+					[message autorelease];					
+					[self sendNetworkPacket:nil packetID:NETWORK_OTHER withData:message ofLength:[message length] reliable:YES withPeerID:[connection host] andUniqueID:[connection uniqueID]];
+				}
+				else
+					[delegate clientSentData:message client:userStruct];
+			}
+		}
         else
-            [delegate serverSentData:newMessage];
+		{
+            if ([delegate uniqueID] == 0)
+			{
+				if ([newMessage hasPrefix:@"UNIQUEID:"])
+				{
+					[delegate setUniqueID:[[[newMessage componentsSeparatedByString:@":"] objectAtIndex:1] intValue]];
+					return;
+				}
+				else
+					return; //Do nothing since we can't send a message 'til we have a uniqueID
+			}
+			else
+				[delegate performSelectorOnMainThread:@selector(serverSentData:) withObject:newMessage waitUntilDone:NO];
+		}
     }
 }
 
@@ -594,8 +675,18 @@ typedef enum {
 {
     if ([[notification name] isEqualToString:@"BluetoothAvailabilityChangedNotification"])
 	{
-		[delegate showBluetooth:(BOOL)[notification object]];
+		
 	}
+}
+
+- (id)getWifiConnection
+{
+	if (localhost)
+	{
+		return [wifiConnections objectAtIndex:0];
+	}
+	else
+		return nil;
 }
 
 @end

@@ -12,10 +12,10 @@
 
 
 @interface iPadHelp : UIViewController {
-    Lair_s_DiceAppDelegate_iPad *delegate;
+    Server *delegate;
 }
 
-@property (nonatomic, assign) Lair_s_DiceAppDelegate_iPad *delegate;
+@property (nonatomic, assign) Server *delegate;
 
 - (IBAction)done;
 

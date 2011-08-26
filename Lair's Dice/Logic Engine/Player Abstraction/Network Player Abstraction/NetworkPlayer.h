@@ -10,7 +10,16 @@
 #import "DiceEngine.h"
 #import "NetworkParser.h"
 
-@class Lair_s_DiceAppDelegate_iPad;
+@class Server;
+
+#ifndef USER_STRUCT
+#define USER_STRUCT 1
+//User struct containing their name and unique id
+typedef struct {
+	NSString *name;
+	int uniqueID;
+} User;
+#endif
 
 @interface NetworkPlayer : NSObject <Player, NSStreamDelegate> {
     NSString *name;
@@ -25,18 +34,22 @@
     
     NSArray *dicePushing;
     
-    Lair_s_DiceAppDelegate_iPad *delegate;
+    Server *delegate;
     
     BOOL hasInput;
     
     BOOL doneShowAll;
+	
+	int uniqueID;
 }
 
-@property (nonatomic, assign) Lair_s_DiceAppDelegate_iPad *delegate;
+@property (nonatomic, assign) Server *delegate;
 
 @property (nonatomic, assign) BOOL doneShowAll;
 
-- (id)initWithName:(NSString *)name playerID:(int)playerID;
+@property (nonatomic, readonly) int uniqueID;
+
+- (id)initWithUser:(User)user playerID:(int)playerID;
 
 - (void)clientData:(NSString *)data;
 

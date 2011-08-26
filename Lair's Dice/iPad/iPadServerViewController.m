@@ -10,6 +10,8 @@
 
 #import "PlayerState.h"
 
+#import "Lair_s_DiceAppDelegate_iPad.h"
+
 typedef enum {
     QuestionMark = 0,
     One = 1,

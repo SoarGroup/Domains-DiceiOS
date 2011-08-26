@@ -8,6 +8,7 @@
 
 #import "NetworkParser.h"
 
+#import "Die.h"
 
 @implementation NetworkParser
 
@@ -101,13 +102,19 @@
 
 + (NSString *)parseOutput:(outputToSendToClient)output
 {
-    NSString *finalOutput = Proto_Dice;
+#pragma mark - Client Dice Output
+	
+	NSString *finalOutput = [NSString stringWithFormat:@"%i%@%@", Proto_Enum_ClientDice, Proto_ProtocolTypesEnd, Proto_Dice];
     
     for (NSNumber *die in output.playersDice)
         finalOutput = [NSString stringWithFormat:@"%@%@%i", finalOutput, Proto_Seperator, [die intValue]];
     
+#pragma mark - Actions able to do
+	
     finalOutput = [NSString stringWithFormat:@"%@%@", finalOutput, Proto_CommandDelimiter];
-    
+	
+	finalOutput = [finalOutput stringByAppendingFormat:@"%i%@", Proto_Enum_Actions, Proto_ProtocolTypesEnd];
+	
     BOOL challenge = NO;
     
     int i = 0;
@@ -138,16 +145,27 @@
         }
         
         if ((i + 1) < [output.actions count])
-            finalOutput = [NSString stringWithFormat:@"%@,", finalOutput];
+            finalOutput = [finalOutput stringByAppendingString:Proto_ArraySeperator];
         
         i++;
     }
+	
+#pragma mark - Previous Bid
+	
+	if (output.previousBid != nil)
+	{
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_PreviousBid, Proto_ProtocolTypesEnd];
+		
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%@%i%@%i:%@", Proto_PreviousBid, Proto_Seperator, output.previousBid.numberOfDice, Proto_Seperator, output.previousBid.rankOfDie, output.nameOfPreviousBidPlayer];
+	}
     
-    finalOutput = [finalOutput stringByAppendingFormat:@"%@%@%@%i%@%i", Proto_CommandDelimiter, Proto_PreviousBid, Proto_Seperator, output.previousBid.numberOfDice, Proto_Seperator, output.previousBid.rankOfDie];
-    
+#pragma mark - Challenges
+	
     if (challenge)
     {
         finalOutput = [NSString stringWithFormat:@"%@%@", finalOutput, Proto_CommandDelimiter];
+		
+		finalOutput = [NSString stringWithFormat:@"%@%i%@", finalOutput, Proto_Enum_ChallengeTargets_Types, Proto_ProtocolTypesEnd];
         
         int i = 0;
         for (NSString *target in output.validChallengeTargets)
@@ -157,19 +175,127 @@
             finalOutput = [finalOutput stringByAppendingFormat:@":%i", [(NSNumber *)[output.corespondingChallengTypes objectAtIndex:i] intValue]];
             
             if ((i + 1) < [output.validChallengeTargets count])
-                finalOutput = [finalOutput stringByAppendingString:@","];
+                finalOutput = [finalOutput stringByAppendingString:Proto_ArraySeperator];
             
             i++;
         }
-        
-        NSLog(@"Was challenge:%@", finalOutput);
-    }
+	}
     
+#pragma mark - Special Rules
+	
     if (output.specialRules)
     {
-        finalOutput = [NSString stringWithFormat:@"%@%@%@", finalOutput, Proto_CommandDelimiter, Proto_SpecialRules];
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_SpecialRules, Proto_ProtocolTypesEnd];
+		
+        finalOutput = [NSString stringWithFormat:@"%@", Proto_SpecialRules];
     }
-    
+	
+#pragma mark - All Dice Pushed
+	
+	if (output.allDicePushed && [output.allDicePushed count] > 0)
+	{
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_AllDice, Proto_ProtocolTypesEnd];
+		
+		i = 0;
+		for (Die* die in output.allDicePushed)
+		{
+			if ([die isKindOfClass:[Die class]])
+			{
+				finalOutput = [NSString stringWithFormat:@"%@%i", finalOutput, [die dieValue]];
+				
+				if ((i + 1) < [output.allDicePushed count])
+					finalOutput = [finalOutput stringByAppendingString:Proto_ArraySeperator];
+			}
+			
+			i++;
+		}
+		
+	}
+	
+#pragma mark - Dice Under Cups
+	
+	finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_DiceUnderCups, Proto_ProtocolTypesEnd];
+	
+	finalOutput = [finalOutput stringByAppendingFormat:@"%i", output.diceUnderCups];
+	
+#pragma mark - Array Of Numbers
+	
+	finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_ArrayOfNumbers, Proto_ProtocolTypesEnd];
+	
+	i = 0;
+	for (NSValue *numberOfDiceNSValue in output.arrayOfNumbers)
+	{
+		if ([numberOfDiceNSValue isKindOfClass:[NSValue class]])
+		{
+			numberOfDiceStruct dieNumber;
+			[numberOfDiceNSValue getValue:&dieNumber];
+			
+			finalOutput = [finalOutput stringByAppendingFormat:@"%i:%i", dieNumber.dieFace, dieNumber.numberOfKnownDice];
+			
+			if ((i + 1) < [output.arrayOfNumbers count])
+				finalOutput = [finalOutput stringByAppendingString:Proto_ArraySeperator];
+		}
+		
+		i++;
+	}
+	
+#pragma mark - Player Structs
+	
+	finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_PlayerStructs, Proto_ProtocolTypesEnd];
+	
+	i = 0;
+	for (NSValue *playerStructNSValueEncoded in output.players)
+	{
+		if ([playerStructNSValueEncoded isKindOfClass:[NSValue class]])
+		{
+			playerStruct playerStructFromNSValue;
+			[playerStructNSValueEncoded getValue:&playerStructFromNSValue];
+			
+			finalOutput = [finalOutput stringByAppendingFormat:@"%i:%i:%@", playerStructFromNSValue.playerID, playerStructFromNSValue.numberOfDice, playerStructFromNSValue.nameOfThePlayer];
+			
+			if (playerStructFromNSValue.pushedDice && [playerStructFromNSValue.pushedDice count] > 0)
+			{
+				finalOutput = [finalOutput stringByAppendingFormat:@":"];
+				
+				int i = 0;
+				for (Die *die in playerStructFromNSValue.pushedDice)
+				{
+					if ([die isKindOfClass:[Die class]])
+					{
+						finalOutput = [finalOutput stringByAppendingFormat:@"%i", [die dieValue]];
+						
+						if ((i + 1) < [playerStructFromNSValue.pushedDice count])
+							finalOutput = [finalOutput stringByAppendingString:Proto_ArraySeperator];
+					}
+					i++;
+				}
+			}
+			
+			if ((i + 1) < [output.players count])
+				finalOutput = [finalOutput stringByAppendingString:@"|"];
+		}
+		
+		i++;
+	}
+	
+#pragma mark - Previous Pass
+	
+	if (output.previousPass.playerID != -1 && output.previousPass.nameOfThePlayer != nil)
+	{
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_PreviousPass, Proto_ProtocolTypesEnd];
+		
+		finalOutput = [finalOutput stringByAppendingFormat:@"%i:%@", output.previousPass.playerID, output.previousPass.nameOfThePlayer];
+	}
+	
+#pragma mark - Second To Last Pass
+	
+	if (output.secondToLastPass.playerID != -1 && output.secondToLastPass.nameOfThePlayer != nil)
+	{
+		finalOutput = [finalOutput stringByAppendingFormat:@"%@%i%@", Proto_CommandDelimiter, Proto_Enum_SecondToLastPass, Proto_ProtocolTypesEnd];
+		
+		finalOutput = [finalOutput stringByAppendingFormat:@"%i:%@", output.secondToLastPass.playerID, output.secondToLastPass.nameOfThePlayer];
+	}
+	
     return finalOutput;
 }
 
@@ -179,21 +305,36 @@
     
     NSArray *serverSplit = [serverInput componentsSeparatedByString:Proto_CommandDelimiter];
     
-    if ([serverSplit count] >= 2)
+    if ([serverSplit count])
     {
         outputToSendToClient output;
+        output.actions = nil;
+        output.playersDice = nil;
         output.previousBid = nil;
-        
-        output.specialRules = NO;
+		output.nameOfPreviousBidPlayer = nil;
+		output.validChallengeTargets = nil;
+		output.corespondingChallengTypes = nil;
+		output.specialRules = (BOOL)nil;
+		output.allDicePushed = nil;
+		output.diceUnderCups = (int)nil;
+		output.arrayOfNumbers = nil;
+		output.players = nil;
+		output.previousPass.playerID = -1;
+		output.previousPass.nameOfThePlayer = nil;
+		output.secondToLastPass.playerID = -1;
+		output.secondToLastPass.nameOfThePlayer = nil;
         
         BOOL challenge = NO;
         
         int i = 0;
         for (NSString *string in serverSplit)
         {
-            if ([string hasPrefix:[NSString stringWithFormat:@"%@%@", Proto_Dice, Proto_Seperator]])
+			ProtocolTypes protocolType = [[[string componentsSeparatedByString:Proto_ProtocolTypesEnd] objectAtIndex:0] intValue];
+			NSString *networkCommand = [[string componentsSeparatedByString:Proto_ProtocolTypesEnd] objectAtIndex:1];
+			
+            if (protocolType == Proto_Enum_ClientDice)
             {
-                NSArray *numbers = [string componentsSeparatedByString:Proto_Seperator];
+                NSArray *numbers = [networkCommand componentsSeparatedByString:Proto_Seperator];
                 NSMutableArray *numbersAsNSNumbers = [NSMutableArray array];
                 
                 for (NSString *string in numbers)
@@ -206,9 +347,9 @@
                 
                 output.playersDice = numbersAsUseable;
             }
-            else if (i == 1)
+            else if (protocolType == Proto_Enum_Actions)
             {
-                NSArray *availibleActions = [string componentsSeparatedByString:@","];
+                NSArray *availibleActions = [networkCommand componentsSeparatedByString:Proto_ArraySeperator];
                 NSMutableArray *arrayOfNumbers = [NSMutableArray array];
                 
                 for (NSString *action in availibleActions)
@@ -229,11 +370,14 @@
                 NSArray *numbersAsUsable = [NSArray arrayWithArray:arrayOfNumbers];
                 output.actions = numbersAsUsable;
             }
-            else if (i == 2)
+            else if (protocolType == Proto_Enum_PreviousBid)
             {
-                NSArray *previousBidAsStrings = [string componentsSeparatedByString:Proto_Seperator];
+				NSArray *previousBidVSName = [networkCommand componentsSeparatedByString:@":"];
+                NSArray *previousBidAsStrings = [[previousBidVSName objectAtIndex:0] componentsSeparatedByString:Proto_Seperator];
                 NSNumber *rankOfDie = nil;
                 NSNumber *numberOfDice = nil;
+				
+				output.nameOfPreviousBidPlayer = [previousBidVSName objectAtIndex:1];
                 
                 int i = 0;
                 for (NSString *number in previousBidAsStrings)
@@ -254,10 +398,9 @@
                     output.previousBid = bid;
                 }
             }
-            
-            if (challenge && i == 3)
+            else if (challenge && protocolType == Proto_Enum_ChallengeTargets_Types)
             {
-                NSArray *targets = [string componentsSeparatedByString:@","];
+                NSArray *targets = [networkCommand componentsSeparatedByString:@","];
                 NSMutableArray *finalTargets = [[[NSMutableArray alloc] init] autorelease];
                 NSMutableArray *finalTypes = [[[NSMutableArray alloc] init] autorelease];
                 
@@ -276,15 +419,92 @@
                 output.validChallengeTargets = [[NSArray alloc] initWithArray:finalTargets];
                 output.corespondingChallengTypes = [[NSArray alloc] initWithArray:finalTypes];
             }
-            
-            if (i == 4)
+            else if (protocolType == Proto_Enum_SpecialRules)
             {
                 if ([string hasPrefix:Proto_SpecialRules])
                 {
                     output.specialRules = YES;
                 }
             }
-            
+            else if (protocolType == Proto_Enum_AllDice)
+			{
+				NSMutableArray *arrayOfPushedDice = [[[NSMutableArray alloc] init] autorelease];
+				NSArray *splitArray = [networkCommand componentsSeparatedByString:Proto_ArraySeperator];
+				
+				for (NSString *dieAsString in splitArray)
+					[arrayOfPushedDice addObject:[[[Die alloc] initWithNumber:[dieAsString intValue]] autorelease]];
+				
+				output.allDicePushed = [[NSArray alloc] initWithArray:arrayOfPushedDice];
+			}
+			else if (protocolType == Proto_Enum_DiceUnderCups)
+			{
+				output.diceUnderCups = [networkCommand intValue];
+			}
+			else if (protocolType == Proto_Enum_ArrayOfNumbers)
+			{
+				NSMutableArray *numberOfDiceStructsEncodedInNSValues = [[[NSMutableArray alloc] init] autorelease];
+				NSArray *splitArray = [networkCommand componentsSeparatedByString:Proto_ArraySeperator];
+				
+				for (NSString *string in splitArray)
+				{
+					NSArray *partsOfStruct = [string componentsSeparatedByString:@":"];
+					
+					numberOfDiceStruct numberOfDice;
+					numberOfDice.dieFace = [[partsOfStruct objectAtIndex:0] intValue];
+					numberOfDice.numberOfKnownDice = [[partsOfStruct objectAtIndex:1] intValue];
+					
+					NSValue *valueToAddToArray = [[[NSValue alloc] initWithBytes:&numberOfDice objCType:@encode(numberOfDiceStruct)] autorelease];
+					
+					[numberOfDiceStructsEncodedInNSValues addObject:valueToAddToArray];
+				}
+				
+				output.arrayOfNumbers = [[NSArray alloc] initWithArray:numberOfDiceStructsEncodedInNSValues];
+			}
+			else if (protocolType == Proto_Enum_PlayerStructs)
+			{
+				NSMutableArray *playerStructsEncodedInNSValues = [[[NSMutableArray alloc] init] autorelease];
+				NSArray *playerSplits = [networkCommand componentsSeparatedByString:@"|"];
+				
+				for (NSString *playerAsString in playerSplits)
+				{
+					NSArray *partsOfThePlayer = [playerAsString componentsSeparatedByString:@":"];
+					
+					playerStruct structOfThePlayer;
+					structOfThePlayer.playerID = [[partsOfThePlayer objectAtIndex:0] intValue];
+					structOfThePlayer.numberOfDice = [[partsOfThePlayer objectAtIndex:1] intValue];
+					structOfThePlayer.nameOfThePlayer = [partsOfThePlayer objectAtIndex:2];
+					
+					NSMutableArray *arrayOfPushedDice = [[[NSMutableArray alloc] init] autorelease];
+					if ([partsOfThePlayer count] == 4)
+					{
+						NSArray *pushedDice = [[partsOfThePlayer objectAtIndex:3] componentsSeparatedByString:Proto_ArraySeperator];
+						
+						for (NSString *dieAsString in pushedDice)
+							[arrayOfPushedDice addObject:[[[Die alloc] initWithNumber:[dieAsString intValue]] autorelease]];
+					}
+					structOfThePlayer.pushedDice = [[NSArray alloc] initWithArray:arrayOfPushedDice];
+					
+					NSValue *valueToInsertIntoPlayerStructsArray = [[[NSValue alloc] initWithBytes:&structOfThePlayer objCType:@encode(playerStruct)] autorelease];
+					[playerStructsEncodedInNSValues addObject:valueToInsertIntoPlayerStructsArray];
+				}
+				
+				output.players = [[NSArray alloc] initWithArray:playerStructsEncodedInNSValues];
+			}
+			else if (protocolType == Proto_Enum_PreviousPass)
+			{
+				NSArray *previousPassSplit = [networkCommand componentsSeparatedByString:@":"];
+				
+				output.previousPass.playerID = [[previousPassSplit objectAtIndex:0] intValue];
+				output.previousPass.nameOfThePlayer = [previousPassSplit objectAtIndex:1];
+			}
+			else if (protocolType == Proto_Enum_SecondToLastPass)
+			{
+				NSArray *secondToLastPassSplit = [networkCommand componentsSeparatedByString:@":"];
+				
+				output.secondToLastPass.playerID = [[secondToLastPassSplit objectAtIndex:0] intValue];
+				output.secondToLastPass.nameOfThePlayer = [secondToLastPassSplit objectAtIndex:1];
+			}
+			
             i++;
         }
         
@@ -296,6 +516,18 @@
         output.actions = nil;
         output.playersDice = nil;
         output.previousBid = nil;
+		output.nameOfPreviousBidPlayer = nil;
+		output.validChallengeTargets = nil;
+		output.corespondingChallengTypes = nil;
+		output.specialRules = (BOOL)nil;
+		output.allDicePushed = nil;
+		output.diceUnderCups = (int)nil;
+		output.arrayOfNumbers = nil;
+		output.players = nil;
+		output.previousPass.playerID = -1;
+		output.previousPass.nameOfThePlayer = nil;
+		output.secondToLastPass.playerID = -1;
+		output.secondToLastPass.nameOfThePlayer = nil;
         return output;
     }
 }

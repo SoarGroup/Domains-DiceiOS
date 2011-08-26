@@ -11,7 +11,7 @@
 
 @implementation iPhoneMainMenu
 
-@synthesize delegate, searchForGames, help, name;
+@synthesize delegate, searchForGames, help, name, server;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,18 +62,43 @@
 {
     if ([sender.titleLabel.text isEqualToString:@"Search For Games"])
     {
-        [delegate goToMainGame:name.text];
+		[delegate goToMainGame:name.text];
     }
     else if ([sender.titleLabel.text isEqualToString:@"Help"])
     {
         //Help Menu
-        [delegate goToHelp];
+        [delegate goToiPhoneHelp];
     }
+	else if ([sender.titleLabel.text isEqualToString:@"Start Server"])
+	{
+		[delegate goToServer];
+	}
 }
 
 - (BOOL)textFieldShouldReturn: (UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (IBAction)serverValueChanged:(UISwitch *)server
+{
+	if (server != self.server)
+		return;
+	
+	if (server.on)
+	{
+		[searchForGames setTitle:@"Start Server" forState:UIControlStateNormal];
+		[searchForGames setTitle:@"Start Server" forState:UIControlStateHighlighted];
+		[searchForGames setTitle:@"Start Server" forState:UIControlStateDisabled];
+		[searchForGames setTitle:@"Start Server" forState:UIControlStateSelected];
+	}
+	else
+	{
+		[searchForGames setTitle:@"Search For Games" forState:UIControlStateNormal];
+		[searchForGames setTitle:@"Search For Games" forState:UIControlStateHighlighted];
+		[searchForGames setTitle:@"Search For Games" forState:UIControlStateDisabled];
+		[searchForGames setTitle:@"Search For Games" forState:UIControlStateSelected];
+	}
 }
 
 @end

@@ -135,7 +135,7 @@ static void serverAcceptCallback(CFSocketRef socket, CFSocketCallBackType type, 
 	memset(&socketAddress, 0, sizeof(socketAddress));
 	socketAddress.sin_len = sizeof(socketAddress);
 	socketAddress.sin_family = AF_INET; //Allow the use of IPv6
-	socketAddress.sin_port = 0;
+	socketAddress.sin_port = 1407;
 	socketAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 	
 	NSData *socketAddressData = [NSData dataWithBytes:&socketAddress length:sizeof(socketAddress)];

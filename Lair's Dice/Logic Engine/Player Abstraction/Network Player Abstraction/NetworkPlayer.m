@@ -10,7 +10,7 @@
 #import "Die.h"
 #import "HistoryItem.h"
 
-#import "Lair_s_DiceAppDelegate_iPad.h"
+#import "Server.h"
 
 @interface NetworkPlayer()
 
@@ -20,15 +20,16 @@
 
 @implementation NetworkPlayer
 
-@synthesize delegate, doneShowAll;
+@synthesize delegate, doneShowAll, uniqueID;
 
-- (id)initWithName:(NSString *)clientName playerID:(int)ID
+- (id)initWithUser:(User)user playerID:(int)ID;
 {
     self = [super init];
     if (self)
     {
         playerID = ID;
-        name = clientName;
+        name = user.name;
+		uniqueID = user.uniqueID;
     }
     return self;
 }
@@ -105,6 +106,22 @@
     }
     
     outputToSendToClient output;
+	output.actions = nil;
+	output.playersDice = nil;
+	output.previousBid = nil;
+	output.nameOfPreviousBidPlayer = nil;
+	output.validChallengeTargets = nil;
+	output.corespondingChallengTypes = nil;
+	output.specialRules = (BOOL)nil;
+	output.allDicePushed = nil;
+	output.diceUnderCups = (int)nil;
+	output.arrayOfNumbers = nil;
+	output.players = nil;
+	output.previousPass.playerID = -1;
+	output.previousPass.nameOfThePlayer = nil;
+	output.secondToLastPass.playerID = -1;
+	output.secondToLastPass.nameOfThePlayer = nil;
+	
     output.actions = turnInfo.actionsAbleToSend;
     
     NSMutableArray *arrayOfDice = [NSMutableArray array];
@@ -116,10 +133,20 @@
     
     output.playersDice = [NSArray arrayWithArray:arrayOfDice];
     
-    output.previousBid = [turnInfo.gameState previousBid];
+	if ([[turnInfo.gameState history] count] > 0)
+	{
+		HistoryItem *previousItem = [[turnInfo.gameState history] objectAtIndex:0];
+		HistoryItem *secondToLastItem = ([[turnInfo.gameState history] count] > 1 ? [[turnInfo.gameState history] objectAtIndex:1] : nil);
+		
+		if ((previousItem != nil && [previousItem type] == BID) || (secondToLastItem != nil && previousItem != nil && [secondToLastItem type] == BID && [previousItem type] == PASS))
+		{
+			output.previousBid = [turnInfo.gameState previousBid];
+			output.nameOfPreviousBidPlayer = (output.previousBid != nil ? [[[[turnInfo.gameState player:[[turnInfo.gameState previousBid] playerID]] playerName] componentsSeparatedByString:@"-"] objectAtIndex:0] : @"");
+		}
+	}
     
-    NSMutableArray *targets = [[NSMutableArray alloc] init];
-    NSMutableArray *challengeTypes = [[NSMutableArray alloc] init];
+    NSMutableArray *targets = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *challengeTypes = [[[NSMutableArray alloc] init] autorelease];
     
     if ([[turnInfo.gameState history] count] > 1)
     {
@@ -225,11 +252,88 @@
             [challengeTypes addObject:[NSNumber numberWithInt:A_PASS]];
         }
     }
-        
+	
     output.validChallengeTargets = targets;
     output.corespondingChallengTypes = challengeTypes;
     output.specialRules = [turnInfo.gameState usingSpecialRules];
+	
+	NSMutableArray *allPushedDice = [[[NSMutableArray alloc] init] autorelease];
     
+	for (PlayerState *player in [turnInfo.gameState players])
+		[allPushedDice addObjectsFromArray:[player pushedDice]];
+	
+	output.allDicePushed = allPushedDice;
+	
+	int diceUnderCups = 0;
+	
+	for (PlayerState *player in [turnInfo.gameState players])
+		diceUnderCups += [[player unPushedDice] count];
+	
+	output.diceUnderCups = diceUnderCups;
+	
+	NSMutableArray *arrayOfNumbers = [[[NSMutableArray alloc] init] autorelease];
+	
+	for (Die *die in [[turnInfo.gameState player:turnInfo.playerID] arrayOfDice])
+	{
+		if ([die isKindOfClass:[Die class]])
+		{
+			int dieFace = [die dieValue];
+			
+			numberOfDiceStruct dieStruct;
+			
+			dieStruct.dieFace = dieFace;
+			
+			NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];
+			[array addObjectsFromArray:allPushedDice];
+			[array addObjectsFromArray:[[turnInfo.gameState player:turnInfo.playerID] arrayOfDice]];
+			dieStruct.numberOfKnownDice = [turnInfo.gameState countKnownDice:dieFace inArray:array];
+			
+			NSValue *value = [[[NSValue alloc] initWithBytes:&dieStruct objCType:@encode(numberOfDiceStruct)] autorelease];
+			[arrayOfNumbers addObject:value];
+		}
+	}
+	
+	output.arrayOfNumbers = arrayOfNumbers;
+	
+	NSMutableArray *playerStructs = [[[NSMutableArray alloc] init] autorelease];
+	
+	for (PlayerState *player in [turnInfo.gameState players])
+	{
+		if ([player isKindOfClass:[PlayerState class]])
+		{
+			playerStruct playerStructObject;
+			
+			playerStructObject.playerID = [player playerID];
+			playerStructObject.numberOfDice = [player numberOfDice];
+			playerStructObject.pushedDice = [player pushedDice];
+			
+			playerStructObject.nameOfThePlayer = [[[player playerName] componentsSeparatedByString:@"-"] objectAtIndex:0];
+			
+			NSValue *valueOfPlayerStructObject = [[[NSValue alloc] initWithBytes:&playerStructObject objCType:@encode(playerStruct)] autorelease];
+			[playerStructs addObject:valueOfPlayerStructObject];
+		}
+	}
+	
+	output.players = playerStructs;
+	
+	Pass previousPass;
+	previousPass.playerID = (int)nil;
+	previousPass.nameOfThePlayer = nil;
+	
+	previousPass.playerID = [turnInfo.gameState lastPassPlayerID];
+	previousPass.nameOfThePlayer = (previousPass.playerID != -1 ? [[turnInfo.gameState player:previousPass.playerID] playerName] : nil);
+	
+	output.previousPass = previousPass;
+	
+	Pass secondToLastPass;
+	secondToLastPass.playerID = (int)nil;
+	secondToLastPass.nameOfThePlayer = nil;
+	
+	secondToLastPass.playerID = [turnInfo.gameState secondLastPassPlayerID];
+	secondToLastPass.nameOfThePlayer = (secondToLastPass.playerID != -1 ? [[turnInfo.gameState player:secondToLastPass.playerID] playerName] : nil);
+	
+	output.secondToLastPass = secondToLastPass;
+	
     [self send:[NetworkParser parseOutput:output]];
     
     while (!hasInput);
@@ -329,7 +433,10 @@
 - (void)send:(NSString *)message
 {
     hasInput = NO;
-    [delegate sendData:message toPlayer:name];
+	User userStruct;
+	userStruct.name = name;
+	userStruct.uniqueID = uniqueID;
+    [delegate sendData:message toPlayer:userStruct];
 }
 
 - (void)newRound:(NSArray *)arrayOfDice

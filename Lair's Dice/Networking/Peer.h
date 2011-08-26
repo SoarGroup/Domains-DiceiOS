@@ -16,6 +16,17 @@
 #import "WifiServer.h"
 #import "WifiClient.h"
 
+#ifndef USER_STRUCT
+#define USER_STRUCT 1
+//User struct containing their name and unique id
+typedef struct {
+	NSString *name;
+	int uniqueID;
+} User;
+#endif
+
+#define Proto_PeerIDSeperator @"|EndOfID|"
+
 typedef enum {
 	NETWORK_ACK,					// no packet
 	NETWORK_COINTOSS,				// decide who is going to be the server
@@ -25,9 +36,9 @@ typedef enum {
 
 @protocol ServerProtocol <NSObject>
 @required
-- (void)clientConnected:(NSString *)clientName;
-- (void)clientDisconnected:(NSString *)clientName;
-- (void)clientSentData:(NSString *)data client:(NSString *)client;
+- (void)clientConnected:(User)clientName;
+- (void)clientDisconnected:(User)clientName;
+- (void)clientSentData:(NSString *)data client:(User)client;
 
 - (BOOL)canAcceptConnections;
 
@@ -45,6 +56,8 @@ typedef enum {
 - (void)serverSentData:(NSString *)data;
 
 - (void)canceledPeerPicker;
+
+@property (nonatomic, assign) int uniqueID;
 @end
 
 @interface Peer : NSObject <GKPeerPickerControllerDelegate, GKSessionDelegate, WifiServerProtocol, WifiClientProtocol, WifiConnectionDelegate> {
@@ -53,9 +66,11 @@ typedef enum {
 	int				gamePacketNumber;
 	
     NSMutableArray	*gamePeerIds;
-    NSMutableDictionary *namesToPeerIDs;
+    NSMutableDictionary *uniqueIDsToPeerIDs;
     NSMutableDictionary *peerIDsToName;
     NSMutableDictionary    *lastHeartbeatDates;
+	
+	NSMutableDictionary *peerIDsToUniqueIDs;
     
     id delegate;
     
@@ -68,18 +83,22 @@ typedef enum {
 	NSMutableArray *wifiConnections;
 	
 	BOOL usingWifi;
+	
+	BOOL localhost;
 }
 
-- (id)init:(BOOL)server delegate:(id)delegateForPeer;
+- (id)init:(BOOL)server delegate:(id)delegateForPeer connectToLocalhost:(BOOL)connectToLocalhost;
 - (id)init:(BOOL)server;
 
 - (void)invalidateSession:(GKSession *)session;
 
-- (void)sendNetworkPacket:(GKSession *)session packetID:(int)packetID withData:(void *)data ofLength:(int)length reliable:(BOOL)howtosend withPeerID:(NSString *)peerID;
+- (void)sendNetworkPacket:(GKSession *)session packetID:(int)packetID withData:(void *)data ofLength:(int)length reliable:(BOOL)howtosend withPeerID:(NSString *)peerID andUniqueID:(int)uniqueID;
 
 - (void)startPicker;
 
 - (void) goToMainMenu;
+
+- (id)getWifiConnection;
 
 @property(nonatomic, assign) id <NSObject> delegate;
 

@@ -17,6 +17,8 @@
     UIButton *help;
     
     UITextField *name;
+	
+	UISwitch *server;
 }
 
 @property (nonatomic, assign) Lair_s_DiceAppDelegate_iPhone *delegate;
@@ -26,6 +28,10 @@
 
 @property (nonatomic, retain) IBOutlet UITextField *name;
 
+@property (nonatomic, retain) IBOutlet UISwitch *server;
+
 - (IBAction)buttonClicked:(UIButton *)sender;
+
+- (IBAction)serverValueChanged:(UISwitch *)server;
 
 @end

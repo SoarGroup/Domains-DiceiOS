@@ -21,6 +21,7 @@
 
 @interface WifiConnection : NSObject <NSNetServiceDelegate> {
     id <WifiConnectionDelegate> connectionDelegate;
+	id <WifiConnectionDelegate> fakeConnectionDelegate;
 	
 	NSString *host;
 	int port;
@@ -41,8 +42,13 @@
 	BOOL hasClosed;
 	
 	BOOL hasConnected;
+	
+	int uniqueID;
+	
+	BOOL fakingData; //We're using localhost if this is YES. But instead of sending data via localhost & port 1404 we're actually just sending data by calling the other delegate (the client) reciever method.
 }
 
+- (id)initWhileFakingData;
 - (id)initWithHostAddress:(NSString*)host andPort:(int)port;
 - (id)initWithNativeSocketHandle:(CFSocketNativeHandle)nativeSocketHandle;
 - (id)initWithNetService:(NSNetService*)netService;
@@ -50,12 +56,16 @@
 - (BOOL)connect;
 - (void)close;
 - (void)sendNetworkPacket:(NSData *)packet;
+- (void)sendFakeNetworkPacket:(NSData *)packet;
 
 @property (nonatomic, assign) id <WifiConnectionDelegate> connectionDelegate;
+@property (nonatomic, assign) id <WifiConnectionDelegate> fakeConnectionDelegate;
 
 @property (nonatomic,retain) NSNetService* bonjourNetService;
 @property (nonatomic, retain) NSString *host;
 
 @property (nonatomic, assign) BOOL hasConnected;
+
+@property (nonatomic, assign) int uniqueID;
 
 @end

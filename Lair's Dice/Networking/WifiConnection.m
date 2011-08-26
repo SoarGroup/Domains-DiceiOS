@@ -12,6 +12,7 @@
 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <unistd.h>
 #include <CFNetwork/CFSocketStream.h>
 
@@ -39,11 +40,12 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 
 @implementation WifiConnection
 
-@synthesize connectionDelegate;
+@synthesize connectionDelegate, fakeConnectionDelegate;
 @synthesize host, port;
 @synthesize connectionHandle;
 @synthesize bonjourNetService;
 @synthesize hasConnected;
+@synthesize uniqueID;
 
 - (void)clean
 {
@@ -73,8 +75,19 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 	host = nil;
 	port = -1;
 	connectionDelegate = nil;
+	fakeConnectionDelegate = nil;
 	
 	[super dealloc];
+}
+
+- (id)initWhileFakingData
+{
+	self = [super init];
+	if (self)
+	{
+		fakingData = YES;
+	}
+	return self;
 }
 
 - (id)initWithHostAddress:(NSString *)_host andPort:(int)_port
@@ -120,6 +133,9 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 
 - (BOOL)connect
 {
+	if (fakingData)
+		return YES;
+	
 	hasClosed = NO;
 	hasConnected = YES;
 	
@@ -248,7 +264,13 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 }
 
 - (void)sendNetworkPacket:(NSData *)packet
-{
+{	
+	if (fakingData)
+	{
+		[fakeConnectionDelegate receivedNetworkPacket:packet via:self];
+		return;
+	}
+	
 	NSData* rawPacket = packet;
 	
 	int packetLength = [rawPacket length];
@@ -257,6 +279,11 @@ void writeStreamHandler(CFWriteStreamRef stream, CFStreamEventType eventType, vo
 	[outgoingDataBuffer appendData:rawPacket];
 	
 	[self writeOutgoingBufferToStream];
+}
+
+- (void)sendFakeNetworkPacket:(NSData *)packet
+{
+	[connectionDelegate receivedNetworkPacket:packet via:self];
 }
 
 //C Functions for the read & write stream handlers

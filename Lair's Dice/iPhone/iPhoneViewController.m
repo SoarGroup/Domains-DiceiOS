@@ -17,24 +17,6 @@
 
 @end
 
-@interface UIButton (ButtonTitleUtils)
-
-- (void)setTitle:(NSString *)title;
-
-@end
-
-@implementation UIButton (ButtonTitleUtils)
-
-- (void)setTitle:(NSString *)title
-{
-    [self setTitle:title forState:UIControlStateNormal];
-    [self setTitle:title forState:UIControlStateHighlighted];
-    [self setTitle:title forState:UIControlStateSelected];
-    [self setTitle:title forState:UIControlStateDisabled];
-}
-
-@end
-
 @implementation iPhoneViewController
 
 @synthesize pushDie1, pushDie2, pushDie3, pushDie4, pushDie5, die1, die2, die3, die4, die5, pass, exact, challenge, bid, number, dieValue, delegate, textView;

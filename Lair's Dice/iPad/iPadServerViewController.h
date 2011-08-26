@@ -6,9 +6,12 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
+#ifndef IPADSERVERVIEWCONTROLLER_H
+#define IPADSERVERVIEWCONTROLLER_H
+
 #import <UIKit/UIKit.h>
 
-#import "Lair_s_DiceAppDelegate_iPad.h"
+#import "Server.h"
 #import "PopoverViewController.h"
 
 typedef struct {
@@ -28,7 +31,7 @@ typedef struct {
         
     NSMutableArray *Players;
         
-    Lair_s_DiceAppDelegate_iPad *appDelegate;
+    Server *appDelegate;
     
     int playerNumbers;
     
@@ -45,7 +48,7 @@ typedef struct {
 
 @property (nonatomic, assign) UIAlertView *gameOverAlert;
 
-@property (nonatomic, assign) Lair_s_DiceAppDelegate_iPad *appDelegate;
+@property (nonatomic, assign) Server *appDelegate;
 
 @property (nonatomic, retain) NSMutableArray *Players;
 
@@ -74,3 +77,5 @@ typedef struct {
 - (void)setCurrentTurn:(NSValue *)player;
 
 @end
+
+#endif

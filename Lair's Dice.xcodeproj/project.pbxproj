@@ -40,6 +40,8 @@
 		4DB74E1113D4A06000B68673 /* iPhoneMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DB74E0F13D4A06000B68673 /* iPhoneMainMenu.xib */; };
 		4DC720D113E08C8200D5484F /* iPadHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC720CF13E08C8200D5484F /* iPadHelp.m */; };
 		4DC720D213E08C8200D5484F /* iPadHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC720D013E08C8200D5484F /* iPadHelp.xib */; };
+		4DD48F46140568CF0016A32B /* iPhoneServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DD48F44140568CF0016A32B /* iPhoneServer.xib */; };
+		4DD48F4B1405710A0016A32B /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD48F4A1405710A0016A32B /* Server.m */; };
 		4DDA885613FD9BAF008D3900 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDA885513FD9BAF008D3900 /* Reachability.m */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
@@ -148,6 +150,9 @@
 		4DC720CE13E08C8200D5484F /* iPadHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPadHelp.h; path = iPad/iPadHelp.h; sourceTree = "<group>"; };
 		4DC720CF13E08C8200D5484F /* iPadHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPadHelp.m; path = iPad/iPadHelp.m; sourceTree = "<group>"; };
 		4DC720D013E08C8200D5484F /* iPadHelp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPadHelp.xib; path = iPad/iPadHelp.xib; sourceTree = "<group>"; };
+		4DD48F44140568CF0016A32B /* iPhoneServer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = iPhoneServer.xib; path = iPhone/iPhoneServer.xib; sourceTree = "<group>"; };
+		4DD48F491405710A0016A32B /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = "Unification Classes/Server.h"; sourceTree = "<group>"; };
+		4DD48F4A1405710A0016A32B /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Server.m; path = "Unification Classes/Server.m"; sourceTree = "<group>"; };
 		4DDA885413FD9BAF008D3900 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Networking/Reachability.h; sourceTree = "<group>"; };
 		4DDA885513FD9BAF008D3900 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Networking/Reachability.m; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -286,8 +291,8 @@
 		CD86D70E13BBA3870005A182 /* NetworkPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkPlayer.m; path = "Logic Engine/Player Abstraction/Network Player Abstraction/NetworkPlayer.m"; sourceTree = "<group>"; };
 		CD86D71C13BBB1B60005A182 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		CD96574313C39D4B00F79BB4 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = iPad/MainMenu.h; sourceTree = "<group>"; };
-		CD96574413C39D4B00F79BB4 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = iPad/MainMenu.m; sourceTree = "<group>"; };
+		CD96574313C39D4B00F79BB4 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = GUI/MainMenu.h; sourceTree = "<group>"; };
+		CD96574413C39D4B00F79BB4 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = GUI/MainMenu.m; sourceTree = "<group>"; };
 		CD96574513C39D4B00F79BB4 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = iPad/MainMenu.xib; sourceTree = "<group>"; };
 		CDCC457913C4C92C002B4996 /* NetworkParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkParser.h; path = "Logic Engine/Player Abstraction/Network Player Abstraction/NetworkParser.h"; sourceTree = "<group>"; };
 		CDCC457A13C4C92C002B4996 /* NetworkParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkParser.m; path = "Logic Engine/Player Abstraction/Network Player Abstraction/NetworkParser.m"; sourceTree = "<group>"; };
@@ -326,6 +331,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DD48F4714056F7E0016A32B /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				CD96574313C39D4B00F79BB4 /* MainMenu.h */,
+				CD96574413C39D4B00F79BB4 /* MainMenu.m */,
+			);
+			name = GUI;
+			sourceTree = "<group>";
+		};
+		4DD48F48140570E90016A32B /* Unification Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4DD48F491405710A0016A32B /* Server.h */,
+				4DD48F4A1405710A0016A32B /* Server.m */,
+			);
+			name = "Unification Classes";
+			sourceTree = "<group>";
+		};
 		CD07ACAC13BCE91500FB8DC8 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +437,8 @@
 		CD86D64F13BB9E450005A182 /* Lair's Dice */ = {
 			isa = PBXGroup;
 			children = (
+				4DD48F48140570E90016A32B /* Unification Classes */,
+				4DD48F4714056F7E0016A32B /* GUI */,
 				CDCC456F13C4B041002B4996 /* Networking */,
 				CD07ACAC13BCE91500FB8DC8 /* Assets */,
 				CD86D6EB13BBA3160005A182 /* Logic Engine */,
@@ -454,6 +479,7 @@
 				4D12A10C13E1A6B8005E6F62 /* iPhoneHelp.h */,
 				4D12A10D13E1A6B8005E6F62 /* iPhoneHelp.m */,
 				4D12A10E13E1A6B8005E6F62 /* iPhoneHelp.xib */,
+				4DD48F44140568CF0016A32B /* iPhoneServer.xib */,
 			);
 			name = iPhone;
 			sourceTree = "<group>";
@@ -468,8 +494,6 @@
 				CD86D67113BB9E6F0005A182 /* iPadServerViewController.h */,
 				CD86D67213BB9E6F0005A182 /* iPadServerViewController.m */,
 				CD86D67313BB9E6F0005A182 /* iPadServerViewController.xib */,
-				CD96574313C39D4B00F79BB4 /* MainMenu.h */,
-				CD96574413C39D4B00F79BB4 /* MainMenu.m */,
 				CD96574513C39D4B00F79BB4 /* MainMenu.xib */,
 				4DC720CE13E08C8200D5484F /* iPadHelp.h */,
 				4DC720CF13E08C8200D5484F /* iPadHelp.m */,
@@ -782,6 +806,7 @@
 				4DEAE53513FC42050044FF11 /* BluetoothEnabled.png in Resources */,
 				4DEAE53613FC42050044FF11 /* WifiEnabled.png in Resources */,
 				4DEAE53713FC42050044FF11 /* WifiDisabled.png in Resources */,
+				4DD48F46140568CF0016A32B /* iPhoneServer.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,6 +843,7 @@
 				4D51F37413F9AEF20040D09C /* WifiClient.m in Sources */,
 				4D51F37713F9B9410040D09C /* WifiConnection.m in Sources */,
 				4DDA885613FD9BAF008D3900 /* Reachability.m in Sources */,
+				4DD48F4B1405710A0016A32B /* Server.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

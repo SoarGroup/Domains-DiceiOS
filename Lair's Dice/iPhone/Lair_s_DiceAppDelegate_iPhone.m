@@ -17,24 +17,6 @@
 #import "iPhoneMainMenu.h"
 #import "iPhoneHelp.h"
 
-@interface UIButton (ButtonTitleUtils)
-
-- (void)setTitle:(NSString *)title;
-
-@end
-
-@implementation UIButton (ButtonTitleUtils)
-
-- (void)setTitle:(NSString *)title
-{
-    [self setTitle:title forState:UIControlStateNormal];
-    [self setTitle:title forState:UIControlStateHighlighted];
-    [self setTitle:title forState:UIControlStateSelected];
-    [self setTitle:title forState:UIControlStateDisabled];
-}
-
-@end
-
 @interface Lair_s_DiceAppDelegate_iPhone()
 
 - (void)send:(NSString *)message;
@@ -44,6 +26,8 @@
 @end
 
 @implementation Lair_s_DiceAppDelegate_iPhone
+
+@synthesize uniqueID;
 
 - (id)init
 {
@@ -56,7 +40,11 @@
         
         viewController = nil;
         
-        [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(heartbeat) userInfo:nil repeats:YES];
+		
+		hasSentName = NO;
+		
+		server = nil;
     }
     return self;
 }
@@ -64,7 +52,9 @@
 - (void)heartbeat
 {
     if (connectedToServer)
-        [self send:@"HEARTBEAT"];
+	{
+        [self send:[@"HEARTBEAT:" stringByAppendingString:[[UIDevice currentDevice] name]]];
+	}
 }
 
 - (void)dealloc
@@ -77,13 +67,15 @@
 
 - (void)send:(NSString *)message
 {
+	message = [NSString stringWithFormat:@"%i%@%@", uniqueID, Proto_PeerIDSeperator, message];
+	
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [archiver encodeObject:message];
     [archiver finishEncoding];
 	[archiver release];
     
-    [peer sendNetworkPacket:[peer gameSession] packetID:NETWORK_OTHER withData:data ofLength:[data length] reliable:YES withPeerID:serverID];
+    [peer sendNetworkPacket:[peer gameSession] packetID:NETWORK_OTHER withData:data ofLength:[data length] reliable:YES withPeerID:serverID andUniqueID:uniqueID];
 }
 
 
@@ -253,7 +245,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self goToMainMenu];
+    [self goToiPhoneMainMenu];
     return YES;
 }
 
@@ -261,6 +253,16 @@
 {
     serverID = serverName;
     connectedToServer = YES;
+	
+	if (server != nil)
+	{
+		id connection = [peer getWifiConnection];
+		
+		if (connection != nil)
+			[server handleNewConnection:connection];
+		else
+			NSLog(@"Error: Connection was nil when we're using localhost");
+	}
 }
 
 - (void)disconnectedFromServer:(NSString *)serverName
@@ -279,7 +281,7 @@
     
     iphoneViewController->confirmed = NO;
     
-    [self goToMainMenu];
+    [self goToiPhoneMainMenu];
 }
 
 - (void)serverSentData:(NSString *)data
@@ -497,7 +499,7 @@
 
 - (void)canceledPeerPicker
 {
-    [self goToMainMenu];
+    [self goToiPhoneMainMenu];
 }
 
 - (void)goToMainGame:(NSString *)name
@@ -525,7 +527,7 @@
     [peer startPicker];
 }
 
-- (void)goToMainMenu
+- (void)goToiPhoneMainMenu
 {
     [viewController.view removeFromSuperview];
     [viewController release];
@@ -544,7 +546,7 @@
     connectedToServer = NO;
 }
 
-- (void)goToHelp
+- (void)goToiPhoneHelp
 {
     [viewController.view removeFromSuperview];
     [viewController release];
@@ -561,9 +563,52 @@
     [window makeKeyAndVisible];
 }
 
-- (void)showBluetooth:(BOOL)bluetoothEnabled
+- (void)goToServer
 {
-	// Do nothing we don't handle this PeerPicker Does in the client
+	server = [[Server alloc] initWithDelegate:self];
+	[server goToMainMenu];
+}
+
+- (iPadServerViewController *)goToMainServerGameWithPlayers:(int)players
+{	
+	[self goToMainGame:[[UIDevice currentDevice] name]];
+	return nil;
+}
+
+- (MainMenu *)goToMainMenu
+{
+	if (![viewController isKindOfClass:[MainMenu class]])
+	{
+		[viewController.view removeFromSuperview];
+		[viewController release];
+		viewController = nil;
+		
+		viewController = [[MainMenu alloc] initWithNibName:@"iPhoneServer" bundle:nil];
+		
+		[window addSubview:viewController.view];
+		[window makeKeyAndVisible];
+		return (MainMenu*)viewController;
+	}
+	else
+	{
+		[self goToiPhoneMainMenu];
+		[server release];
+		server = nil;
+		return nil;
+	}
+}
+
+- (iPadHelp *)goToHelp //Should never be called on the iPhone
+{
+	return nil;
+}
+
+- (void)serverIsUp
+{
+	[peer release];
+	peer = nil;
+	peer = [[Peer alloc] init:NO delegate:self connectToLocalhost:YES];
+	[peer startPicker];
 }
 
 @end
