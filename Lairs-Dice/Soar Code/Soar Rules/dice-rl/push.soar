@@ -1,0 +1,24 @@
+sp {dice*propose*push
+   (state <s> ^name dice
+              ^my-turn false
+              ^io.input-link <il>)
+   (<il> ^players.me.cup.die <d>
+         ^affordances.action <a>)
+   (<a> ^name push
+        ^available true)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name push
+         ^die <d>)
+}
+
+sp {apply*push
+   (state <s> ^operator <op>
+              ^io.output-link <ol>)
+   (<op> ^name push
+         ^die.face <face>)
+-->
+   (<ol> ^push <push>)
+   (<push> ^die <die>)
+   (<die> ^face <face>)
+}
