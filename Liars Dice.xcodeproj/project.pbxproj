@@ -76,6 +76,9 @@
 		C6808994154F56CF0068E477 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808972154F56CF0068E477 /* spinner.png */; };
 		C6808995154F56CF0068E477 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808973154F56CF0068E477 /* star.png */; };
 		C6808996154F56CF0068E477 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808974154F56CF0068E477 /* title.png */; };
+		C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */; };
+		C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */ = {isa = PBXBuildFile; fileRef = C68C288215CB22A400EB07B7 /* dice-agent-p */; };
+		C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */ = {isa = PBXBuildFile; fileRef = C68C288415CB22AC00EB07B7 /* dice-pmh.soar */; };
 		C690D5B0152CD60500AC3020 /* DiceGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = C690D5AF152CD60500AC3020 /* DiceGraphics.m */; };
 		C6951838154F9F3400BD15DA /* HowToPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6951837154F9F3400BD15DA /* HowToPlayView.m */; };
 		C695183B154F9F9400BD15DA /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = C695183A154F9F9400BD15DA /* rules.html */; };
@@ -198,6 +201,9 @@
 		C6808972154F56CF0068E477 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		C6808973154F56CF0068E477 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		C6808974154F56CF0068E477 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
+		C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-agent-new.soar"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-agent-new.soar"; sourceTree = "<group>"; };
+		C68C288215CB22A400EB07B7 /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-agent-p"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-agent-p"; sourceTree = "<group>"; };
+		C68C288415CB22AC00EB07B7 /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-pmh.soar"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-pmh.soar"; sourceTree = "<group>"; };
 		C690D5AE152CD60500AC3020 /* DiceGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGraphics.h; sourceTree = "<group>"; };
 		C690D5AF152CD60500AC3020 /* DiceGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGraphics.m; sourceTree = "<group>"; };
 		C6951836154F9F3400BD15DA /* HowToPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlayView.h; sourceTree = "<group>"; };
@@ -288,6 +294,9 @@
 		C6031A561550B32E00186B8E /* Soar Rules */ = {
 			isa = PBXGroup;
 			children = (
+				C68C288415CB22AC00EB07B7 /* dice-pmh.soar */,
+				C68C288215CB22A400EB07B7 /* dice-agent-p */,
+				C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */,
 				C642BD8B155430F300643A5B /* dice-model-bot-new-old */,
 				C642BD8915542FB000643A5B /* dice-model-bot-new */,
 				C6031A571550B33A00186B8E /* default */,
@@ -658,6 +667,9 @@
 				C642BD8C155430F300643A5B /* dice-model-bot-new-old in Resources */,
 				C642BD8E1554348900643A5B /* dice-p1-m0-c0.soar in Resources */,
 				C66E167615548AEF002190BD /* Default@2x.png in Resources */,
+				C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */,
+				C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */,
+				C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

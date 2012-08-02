@@ -123,7 +123,12 @@ typedef enum {
         agent->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
         
         NSString *path;
-        NSString *ruleFile = @"dice-p0-m0-c0";
+        
+        // This is where we specify the root .soar file that will source the Soar agent.
+        // We want this to be dice-agent-new, but right now that breaks the agent
+        // so we're loading dice-p0-m0-c0 instead.
+        NSString *ruleFile = @"dice-pmh"; /* @"dice-p0-m0-c0"; */
+        
         if (!remoteConnected)
         {
             path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
