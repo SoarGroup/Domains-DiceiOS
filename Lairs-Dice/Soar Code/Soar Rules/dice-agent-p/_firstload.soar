@@ -13,7 +13,7 @@ max-chunks 50000
 indifferent-selection -b
 indifferent-selection -t .08
 
-pushd ../../default
+pushd ../default
 source selection.soar
 popd
 

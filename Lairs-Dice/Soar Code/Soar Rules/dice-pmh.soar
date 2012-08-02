@@ -1,3 +1,5 @@
+watch 5
+
 sp {comp-pm-norm*elaborate*flags-dynamic
    (state <s> ^name dice)
 -->
