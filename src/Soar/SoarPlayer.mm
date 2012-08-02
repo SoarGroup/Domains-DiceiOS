@@ -88,6 +88,7 @@ typedef enum {
         //kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kDefaultLibraryName, 0);
         [turnLock lock];
         //kernel = sml::Kernel::CreateKernelInCurrentThread();
+		
         kernel = sml::Kernel::CreateKernelInNewThread();
         
         if (kernel->HadError())
@@ -581,8 +582,21 @@ typedef enum {
     
     NSArray* history = [gameState history];
     int roundLength = [history count];
+	
+	int lastActionHistoryItem = 0;
+	int numberHistoryItems = 0;
+	
+	for (int i = roundLength - 1; i >= 0; --i)
+	{
+		HistoryItem *item = [history objectAtIndex:i];
+		if (item.historyType == actionHistoryItem)
+		{
+			lastActionHistoryItem = i;
+			numberHistoryItems++;
+		}
+	}
     
-    if (roundLength == 0)
+    if (numberHistoryItems == 0)
     {
         idHistory = inputLink->CreateStringWME("history", "nil");
         idState->CreateStringWME("last-bid", "nil");
@@ -665,7 +679,7 @@ typedef enum {
                 prev->CreateStringWME("result", [item result] == 1 ? "success" : "failure");
             }
             
-            if (i == 0)
+            if (i == lastActionHistoryItem)
             {
                 prev->CreateStringWME("next", "nil");
             }
@@ -753,7 +767,7 @@ typedef enum {
                 prev->CreateStringWME("result", [roundEnd result] == 1 ? "success" : "failure");
             }
             
-            if (i == 1)
+            if (i == (numRounds-1))
             {
                 prev->CreateStringWME("next", "nil");
             }
