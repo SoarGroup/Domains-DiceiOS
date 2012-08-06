@@ -201,9 +201,9 @@
 		C6808972154F56CF0068E477 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		C6808973154F56CF0068E477 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		C6808974154F56CF0068E477 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
-		C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-agent-new.soar"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-agent-new.soar"; sourceTree = "<group>"; };
-		C68C288215CB22A400EB07B7 /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-agent-p"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-agent-p"; sourceTree = "<group>"; };
-		C68C288415CB22AC00EB07B7 /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-pmh.soar"; path = "../SoarDice-iOS/Lairs-Dice/Soar Code/Soar Rules/dice-pmh.soar"; sourceTree = "<group>"; };
+		C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-agent-new.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-agent-new.soar"; sourceTree = "<group>"; };
+		C68C288215CB22A400EB07B7 /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-agent-p"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-agent-p"; sourceTree = "<group>"; };
+		C68C288415CB22AC00EB07B7 /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-pmh.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-pmh.soar"; sourceTree = "<group>"; };
 		C690D5AE152CD60500AC3020 /* DiceGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGraphics.h; sourceTree = "<group>"; };
 		C690D5AF152CD60500AC3020 /* DiceGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGraphics.m; sourceTree = "<group>"; };
 		C6951836154F9F3400BD15DA /* HowToPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlayView.h; sourceTree = "<group>"; };
