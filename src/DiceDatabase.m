@@ -181,4 +181,79 @@ void executeSql(const char *sqlStatement) {
     return [NSArray arrayWithArray:games];
 }
 
+- (void) setPlayerName:(NSString *)playerName
+{
+	executeSql([[NSString stringWithFormat:@"update	settings set player_name='%@';", playerName] UTF8String]);
+}
+
+- (NSString *) getPlayerName
+{
+	// Setup the database object
+	sqlite3 *database;
+    
+	// Init the animals Array
+	NSString* playerName = nil;
+    
+	// Open the database from the users filessytem
+	if(sqlite3_open([databasePath() UTF8String], &database) == SQLITE_OK) {
+		// Setup the SQL Statement and compile it for faster access
+		const char *sqlStatement = "select player_name from settings";
+		sqlite3_stmt *compiledStatement;
+		int error = sqlite3_prepare_v2(database, sqlStatement, -1, &compiledStatement, NULL);
+        if (error == SQLITE_OK) {
+			// Loop through the results and add them to the feeds array
+			while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
+				// Read the data from the result row
+                const unsigned char* nameOfThePlayer = sqlite3_column_text(compiledStatement, 1);
+                
+				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:sizeof(nameOfThePlayer) encoding:NSASCIIStringEncoding];
+			}
+		} else {
+            NSLog(@"SQL read error %d", error);
+        }
+		// Release the compiled statement from memory
+		sqlite3_finalize(compiledStatement);
+	}
+	
+	sqlite3_close(database);
+    return playerName;
+}
+
+- (void) setDifficulty:(int)difficulty
+{
+	executeSql([[NSString stringWithFormat:@"update	settings set difficulty='%i';", difficulty] UTF8String]);
+}
+
+- (int) getDifficulty
+{
+	// Setup the database object
+	sqlite3 *database;
+    
+	// Init the animals Array
+	int difficulty = 0;
+    
+	// Open the database from the users filessytem
+	if(sqlite3_open([databasePath() UTF8String], &database) == SQLITE_OK) {
+		// Setup the SQL Statement and compile it for faster access
+		const char *sqlStatement = "select difficulty from settings";
+		sqlite3_stmt *compiledStatement;
+		int error = sqlite3_prepare_v2(database, sqlStatement, -1, &compiledStatement, NULL);
+        if (error == SQLITE_OK) {
+			// Loop through the results and add them to the feeds array
+			while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
+				// Read the data from the result row
+                difficulty = sqlite3_column_int(compiledStatement, 1);
+			}
+		} else {
+            NSLog(@"SQL read error %d", error);
+        }
+		// Release the compiled statement from memory
+		sqlite3_finalize(compiledStatement);
+	}
+	
+	sqlite3_close(database);
+	
+    return difficulty;
+}
+
 @end

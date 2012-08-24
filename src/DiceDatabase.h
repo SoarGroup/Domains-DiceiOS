@@ -15,5 +15,10 @@
 - (void) addGameRecord:(GameRecord *)gameRecord;
 - (NSArray *) getGameRecords;
 - (void) reset;
+- (void) setPlayerName:(NSString *)name;
+- (NSString *) getPlayerName;
+
+- (void) setDifficulty:(int)difficulty;
+- (int) getDifficulty;
 
 @end

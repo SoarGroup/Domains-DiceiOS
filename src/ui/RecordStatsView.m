@@ -32,19 +32,21 @@
         [subview removeFromSuperview];
     }
     
-    int margin = 8;
+    int margin = 6;
     int labelHeight = 21;
-    int labelWidth = (self.view.bounds.size.width - margin * 5) / 4;
+    float labelWidth = (self.view.bounds.size.width - margin * 5) / 3.5;
     DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
     NSArray *games = [database getGameRecords];
     int y = margin;
     
     NSString *names[] = {@"Player", @"Alice", @"Bob", @"Carol"};
     UILabel *label;
-    for (int playerIndex = 0; playerIndex < 4; ++playerIndex) {
-        label = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, labelHeight)] autorelease];
+	
+	for (int numPlayers = 2;numPlayers <= 4; ++numPlayers)
+	{
+		label = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, labelHeight)] autorelease];
         label.backgroundColor = [UIColor clearColor];
-        label.text = names[playerIndex];
+        label.text = [NSString stringWithFormat:@"%d-Players", numPlayers];
         [label setFont:[UIFont boldSystemFontOfSize:label.font.pointSize]];
         [self.scrollView addSubview:label];
         label = [[[UILabel alloc] initWithFrame:CGRectMake(margin * 2 + labelWidth, y, labelWidth, labelHeight)] autorelease];
@@ -60,12 +62,10 @@
         label.text = @"Quit";
         [self.scrollView addSubview:label];
         y += labelHeight + margin;
-        
-        for (int numPlayers = 2; numPlayers <= 4; ++numPlayers) {
-            if (playerIndex > 1 && playerIndex - numPlayers >= 0) {
-                continue;
-            }
-            int wins = 0;
+		
+		for (int playerIndex = 0;playerIndex < numPlayers; ++playerIndex)
+		{
+			int wins = 0;
             int losses = 0;
             int incomplete = 0;
             for (GameRecord *game in games) {
@@ -95,7 +95,7 @@
             }
             label = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, labelHeight)] autorelease];
             label.backgroundColor = [UIColor clearColor];
-            label.text = [NSString stringWithFormat:@"%d-Player:", numPlayers];
+            label.text = names[playerIndex];
             [self.scrollView addSubview:label];
             label = [[[UILabel alloc] initWithFrame:CGRectMake(margin * 2 + labelWidth, y, labelWidth, labelHeight)] autorelease];
             label.backgroundColor = [UIColor clearColor];
@@ -110,9 +110,11 @@
             label.text = [NSString stringWithFormat:@"%d", incomplete];
             [self.scrollView addSubview:label];
             y += labelHeight + margin;
-        }
-        y += margin * 2;
-    }
+		}
+		
+		y += margin * 2;
+	}
+	
     self.scrollView.contentSize = CGSizeMake(0, y - margin);
 }
 

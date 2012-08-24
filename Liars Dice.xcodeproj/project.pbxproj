@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */; };
+		4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */; };
+		4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2315E6C13300D2CED9 /* SettingsView.m */; };
+		4DA8DA2615E6C13400D2CED9 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		C6013656152B8A6F00854485 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6013654152B8A6F00854485 /* LoadingGameView.m */; };
@@ -16,7 +20,6 @@
 		C602E09915530148005B7D70 /* RecordStatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C602E09715530148005B7D70 /* RecordStatsView.xib */; };
 		C602E09C15531E38005B7D70 /* button-stats-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C602E09A15531E38005B7D70 /* button-stats-pressed.png */; };
 		C602E09D15531E38005B7D70 /* button-stats.png in Resources */ = {isa = PBXBuildFile; fileRef = C602E09B15531E38005B7D70 /* button-stats.png */; };
-		C60318021550663C00186B8E /* Liars Dice-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C60318011550663C00186B8E /* Liars Dice-Info.plist */; };
 		C6031803155066C900186B8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C61DD3241550659E0049A84C /* main.m */; };
 		C6031A641550B33A00186B8E /* default in Resources */ = {isa = PBXBuildFile; fileRef = C6031A571550B33A00186B8E /* default */; };
 		C6031A651550B33A00186B8E /* dice in Resources */ = {isa = PBXBuildFile; fileRef = C6031A581550B33A00186B8E /* dice */; };
@@ -120,6 +123,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings-pressed.png"; sourceTree = "<group>"; };
+		4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings.png"; sourceTree = "<group>"; };
+		4DA8DA2215E6C13300D2CED9 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		4DA8DA2315E6C13300D2CED9 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6013653152B8A6F00854485 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
@@ -339,6 +347,8 @@
 			isa = PBXGroup;
 			children = (
 				C602E09A15531E38005B7D70 /* button-stats-pressed.png */,
+				4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */,
+				4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */,
 				C602E09B15531E38005B7D70 /* button-stats.png */,
 				C6808953154F56CF0068E477 /* background.png */,
 				C6808954154F56CF0068E477 /* bar.png */,
@@ -486,6 +496,9 @@
 				C602E09515530148005B7D70 /* RecordStatsView.h */,
 				C602E09615530148005B7D70 /* RecordStatsView.m */,
 				C602E09715530148005B7D70 /* RecordStatsView.xib */,
+				4DA8DA2215E6C13300D2CED9 /* SettingsView.h */,
+				4DA8DA2315E6C13300D2CED9 /* SettingsView.m */,
+				4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -576,7 +589,7 @@
 		CD86D63A13BB9E450005A182 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "Liars Dice" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -646,7 +659,6 @@
 				C695183B154F9F9400BD15DA /* rules.html in Resources */,
 				C695183D154FAE6100BD15DA /* HowToPlayView.xib in Resources */,
 				C6951841155042AC00BD15DA /* icon@2x.png in Resources */,
-				C60318021550663C00186B8E /* Liars Dice-Info.plist in Resources */,
 				C6031A641550B33A00186B8E /* default in Resources */,
 				C6031A651550B33A00186B8E /* dice in Resources */,
 				C6031A671550B33A00186B8E /* dice-model-bot-new.soar in Resources */,
@@ -670,6 +682,9 @@
 				C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */,
 				C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */,
 				C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */,
+				4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */,
+				4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */,
+				4DA8DA2615E6C13400D2CED9 /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +726,7 @@
 				C61F62A81552DFE20065D8BB /* GameRecord.m in Sources */,
 				C61F62AB1552E5C20065D8BB /* GameRecordView.m in Sources */,
 				C602E09815530148005B7D70 /* RecordStatsView.m in Sources */,
+				4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -722,7 +738,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -741,7 +757,7 @@
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
@@ -759,13 +775,16 @@
 					armv6,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lairs-Dice/Liars Dice-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "Liars Dice";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				SKIP_INSTALL = NO;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -777,7 +796,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -797,7 +816,7 @@
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SDKROOT = iphoneos;
@@ -811,7 +830,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -829,7 +848,7 @@
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
@@ -847,14 +866,17 @@
 					armv6,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lairs-Dice/Liars Dice-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "Liars Dice";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -868,13 +890,16 @@
 					armv6,
 					armv7,
 				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Lairs-Dice/Liars Dice-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "Liars Dice";
+				PROVISIONING_PROFILE = "CBA5FAF2-B3B4-4992-8E30-FC6F4061DD79";
 				SKIP_INSTALL = NO;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

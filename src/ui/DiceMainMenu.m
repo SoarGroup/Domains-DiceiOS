@@ -18,18 +18,21 @@
 #import "LoadingGameView.h"
 #import "HowToPlayView.h"
 #import "RecordStatsView.h"
+#import "SettingsView.h"
+#import "DiceDatabase.h"
 
 @implementation DiceMainMenu
 @synthesize statsButton;
 @synthesize oneOpponentButton;
 @synthesize twoOpponentButton;
 @synthesize threeOpponentButton;
+@synthesize settingsButton;
 @synthesize howToPlayButton;
 @synthesize singlePlayerButton;
 @synthesize multiPlayerButton;
 @synthesize joinMultiplayerButton;
 @synthesize serverOnlyButton;
-@synthesize usernameField, appDelegate;
+@synthesize appDelegate;
 
 - (id)initWithAppDelegate:(id)anAppDelegate
 {
@@ -39,11 +42,6 @@
         self.appDelegate = anAppDelegate;
     }
     return self;
-}
-
-- (IBAction)usernameDoneEditing:(id)sender {
-    [self.usernameField becomeFirstResponder];
-    [self.usernameField resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,18 +60,23 @@
     // Do any additional setup after loading the view from its nib.
     
     [self.oneOpponentButton setImage:[UIImage imageNamed:@"button-one-opponent-pressed"] forState:UIControlStateHighlighted];
-        [self.twoOpponentButton setImage:[UIImage imageNamed:@"button-two-opponents-pressed"] forState:UIControlStateHighlighted];
-        [self.threeOpponentButton setImage:[UIImage imageNamed:@"button-three-opponents-pressed"] forState:UIControlStateHighlighted];
-        [self.howToPlayButton setImage:[UIImage imageNamed:@"button-how-to-play-pressed"] forState:UIControlStateHighlighted];
-            [self.statsButton setImage:[UIImage imageNamed:@"button-stats-pressed"] forState:UIControlStateHighlighted];
+	[self.twoOpponentButton setImage:[UIImage imageNamed:@"button-two-opponents-pressed"] forState:UIControlStateHighlighted];
+	[self.threeOpponentButton setImage:[UIImage imageNamed:@"button-three-opponents-pressed"] forState:UIControlStateHighlighted];
+	
+	[self.settingsButton setImage:[UIImage imageNamed:@"settings-pressed"] forState:UIControlStateHighlighted];
+	[self.howToPlayButton setImage:[UIImage imageNamed:@"button-how-to-play-pressed"] forState:UIControlStateHighlighted];
+	[self.statsButton setImage:[UIImage imageNamed:@"button-stats-pressed"] forState:UIControlStateHighlighted];
     
-    [usernameField setText:[[UIDevice currentDevice] name]];
+	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+	
+    username = [database getPlayerName];
+	
     self.singlePlayerButton.enabled = YES;
     self.multiPlayerButton.enabled = NO;
     self.joinMultiplayerButton.enabled = NO;
     self.serverOnlyButton.enabled = NO;
     int seed = arc4random() % RAND_MAX;
-    srand(seed);    
+    srand(seed);
     NSLog(@"Seed:%i", seed);
 }
 
@@ -83,7 +86,6 @@
 
 - (void)viewDidUnload
 {
-    [self setUsernameField:nil];
     [self setSinglePlayerButton:nil];
     [self setMultiPlayerButton:nil];
     [self setJoinMultiplayerButton:nil];
@@ -91,6 +93,7 @@
     [self setOneOpponentButton:nil];
     [self setTwoOpponentButton:nil];
     [self setThreeOpponentButton:nil];
+	[self setSettingsButton:nil];
     [self setHowToPlayButton:nil];
     [self setStatsButton:nil];
     [super viewDidUnload];
@@ -105,7 +108,7 @@
 }
 
 - (void)dealloc {
-    [usernameField release];
+    [username release];
     [singlePlayerButton release];
     [multiPlayerButton release];
     [joinMultiplayerButton release];
@@ -114,71 +117,11 @@
     [oneOpponentButton release];
     [twoOpponentButton release];
     [threeOpponentButton release];
+	[settingsButton release];
     [howToPlayButton release];
     [statsButton release];
     [super dealloc];
 }
-
-/*
-- (IBAction)newSinglePlayerGame:(id)sender {
-    DiceGame *game = [[[DiceGame alloc]
-                       initWithType:LOCAL_PRIVATE
-                       appDelegate:self.appDelegate
-                       username:usernameField.text]
-                      autorelease];
-    
-    DiceServerView *serverView = [[[DiceServerView alloc]
-                                   initWithGame:game]
-                                  autorelease];
-    
-    [self.navigationController pushViewController:serverView
-                                         animated:YES];
-}
-
-- (IBAction)newMultiplayerGame:(id)sender {
-    DiceGame *game = [[[DiceGame alloc]
-                       initWithType:LOCAL_PUBLIC
-                       appDelegate:appDelegate
-                       username:usernameField.text]
-                      autorelease];
-
-    DiceServerView *serverView = [[[DiceServerView alloc]
-                                   initWithGame:game]
-                                  autorelease];
-    
-    [self.appDelegate.navigationController pushViewController:serverView
-                                                     animated:YES];
-}
-
-- (IBAction)joinMultiplayerGame:(id)sender {
-    DiceGame *game = [[[DiceGame alloc]
-                       initWithType:CLIENT
-                       appDelegate:self.appDelegate
-                       username:usernameField.text]
-                      autorelease];
-    
-    JoinGameView *join = [[[JoinGameView alloc] initWithGame:game]
-                          autorelease];
-    
-    [self.appDelegate.navigationController pushViewController:join
-                                                     animated:YES];
-}
-
-- (IBAction)startServerOnly:(id)sender {
-    DiceGame *game = [[[DiceGame alloc]
-                       initWithType:SERVER_ONLY
-                       appDelegate:self.appDelegate
-                       username:nil]
-                      autorelease];
-    
-    DiceServerView *serverView = [[[DiceServerView alloc]
-                                   initWithGame:game]
-                                  autorelease];
-    
-    [self.appDelegate.navigationController pushViewController:serverView
-                                                     animated:YES];
-}
- */
 
 - (void) startGameWithOpponents:(int)opponents {
     DiceGame *game = [[[DiceGame alloc]
@@ -199,9 +142,12 @@
 }
 
 - (IBAction)startGameThreeOpponents:(id)sender {
-    [self startGameWithOpponents:3];    
+    [self startGameWithOpponents:3];
 }
 
+- (IBAction)settingsPressed:(id)sender {
+	[self.navigationController pushViewController:[[[SettingsView alloc] init] autorelease] animated:YES];
+}
 
 - (IBAction)howToPlayPressed:(id)sender {
     [self.navigationController pushViewController:[[[HowToPlayView alloc] init] autorelease] animated:YES];
