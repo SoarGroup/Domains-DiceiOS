@@ -10,7 +10,10 @@
 		4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */; };
 		4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */; };
 		4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2315E6C13300D2CED9 /* SettingsView.m */; };
-		4DA8DA2615E6C13400D2CED9 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */; };
+		4DA8DA2815E8282A00D2CED9 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */; };
+		4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */; };
+		4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */; };
+		4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		C6013656152B8A6F00854485 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6013654152B8A6F00854485 /* LoadingGameView.m */; };
@@ -127,7 +130,10 @@
 		4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings.png"; sourceTree = "<group>"; };
 		4DA8DA2215E6C13300D2CED9 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		4DA8DA2315E6C13300D2CED9 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
-		4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hard.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-hard.soar"; sourceTree = "<group>"; };
+		4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hardest.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-hardest.soar"; sourceTree = "<group>"; };
+		4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-medium.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-medium.soar"; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6013653152B8A6F00854485 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
@@ -305,6 +311,9 @@
 				C68C288415CB22AC00EB07B7 /* dice-pmh.soar */,
 				C68C288215CB22A400EB07B7 /* dice-agent-p */,
 				C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */,
+				4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */,
+				4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */,
+				4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */,
 				C642BD8B155430F300643A5B /* dice-model-bot-new-old */,
 				C642BD8915542FB000643A5B /* dice-model-bot-new */,
 				C6031A571550B33A00186B8E /* default */,
@@ -498,7 +507,7 @@
 				C602E09715530148005B7D70 /* RecordStatsView.xib */,
 				4DA8DA2215E6C13300D2CED9 /* SettingsView.h */,
 				4DA8DA2315E6C13300D2CED9 /* SettingsView.m */,
-				4DA8DA2415E6C13400D2CED9 /* SettingsView.xib */,
+				4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -684,7 +693,10 @@
 				C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */,
 				4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */,
 				4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */,
-				4DA8DA2615E6C13400D2CED9 /* SettingsView.xib in Resources */,
+				4DA8DA2815E8282A00D2CED9 /* SettingsView.xib in Resources */,
+				4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */,
+				4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */,
+				4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

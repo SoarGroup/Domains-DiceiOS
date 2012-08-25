@@ -12,6 +12,8 @@
 #import "PlayGameView.h"
 #import "DiceMainMenu.h"
 
+#import "DiceDatabase.h"
+
 @implementation LoadingGameView
 @synthesize spinnerView;
 
@@ -55,8 +57,12 @@ NSString *makePlayerName(int index) {
         case 3:
             return @"Carol";
         default:
-            return @"Player";
+		{
+			DiceDatabase *database = [[DiceDatabase alloc] init];
+			
+            return [database getPlayerName];
             break;
+		}
     }
 }
 

@@ -127,7 +127,7 @@
     DiceGame *game = [[[DiceGame alloc]
                        initWithType:LOCAL_PRIVATE
                        appDelegate:self.appDelegate
-                       username:@"Player"]
+                       username:username]
                       autorelease];
     UIViewController *gameView = [[[LoadingGameView alloc] initWithGame:game numOpponents:opponents mainMenu:self] autorelease];
     [self.navigationController pushViewController:gameView animated:YES];

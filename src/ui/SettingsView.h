@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsView : UIViewController
+@interface SettingsView : UIViewController <UITextFieldDelegate>
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UIImageView *background;
+
+- (void)textFieldDidEndEditing:(UITextField *)textField;
+- (void)segmentedControlValueChanged:(UISegmentedControl *)segmentedControl;
 
 @end

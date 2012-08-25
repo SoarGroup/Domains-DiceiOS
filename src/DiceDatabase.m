@@ -183,7 +183,11 @@ void executeSql(const char *sqlStatement) {
 
 - (void) setPlayerName:(NSString *)playerName
 {
-	executeSql([[NSString stringWithFormat:@"update	settings set player_name='%@';", playerName] UTF8String]);
+	int difficulty = [self getDifficulty];
+	
+	executeSql("delete from settings;");
+	
+	executeSql([[NSString stringWithFormat:@"insert into settings (player_name, difficulty) values ('%@', %i);", playerName, difficulty] UTF8String]);
 }
 
 - (NSString *) getPlayerName
@@ -204,7 +208,7 @@ void executeSql(const char *sqlStatement) {
 			// Loop through the results and add them to the feeds array
 			while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 				// Read the data from the result row
-                const unsigned char* nameOfThePlayer = sqlite3_column_text(compiledStatement, 1);
+                const unsigned char* nameOfThePlayer = sqlite3_column_text(compiledStatement, 0);
                 
 				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:sizeof(nameOfThePlayer) encoding:NSASCIIStringEncoding];
 			}
@@ -221,7 +225,14 @@ void executeSql(const char *sqlStatement) {
 
 - (void) setDifficulty:(int)difficulty
 {
-	executeSql([[NSString stringWithFormat:@"update	settings set difficulty='%i';", difficulty] UTF8String]);
+	NSString* name = [self getPlayerName];
+	
+	if (name == nil)
+		name = @"Player";
+	
+	executeSql("delete from settings;");
+	
+	executeSql([[NSString stringWithFormat:@"insert into settings (player_name, difficulty) values ('%@', %i);", name, difficulty] UTF8String]);
 }
 
 - (int) getDifficulty
@@ -242,7 +253,7 @@ void executeSql(const char *sqlStatement) {
 			// Loop through the results and add them to the feeds array
 			while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 				// Read the data from the result row
-                difficulty = sqlite3_column_int(compiledStatement, 1);
+                difficulty = sqlite3_column_int(compiledStatement, 0);
 			}
 		} else {
             NSLog(@"SQL read error %d", error);

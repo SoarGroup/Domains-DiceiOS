@@ -39,7 +39,7 @@
     NSArray *games = [database getGameRecords];
     int y = margin;
     
-    NSString *names[] = {@"Player", @"Alice", @"Bob", @"Carol"};
+    NSString *names[] = {[database getPlayerName], @"Alice", @"Bob", @"Carol"};
     UILabel *label;
 	
 	for (int numPlayers = 2;numPlayers <= 4; ++numPlayers)

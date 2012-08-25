@@ -13,6 +13,8 @@
 #import "DiceGameState.h"
 #import "DiceGame.h"
 
+#import "DiceDatabase.h"
+
 #include <map>
 
 //#include "sml_Events.h"
@@ -128,8 +130,33 @@ typedef enum {
         // This is where we specify the root .soar file that will source the Soar agent.
         // We want this to be dice-agent-new, but right now that breaks the agent
         // so we're loading dice-p0-m0-c0 instead.
-        NSString *ruleFile = @"dice-pmh"; /* @"dice-p0-m0-c0"; */
+		
+		DiceDatabase *database = [[DiceDatabase alloc] init];
+		
+		int difficulty = [database getDifficulty];
+		
+        NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
         
+		switch (difficulty)
+		{
+			default:
+			case 0:
+			{
+				ruleFile = @"dice-medium";
+				break;
+			}
+			case 1:
+			{
+				ruleFile = @"dice-hard";
+				break;
+			}
+			case 2:
+			{
+				ruleFile = @"dice-hardest";
+				break;
+			}
+		}
+		
         if (!remoteConnected)
         {
             path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
