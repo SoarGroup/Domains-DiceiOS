@@ -210,7 +210,7 @@ void executeSql(const char *sqlStatement) {
 				// Read the data from the result row
                 const unsigned char* nameOfThePlayer = sqlite3_column_text(compiledStatement, 0);
                 
-				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:sizeof(nameOfThePlayer) encoding:NSASCIIStringEncoding];
+				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:strlen(nameOfThePlayer) encoding:NSASCIIStringEncoding];
 			}
 		} else {
             NSLog(@"SQL read error %d", error);

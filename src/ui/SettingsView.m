@@ -54,13 +54,13 @@
 	UILabel *playerLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, height)] autorelease];
 	
 	playerLabel.backgroundColor = [UIColor clearColor];
-	playerLabel.text = @"Player Name:";
+	playerLabel.text = @"Name:";
 	
 	[playerLabel setFont:[UIFont boldSystemFontOfSize:playerLabel.font.pointSize]];
 	
 	[self.scrollView addSubview:playerLabel];
 	
-	UITextField *playerNameInput = [[[UITextField alloc] initWithFrame:CGRectMake(labelWidth + margin * 2, y, textFieldWidth, height)] autorelease];
+	UITextField *playerNameInput = [[[UITextField alloc] initWithFrame:CGRectMake(margin * 9, y, viewSize.width - margin * 11, height)] autorelease];
 	
 	playerNameInput.placeholder = playerName;
 	playerNameInput.backgroundColor = [UIColor clearColor];
@@ -68,15 +68,19 @@
 	playerNameInput.borderStyle = UITextBorderStyleRoundedRect;
 	playerNameInput.delegate = self;
 	
+	[playerNameInput setValue:[UIColor darkGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+	
 	[self.scrollView addSubview:playerNameInput];
 	
 	y += height + margin;
 	
-	UILabel *difficultyLabel = [[[UILabel alloc] initWithFrame:CGRectMake(self.scrollView.center.x - labelWidth/3.0, y, labelWidth, height)] autorelease];
+	UILabel *difficultyLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, viewSize.width - margin * 2, height)] autorelease];
 	difficultyLabel.backgroundColor = [UIColor clearColor];
 	difficultyLabel.text = @"Difficulty:";
 	
 	[difficultyLabel setFont:[UIFont boldSystemFontOfSize:difficultyLabel.font.pointSize]];
+	
+	difficultyLabel.textAlignment = UITextAlignmentCenter;
 	
 	[self.scrollView addSubview:difficultyLabel];
 	
@@ -99,6 +103,21 @@
 	[self.scrollView addSubview:difficultySelector];
 	
 	y += height + margin;
+	
+	UILabel *credits = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y + margin, viewSize.width - margin * 2, (height + margin) * 6)] autorelease];
+	
+	credits.backgroundColor = [UIColor clearColor];
+	credits.text = @"Credits:\n\nAlex Turner\n\nMiller Tinkerhess\n\nNate Derbinsky\n\nProfessor John Laird\n\nUniversity of Michigan";
+	
+	[credits setNumberOfLines:0];
+	
+	[credits setFont:[UIFont boldSystemFontOfSize:difficultyLabel.font.pointSize]];
+	
+	credits.textAlignment = UITextAlignmentCenter;
+	
+	[self.scrollView addSubview:credits];
+	
+	y += margin + (height + margin) * 6 + margin;
 	
 	y += margin * 2;
 	
@@ -131,6 +150,14 @@
 {
 	[textField resignFirstResponder];
 	return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	if (range.location >= 18)
+		return NO; // return NO to not change text
+	
+	return YES;
 }
 
 - (void)segmentedControlValueChanged:(UISegmentedControl *)segmentedControl
