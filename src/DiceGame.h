@@ -49,6 +49,8 @@ typedef enum DiceGameType {
     BOOL deferNotification;
     
     GameTime time;
+	
+	int nextID;
 }
 
 -(DiceGame*)initWithType:(DiceGameType)type appDelegate:(DiceApplicationDelegate*)appDelegate username:(NSString*)usernameOrNil;

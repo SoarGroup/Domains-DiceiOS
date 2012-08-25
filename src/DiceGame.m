@@ -28,6 +28,7 @@
     self.gameState = nil;
     started = NO;
     time = [DiceDatabase getCurrentGameTime];
+	nextID = 0;
     
     switch (aType) {
         case SERVER_ONLY:
@@ -94,7 +95,6 @@
 }
 
 -(int)getNextID {
-    static int nextID = 0;
     return nextID++;
 }
 

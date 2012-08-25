@@ -70,6 +70,8 @@
 	
 	[playerNameInput setValue:[UIColor darkGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
 	
+	[playerNameInput setReturnKeyType:UIReturnKeyDone];
+	
 	[self.scrollView addSubview:playerNameInput];
 	
 	y += height + margin;
@@ -140,8 +142,13 @@
 	if (textField == nil)
 		return;
 	
+	NSString *playerName = textField.text;
+	
+	if ([playerName length] == 0 || [playerName isEqualToString:@"\n"])
+		playerName = @"Player";
+	
 	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-	[database setPlayerName:textField.text];
+	[database setPlayerName:playerName];
 	
 	[self doLayout];
 }

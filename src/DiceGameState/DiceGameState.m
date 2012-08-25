@@ -634,7 +634,7 @@
     player.hasLost = YES;
     --playersLeft;
     // [player setNumberOfDice:0];
-    if (playersLeft == 1)
+    if (playersLeft <= 1)
     {
         [self goToNextPlayerWhoHasntLost];
         
