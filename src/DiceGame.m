@@ -101,10 +101,20 @@
 -(void)startGame
 {
     assert(!self.started);
+	
+	NSMutableArray *mut = [[[NSMutableArray alloc] initWithArray:self.players] autorelease];
+	
+	//Shuffle the array
+	for (int i = 0;i < 16;i++)
+		[mut exchangeObjectAtIndex:rand()%[mut count] withObjectAtIndex:rand()%[mut count]];
+	
+	self.players = [[[NSArray alloc] initWithArray:mut] autorelease];
+	
     self.started = YES;
     self.gameState = [[[DiceGameState alloc] initWithPlayers:self.players
                                                 numberOfDice:5 game:self]
                       autorelease];
+		
     [self publishState];
     [self notifyCurrentPlayer];
 }

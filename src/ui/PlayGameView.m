@@ -361,10 +361,15 @@ NSArray *buildDiceImages() {
     int dividerHeight = 8 / 2;
     int dy = labelHeight + diceHeight + dividerHeight;
     int buttonWidth = 160 / 2;
+	bool hasHitControl = false;
+	
     for (PlayerState *playerState in playerStates)
     {
         // Whether this player is the play that we're controlling
         bool control = self.state.playerID == playerState.playerID;
+		
+		if (control)
+			hasHitControl = true;
 
         if (playerState.hasLost && !control)
         {
@@ -379,8 +384,9 @@ NSArray *buildDiceImages() {
         
         int starSize = 64 / 2;
         int x = starSize;
-        int y = labelIndex * dy;
-        int width = parent.frame.size.width;
+		
+        int y = (hasHitControl ? labelIndex : labelIndex + 1) * dy;
+		int width = parent.frame.size.width;
         int height = labelHeight;
         UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[self.images objectAtIndex:BAR]] autorelease];
         dividerView.frame = CGRectMake(0, y, width, dividerHeight);

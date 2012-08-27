@@ -580,7 +580,7 @@
     
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
-        if ([player isInSpecialRules] && playersLeft > 2)
+        if ([player isInSpecialRules] && playersLeft > 1)
         {
             inSpecialRules = YES;
         }

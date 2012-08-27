@@ -92,7 +92,7 @@
 - (void)isNewRound
 {
     [self.lock lock];
-    if (numberOfDice == 1 && !hasDoneSpecialRules && [self getNumberOfPlayers] > 2)
+    if (numberOfDice == 1 && !hasDoneSpecialRules && [self getNumberOfPlayers] > 1)
     {
         specialRules = YES;
         hasDoneSpecialRules = YES;
