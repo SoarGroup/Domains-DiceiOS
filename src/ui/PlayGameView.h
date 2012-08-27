@@ -33,13 +33,15 @@ const int pushMargin();
     UIButton *bidCountButton;
     UIButton *bidFaceButton;
     UILabel *previousBidLabel;
+	NSMutableArray *previousBidImageViews;
+	
     UIView *controlStateView;
     UIView *gameStateView;
     
     NSMutableArray *challengeButtons;
     NSMutableArray *tempViews;
     UILabel *bidCountLabel;
-    UILabel *bidFaceLabel;
+    UIImageView *bidFaceLabel;
     UIButton *bidCountPlusButton;
     UIButton *bidCountMinusButton;
     UIButton *bidFacePlusButton;
@@ -81,7 +83,7 @@ const int pushMargin();
 - (IBAction)bidPressed:(id)sender;
 - (IBAction)exactPressed:(id)sender;
 @property (nonatomic, retain) IBOutlet UILabel *bidCountLabel;
-@property (nonatomic, retain) IBOutlet UILabel *bidFaceLabel;
+@property (nonatomic, retain) IBOutlet UIImageView *bidFaceLabel;
 @property (nonatomic, retain) IBOutlet UIButton *bidCountPlusButton;
 @property (nonatomic, retain) IBOutlet UIButton *bidCountMinusButton;
 @property (nonatomic, retain) IBOutlet UIButton *bidFacePlusButton;

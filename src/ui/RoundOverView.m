@@ -25,6 +25,8 @@
         self.game = aGame;
         self.player = aPlayer;
         self.playGameView = aPlayGameView;
+		
+		previousBidImageViews = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -49,6 +51,78 @@
     
     NSString *headerString = [self.game.gameState headerString:-1 singleLine:YES];
     NSString *lastMoveString = [self.game.gameState historyText:[self.game.gameState lastHistoryItem].player.playerID];
+	
+	int line = 0;
+	int location = 0;
+	
+	for (NSUInteger i = 0;i < [headerString length];i++)
+	{
+		if (isdigit([headerString characterAtIndex:i]))
+		{
+			int number = 0;
+			
+			int startLocation = i;
+			
+			for (;i < [headerString length];i++)
+			{
+				if (!isdigit([headerString characterAtIndex:i]))
+					break;
+				
+				number *= 10;
+				number += (int)([headerString characterAtIndex:i] - '0');
+			}
+			
+			if (i == [headerString length])
+				continue;
+			
+			if ([headerString characterAtIndex:i] == 's')
+			{
+				NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
+				
+				for (NSUInteger g = startLocation;g > 0;g--)
+				{
+					if ([headerString characterAtIndex:g] != '\n')
+					{
+						unichar* characters = (unichar*)malloc(sizeof(unichar));
+						characters[0] = [headerString characterAtIndex:g];
+						
+						[previousPart insertString:[NSString stringWithCharacters:characters length:1] atIndex:0];
+					}
+					else
+						break;
+				}
+				
+				CGSize widthSize = [previousPart sizeWithFont:titleLabel.font];
+								
+				int x = (int)widthSize.width + titleLabel.frame.origin.x - (line * 10);
+				
+				int y = (int)widthSize.height * line + titleLabel.frame.origin.y + 12;
+				
+				UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 15, 15)];
+				[imageView setImage:[self.playGameView imageForDie:number]];
+				
+				[self.view addSubview:imageView];
+				
+				[previousBidImageViews addObject:imageView];
+				
+				NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
+				
+				for (int j = 0;j < (i - startLocation) + 3;j++)
+					[spaces insertString:@" " atIndex:0];
+				
+				headerString = [headerString stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
+			}
+		}
+		
+		location++;
+		
+		if ([headerString characterAtIndex:i] == '\n')
+		{
+			line++;
+			location = 0;
+		}
+	}
+	
     titleLabel.text = [NSString stringWithFormat:@"%@\n%@", headerString, lastMoveString];
     
     int bidValue = [self.game.gameState previousBid].rankOfDie;
@@ -195,6 +269,14 @@
     [titleLabel release];
     [diceView release];
     [doneButton release];
+	
+	for (UIImageView* view in previousBidImageViews)
+	{
+		[view removeFromSuperview];
+		[view release];
+	}
+	
+	[previousBidImageViews release];
     [super dealloc];
 }
 @end

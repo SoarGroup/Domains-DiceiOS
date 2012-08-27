@@ -124,6 +124,10 @@
 }
 
 - (void) startGameWithOpponents:(int)opponents {
+	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+	
+	username = [database getPlayerName];
+	
     DiceGame *game = [[[DiceGame alloc]
                        initWithType:LOCAL_PRIVATE
                        appDelegate:self.appDelegate

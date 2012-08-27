@@ -109,7 +109,7 @@
 	UILabel *credits = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y + margin, viewSize.width - margin * 2, (height + margin) * 6)] autorelease];
 	
 	credits.backgroundColor = [UIColor clearColor];
-	credits.text = @"Credits:\n\nAlex Turner\n\nMiller Tinkerhess\n\nNate Derbinsky\n\nProfessor John Laird\n\nUniversity of Michigan";
+	credits.text = @"Credits:\n\nNate Derbinsky\n\nJohn Laird\n\nMiller Tinkerhess\n\nAlex Turner\n\nUniversity of Michigan";
 	
 	[credits setNumberOfLines:0];
 	

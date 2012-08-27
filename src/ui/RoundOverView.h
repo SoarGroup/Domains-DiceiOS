@@ -17,6 +17,8 @@
     PlayGameView *playGameView;
     UILabel *titleLabel;
     UIView *diceView;
+	
+	NSMutableArray *previousBidImageViews;
 }
 
 - (id) initWithGame:(DiceGame*)game player:(PlayerState*)player playGameView:(PlayGameView *)playGameView;
