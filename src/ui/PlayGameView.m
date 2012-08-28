@@ -552,7 +552,7 @@ NSArray *buildDiceImages() {
 					
 					NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
 					
-					for (int j = 0;j < (i - startLocation) + 3;j++)
+					for (int j = 0;j < (i - startLocation) + 4;j++)
 						[spaces insertString:@" " atIndex:0];
 					
 					nameLabelText = [nameLabelText stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
@@ -702,12 +702,42 @@ NSArray *buildDiceImages() {
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
 	
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
+	for (int i = 0;i < [bidStr length];i++)
+	{
+		int startLocation = i;
+		
+		for (;i < [bidStr length];i++)
+		{
+			if (!isdigit([bidStr characterAtIndex:i]))
+				break;
+		}
+		
+		if (i == [bidStr length])
+			continue;
+		
+		if ([bidStr characterAtIndex:i] == 's')
+		{
+			NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
+	
+			for (int j = 0;j < (i - startLocation) + 4;j++)
+				[spaces insertString:@" " atIndex:0];
+		
+			bidStr = [bidStr stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
+		}
+	}
+	
+	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
                                                      message:bidStr
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles:nil]
-                          autorelease];
+						  autorelease];
+	
+	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (currentBidCount >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
+	[dieFace setImage:[self imageForDie:currentBidFace]];
+	
+	[alert addSubview:dieFace];
+	
     Bid *challengeableBid = [state getChallengeableBid];
     if (challengeableBid != nil)
     {
@@ -764,7 +794,7 @@ NSArray *buildDiceImages() {
     
     NSString *title = [NSString stringWithFormat:@"Bid %d        ?", currentBidCount];
     NSArray *push = [self makePushedDiceArray];
-    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d %@?", [push count], ([push count] == 1 ? @"die" : @"dice")];
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                      message:message
                                                     delegate:self
@@ -784,6 +814,31 @@ NSArray *buildDiceImages() {
 - (IBAction)exactPressed:(id)sender {
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
+	
+	for (int i = 0;i < [bidStr length];i++)
+	{
+		int startLocation = i;
+		
+		for (;i < [bidStr length];i++)
+		{
+			if (!isdigit([bidStr characterAtIndex:i]))
+				break;
+		}
+		
+		if (i == [bidStr length])
+			continue;
+		
+		if ([bidStr characterAtIndex:i] == 's')
+		{
+			NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
+			
+			for (int j = 0;j < (i - startLocation) + 4;j++)
+				[spaces insertString:@" " atIndex:0];
+			
+			bidStr = [bidStr stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
+		}
+	}
+	
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Exact?"
                                                      message:bidStr
                                                     delegate:self
@@ -791,6 +846,12 @@ NSArray *buildDiceImages() {
                                            otherButtonTitles:@"Exact", nil]
                           autorelease];
     alert.tag = ACTION_EXACT;
+	
+	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (currentBidCount >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
+	[dieFace setImage:[self imageForDie:currentBidFace]];
+	
+	[alert addSubview:dieFace];
+	
     [alert show];
 }
 

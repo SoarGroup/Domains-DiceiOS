@@ -106,7 +106,12 @@
 	
 	//Shuffle the array
 	for (int i = 0;i < 16;i++)
-		[mut exchangeObjectAtIndex:rand()%[mut count] withObjectAtIndex:rand()%[mut count]];
+		[mut exchangeObjectAtIndex:(rand()%([mut count]-1)+1) withObjectAtIndex:(rand()%([mut count]-1)+1)];
+	
+	int shouldMovePlayer = rand()%100;
+	
+	if (shouldMovePlayer >= 49)
+		[mut exchangeObjectAtIndex:0 withObjectAtIndex:([mut count]-1)];
 	
 	self.players = [[[NSArray alloc] initWithArray:mut] autorelease];
 	

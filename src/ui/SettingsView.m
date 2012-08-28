@@ -109,7 +109,7 @@
 	UILabel *credits = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y + margin, viewSize.width - margin * 2, (height + margin) * 6)] autorelease];
 	
 	credits.backgroundColor = [UIColor clearColor];
-	credits.text = @"Credits:\n\nNate Derbinsky\n\nJohn Laird\n\nMiller Tinkerhess\n\nAlex Turner\n\nUniversity of Michigan";
+	credits.text = @"Credits:\n\nGame Engine and Interface\nMiller Tinkerhess and Alex Turner\n\nGame Engine\nNate Derbinsky\n\nGame AI\nJohn Laird";
 	
 	[credits setNumberOfLines:0];
 	
@@ -121,7 +121,18 @@
 	
 	y += margin + (height + margin) * 6 + margin;
 	
-	y += margin * 2;
+	UILabel *versionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, height)] autorelease];
+	
+	versionLabel.backgroundColor = [UIColor clearColor];
+	versionLabel.text = @"Version: 1.0";
+	
+	[versionLabel setFont:[UIFont boldSystemFontOfSize:versionLabel.font.pointSize]];
+	
+	[self.scrollView addSubview:versionLabel];
+	
+	y += height + margin;
+	
+	//y += margin * 2;
 	
 	self.scrollView.contentSize = CGSizeMake(0, y - margin);
 }
