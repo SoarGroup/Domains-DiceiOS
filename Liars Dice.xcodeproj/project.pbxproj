@@ -795,6 +795,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+				);
 				PRODUCT_NAME = "Liars Dice";
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
 				SKIP_INSTALL = NO;
@@ -887,6 +891,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+				);
 				PRODUCT_NAME = "Liars Dice";
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
 				SKIP_INSTALL = NO;
@@ -910,6 +918,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Lairs-Dice/Liars Dice-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+				);
 				PRODUCT_NAME = "Liars Dice";
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
 				SKIP_INSTALL = NO;

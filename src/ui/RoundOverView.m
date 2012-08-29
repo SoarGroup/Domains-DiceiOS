@@ -136,6 +136,9 @@
     int starSize = 64 / 2;
     int pushAmount = 0;
     int dy = labelHeight + diceHeight + dividerHeight + pushAmount;
+	
+	BOOL displayedPlayer = NO;
+	
     for (PlayerState *playerState in playerStates)
     {
         if ([playerState.arrayOfDice count] == 0)
@@ -144,12 +147,18 @@
         }
         ++i;
                 
-        int labelIndex = i;
+        int labelIndex = (displayedPlayer ? i : i + 1);
+		
+		if (playerState.playerID == self.player.playerID)
+		{
+			displayedPlayer = YES;
+			labelIndex = 0;
+		}
         
         int x = 0;
         int y = labelIndex * dy;
         int width = diceView.frame.size.width;
-        
+		
         CGRect dividerRect = CGRectMake(x, y, width, dividerHeight);
         UIImage *dividerImage = [self.playGameView.images objectAtIndex:BAR];
         UIImageView *barView = [[[UIImageView alloc] initWithImage:dividerImage] autorelease];

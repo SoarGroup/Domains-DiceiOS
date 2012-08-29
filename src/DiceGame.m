@@ -205,13 +205,13 @@
 {
     int numPlayers = self.players.count;
     NSMutableArray *losers = self.gameState.losers;
-    int numLosers = losers.count;
-    int currentLoser = numLosers;
     int places[] = {-1, -1, -1, -1};
-    for (NSNumber *loser in losers) {
-        places[currentLoser] = [loser intValue];
-        --currentLoser;
-    }
+	for (int i = [losers count];i > 0;i--)
+	{
+		NSNumber *loser = [losers objectAtIndex:i-1];
+		places[i] = [loser intValue];
+	}
+	
     id <Player> winner = [gameState gameWinner];
     if (winner != nil) {
         places[0] = [winner getID];

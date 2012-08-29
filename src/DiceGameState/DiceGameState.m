@@ -580,7 +580,7 @@
     
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
-        if ([player isInSpecialRules] && playersLeft > 1)
+        if ([player isInSpecialRules] && playersLeft > 2)
         {
             inSpecialRules = YES;
         }
@@ -653,6 +653,9 @@
         bid.numberOfDice < 1) {
         return NO;
     }
+	
+	if ([[bid diceToPush] count] >= [[self getCurrentPlayerState] numberOfDice])
+		return NO;
     
     //Check if there is a previous bid, otherwise the bid is automatically valid
     if (!self.previousBid) return YES;
@@ -660,6 +663,7 @@
     //Make sure the bid is a legal raise over the previous bid
     if (![bid isLegalRaise:self.previousBid specialRules:[self usingSpecialRules] playerSpecialRules:playerSpecialRules])
         return NO;
+	
     return YES;
 }
 

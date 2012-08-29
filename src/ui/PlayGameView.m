@@ -425,6 +425,9 @@ NSArray *buildDiceImages() {
 			
 			int y = (int)widthSize.height * [line integerValue] + self.previousBidLabel.frame.origin.y + 10;
 			
+			if ([self.state.gameState usingSpecialRules])
+				y -= 10;
+			
 			NSNumber *die = [numbers objectAtIndex:i];
 			
 			int dieValue = [die integerValue];
@@ -773,17 +776,25 @@ NSArray *buildDiceImages() {
 
 - (IBAction)bidPressed:(id)sender {
     // Check that the bid is legal
-    Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace] autorelease];
+	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[state markedToPushDice]];
+	[markedToPushDiceWithPushedDice addObjectsFromArray:[state pushedDice]];
+	
+    Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice] autorelease];
     if (!([game.gameState getCurrentPlayerState].playerID == state.playerID && [game.gameState checkBid:bid playerSpecialRules:([game.gameState usingSpecialRules] && [state numberOfDice] > 1)])) {
         NSString *title = @"Illegal raise";
-        NSString *message = [NSString stringWithFormat:@"Can't bid %d       ", currentBidCount];
+		NSString *pushedDice = @"";
+		
+		if ([markedToPushDiceWithPushedDice count] > 0)
+			pushedDice = [NSString stringWithFormat:@",\nAnd push %d %@", [[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
+		
+        NSString *message = [NSString stringWithFormat:@"Can't bid %d       %@", currentBidCount, pushedDice];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:nil
                                                cancelButtonTitle:@"Okay"
                                                otherButtonTitles:nil]
                               autorelease];
-		UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170, 43, 25, 25)] autorelease];
+		UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 - ([markedToPushDiceWithPushedDice count] > 0 ? 3 : 0), 43, 25, 25)] autorelease];
 		[dieFace setImage:[self imageForDie:currentBidFace]];
 		
 		[alert addSubview:dieFace];

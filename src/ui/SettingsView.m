@@ -92,9 +92,9 @@
 	
 	difficultySelector.backgroundColor = [UIColor clearColor];
 	
-	[difficultySelector insertSegmentWithTitle:@"Medium" atIndex:0 animated:NO];
-	[difficultySelector insertSegmentWithTitle:@"Hard" atIndex:1 animated:NO];
-	[difficultySelector insertSegmentWithTitle:@"Call Me HAL" atIndex:2 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Good" atIndex:0 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Better" atIndex:1 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Best" atIndex:2 animated:NO];
 	
 	difficultySelector.segmentedControlStyle = UISegmentedControlStyleBar;
 	
@@ -121,10 +121,12 @@
 	
 	y += margin + (height + margin) * 6 + margin;
 	
-	UILabel *versionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, labelWidth, height)] autorelease];
+	UILabel *versionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, viewSize.width - margin * 2, height)] autorelease];
 	
 	versionLabel.backgroundColor = [UIColor clearColor];
-	versionLabel.text = @"Version: 1.0";
+	versionLabel.text = @"AI Engine: Soar";
+	
+	versionLabel.textAlignment = UITextAlignmentCenter;
 	
 	[versionLabel setFont:[UIFont boldSystemFontOfSize:versionLabel.font.pointSize]];
 	

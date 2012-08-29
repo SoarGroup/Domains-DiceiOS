@@ -56,6 +56,7 @@
 
 - (NSArray *)unPushedDice;
 - (NSArray *)pushedDice;
+- (NSArray *)markedToPushDice;
 
 - (BOOL)canBid;
 - (BOOL)hasWon;

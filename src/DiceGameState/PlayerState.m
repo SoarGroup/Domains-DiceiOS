@@ -92,7 +92,7 @@
 - (void)isNewRound
 {
     [self.lock lock];
-    if (numberOfDice == 1 && !hasDoneSpecialRules && [self getNumberOfPlayers] > 1)
+    if (numberOfDice == 1 && !hasDoneSpecialRules && [self getNumberOfPlayers] > 2)
     {
         specialRules = YES;
         hasDoneSpecialRules = YES;
@@ -202,6 +202,25 @@
     
     NSArray *array = [[NSArray alloc] initWithArray:pushedDice];
     [pushedDice release];
+    [array autorelease];
+    [self.lock unlock];
+    return array;
+}
+
+- (NSArray *)markedToPushDice
+{
+	[self.lock lock];
+    NSMutableArray *markedDice = [[NSMutableArray alloc] init];
+    for (Die *die in arrayOfDice) {
+        if ([die isKindOfClass:[Die class]]) {
+            if ([die markedToPush] && ![die hasBeenPushed]) {
+                [markedDice addObject:die];
+            }
+        }
+    }
+    
+    NSArray *array = [[NSArray alloc] initWithArray:markedDice];
+    [markedDice release];
     [array autorelease];
     [self.lock unlock];
     return array;
