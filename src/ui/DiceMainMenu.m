@@ -128,6 +128,9 @@
 	
 	username = [database getPlayerName];
 	
+	if ([username length] == 0)
+		username = @"Player";
+	
     DiceGame *game = [[[DiceGame alloc]
                        initWithType:LOCAL_PRIVATE
                        appDelegate:self.appDelegate
