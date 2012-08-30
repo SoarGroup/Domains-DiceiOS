@@ -92,9 +92,11 @@
 	
 	difficultySelector.backgroundColor = [UIColor clearColor];
 	
-	[difficultySelector insertSegmentWithTitle:@"Good" atIndex:0 animated:NO];
-	[difficultySelector insertSegmentWithTitle:@"Better" atIndex:1 animated:NO];
-	[difficultySelector insertSegmentWithTitle:@"Best" atIndex:2 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Easy" atIndex:0 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Medium" atIndex:1 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Hard" atIndex:2 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Harder" atIndex:3 animated:NO];
+	[difficultySelector insertSegmentWithTitle:@"Hardest" atIndex:4 animated:NO];
 	
 	difficultySelector.segmentedControlStyle = UISegmentedControlStyleBar;
 	

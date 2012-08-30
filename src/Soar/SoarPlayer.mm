@@ -142,15 +142,25 @@ typedef enum {
 			default:
 			case 0:
 			{
-				ruleFile = @"dice-medium";
+				ruleFile = @"dice-easy";
 				break;
 			}
 			case 1:
 			{
-				ruleFile = @"dice-hard";
+				ruleFile = @"dice-medium";
 				break;
 			}
 			case 2:
+			{
+				ruleFile = @"dice-hard";
+				break;
+			}
+			case 3:
+			{
+				ruleFile = @"dice-harder";
+				break;
+			}
+			case 4:
 			{
 				ruleFile = @"dice-hardest";
 				break;
