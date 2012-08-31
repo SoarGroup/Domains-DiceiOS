@@ -67,9 +67,7 @@
 	[playerNameInput setFont:[UIFont boldSystemFontOfSize:playerNameInput.font.pointSize]];
 	playerNameInput.borderStyle = UITextBorderStyleRoundedRect;
 	playerNameInput.delegate = self;
-	
-	[playerNameInput setValue:[UIColor darkGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
-	
+		
 	[playerNameInput setReturnKeyType:UIReturnKeyDone];
 	
 	[self.scrollView addSubview:playerNameInput];
