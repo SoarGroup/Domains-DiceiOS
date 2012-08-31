@@ -1,1 +1,3 @@
 Open the Xcode Workspace for the Latest Version
+
+If you want to use the MSoar Provisioning Profile, make sure to change the bundle identifier to be "org.msoar.<leave the original part here>" instead of "edu.umich.".
