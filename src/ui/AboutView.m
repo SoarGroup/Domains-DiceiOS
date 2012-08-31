@@ -15,6 +15,15 @@
 @implementation AboutView
 @synthesize webView;
 
+- (id)init
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+		
+    }
+    return self;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
