@@ -436,11 +436,6 @@
 # define _STLSOFT_SIZEOF_INT            (4)
 # define _STLSOFT_SIZEOF_LONG           (4)
 # define _STLSOFT_SIZEOF_LONG_LONG      (8)
-#elif TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-# define _STLSOFT_SIZEOF_SHORT          (sizeof(short))
-# define _STLSOFT_SIZEOF_INT            (sizeof(int))
-# define _STLSOFT_SIZEOF_LONG           (sizeof(long))
-# define _STLSOFT_SIZEOF_LONG_LONG      (sizeof(long long))
 #else /* ? data model */
 # error Use of GCC has not been verified with any memory model other than LP64 and LLP64. Please contact Synesis Software
 #endif /* data model */

@@ -28,6 +28,7 @@
 @synthesize twoOpponentButton;
 @synthesize threeOpponentButton;
 @synthesize settingsButton;
+@synthesize aboutButton;
 @synthesize howToPlayButton;
 @synthesize singlePlayerButton;
 @synthesize multiPlayerButton;
@@ -120,6 +121,7 @@
     [twoOpponentButton release];
     [threeOpponentButton release];
 	[settingsButton release];
+	[aboutButton release];
     [howToPlayButton release];
     [statsButton release];
     [super dealloc];

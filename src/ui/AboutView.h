@@ -2,7 +2,7 @@
 //  AboutView.h
 //  Liars Dice
 //
-//  Created by Alex Turner on 8/23/12.
+//  Created by Alex Turner on 8/31/12.
 //
 //
 

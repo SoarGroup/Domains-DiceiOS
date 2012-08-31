@@ -10,6 +10,10 @@
 		4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC815F0F8B100265801 /* button-about-pressed.png */; };
 		4D12BDCB15F0F8B100265801 /* button-about.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC915F0F8B100265801 /* button-about.png */; };
 		4D12BDD115F0FDF200265801 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD015F0FDF200265801 /* about.html */; };
+		4D12BDD515F0FFC100265801 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BDD315F0FFC000265801 /* AboutView.m */; };
+		4D12BDD615F0FFC100265801 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD415F0FFC000265801 /* AboutView.xib */; };
+		4D12BDD915F1094B00265801 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD715F1094B00265801 /* icon.png */; };
+		4D12BDDC15F1098400265801 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDDB15F1098400265801 /* Default.png */; };
 		4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF815EFB3A200829BC6 /* dice-easy.soar */; };
 		4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF915EFB3A200829BC6 /* dice-harder.soar */; };
 		4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */; };
@@ -133,10 +137,13 @@
 /* Begin PBXFileReference section */
 		4D12BDC815F0F8B100265801 /* button-about-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about-pressed.png"; sourceTree = "<group>"; };
 		4D12BDC915F0F8B100265801 /* button-about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about.png"; sourceTree = "<group>"; };
-		4D12BDCD15F0FA2F00265801 /* AboutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
-		4D12BDCE15F0FA2F00265801 /* AboutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
-		4D12BDCF15F0FA2F00265801 /* AboutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
 		4D12BDD015F0FDF200265801 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		4D12BDD215F0FFC000265801 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		4D12BDD315F0FFC000265801 /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
+		4D12BDD415F0FFC000265801 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		4D12BDD715F1094B00265801 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		4D12BDDB15F1098400265801 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		4D12BDDD15F1098E00265801 /* Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4D55DFF815EFB3A200829BC6 /* dice-easy.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-easy.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-easy.soar"; sourceTree = "<group>"; };
 		4D55DFF915EFB3A200829BC6 /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-harder.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-harder.soar"; sourceTree = "<group>"; };
 		4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings-pressed.png"; sourceTree = "<group>"; };
@@ -526,9 +533,9 @@
 				4DA8DA2215E6C13300D2CED9 /* SettingsView.h */,
 				4DA8DA2315E6C13300D2CED9 /* SettingsView.m */,
 				4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */,
-				4D12BDCD15F0FA2F00265801 /* AboutView.xib */,
-				4D12BDCE15F0FA2F00265801 /* AboutView.m */,
-				4D12BDCF15F0FA2F00265801 /* AboutView.h */,
+				4D12BDD215F0FFC000265801 /* AboutView.h */,
+				4D12BDD315F0FFC000265801 /* AboutView.m */,
+				4D12BDD415F0FFC000265801 /* AboutView.xib */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -536,11 +543,14 @@
 		CD86D63813BB9E450005A182 = {
 			isa = PBXGroup;
 			children = (
+				4D12BDDD15F1098E00265801 /* Liars Dice.entitlements */,
+				4D12BDDB15F1098400265801 /* Default.png */,
 				C66E167515548AEF002190BD /* Default@2x.png */,
 				C61F629C1552D6060065D8BB /* Database */,
 				C6031A561550B32E00186B8E /* Soar Rules */,
 				C6951844155045D900BD15DA /* Supporting Files */,
 				C6951840155042AC00BD15DA /* icon@2x.png */,
+				4D12BDD715F1094B00265801 /* icon.png */,
 				C6951839154F9F9300BD15DA /* html */,
 				C690D57D152CD5ED00AC3020 /* Graphics */,
 				C6F66149143BA53800EF3AD2 /* src */,
@@ -723,6 +733,9 @@
 				4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */,
 				4D12BDCB15F0F8B100265801 /* button-about.png in Resources */,
 				4D12BDD115F0FDF200265801 /* about.html in Resources */,
+				4D12BDD615F0FFC100265801 /* AboutView.xib in Resources */,
+				4D12BDD915F1094B00265801 /* icon.png in Resources */,
+				4D12BDDC15F1098400265801 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +778,7 @@
 				C61F62AB1552E5C20065D8BB /* GameRecordView.m in Sources */,
 				C602E09815530148005B7D70 /* RecordStatsView.m in Sources */,
 				4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */,
+				4D12BDD515F0FFC100265801 /* AboutView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
