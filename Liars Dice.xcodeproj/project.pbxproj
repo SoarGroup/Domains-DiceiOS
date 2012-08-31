@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC815F0F8B100265801 /* button-about-pressed.png */; };
+		4D12BDCB15F0F8B100265801 /* button-about.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC915F0F8B100265801 /* button-about.png */; };
+		4D12BDD115F0FDF200265801 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD015F0FDF200265801 /* about.html */; };
 		4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF815EFB3A200829BC6 /* dice-easy.soar */; };
 		4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF915EFB3A200829BC6 /* dice-harder.soar */; };
 		4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */; };
@@ -128,6 +131,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D12BDC815F0F8B100265801 /* button-about-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about-pressed.png"; sourceTree = "<group>"; };
+		4D12BDC915F0F8B100265801 /* button-about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about.png"; sourceTree = "<group>"; };
+		4D12BDCD15F0FA2F00265801 /* AboutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		4D12BDCE15F0FA2F00265801 /* AboutView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
+		4D12BDCF15F0FA2F00265801 /* AboutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		4D12BDD015F0FDF200265801 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		4D55DFF815EFB3A200829BC6 /* dice-easy.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-easy.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-easy.soar"; sourceTree = "<group>"; };
 		4D55DFF915EFB3A200829BC6 /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-harder.soar"; path = "Lairs-Dice/Soar Code/Soar Rules/dice-harder.soar"; sourceTree = "<group>"; };
 		4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings-pressed.png"; sourceTree = "<group>"; };
@@ -361,6 +370,8 @@
 		C690D57D152CD5ED00AC3020 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				4D12BDC815F0F8B100265801 /* button-about-pressed.png */,
+				4D12BDC915F0F8B100265801 /* button-about.png */,
 				C602E09A15531E38005B7D70 /* button-stats-pressed.png */,
 				4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */,
 				4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */,
@@ -406,6 +417,7 @@
 		C6951839154F9F9300BD15DA /* html */ = {
 			isa = PBXGroup;
 			children = (
+				4D12BDD015F0FDF200265801 /* about.html */,
 				C695183A154F9F9400BD15DA /* rules.html */,
 			);
 			path = html;
@@ -514,6 +526,9 @@
 				4DA8DA2215E6C13300D2CED9 /* SettingsView.h */,
 				4DA8DA2315E6C13300D2CED9 /* SettingsView.m */,
 				4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */,
+				4D12BDCD15F0FA2F00265801 /* AboutView.xib */,
+				4D12BDCE15F0FA2F00265801 /* AboutView.m */,
+				4D12BDCF15F0FA2F00265801 /* AboutView.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -705,6 +720,9 @@
 				4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */,
 				4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */,
 				4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */,
+				4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */,
+				4D12BDCB15F0F8B100265801 /* button-about.png in Resources */,
+				4D12BDD115F0FDF200265801 /* about.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

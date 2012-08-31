@@ -46,6 +46,8 @@
 @property (retain, nonatomic) IBOutlet UIButton *threeOpponentButton;
 @property (retain, nonatomic) IBOutlet UIButton *settingsButton;
 - (IBAction)settingsPressed:(id)sender;
+@property (retain, nonatomic) IBOutlet UIButton *aboutButton;
+- (IBAction)aboutPressed:(id)sender;
 @property (retain, nonatomic) IBOutlet UIButton *howToPlayButton;
 - (IBAction)howToPlayPressed:(id)sender;
 - (IBAction)recordsPressed:(id)sender;

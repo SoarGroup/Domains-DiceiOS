@@ -19,6 +19,7 @@
 #import "HowToPlayView.h"
 #import "RecordStatsView.h"
 #import "SettingsView.h"
+#import "AboutView.h"
 #import "DiceDatabase.h"
 
 @implementation DiceMainMenu
@@ -63,7 +64,8 @@
 	[self.twoOpponentButton setImage:[UIImage imageNamed:@"button-two-opponents-pressed"] forState:UIControlStateHighlighted];
 	[self.threeOpponentButton setImage:[UIImage imageNamed:@"button-three-opponents-pressed"] forState:UIControlStateHighlighted];
 	
-	[self.settingsButton setImage:[UIImage imageNamed:@"settings-pressed"] forState:UIControlStateHighlighted];
+	[self.settingsButton setImage:[UIImage imageNamed:@"button-settings-pressed"] forState:UIControlStateHighlighted];
+	[self.aboutButton setImage:[UIImage imageNamed:@"button-about-pressed"] forState:UIControlStateHighlighted];
 	[self.howToPlayButton setImage:[UIImage imageNamed:@"button-how-to-play-pressed"] forState:UIControlStateHighlighted];
 	[self.statsButton setImage:[UIImage imageNamed:@"button-stats-pressed"] forState:UIControlStateHighlighted];
     
@@ -154,6 +156,10 @@
 
 - (IBAction)settingsPressed:(id)sender {
 	[self.navigationController pushViewController:[[[SettingsView alloc] init] autorelease] animated:YES];
+}
+
+- (IBAction)aboutPressed:(id)sender {
+	[self.navigationController pushViewController:[[[AboutView alloc] init] autorelease] animated:YES];
 }
 
 - (IBAction)howToPlayPressed:(id)sender {
