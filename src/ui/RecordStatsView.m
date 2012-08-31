@@ -38,8 +38,13 @@
     DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
     NSArray *games = [database getGameRecords];
     int y = margin;
+		
+	NSString* username = [database getPlayerName];
+	
+	if ([username length] == 0)
+		username = @"Player";
     
-    NSString *names[] = {[database getPlayerName], @"Alice", @"Bob", @"Carol"};
+    NSString *names[] = {username, @"Alice", @"Bob", @"Carol"};
     UILabel *label;
 	
 	for (int numPlayers = 2;numPlayers <= 4; ++numPlayers)
