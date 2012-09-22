@@ -1,0 +1,17 @@
+source _firstload.soar
+pushd all
+source all_source.soar
+popd
+pushd elaborations
+source elaborations_source.soar
+popd
+source rl.soar
+source accept.soar
+source bid.soar
+source challenge.soar
+source clean.soar
+source exact.soar
+source initialize-dice.soar
+source pass.soar
+source push.soar
+source sleep.soar

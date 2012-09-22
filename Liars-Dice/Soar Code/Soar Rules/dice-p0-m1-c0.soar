@@ -1,0 +1,4 @@
+
+sp {dice*elaborate*flags-dynamic (state <s> ^name dice) --> (<s> ^probabilities false ^model-enabled true) }
+source dice-model-bot-new.soar
+

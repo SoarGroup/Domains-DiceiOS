@@ -1,0 +1,46 @@
+gp {dice*rl
+   :template
+   (state <s> ^operator <op> +
+              ^io.input-link <in>)
+   (<op> ^name [bid challenge exact pass push])
+   (<in> ^state <ds>
+         ^players.me <me>)
+   (<ds> ^special <special>
+         ^last-bid <bid>)
+   (<bid> ^face <face>
+          ^multiplier <mult>)
+   (<me> ^exists <exists>
+         ^cup.count <cup-count>
+         ^pushed.count <push-count>)
+-->
+   (<s> ^operator <op> = 0)
+}
+
+sp {dice-rl*reward*challenged*success
+   (state <s> ^name dice
+              ^reward-link <rl>
+              ^io.input-link <in>)
+   (<in> ^history nil
+         ^rounds <r>
+         ^players.me <me>)
+   (<r> ^action challenge
+        ^result success
+        ^target <me>)
+-->
+   (<rl> ^reward.value -10)
+}
+
+
+sp {dice-rl*reward*challenged*failure
+   (state <s> ^name dice
+              ^reward-link <rl>
+              ^io.input-link <in>)
+   (<in> ^history nil
+         ^rounds <r>
+         ^players.me <me>)
+   (<r> ^action challenge
+        ^result failure
+        ^target <me>)
+-->
+   (<rl> ^reward.value 10)
+}

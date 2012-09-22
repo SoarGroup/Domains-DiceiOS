@@ -1,0 +1,37 @@
+sp {dice*propose*bid
+   (state <s> ^name dice
+              ^my-turn true
+              ^io.input-link.affordances.action <a>)
+   (<a> ^name bid
+        ^available true)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name bid)
+}
+
+sp {apply*bid*continue
+   (state <s> ^operator <op>
+              ^io <io>)
+   (<io> ^output-link <ol>
+         ^input-link <il>)
+   (<op> ^name bid)
+   (<il> ^state.last-bid <last-bid>)
+   (<last-bid> ^face <face>
+               ^multiplier <multiplier>)
+-->
+   (<ol> ^bid <bid>)
+   (<bid> ^face <face>
+          ^multiplier (+ 1 <multiplier>))
+}
+
+sp {apply*bid*first
+   (state <s> ^operator <op>
+              ^io <io>)
+   (<io> ^input-link.state.last-bid nil
+         ^output-link <ol>)
+   (<op> ^name bid)
+-->
+   (<ol> ^bid <bid>)
+   (<bid> ^face 1
+          ^multiplier 1)
+}
