@@ -19,7 +19,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"SettingsView-i5";
+	else
+		nibFile = @"SettingsView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
     }
@@ -32,6 +41,12 @@
     }
 	
 	int margin = 8;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		margin = 10;
+	
 	int y = margin * 8;
 	
 	int height = 30;
@@ -39,9 +54,7 @@
 	CGSize viewSize = [[self view] bounds].size;
 	
 	int labelWidth = viewSize.width * 1.25f/3.0f - margin * 2.0f;
-	
-	int textFieldWidth = viewSize.width * 1.75f/3.0f - margin * 2.0f;
-	
+		
 	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 	
 	NSString *playerName = [database getPlayerName];

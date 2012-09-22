@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367540965.907553"
+         timestampString = "369961788.528375"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "30"
-         endingLineNumber = "30"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367540965.907553"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367540965.907553"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,7 +47,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367535841.783161"
+         timestampString = "369961788.528375"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "22"
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "368030832.274511"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "157"
+         endingLineNumber = "157"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "368030832.274511"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "185"
-         endingLineNumber = "185"
+         startingLineNumber = "198"
+         endingLineNumber = "198"
          landmarkName = "-segmentedControlValueChanged:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "368030832.274511"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "163"
-         endingLineNumber = "163"
+         startingLineNumber = "176"
+         endingLineNumber = "176"
          landmarkName = "-textFieldDidEndEditing:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/DiceDatabase.m"
-         timestampString = "367541878.691397"
+         timestampString = "369966112.781262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
          landmarkName = "-setPlayerName:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "368030832.274511"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "171"
-         endingLineNumber = "171"
+         startingLineNumber = "184"
+         endingLineNumber = "184"
          landmarkName = "-textFieldShouldReturn:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "368030832.274511"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/Soar/SoarPlayer.mm"
-         timestampString = "368030832.274511"
+         timestampString = "369966112.781262"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "170"
-         endingLineNumber = "170"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
          landmarkName = "-initWithName:game:connentToRemoteDebugger:lock:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367546379.603312"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
+         startingLineNumber = "62"
+         endingLineNumber = "62"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367546381.529065"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "52"
-         endingLineNumber = "52"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/SettingsView.m"
-         timestampString = "367546485.556826"
+         timestampString = "369967100.254733"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "47"
-         endingLineNumber = "47"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
          landmarkName = "-doLayout"
          landmarkType = "5">
       </FileBreakpoint>
@@ -242,11 +242,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367946182.667779"
+         timestampString = "369966946.780784"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "506"
-         endingLineNumber = "506"
+         startingLineNumber = "523"
+         endingLineNumber = "523"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -255,11 +255,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367946182.667779"
+         timestampString = "369966946.780784"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "797"
-         endingLineNumber = "797"
+         startingLineNumber = "812"
+         endingLineNumber = "812"
          landmarkName = "-bidPressed:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -268,11 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367946182.667779"
+         timestampString = "369966946.780784"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "817"
-         endingLineNumber = "817"
+         startingLineNumber = "832"
+         endingLineNumber = "832"
          landmarkName = "-bidPressed:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "300"
-         endingLineNumber = "300"
+         startingLineNumber = "309"
+         endingLineNumber = "309"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "402"
-         endingLineNumber = "402"
+         startingLineNumber = "411"
+         endingLineNumber = "411"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -307,11 +307,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "404"
-         endingLineNumber = "404"
+         startingLineNumber = "413"
+         endingLineNumber = "413"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -320,11 +320,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "343"
-         endingLineNumber = "343"
+         startingLineNumber = "352"
+         endingLineNumber = "352"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -333,11 +333,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "347"
-         endingLineNumber = "347"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -346,7 +346,20 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367946182.667779"
+         timestampString = "369966751.070238"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "453"
+         endingLineNumber = "453"
+         landmarkName = "-updateUI"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "src/ui/PlayGameView.m"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "444"
@@ -359,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367946182.667779"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "435"
-         endingLineNumber = "435"
+         startingLineNumber = "374"
+         endingLineNumber = "374"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,24 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792781.72142"
+         timestampString = "369966751.070238"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "365"
-         endingLineNumber = "365"
-         landmarkName = "-updateUI"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "src/ui/PlayGameView.m"
-         timestampString = "367792851.460871"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "327"
-         endingLineNumber = "327"
+         startingLineNumber = "336"
+         endingLineNumber = "336"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>

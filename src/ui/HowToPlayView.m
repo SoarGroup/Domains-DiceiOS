@@ -26,7 +26,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:@"HowToPlayView" bundle:nibBundleOrNil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"HowToPlayView-i5";
+	else
+		nibFile = @"HowToPlayView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
     }

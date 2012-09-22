@@ -1,9 +1,9 @@
 //
 //  DiceMainMenu.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/4/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DiceMainMenu.h"
@@ -38,7 +38,16 @@
 
 - (id)initWithAppDelegate:(id)anAppDelegate
 {
-    self = [super initWithNibName:@"DiceMainMenu" bundle:nil];
+	NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"DiceMainMenu-i5";
+	else
+		nibFile = @"DiceMainMenu";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
         self.appDelegate = anAppDelegate;

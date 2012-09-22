@@ -1,9 +1,9 @@
 //
 //  DiceApplication.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/4/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DiceApplication.h"
@@ -12,7 +12,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"DiceApplication-i5";
+	else
+		nibFile = @"DiceApplication";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
     }

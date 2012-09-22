@@ -3,7 +3,7 @@
 //  iSoar
 //
 //  Created by Alex on 6/20/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "HistoryItem.h"
@@ -103,10 +103,10 @@
                 first = [self.bid asString];
                 break;
             case ACTION_PUSH:
-                first = [NSString stringWithFormat:@", pushed.", playerName];
+                first = [NSString stringWithFormat:@", pushed."];
                 break;
             case ACTION_CHALLENGE_BID:
-                first = [NSString stringWithFormat:@"%@ challenged the bid.", playerName, [self.bid asString]];
+                first = [NSString stringWithFormat:@"%@ challenged the bid.", playerName];
                 break;
             case ACTION_CHALLENGE_PASS:
             {
@@ -114,7 +114,7 @@
                 break;
             }
             case ACTION_EXACT:
-                first = [NSString stringWithFormat:@"%@ exacted.", playerName, [self.bid asString]];
+                first = [NSString stringWithFormat:@"%@ exacted.", playerName];
                 break;
             case ACTION_PASS:
                 first = [NSString stringWithFormat:@"%@ passed.", playerName];
@@ -122,6 +122,12 @@
             case ACTION_ILLEGAL:
                 first = [NSString stringWithFormat:@"%@ made illegal move.", playerName];
                 break;
+			case ACTION_QUIT:
+			default:
+			{
+				NSLog(@"Impossible Situation? HistoryItem.m:128");
+				break;
+			}
         }
         if (playerLosingADie != -1) {
             NSString *valueName = [self.diceGameState getPlayerState:playerLosingADie].playerName;
@@ -178,6 +184,12 @@
             case ACTION_ILLEGAL:
                 first = [NSString stringWithFormat:@"%@ made an illegal move", playerName];
                 break;
+			case ACTION_QUIT:
+			default:
+			{
+				NSLog(@"Impossible Situation? HistoryItem.m:128");
+				break;
+			}
         }
         if (playerLosingADie != -1) {
             NSString *valueName = [self.diceGameState getPlayerState:playerLosingADie].playerName;

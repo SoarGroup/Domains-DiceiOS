@@ -3,7 +3,7 @@
 //  Liars Dice
 //
 //  Created by Miller Tinkerhess on 4/3/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "LoadingGameView.h"
@@ -21,7 +21,16 @@
 
 - (id) initWithGame:(DiceGame *)aGame numOpponents:(int)aNumOpponents mainMenu:(DiceMainMenu *)aMenu
 {
-    self = [super initWithNibName:@"LoadingGameView" bundle:nil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"LoadingGameView-i5";
+	else
+		nibFile = @"LoadingGameView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         self.numOpponents = aNumOpponents;
         self.game = aGame;

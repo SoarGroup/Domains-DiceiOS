@@ -19,7 +19,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"RecordStatsView-i5";
+	else
+		nibFile = @"RecordStatsView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
     }
@@ -33,6 +42,12 @@
     }
     
     int margin = 6;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		margin = 8;
+	
     int labelHeight = 21;
     float labelWidth = (self.view.bounds.size.width - margin * 5) / 3.5;
     DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];

@@ -3,7 +3,7 @@
 //  Liars Dice
 //
 //  Created by Miller Tinkerhess on 10/14/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DiceHistoryView.h"
@@ -15,8 +15,16 @@
 
 - (id)initWithPlayerState:(PlayerState *)aState
 {
-    self = [super initWithNibName:@"DiceHistoryView"
-                           bundle:nil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"DiceHistoryView-i5";
+	else
+		nibFile = @"DiceHistoryView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
         self.state = aState;

@@ -3,7 +3,7 @@
 //  iSoar
 //
 //  Created by Alex on 6/20/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "Die.h"

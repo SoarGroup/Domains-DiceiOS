@@ -1,9 +1,9 @@
 //
 //  DiceServerView.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/4/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DiceServerView.h"
@@ -20,7 +20,16 @@
 
 - (id)initWithGame:(DiceGame*)aGame
 {
-    self = [super initWithNibName:@"DiceServerView" bundle:nil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"DiceServerView-i5";
+	else
+		nibFile = @"DiceServerView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
         self.game = aGame;
@@ -91,7 +100,7 @@
                                    initWithGame:self.game]
                                   autorelease];
      */
-    UIViewController *gameView = [[[PlayGameView alloc] initWithGame:self.game] autorelease];
+    UIViewController *gameView = [[[PlayGameView alloc] initWithGame:self.game mainMenu:nil] autorelease];
     [self.navigationController pushViewController:gameView animated:YES];
 }
 
@@ -108,7 +117,7 @@
         return;
     }
     NSString *agentName = [NSString stringWithFormat:@"Soar-%d", [game getNumberOfPlayers]];
-    SoarPlayer *soarPlayer = [[[SoarPlayer alloc] initWithName:agentName game:self.game connentToRemoteDebugger:NO] autorelease];
+	SoarPlayer *soarPlayer = [[[SoarPlayer alloc] initWithName:agentName game:self.game connentToRemoteDebugger:NO lock:nil] autorelease];
     [game addPlayer:soarPlayer];
     [playerNameList reloadData];
 }

@@ -1,9 +1,9 @@
 //
 //  PlayGameView.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/5/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "PlayGameView.h"
@@ -74,7 +74,16 @@ NSArray *buildDiceImages() {
 
 - (id)initWithGame:(DiceGame*)aGame mainMenu:(DiceMainMenu *)aMenu
 {
-    self = [super initWithNibName:@"PlayGameView" bundle:nil];
+	NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"PlayGameView-i5";
+	else
+		nibFile = @"PlayGameView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         // Custom initialization
         self.game = aGame;
@@ -477,6 +486,14 @@ NSArray *buildDiceImages() {
     int labelHeight = 64 / 2;
     int diceHeight = 96 / 2;
     int dividerHeight = 8 / 2;
+	
+	int margin = 0;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		margin = 26;
+	
     int dy = labelHeight + diceHeight + dividerHeight;
     int buttonWidth = 160 / 2;
 	bool hasHitControl = false;
@@ -503,7 +520,7 @@ NSArray *buildDiceImages() {
         int starSize = 64 / 2;
         int x = starSize;
 		
-        int y = (hasHitControl ? labelIndex : labelIndex + 1) * dy;
+        int y = (hasHitControl ? labelIndex * dy : (labelIndex + 1) * (dy + margin));
 		int width = parent.frame.size.width;
         int height = labelHeight;
         UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[self.images objectAtIndex:BAR]] autorelease];
@@ -700,8 +717,6 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)challengePressed:(id)sender {
-    UIButton *challengeButton = (UIButton *) sender;
-    int challengeTargetID = challengeButton.tag;
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
 	

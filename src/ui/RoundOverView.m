@@ -3,7 +3,7 @@
 //  Liars Dice
 //
 //  Created by Miller Tinkerhess on 3/30/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "RoundOverView.h"
@@ -20,7 +20,16 @@
 @synthesize doneButton;
 
 - (id) initWithGame:(DiceGame*) aGame player:(PlayerState*)aPlayer playGameView:(PlayGameView *)aPlayGameView {
-    self = [super initWithNibName:@"RoundOverView" bundle:nil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"RoundOverView-i5";
+	else
+		nibFile = @"RoundOverView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         self.game = aGame;
         self.player = aPlayer;
@@ -124,10 +133,7 @@
 	}
 	
     titleLabel.text = [NSString stringWithFormat:@"%@\n%@", headerString, lastMoveString];
-    
-    int bidValue = [self.game.gameState previousBid].rankOfDie;
-    BOOL specialRules = [self.game.gameState usingSpecialRules];
-    
+        
     NSArray *playerStates = self.game.gameState.playerStates;
     int i = -1;
     int labelHeight = 64 / 2;

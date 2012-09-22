@@ -41,7 +41,6 @@ static void checkAndCreateDatabase() {
     
 	// Get the path to the database in the application package
     NSString *databaseAppPath = [[NSBundle mainBundle] pathForResource:@"database" ofType:@"db"];
-	NSString *databasePathFromApp = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:databaseName()];
     
 	// Copy the database from the package to the users filesystem
 	[fileManager copyItemAtPath:databaseAppPath toPath:dbPath error:nil];
@@ -210,7 +209,7 @@ void executeSql(const char *sqlStatement) {
 				// Read the data from the result row
                 const unsigned char* nameOfThePlayer = sqlite3_column_text(compiledStatement, 0);
                 
-				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:strlen(nameOfThePlayer) encoding:NSASCIIStringEncoding];
+				playerName = [[NSString alloc] initWithBytes:nameOfThePlayer length:strlen((const char*)nameOfThePlayer) encoding:NSASCIIStringEncoding];
 			}
 		} else {
             NSLog(@"SQL read error %d", error);

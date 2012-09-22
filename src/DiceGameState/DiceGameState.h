@@ -3,7 +3,7 @@
 //  iSoar
 //
 //  Created by Alex on 6/20/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -33,7 +33,7 @@
     
     NSMutableArray *history;
     NSMutableArray *rounds;
-    NSMutableArray *newRoundListeners;
+    NSMutableArray *theNewRoundListeners;
     NSMutableArray *losers;
     
     BOOL inSpecialRules;
@@ -56,7 +56,7 @@
 @property (readwrite, assign) int currentTurn;
 @property (readwrite, assign) int playersLeft;
 @property (readwrite, retain) Bid *previousBid;
-@property (readwrite, retain) NSMutableArray *newRoundListeners;
+@property (readwrite, retain) NSMutableArray *theNewRoundListeners;
 @property (readwrite, retain) DiceGame *game;
 
 - (id <Player>)getCurrentPlayer;

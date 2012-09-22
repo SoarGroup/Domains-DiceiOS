@@ -1,9 +1,9 @@
 //
 //  Agent.m
-//  iSoar
+//  Liar's Dice
 //
 //  Created by Alex on 6/21/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "SoarPlayer.h"
@@ -24,10 +24,7 @@ void testWme(sml::WMElement *wme)
     const char *name = wme->GetIdentifierName();
     // NSLog(@"Testing wme \"%s\"", name);
     if (strlen(name) < 2)
-    {
-        sml::IdentifierSymbol *ident = wme->GetIdentifier();
-        NSLog(@"Identifier name too short! \"%s\"", name);
-    }
+		NSLog(@"Identifier name too short! \"%s\"", name);
 }
 
 void sdb(char * command, sml::Agent *agent)
@@ -173,7 +170,7 @@ typedef enum {
         }
         else
         {
-            path = @"source \"\"/Users/bluechill/Desktop/2011 Soar Summer Work/Lair's Dice/Lair's Dice/Soar/Soar Rules/dice-p0-m0-c0.soar\"";
+            path = @"source \"\"/Users/bluechill/Desktop/2011 Soar Summer Work/Liar's Dice/Liar's Dice/Soar/Soar Rules/dice-p0-m0-c0.soar\"";
         }
         
         NSLog(@"Path:%@", path);
@@ -188,7 +185,7 @@ typedef enum {
         }
         else
         {
-            directory = @"cd \"/Users/bluechill/Desktop/2011 Soar Summer Work/Lair's Dice/Lair's Dice/Soar/Soar Rules/\"";
+            directory = @"cd \"/Users/bluechill/Desktop/2011 Soar Summer Work/Liar's Dice/Liar's Dice/Soar/Soar Rules/\"";
         }
         
         // NSLog(@"About to source:\n%@\n%@", directory, path);
@@ -690,6 +687,12 @@ typedef enum {
                 case ACTION_ILLEGAL:
                     action = const_cast<char*>((const char*)"illegal");
                     break;
+				case ACTION_QUIT:
+				default:
+				{
+					NSLog(@"Impossible Situation? HistoryItem.m:128");
+					break;
+				}
             }
             
             prev->CreateStringWME("action", action);
@@ -789,6 +792,12 @@ typedef enum {
                 case ACTION_ILLEGAL:
                     action = const_cast<char*>((const char*)"illegal");
                     break;
+				case ACTION_QUIT:
+				default:
+				{
+					NSLog(@"Impossible Situation? HistoryItem.m:128");
+					break;
+				}
             }
             
             prev->CreateStringWME("action", action);

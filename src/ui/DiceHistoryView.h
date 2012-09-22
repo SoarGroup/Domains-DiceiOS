@@ -3,7 +3,7 @@
 //  Liars Dice
 //
 //  Created by Miller Tinkerhess on 10/14/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "PlayerState.h"

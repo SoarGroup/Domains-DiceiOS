@@ -1,9 +1,9 @@
 //
 //  DicePeekView.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/6/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DicePeekView.h"
@@ -18,7 +18,16 @@
 
 - (id)initWithState:(PlayerState *)aState
 {
-    self = [super initWithNibName:@"DicePeekView" bundle:nil];
+    NSString* nibFile = nil;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		nibFile = @"DicePeekView-i5";
+	else
+		nibFile = @"DicePeekView";
+	
+    self = [super initWithNibName:nibFile bundle:nil];
     if (self) {
         self.state = aState;
         self.modalTransitionStyle = UIModalTransitionStylePartialCurl;

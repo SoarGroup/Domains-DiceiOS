@@ -1,9 +1,9 @@
 //
 //  PlayGameView.m
-//  Lair's Dice
+//  Liar's Dice
 //
 //  Created by Miller Tinkerhess on 10/5/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "PlayGameTableView.h"
@@ -16,7 +16,16 @@
 
 float controlButtonHeight()         { return 40.0f; }
 float controlButtonWidth()          { return 68.0f; }
-float margin()                      { return 8.0f; }
+float margin()                      {
+	float margin = 8.0f;
+	
+	CGRect screenBounds = [[UIScreen mainScreen] bounds];
+	
+	if (screenBounds.size.height > 480)
+		margin *= 2.0f;
+	
+	return margin;
+}
 float titleTopMargin()              { return 4.0f; }
 float controlCellHeight()           { return 152.0f; }
 float headerCellHeight()            { return 64.0f; }
@@ -112,7 +121,7 @@ float diceViewFixedHeight()         { return 42.0f; }
     }
     
     Bid *previousBid = self.state.gameState.previousBid;
-            
+	
     if (previousBid != nil)
     {
         currentBidCount = previousBid.numberOfDice;
@@ -213,7 +222,7 @@ float diceViewFixedHeight()         { return 42.0f; }
     // Check that the bid is legal
     Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace] autorelease];
     if (!(game.gameState.currentTurn == state.playerID && [game.gameState checkBid:bid playerSpecialRules:([ game.gameState usingSpecialRules] && [state numberOfDice] > 1)])) {
-        NSString *title = [NSString stringWithFormat:@"Illegal raise", currentBidCount, currentBidFace];
+        NSString *title = [NSString stringWithFormat:@"Illegal raise"];
         NSString *message = [NSString stringWithFormat:@"Can't bid %d %@", currentBidCount, @"" /* numberName(currentBidFace) */];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                          message:message

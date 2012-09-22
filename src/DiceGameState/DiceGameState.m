@@ -3,7 +3,7 @@
 //  iSoar
 //
 //  Created by Alex on 6/20/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 University of Michigan. All rights reserved.
 //
 
 #import "DiceGameState.h"
@@ -19,7 +19,7 @@
 
 @synthesize playerStates;
 @synthesize players, currentTurn, previousBid;
-@synthesize playersLeft, newRoundListeners, game, losers;
+@synthesize playersLeft, theNewRoundListeners, game, losers;
 
 /*** DiceGameState
  Takes a NSArray of player names and the maximum number of dice.
@@ -61,7 +61,7 @@
         }
         
         self.playerStates = [NSArray arrayWithArray:mutPlayerStates];
-        self.newRoundListeners = [NSMutableArray array];
+        self.theNewRoundListeners = [NSMutableArray array];
         rounds = [[NSMutableArray alloc] init];        
         playersLeft = [self.players count];
         gameWinner = nil;
@@ -83,7 +83,7 @@
 }
 
 - (void)addNewRoundListener:(id <NewRoundListener>)listener {
-    [newRoundListeners addObject:listener];
+    [theNewRoundListeners addObject:listener];
 }
 
 // Handle bids
@@ -571,7 +571,7 @@
 - (void)createNewRound
 {
     BOOL deferNotification = NO;
-    for (id <NewRoundListener> listener in newRoundListeners) {
+    for (id <NewRoundListener> listener in theNewRoundListeners) {
         if ([listener roundEnding]) {
             deferNotification = YES;
         }
@@ -598,7 +598,7 @@
         history = [[NSMutableArray alloc] init];
     }
     [history addObject:[[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] autorelease]];
-    for (id <NewRoundListener> listener in newRoundListeners) {
+    for (id <NewRoundListener> listener in theNewRoundListeners) {
         if ([listener roundBeginning]) {
             deferNotification = YES;
         }
