@@ -487,13 +487,6 @@ NSArray *buildDiceImages() {
     int diceHeight = 96 / 2;
     int dividerHeight = 8 / 2;
 	
-	int margin = 0;
-	
-	CGRect screenBounds = [[UIScreen mainScreen] bounds];
-	
-	if (screenBounds.size.height > 480)
-		margin = 26;
-	
     int dy = labelHeight + diceHeight + dividerHeight;
     int buttonWidth = 160 / 2;
 	bool hasHitControl = false;
@@ -520,7 +513,7 @@ NSArray *buildDiceImages() {
         int starSize = 64 / 2;
         int x = starSize;
 		
-        int y = (hasHitControl ? labelIndex * dy : (labelIndex + 1) * (dy + margin));
+        int y = (hasHitControl ? labelIndex : labelIndex + 1) * dy;
 		int width = parent.frame.size.width;
         int height = labelHeight;
         UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[self.images objectAtIndex:BAR]] autorelease];

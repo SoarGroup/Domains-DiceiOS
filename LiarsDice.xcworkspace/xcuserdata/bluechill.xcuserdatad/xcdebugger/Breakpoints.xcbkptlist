@@ -242,11 +242,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "369966946.780784"
+         timestampString = "369973012.122039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "523"
-         endingLineNumber = "523"
+         startingLineNumber = "516"
+         endingLineNumber = "516"
          landmarkName = "-updateUI"
          landmarkType = "5">
       </FileBreakpoint>
@@ -255,11 +255,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "369966946.780784"
+         timestampString = "369973012.122039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "812"
-         endingLineNumber = "812"
+         startingLineNumber = "805"
+         endingLineNumber = "805"
          landmarkName = "-bidPressed:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -268,11 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "src/ui/PlayGameView.m"
-         timestampString = "369966946.780784"
+         timestampString = "369973012.122039"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "832"
-         endingLineNumber = "832"
+         startingLineNumber = "825"
+         endingLineNumber = "825"
          landmarkName = "-bidPressed:"
          landmarkType = "5">
       </FileBreakpoint>
