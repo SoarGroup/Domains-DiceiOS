@@ -174,6 +174,7 @@
 		4D956E5E160D28CD00E7A7C2 /* RecordStatsView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RecordStatsView-i5.xib"; sourceTree = "<group>"; };
 		4D956E5F160D28CD00E7A7C2 /* RoundOverView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RoundOverView-i5.xib"; sourceTree = "<group>"; };
 		4D956E60160D28CD00E7A7C2 /* SettingsView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SettingsView-i5.xib"; sourceTree = "<group>"; };
+		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings-pressed.png"; sourceTree = "<group>"; };
 		4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings.png"; sourceTree = "<group>"; };
 		4DA8DA2215E6C13300D2CED9 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
@@ -324,7 +325,6 @@
 		C6F66169143BBF4C00EF3AD2 /* DiceAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceAction.h; sourceTree = "<group>"; };
 		C6F6616A143BBF4C00EF3AD2 /* DiceAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceAction.m; sourceTree = "<group>"; };
 		CD548D3213C612B700D70176 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		CD86D64313BB9E450005A182 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "UM Liars Dice.app"; path = "/Users/bluechill/Downloads/SoarDice-iOS/build/Release-iphoneos/UM Liars Dice.app"; sourceTree = "<absolute>"; };
 		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CD86D64913BB9E450005A182 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CD86D64B13BB9E450005A182 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -597,6 +597,7 @@
 				C690D57D152CD5ED00AC3020 /* Graphics */,
 				C6F66149143BA53800EF3AD2 /* src */,
 				CD86D64613BB9E450005A182 /* Frameworks */,
+				4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -653,7 +654,7 @@
 			);
 			name = "UM Liars Dice";
 			productName = "Lair's Dice";
-			productReference = CD86D64313BB9E450005A182 /* UM Liars Dice.app */;
+			productReference = 4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
