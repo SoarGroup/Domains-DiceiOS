@@ -698,7 +698,14 @@ NSArray *buildDiceImages() {
 }
 
 -(void)constrainAndUpdateBidCount {
-    int maxBidCount = [self.state getNumberOfPlayers] * 5;
+    int maxBidCount = 0;
+	
+	for (PlayerState* pstate in game.gameState.playerStates)
+	{
+		if ([pstate isKindOfClass:[PlayerState class]])
+			maxBidCount += [[pstate arrayOfDice] count];
+	}
+	
     currentBidCount = (currentBidCount - 1 + maxBidCount) % maxBidCount + 1;
     [self updateCurrentBidLabels];
 }

@@ -175,6 +175,10 @@ float diceViewFixedHeight()         { return 42.0f; }
 }
 
 - (IBAction)challengePressed:(id)sender {
+	assert([sender isKindOfClass:[UIButton class]]);
+	
+	UIButton* button = sender;
+	
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
 
@@ -184,24 +188,31 @@ float diceViewFixedHeight()         { return 42.0f; }
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles:nil]
                           autorelease];
-    Bid *challengeableBid = [state getChallengeableBid];
-    if (challengeableBid != nil)
+    
+	Bid *challengeableBid = [state getChallengeableBid];
+    
+	if (challengeableBid != nil && challengeableBid.playerID == button.tag)
     {
         NSString *playerName = [[state.gameState getPlayerWithID:challengeableBid.playerID] getName];
         [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s bid", playerName]];
     }
-    int passID = [state getChallengeableLastPass];
-    if (passID != -1)
+    
+	int passID = [state getChallengeableLastPass];
+    
+	if (passID != -1 && passID == button.tag)
     {
         NSString *playerName = [[state.gameState getPlayerWithID:passID] getName];
         [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s pass", playerName]];
     }
-    passID = [state getChallengeableSecondLastPass];
-    if (passID != -1)
+    
+	passID = [state getChallengeableSecondLastPass];
+	
+    if (passID != -1 && passID == button.tag)
     {
         NSString *playerName = [[state.gameState getPlayerWithID:passID] getName];
         [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s pass", playerName]];
     }
+	
     alert.tag = ACTION_CHALLENGE_BID; // TODO ask which player to challenge, bid / pass / etc
     [alert show];           
 }
