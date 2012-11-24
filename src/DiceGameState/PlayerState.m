@@ -12,6 +12,7 @@
 #import "Die.h"
 #import "HistoryItem.h"
 #import "DiceGameState.h"
+#import "DiceLocalPlayer.h"
 
 @implementation PlayerState
 
@@ -111,6 +112,23 @@
         
         [arrayOfDice addObject:newDie];
     }
+	
+	if ([[gameState getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
+	{
+		for (int i = 1;i < [arrayOfDice count];i++)
+		{
+			Die* die = [arrayOfDice objectAtIndex:i];
+			int dieValue = [die dieValue];
+			int hole = i;
+			
+			while (hole > 0 && [[arrayOfDice objectAtIndex:(hole - 1)] dieValue] > dieValue)
+			{
+				[arrayOfDice exchangeObjectAtIndex:hole withObjectAtIndex:(hole-1)];
+				hole -= 1;
+			}
+		}
+	}
+	
     [self.lock unlock];
 }
 
@@ -161,6 +179,22 @@
             }
         }
     }
+	
+	if ([[gameState getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
+	{
+		for (int i = 1;i < [arrayOfDice count];i++)
+		{
+			Die* die = [arrayOfDice objectAtIndex:i];
+			int dieValue = [die dieValue];
+			int hole = i;
+			
+			while (hole > 0 && [[arrayOfDice objectAtIndex:(hole - 1)] dieValue] > dieValue)
+			{
+				[arrayOfDice exchangeObjectAtIndex:hole withObjectAtIndex:(hole-1)];
+				hole -= 1;
+			}
+		}
+	}
     
         //Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
     playerHasPushedAllDice = !isThereDiceLeft;
