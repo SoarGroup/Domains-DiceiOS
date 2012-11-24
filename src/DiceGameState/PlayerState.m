@@ -322,8 +322,10 @@
     HistoryItem *historyItem = [self.gameState lastHistoryItem];
     if (historyItem != nil && [self.gameState getCurrentPlayerState] == self && historyItem.actionType == ACTION_PASS)
     {
-        return historyItem.player.playerID;
+		if (historyItem.player.playerID != self.playerID)
+			return historyItem.player.playerID;
     }
+	
     return -1;
 }
 
@@ -335,20 +337,26 @@
 }
 
 - (int) getChallengeableSecondLastPass {
-    if (hasLost) return -1;
-    if (![self canChallengeLastPass]) return -1;
+    if (hasLost)
+		return -1;
+	
+    if (![self canChallengeLastPass])
+		return -1;
     
     NSArray *history = [self.gameState history];
-    if (!history || [history count] < 2) return -1;
+	
+    if (!history || [history count] < 2)
+		return -1;
     
     HistoryItem *item;
+	
     if ([[history objectAtIndex:[history count] - 2] isKindOfClass:[HistoryItem class]])
-    {
         item = [history objectAtIndex:[history count] - 2];
-    }
+	
     if (item != nil && [self.gameState getCurrentPlayerState] == self && item.actionType == ACTION_PASS)
     {
-        return item.player.playerID;
+		if (item.player.playerID != self.playerID)
+			return item.player.playerID;
     }
     return -1;
 }
