@@ -106,11 +106,15 @@
                 first = [NSString stringWithFormat:@", pushed."];
                 break;
             case ACTION_CHALLENGE_BID:
-                first = [NSString stringWithFormat:@"%@ challenged the bid.", playerName];
+			{
+				NSString *valueName = [self.diceGameState getPlayerState:value].playerName;
+                first = [NSString stringWithFormat:@"%@ challenged %@'s bid.", playerName, valueName];
                 break;
+			}
             case ACTION_CHALLENGE_PASS:
             {
-                first = [NSString stringWithFormat:@"%@ challenged the pass.", playerName];
+				NSString *valueName = [self.diceGameState getPlayerState:value].playerName;
+                first = [NSString stringWithFormat:@"%@ challenged %@'s pass.", playerName, valueName];
                 break;
             }
             case ACTION_EXACT:
