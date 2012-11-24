@@ -751,8 +751,8 @@ NSArray *buildDiceImages() {
                                            otherButtonTitles:nil]
 						  autorelease];
 	
-	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (currentBidCount >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
-	[dieFace setImage:[self imageForDie:currentBidFace]];
+	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (previousBid.numberOfDice >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
+	[dieFace setImage:[self imageForDie:previousBid.rankOfDie]];
 	
 	[alert addSubview:dieFace];
 	
@@ -873,8 +873,8 @@ NSArray *buildDiceImages() {
                           autorelease];
     alert.tag = ACTION_EXACT;
 	
-	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (currentBidCount >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
-	[dieFace setImage:[self imageForDie:currentBidFace]];
+	UIImageView *dieFace = [[[UIImageView alloc] initWithFrame:CGRectMake(170 + (previousBid.numberOfDice >= 10 ? 5 : 0), 43, 25, 25)] autorelease];
+	[dieFace setImage:[self imageForDie:previousBid.rankOfDie]];
 	
 	[alert addSubview:dieFace];
 	
