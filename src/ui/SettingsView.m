@@ -80,7 +80,7 @@
 	[playerNameInput setFont:[UIFont boldSystemFontOfSize:playerNameInput.font.pointSize]];
 	playerNameInput.borderStyle = UITextBorderStyleRoundedRect;
 	playerNameInput.delegate = self;
-		
+	
 	[playerNameInput setReturnKeyType:UIReturnKeyDone];
 	
 	[self.scrollView addSubview:playerNameInput];
@@ -116,34 +116,6 @@
 	[difficultySelector addTarget:self action:@selector(segmentedControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 	
 	[self.scrollView addSubview:difficultySelector];
-	
-	y += height + margin;
-	
-	UILabel *credits = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y + margin, viewSize.width - margin * 2, (height + margin) * 6)] autorelease];
-	
-	credits.backgroundColor = [UIColor clearColor];
-	credits.text = @"Credits:\n\nGame Engine and Interface\nMiller Tinkerhess and Alex Turner\n\nGame Engine\nNate Derbinsky\n\nGame AI\nJohn Laird";
-	
-	[credits setNumberOfLines:0];
-	
-	[credits setFont:[UIFont boldSystemFontOfSize:difficultyLabel.font.pointSize]];
-	
-	credits.textAlignment = UITextAlignmentCenter;
-	
-	[self.scrollView addSubview:credits];
-	
-	y += margin + (height + margin) * 6 + margin;
-	
-	UILabel *versionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(margin, y, viewSize.width - margin * 2, height)] autorelease];
-	
-	versionLabel.backgroundColor = [UIColor clearColor];
-	versionLabel.text = @"AI Engine: Soar";
-	
-	versionLabel.textAlignment = UITextAlignmentCenter;
-	
-	[versionLabel setFont:[UIFont boldSystemFontOfSize:versionLabel.font.pointSize]];
-	
-	[self.scrollView addSubview:versionLabel];
 	
 	y += height + margin;
 	
