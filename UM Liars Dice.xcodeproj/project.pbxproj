@@ -882,7 +882,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
@@ -982,7 +982,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
@@ -1007,7 +1007,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
