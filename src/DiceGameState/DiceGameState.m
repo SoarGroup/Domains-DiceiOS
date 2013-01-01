@@ -57,6 +57,7 @@
                                                             withNumberOfDice:numberOfDice 
                                                            withDiceGameState:self]
                                            autorelease];
+			
             [mutPlayerStates addObject:newPlayerState];
         }
         
@@ -174,9 +175,7 @@
     HistoryItem *secondLast;
     
     if ([[self history] count] >= 2)
-    {
         secondLast = [[self history] objectAtIndex:[[self history] count] - 2];
-    }
     
     //Make sure its a valid challenge
     if (self.previousBid && [self.previousBid playerID] == targetID) {
@@ -185,7 +184,7 @@
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                         andWithPlayer:player 
                                                           whereTypeIs:ACTION_CHALLENGE_BID
-                                                            withValue:[self.previousBid playerID]
+                                                            withValue:targetID
                                                             andResult:0];
             [newItem setBid:self.previousBid];
             [newItem setLosingPlayer:playerID];
@@ -193,15 +192,14 @@
             [history addObject:newItem];
             *didTheChallengerWin = NO;
         } else {
-            int loserID = [self.previousBid playerID];
-            [self playerLosesRound:loserID];
+            [self playerLosesRound:targetID];
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                         andWithPlayer:player 
                                                           whereTypeIs:ACTION_CHALLENGE_BID
-                                                            withValue:[self.previousBid playerID]
+                                                            withValue:targetID
                                                             andResult:1];
             [newItem setBid:self.previousBid];
-            [newItem setLosingPlayer:loserID];
+            [newItem setLosingPlayer:targetID];
             [newItem autorelease];
             [history addObject:newItem];
             *didTheChallengerWin = YES;
@@ -298,7 +296,7 @@
         return NO;
     [player setPlayerHasExacted:YES];
     
-    //Make sure the exact is corret otherwise say it wasn't
+    //Make sure the exact is correct otherwise say it wasn't
     if ([self countDice:[bid rankOfDie]] == [bid numberOfDice]) {
         NSLog(@"%i: exact was correct", [player playerID]);
         HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
@@ -307,10 +305,9 @@
                                                         withValue:1];
         [newItem setBid:bid];
         if ([player numberOfDice] < [player maxNumberOfDice])
-        {
             player.numberOfDice++;
-            [newItem setWinningPlayer:playerID];
-        }
+		
+		[newItem setWinningPlayer:playerID];
         [newItem autorelease];
         [history addObject:newItem];
         
