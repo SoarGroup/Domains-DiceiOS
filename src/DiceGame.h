@@ -66,7 +66,7 @@ typedef enum DiceGameType {
 -(void)publishState;
 -(void)handleAction:(DiceAction*)action;
 
-- (void) end;
+- (void)end;
 
 // Getting information about the game
 -(int)getNumberOfPlayers;

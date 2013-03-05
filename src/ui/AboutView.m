@@ -15,15 +15,6 @@
 @implementation AboutView
 @synthesize webView;
 
-- (id)init
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-		
-    }
-    return self;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     NSString* nibFile = nil;
@@ -36,9 +27,6 @@
 		nibFile = @"AboutView";
 	
     self = [super initWithNibName:nibFile bundle:nil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 

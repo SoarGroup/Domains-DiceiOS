@@ -44,12 +44,12 @@ public:
 	sml::WMElement *idHistory;
 	sml::WMElement *idRounds;
 	
-	DiceSMLData(sml::Identifier *idState, sml::Identifier *idPlayers, sml::Identifier *idAffordances, sml::WMElement *idHistory, sml::WMElement *idRounds) {
-		this->idState = idState;
-		this->idPlayers = idPlayers;
-		this->idAffordances = idAffordances;
-		this->idHistory = idHistory;
-		this->idRounds = idRounds;
+	DiceSMLData(sml::Identifier *m_idState, sml::Identifier *m_idPlayers, sml::Identifier *m_idAffordances, sml::WMElement *m_idHistory, sml::WMElement *m_idRounds) {
+		this->idState = m_idState;
+		this->idPlayers = m_idPlayers;
+		this->idAffordances = m_idAffordances;
+		this->idHistory = m_idHistory;
+		this->idRounds = m_idRounds;
 	}
 };
 
@@ -661,7 +661,7 @@ typedef enum {
                 prev->CreateSharedIdWME("player", static_cast<Identifier *>(playerMap[historyPlayerId]));
             }
             
-            char *action;
+            char *action = NULL;
             switch (item.actionType) {
                 case ACTION_ACCEPT:
                     action = const_cast<char*>((const char*)"accept");
@@ -766,7 +766,7 @@ typedef enum {
                 prev->CreateSharedIdWME("player", static_cast<Identifier *>(playerMap[playerId]));
             }
             
-            char *action;
+            char *action = NULL;
             switch (roundEnd.actionType) {
                 case ACTION_ACCEPT:
                     action = const_cast<char*>((const char*)"accept");
@@ -879,7 +879,7 @@ typedef enum {
             else if ([attrName isEqualToString:@"push"])
             {
                 BOOL goodCommand = YES;
-                int faces[ident->GetNumberChildren()];
+                int* faces = new int[ident->GetNumberChildren()];
                 
                 for (int k = 0; k < ident->GetNumberChildren(); k++)
                 {
@@ -947,6 +947,8 @@ typedef enum {
                     
                     // action = [DiceAction pushAction:self.playerID push:diceToPush];
                 }
+				
+				delete faces;
             }
             else if ([attrName isEqualToString:@"challenge"])
             {
@@ -1036,8 +1038,8 @@ typedef enum {
     else if (diceToPush != nil)
     {
         NSLog(@"Agent just pushing, count: %d", [diceToPush count]);
-        DiceAction *action = [DiceAction pushAction:self.playerID push:diceToPush];
-        [game handleAction:action];
+        DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
+        [game handleAction:new_action];
     }
     
 }

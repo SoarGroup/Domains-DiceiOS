@@ -39,6 +39,7 @@
     [self.navigationController pushViewController:self.mainMenu animated:NO];
     
     [self.window addSubview:self.navigationController.view];
+	[self.window makeKeyAndVisible];
 }
 
 - (void)dealloc {

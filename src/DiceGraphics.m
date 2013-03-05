@@ -98,7 +98,9 @@
         case STAR:
             imageName = @"star";
             break;
-        default:break;
+        default:
+			imageName = @"unknown";
+			break;
     }
     UIImage *ret = [UIImage imageNamed:[imageName stringByAppendingFormat:@".png"]];
     if (ret == nil) {

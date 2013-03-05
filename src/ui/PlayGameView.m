@@ -428,11 +428,11 @@ NSArray *buildDiceImages() {
 			
 			CGSize widthSize = [previous sizeWithFont:self.previousBidLabel.font];
 			
-			NSNumber *line = [lines objectAtIndex:i];
+			NSNumber *newLine = [lines objectAtIndex:i];
 			
-			int x = (int)widthSize.width + self.previousBidLabel.frame.origin.x - ([line integerValue] * 10);
+			int x = (int)widthSize.width + self.previousBidLabel.frame.origin.x - ([newLine integerValue] * 10);
 			
-			int y = (int)widthSize.height * [line integerValue] + self.previousBidLabel.frame.origin.y + 10;
+			int y = (int)widthSize.height * [newLine integerValue] + self.previousBidLabel.frame.origin.y + 10;
 			
 			if ([self.state.gameState usingSpecialRules])
 				y -= 10;
@@ -526,27 +526,27 @@ NSArray *buildDiceImages() {
         [tempViews addObject:nameLabel];
 		
 		NSString* nameLabelText = [self.game.gameState historyText:playerState.playerID];
-		for (NSUInteger i = 0;i < [nameLabelText length];i++)
+		for (NSUInteger z = 0;z < [nameLabelText length];z++)
 		{
-			if (isdigit([nameLabelText characterAtIndex:i]))
+			if (isdigit([nameLabelText characterAtIndex:z]))
 			{
 				int number = 0;
 				
-				int startLocation = i;
+				int startLocation = z;
 				
-				for (;i < [nameLabelText length];i++)
+				for (;z < [nameLabelText length];z++)
 				{
-					if (!isdigit([nameLabelText characterAtIndex:i]))
+					if (!isdigit([nameLabelText characterAtIndex:z]))
 						break;
 					
 					number *= 10;
-					number += (int)([nameLabelText characterAtIndex:i] - '0');
+					number += (int)([nameLabelText characterAtIndex:z] - '0');
 				}
 				
-				if (i == [nameLabelText length])
+				if (z == [nameLabelText length])
 					continue;
 				
-				if ([nameLabelText characterAtIndex:i] == 's')
+				if ([nameLabelText characterAtIndex:z] == 's')
 				{
 					NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
 					
@@ -565,18 +565,18 @@ NSArray *buildDiceImages() {
 					
 					NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
 					
-					for (int j = 0;j < (i - startLocation) + 4;j++)
+					for (int j = 0;j < (z - startLocation) + 4;j++)
 						[spaces insertString:@" " atIndex:0];
 					
-					nameLabelText = [nameLabelText stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
+					nameLabelText = [nameLabelText stringByReplacingCharactersInRange:NSMakeRange(startLocation, z-startLocation+1) withString:spaces];
 					
 					CGSize widthSize = [previousPart sizeWithFont:nameLabel.font];
 					
-					int x = (int)widthSize.width + nameLabel.frame.origin.x;
+					int x_label = (int)widthSize.width + nameLabel.frame.origin.x;
 					
-					int y = nameLabel.frame.origin.y + 5;
+					int y_label = nameLabel.frame.origin.y + 5;
 										
-					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 25, 25)];
+					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x_label, y_label, 25, 25)];
 					[imageView setImage:[self imageForDie:number]];
 					
 					[parent addSubview:imageView];

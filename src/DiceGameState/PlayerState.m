@@ -386,6 +386,8 @@
 	
     if ([[history objectAtIndex:[history count] - 2] isKindOfClass:[HistoryItem class]])
         item = [history objectAtIndex:[history count] - 2];
+	else
+		item = nil;
 	
     if (item != nil && [self.gameState getCurrentPlayerState] == self && item.actionType == ACTION_PASS)
     {

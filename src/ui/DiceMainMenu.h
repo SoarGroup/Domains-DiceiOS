@@ -40,7 +40,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *multiPlayerButton;
 @property (nonatomic, retain) IBOutlet UIButton *joinMultiplayerButton;
 @property (nonatomic, retain) IBOutlet UIButton *serverOnlyButton;
-- (IBAction)howToPlayPressed:(id)sender;
 @property (retain, nonatomic) IBOutlet UIButton *oneOpponentButton;
 @property (retain, nonatomic) IBOutlet UIButton *twoOpponentButton;
 @property (retain, nonatomic) IBOutlet UIButton *threeOpponentButton;

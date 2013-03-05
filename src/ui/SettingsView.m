@@ -29,9 +29,6 @@
 		nibFile = @"SettingsView";
 	
     self = [super initWithNibName:nibFile bundle:nil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
@@ -133,6 +130,14 @@
     self.navigationItem.leftBarButtonItem.title = @"Back";
     
     [self doLayout];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	if (textField == nil)
+		return NO;
+	
+	return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
