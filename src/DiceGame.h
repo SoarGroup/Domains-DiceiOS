@@ -69,7 +69,7 @@ typedef enum DiceGameType {
 - (void)end;
 
 // Getting information about the game
--(int)getNumberOfPlayers;
+-(NSInteger)getNumberOfPlayers;
 
 -(id <Player>)getPlayerAtIndex:(int)index;
 -(void) notifyCurrentPlayer;

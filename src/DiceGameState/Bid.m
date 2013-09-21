@@ -16,7 +16,7 @@
 @synthesize playerID, rankOfDie, numberOfDice, playerName;
 
     //Initialize ourself
-- (id)initWithPlayerID:(int)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank
+- (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank
 {
     self = [super init]; //check to makesure our super class initialized properly
     if (self) {
@@ -35,7 +35,7 @@
 }
 
     //Initialize ourself by calling our default method but also set some other properties
-- (id)initWithPlayerID:(int)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing
+- (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing
 {
     id ret = [self initWithPlayerID:playerID name:aPlayerName dice:dice rank:rank];
     if (ret) {

@@ -42,7 +42,7 @@ float diceViewFixedHeight()         { return 42.0f; }
 -(void)constrainAndUpdateBidCount;
 -(void)constrainAndUpdateBidFace;
 -(NSArray*)makePushedDiceArray;
--(int)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(int) buttonIndex;
+-(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger) buttonIndex;
 
 @end
 
@@ -84,19 +84,6 @@ float diceViewFixedHeight()         { return 42.0f; }
     
     // THIS IS THE ONLY PLACE THIS SHOULD GET CALLED FROM.
     [self.game startGame];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)backPressed:(id)sender {
@@ -157,13 +144,13 @@ float diceViewFixedHeight()         { return 42.0f; }
 }
 
 - (void) updateBidText {
-    NSString *countString = [NSString stringWithFormat:@"%d", currentBidCount];
+    NSString *countString = [NSString stringWithFormat:@"%ld", (long)currentBidCount];
     [controlButtons.bidCountButton setTitle:countString forState:UIControlStateNormal];
     [controlButtons.bidFaceButton setTitle:@"" /* numberName(currentBidFace) */ forState:UIControlStateNormal];
 }
 
 -(void)constrainAndUpdateBidCount {
-    int maxBidCount = [self.state getNumberOfPlayers] * 5;
+    NSInteger maxBidCount = [self.state getNumberOfPlayers] * 5;
     currentBidCount = (currentBidCount - 1 + maxBidCount) % maxBidCount + 1;
     [self updateBidText];
 }
@@ -231,10 +218,10 @@ float diceViewFixedHeight()         { return 42.0f; }
 - (IBAction)bidPressed:(id)sender {
     
     // Check that the bid is legal
-    Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace] autorelease];
+    Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:(int)currentBidCount rank:currentBidFace] autorelease];
     if (!(game.gameState.currentTurn == state.playerID && [game.gameState checkBid:bid playerSpecialRules:([ game.gameState usingSpecialRules] && [state numberOfDice] > 1)])) {
         NSString *title = [NSString stringWithFormat:@"Illegal raise"];
-        NSString *message = [NSString stringWithFormat:@"Can't bid %d %@", currentBidCount, @"" /* numberName(currentBidFace) */];
+        NSString *message = [NSString stringWithFormat:@"Can't bid %ld %@", (long)currentBidCount, @"" /* numberName(currentBidFace) */];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:nil
@@ -245,9 +232,9 @@ float diceViewFixedHeight()         { return 42.0f; }
         return;
     }
     
-    NSString *title = [NSString stringWithFormat:@"Bid %d %ds?", currentBidCount, currentBidFace];
+    NSString *title = [NSString stringWithFormat:@"Bid %ld %ds?", (long)currentBidCount, currentBidFace];
     NSArray *push = [self makePushedDiceArray];
-    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu dice?", (unsigned long)[push count]];
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                      message:message
                                                     delegate:self
@@ -281,7 +268,7 @@ float diceViewFixedHeight()         { return 42.0f; }
         case ACTION_BID:
         {
             DiceAction *action = [DiceAction bidAction:state.playerID
-                                                 count:currentBidCount
+                                                 count:(int)currentBidCount
                                                   face:currentBidFace
                                                   push:[self makePushedDiceArray]];
             [game handleAction:action];
@@ -325,13 +312,13 @@ float diceViewFixedHeight()         { return 42.0f; }
     return ret;
 }
                                   
--(int)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(int)buttonIndex {
+-(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger)buttonIndex {
     if (alertOrNil == nil) return -1;
     if (buttonIndex == alertOrNil.cancelButtonIndex)
     {
         return -1;
     }
-    int buttonOffset = buttonIndex - 1;
+    NSInteger buttonOffset = buttonIndex - 1;
     Bid *challengeableBid = [state getChallengeableBid];
     if (challengeableBid != nil)
     {
@@ -417,7 +404,7 @@ UIImage *imageForDie(int die) {
     }
     
     UIButton *button = (UIButton*)dieID;
-    int dieIndex = button.tag;
+    NSInteger dieIndex = button.tag;
     
     Die *dieObject = [self.state.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
@@ -445,7 +432,7 @@ void addDice(PlayGameTableView *table, UITableViewCell *cell, NSArray *dice, boo
     UIView *diceView = [[[UIView alloc] initWithFrame:CGRectMake(margin(), cellTitleHeight() + margin(),
                                                                  diceViewWidth(), (interactive ? diceViewHeight() : diceViewFixedHeight()))] autorelease];
     int width = diceView.frame.size.width;
-    int numDice = [dice count];
+    NSInteger numDice = [dice count];
     int maxDice = 5;
     int dieWidth = (width - (margin() * (maxDice - 1))) / maxDice;
     for (int i = 0; i < numDice; ++i)
@@ -500,10 +487,10 @@ void addCellColors(UITableViewCell *cell, float height, bool active) {
 }
 
 // Make a UITableViewCell for the history item at the given index.
-UITableViewCell *historyCell(PlayGameTableView *table, int index, bool active) {
+UITableViewCell *historyCell(PlayGameTableView *table, NSInteger index, bool active) {
     NSString *labelText;
     // What playerID goes in this slot
-    int playerIndex = index;
+    NSInteger playerIndex = index;
     id <Player> player = [table.game.gameState.players objectAtIndex:playerIndex];
     NSString *playerName = [player getName];
     int playerID = [player getID];
@@ -514,7 +501,7 @@ UITableViewCell *historyCell(PlayGameTableView *table, int index, bool active) {
         labelText = playerName;
     } else {
         NSMutableString *moveString = [NSMutableString string];
-        for (int i = [lastMove count] - 1; i >= 0; --i) {
+        for (NSInteger i = [lastMove count] - 1; i >= 0; --i) {
             HistoryItem *item = [lastMove objectAtIndex:i];
             [moveString appendFormat:@"%@", [item asString]];
             if (i > 0) {
@@ -598,7 +585,7 @@ UITableViewCell *historyCell(PlayGameTableView *table, int index, bool active) {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    int index = [indexPath row];
+    NSInteger index = [indexPath row];
     if (index == 0) {
         // Header
         return headerCellHeight();
@@ -612,9 +599,9 @@ UITableViewCell *historyCell(PlayGameTableView *table, int index, bool active) {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    int index = [indexPath row];
+    NSInteger index = [indexPath row];
     UITableViewCell *ret;
-    int playerID = index - 1;
+    NSInteger playerID = index - 1;
     bool active = (playerID == game.gameState.currentTurn);
     if (index == 0) {
         ret = headerCell(self);

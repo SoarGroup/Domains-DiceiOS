@@ -25,8 +25,8 @@ typedef enum HistoryItemType {
     int result;
     NSString *state;
     
-    int playerLosingADie;
-    int playerWinningADie;
+    NSInteger playerLosingADie;
+    NSInteger playerWinningADie;
     
     Bid *bid;
 }
@@ -49,8 +49,8 @@ typedef enum HistoryItemType {
 
 - (void)dealloc;
 
-- (void)setLosingPlayer:(int)playerID;
-- (void)setWinningPlayer:(int)playerID;
+- (void)setLosingPlayer:(NSInteger)playerID;
+- (void)setWinningPlayer:(NSInteger)playerID;
 
 - (NSString *)asString;
 - (NSString *)asDetailedString;

@@ -76,13 +76,13 @@
 }
 
 //Set the losing playerID if someone lost this turn
-- (void)setLosingPlayer:(int)playerID
+- (void)setLosingPlayer:(NSInteger)playerID
 {
     playerLosingADie = playerID;
 }
 
 //Set the winnign playerID if someone lost this turn
-- (void)setWinningPlayer:(int)playerID
+- (void)setWinningPlayer:(NSInteger)playerID
 {
     playerWinningADie = playerID;
 }

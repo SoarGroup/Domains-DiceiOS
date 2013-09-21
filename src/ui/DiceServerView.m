@@ -62,20 +62,6 @@
     // Do any additional setup after loading the view from its nib.
 }
 
-- (void)viewDidUnload
-{
-    [self setPlayerNameList:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (IBAction)quitGame:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -116,7 +102,7 @@
         [alert show];
         return;
     }
-    NSString *agentName = [NSString stringWithFormat:@"Soar-%d", [game getNumberOfPlayers]];
+    NSString *agentName = [NSString stringWithFormat:@"Soar-%ld", (long)[game getNumberOfPlayers]];
 	SoarPlayer *soarPlayer = [[[SoarPlayer alloc] initWithName:agentName game:self.game connentToRemoteDebugger:NO lock:nil] autorelease];
     [game addPlayer:soarPlayer];
     [playerNameList reloadData];
@@ -127,7 +113,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    int index = [indexPath indexAtPosition:indexPath.length - 1];
+    NSInteger index = [indexPath indexAtPosition:indexPath.length - 1];
     if (index < 0 || index >= [game getNumberOfPlayers])
     {
         return nil;

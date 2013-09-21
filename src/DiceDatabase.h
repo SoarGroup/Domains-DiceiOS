@@ -18,7 +18,7 @@
 - (void) setPlayerName:(NSString *)name;
 - (NSString *) getPlayerName;
 
-- (void) setDifficulty:(int)difficulty;
+- (void) setDifficulty:(NSInteger)difficulty;
 - (int) getDifficulty;
 
 @end

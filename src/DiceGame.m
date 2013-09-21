@@ -142,7 +142,7 @@
     [[gameState getCurrentPlayer] itsYourTurn];
 }
 
--(int)getNumberOfPlayers
+-(NSInteger)getNumberOfPlayers
 {
     return [self.players count];
 }
@@ -203,12 +203,12 @@
 
 - (void) end
 {
-    int numPlayers = self.players.count;
+    NSInteger numPlayers = self.players.count;
     NSMutableArray *losers = self.gameState.losers;
 		
     int places[] = {-1, -1, -1, -1};
 	
-	for (int i = [losers count];i > 0;i--)
+	for (NSInteger i = [losers count];i > 0;i--)
 	{
 		NSNumber *loser = [losers objectAtIndex:i-1];
 		places[i] = [loser intValue];

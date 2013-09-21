@@ -27,7 +27,7 @@
     NSArray *playerStates; // of type PlayerState
     DiceGame *game;
     int currentTurn;
-    int playersLeft;
+    NSInteger playersLeft;
     Bid *previousBid;
     id <Player> gameWinner;
     
@@ -42,25 +42,25 @@
 - (id)initWithPlayers:(NSArray *)players numberOfDice:(int)numberOfDice game:(DiceGame*)game;
 - (void)dealloc;
 
-- (BOOL)handleBid:(int)playerID withBid:(Bid *)bid;
-- (BOOL)handlePush:(int)playerID withPush:(NSArray *)push;
-- (BOOL)handlePass:(int)playerID;
-- (BOOL)handleChallenge:(int)playerID againstTarget:(int)targetID withFirstPlayerWonOrNot:(BOOL *)didTheChallengerWin;
-- (BOOL)handleExact:(int)playerID andWasTheExactRight:(BOOL *)wasTheExactRight;
-- (BOOL)handleAccept:(int)playerID;
+- (BOOL)handleBid:(NSInteger)playerID withBid:(Bid *)bid;
+- (BOOL)handlePush:(NSInteger)playerID withPush:(NSArray *)push;
+- (BOOL)handlePass:(NSInteger)playerID;
+- (BOOL)handleChallenge:(NSInteger)playerID againstTarget:(NSInteger)targetID withFirstPlayerWonOrNot:(BOOL *)didTheChallengerWin;
+- (BOOL)handleExact:(NSInteger)playerID andWasTheExactRight:(BOOL *)wasTheExactRight;
+- (BOOL)handleAccept:(NSInteger)playerID;
 - (void)addNewRoundListener:(id <NewRoundListener>)listener;
 
 @property (readwrite, retain) NSArray *players;
 @property (readwrite, retain) NSArray *playerStates;
 @property (readwrite, retain) NSMutableArray *losers;
 @property (readwrite, assign) int currentTurn;
-@property (readwrite, assign) int playersLeft;
+@property (readwrite, assign) NSInteger playersLeft;
 @property (readwrite, retain) Bid *previousBid;
 @property (readwrite, retain) NSMutableArray *theNewRoundListeners;
 @property (readwrite, retain) DiceGame *game;
 
 - (id <Player>)getCurrentPlayer;
-- (id <Player>)getPlayerWithID:(int)playerID;
+- (id <Player>)getPlayerWithID:(NSInteger)playerID;
 - (PlayerState *)getCurrentPlayerState;
 - (BOOL)hasAPlayerWonTheGame;
 - (id <Player>)gameWinner;
@@ -71,40 +71,40 @@
 - (NSArray *)flatHistory;
 - (HistoryItem *)lastHistoryItem;
 - (PlayerStatus)playerStatus:(int)playerID;
-- (int)historySize;
-- (int) getNumberOfPlayers:(BOOL)includeLostPlayers;
+- (NSInteger)historySize;
+- (NSInteger) getNumberOfPlayers:(BOOL)includeLostPlayers;
 - (NSString *)stateString:(int)playerID;
 - (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine;
-- (NSArray *) lastMoveForPlayer:(int)playerID;
+- (NSArray *) lastMoveForPlayer:(NSInteger)playerID;
 - (BOOL)checkBid:(Bid *)bid playerSpecialRules:(BOOL)playerSpecialRules;
-- (BOOL)checkPlayer:(int)playerID;
+- (BOOL)checkPlayer:(NSInteger)playerID;
 
-- (int)lastPassPlayerID;
-- (int)secondLastPassPlayerID;
+- (NSInteger)lastPassPlayerID;
+- (NSInteger)secondLastPassPlayerID;
 
 - (NSArray *)playersWhoHaveLost;
 
 - (int)countKnownDice:(int)rankOfDice inArray:(NSArray *)arrayToCountIn;
 
-- (NSString *) historyText:(int)playerID;
+- (NSString *) historyText:(NSInteger)playerID;
 
 @end
 
 @interface DiceGameState()
 - (void)createNewRound;
-- (void)playerLosesRound:(int)playerID;
-- (void)playerLosesGame:(int)playerID;
+- (void)playerLosesRound:(NSInteger)playerID;
+- (void)playerLosesGame:(NSInteger)playerID;
 - (void)goToNextPlayerWhoHasntLost;
 
-- (PlayerState *) getPlayerState:(int)playerID;
+- (PlayerState *) getPlayerState:(NSInteger)playerID;
 - (void)moveToNextTurn;
 
 - (int)countDice:(int)rankOfDice;
-- (int)countSeenDice:(int)playerIDorMinusOne rank:(int)rank;
-- (int)countUnknownDice:(int)playerIDorMinusOne;
+- (int)countSeenDice:(NSInteger)playerIDorMinusOne rank:(int)rank;
+- (int)countUnknownDice:(NSInteger)playerIDorMinusOne;
 - (int)countAllDice;
 - (BOOL)isBidCorrect:(Bid *)bid;
 
-- (int) getIndexOfPlayerWithId:(int)playerID;
+- (int) getIndexOfPlayerWithId:(NSInteger)playerID;
 
 @end

@@ -508,7 +508,7 @@
     return [gameState headerString:self.playerID singleLine:singleLine];
 }
 
-- (int) getNumberOfPlayers {
+- (NSInteger) getNumberOfPlayers {
     return [self.gameState getNumberOfPlayers:NO];
 }
 

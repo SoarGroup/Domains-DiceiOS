@@ -96,29 +96,6 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)viewDidUnload
-{
-    [self setSinglePlayerButton:nil];
-    [self setMultiPlayerButton:nil];
-    [self setJoinMultiplayerButton:nil];
-    [self setServerOnlyButton:nil];
-    [self setOneOpponentButton:nil];
-    [self setTwoOpponentButton:nil];
-    [self setThreeOpponentButton:nil];
-	[self setSettingsButton:nil];
-    [self setHowToPlayButton:nil];
-    [self setStatsButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)dealloc {
     [username release];
     [singlePlayerButton release];

@@ -13,25 +13,25 @@
 
 @interface DiceAction : NSObject {
     ActionType actionType;
-    int playerID;
+    NSInteger playerID;
     int count;
     int face;
     NSArray *push;
-    int targetID;
+    NSInteger targetID;
 }
 
 @property (readwrite, assign) ActionType actionType;
-@property (readwrite, assign) int playerID;
+@property (readwrite, assign) NSInteger playerID;
 @property (readwrite, assign) int count;
 @property (readwrite, assign) int face;
 @property (readwrite, retain) NSArray *push;
-@property (readwrite, assign) int targetID;
+@property (readwrite, assign) NSInteger targetID;
 
-+ (DiceAction *) bidAction:(int)playerID count:(int)count face:(int)face push:(NSArray *)push;
-+ (DiceAction *) challengeAction:(int)playerID target:(int)targetId;
-+ (DiceAction *) exactAction:(int)playerID;
-+ (DiceAction *) passAction:(int)playerID push:(NSArray*)push;
-+ (DiceAction *) acceptAction:(int)playerID;
-+ (DiceAction *) pushAction:(int)playerID push:(NSArray *)push;
++ (DiceAction *) bidAction:(NSInteger)playerID count:(int)count face:(int)face push:(NSArray *)push;
++ (DiceAction *) challengeAction:(NSInteger)playerID target:(NSInteger)targetId;
++ (DiceAction *) exactAction:(NSInteger)playerID;
++ (DiceAction *) passAction:(NSInteger)playerID push:(NSArray*)push;
++ (DiceAction *) acceptAction:(NSInteger)playerID;
++ (DiceAction *) pushAction:(NSInteger)playerID push:(NSArray *)push;
 
 @end

@@ -54,7 +54,7 @@
     int width = sub.frame.size.width;
     int margin = 8;
     NSArray *dice = [self.state arrayOfDice];
-    int numDice = [dice count];
+    NSInteger numDice = [dice count];
     int maxDice = 5;
     dieWidth = (width - (margin * (maxDice - 1))) / maxDice;
     for (int i = 0; i < numDice; ++i)
@@ -84,7 +84,7 @@
 
 - (void) dieButtonPressed:(id)sender {
     UIButton *button = (UIButton*)sender;
-    int dieIndex = button.tag;
+    NSInteger dieIndex = button.tag;
     
     Die *dieObject = [self.state.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
@@ -106,20 +106,6 @@
     [UIView setAnimationDuration:0.3f];
     button.frame = newFrame;
     [UIView commitAnimations];
-}
-
-- (void)viewDidUnload
-{
-    [self setDiceSubvew:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)dealloc {

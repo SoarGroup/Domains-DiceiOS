@@ -22,7 +22,7 @@
 -(void)constrainAndUpdateBidCount;
 -(void)constrainAndUpdateBidFace;
 -(NSArray*)makePushedDiceArray;
--(int)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(int) buttonIndex;
+-(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger) buttonIndex;
 
 @end
 
@@ -108,7 +108,7 @@ NSArray *buildDiceImages() {
                                 initWithGame:self.game
                                 player:state playGameView:self]
                                autorelease];
-    [self.navigationController presentModalViewController:overView animated:YES];
+    [self.navigationController presentViewController:overView animated:YES completion:nil];
     return YES;
 }
 
@@ -177,36 +177,10 @@ NSArray *buildDiceImages() {
     [self.game.gameState addNewRoundListener:self];
 }
 
--(UIImage *)imageForDie:(int)die {
+-(UIImage *)imageForDie:(NSInteger)die {
     if (die <= 0 || die > 6) return [self.images objectAtIndex:DIE_UNKNOWN];
     return [self.images objectAtIndex:(DIE_1 - 1 + die)];
 }
-
-- (void)viewDidUnload
-{
-    [self setGameStateLabel:nil];
-    [self setPassButton:nil];
-    [self setBidButton:nil];
-    [self setExactButton:nil];
-    [self setPreviousBidLabel:nil];
-    [self setBidCountLabel:nil];
-    [self setBidFaceLabel:nil];
-    [self setQuitButton:nil];
-    [self setBidCountPlusButton:nil];
-    [self setBidCountMinusButton:nil];
-    [self setBidFacePlusButton:nil];
-    [self setBidFaceMinusButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 
 - (IBAction)backPressed:(id)sender {
     NSString *title = [NSString stringWithFormat:@"Quit the game?"];
@@ -280,7 +254,7 @@ NSArray *buildDiceImages() {
 
 - (void) dieButtonPressed:(id)sender {
     UIButton *button = (UIButton*)sender;
-    int dieIndex = button.tag;
+    NSInteger dieIndex = button.tag;
 	
     Die *dieObject = [self.state.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
@@ -355,7 +329,7 @@ NSArray *buildDiceImages() {
 		{
 			int number = 0;
 			
-			int startLocation = i;
+			NSInteger startLocation = i;
 			
 			for (;i < [headerString length];i++)
 			{
@@ -439,7 +413,7 @@ NSArray *buildDiceImages() {
 			
 			NSNumber *die = [numbers objectAtIndex:i];
 			
-			int dieValue = [die integerValue];
+			NSInteger dieValue = [die integerValue];
 			
 			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 15, 15)];
 			[imageView setImage:[self imageForDie:dieValue]];
@@ -532,7 +506,7 @@ NSArray *buildDiceImages() {
 			{
 				int number = 0;
 				
-				int startLocation = z;
+				NSInteger startLocation = z;
 				
 				for (;z < [nameLabelText length];z++)
 				{
@@ -800,7 +774,7 @@ NSArray *buildDiceImages() {
 		NSString *pushedDice = @"";
 		
 		if ([markedToPushDiceWithPushedDice count] > 0)
-			pushedDice = [NSString stringWithFormat:@",\nAnd push %d %@", [[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
+			pushedDice = [NSString stringWithFormat:@",\nAnd push %lu %@", (unsigned long)[[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
 		
         NSString *message = [NSString stringWithFormat:@"Can't bid %d       %@", currentBidCount, pushedDice];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
@@ -820,7 +794,7 @@ NSArray *buildDiceImages() {
     
     NSString *title = [NSString stringWithFormat:@"Bid %d        ?", currentBidCount];
     NSArray *push = [self makePushedDiceArray];
-    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d %@?", [push count], ([push count] == 1 ? @"die" : @"dice")];
+    NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu %@?", (unsigned long)[push count], ([push count] == 1 ? @"die" : @"dice")];
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                      message:message
                                                     delegate:self
@@ -940,13 +914,13 @@ NSArray *buildDiceImages() {
     return ret;
 }
 
--(int)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(int)buttonIndex {
+-(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger)buttonIndex {
     if (alertOrNil == nil) return -1;
     if (buttonIndex == alertOrNil.cancelButtonIndex)
     {
         return -1;
     }
-    int buttonOffset = buttonIndex - 1;
+    NSInteger buttonOffset = buttonIndex - 1;
     Bid *challengeableBid = [state getChallengeableBid];
     if (challengeableBid != nil)
     {
@@ -988,7 +962,7 @@ NSArray *buildDiceImages() {
 
 - (IBAction)historyPressed:(id)sender {
     DiceHistoryView *history = [[[DiceHistoryView alloc] initWithPlayerState:self.state] autorelease];
-    [self.navigationController presentModalViewController:history animated:YES];
+    [self.navigationController presentViewController:history animated:YES completion:nil];
 }
 
 @end

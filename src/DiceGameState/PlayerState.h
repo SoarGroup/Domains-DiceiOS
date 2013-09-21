@@ -90,6 +90,6 @@
 - (NSString *)perceptionString:(BOOL)showPrivate;
 - (Die *) getDie:(int)index;
 
-- (int) getNumberOfPlayers;
+- (NSInteger) getNumberOfPlayers;
 
 @end

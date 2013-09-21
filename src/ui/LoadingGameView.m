@@ -56,7 +56,7 @@
     NSLog(@"Pushed gameView");
 }
 
-NSString *makePlayerName(int index) {
+NSString *makePlayerName(NSInteger index) {
     switch (index) {
         case 1:
             return @"Alice";
@@ -108,20 +108,6 @@ NSString *makePlayerName(int index) {
 
 - (void) viewDidAppear:(BOOL)animated {
     [NSThread detachNewThreadSelector:@selector(initSoarOpponents) toTarget:self withObject:nil];    
-}
-
-- (void)viewDidUnload
-{
-    [self setSpinnerView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)dealloc {

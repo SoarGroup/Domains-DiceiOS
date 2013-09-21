@@ -24,7 +24,7 @@ typedef struct ControlButtons {
 
 @interface PlayGameTableView : UITableViewController <PlayGame, UITableViewDataSource, UITableViewDelegate> {
     DiceGame *game;    
-    int currentBidCount;
+    NSInteger currentBidCount;
     int currentBidFace;
     PlayerState *state;
     
@@ -34,7 +34,7 @@ typedef struct ControlButtons {
 
 @property (readwrite, retain) DiceGame *game;
 @property (readwrite, retain) PlayerState *state;
-@property (readwrite, assign) int currentBidCount;
+@property (readwrite, assign) NSInteger currentBidCount;
 @property (readwrite, assign) int currentBidFace;
 @property (readwrite, assign) ControlButtons controlButtons;
 

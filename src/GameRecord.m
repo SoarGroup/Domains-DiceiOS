@@ -13,7 +13,7 @@
 @synthesize gameTime, numPlayers, firstPlace, secondPlace, thirdPlace, fourthPlace;
 
 - (id)initWithGameTime:(GameTime)aGameTime
-NumPlayers:(int)aNumPlayers
+NumPlayers:(NSInteger)aNumPlayers
 firstPlace:(int)aFirstPlace
 secondPlace:(int)aSecondPlace
 thirdPlace:(int)aThirdPlace

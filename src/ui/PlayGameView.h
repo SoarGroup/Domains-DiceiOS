@@ -88,6 +88,6 @@ const int pushMargin();
 @property (nonatomic, retain) IBOutlet UIButton *bidCountMinusButton;
 @property (nonatomic, retain) IBOutlet UIButton *bidFacePlusButton;
 @property (nonatomic, retain) IBOutlet UIButton *bidFaceMinusButton;
--(UIImage *)imageForDie:(int)die;
+-(UIImage *)imageForDie:(NSInteger)die;
 
 @end

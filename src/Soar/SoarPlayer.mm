@@ -378,7 +378,7 @@ typedef enum {
     idState->CreateStringWME("special", ([gameState usingSpecialRules] ? "true" : "false"));
     idState->CreateStringWME("inprogress", ([gameState isGameInProgress] ? "true" : "false"));
     
-    std::map<int, void*> playerMap;
+    std::map<NSInteger, void*> playerMap;
     int victorID = -1;
     
     BOOL playerHasWon = [gameState hasAPlayerWonTheGame];
@@ -585,12 +585,12 @@ typedef enum {
     
     if (canChallengeBid)
     {
-        int target = [[gameState previousBid] playerID];
+        NSInteger target = [[gameState previousBid] playerID];
         challenge->CreateSharedIdWME("target", static_cast<Identifier *>(playerMap[target]));
     }
     else if (canChallengePass)
     {
-        int target = [gameState lastPassPlayerID];
+        NSInteger target = [gameState lastPassPlayerID];
         challenge->CreateSharedIdWME("target", static_cast<Identifier *>(playerMap[target]));
         target = [gameState secondLastPassPlayerID];
         if (target != -1)
@@ -620,12 +620,12 @@ typedef enum {
     accept->CreateStringWME("available", ([self.playerState canAccept] ? "true" : "false"));
     
     NSArray* history = [gameState history];
-    int roundLength = [history count];
+    NSInteger roundLength = [history count];
 	
-	int lastActionHistoryItem = 0;
+	NSInteger lastActionHistoryItem = 0;
 	int numberHistoryItems = 0;
 	
-	for (int i = roundLength - 1; i >= 0; --i)
+	for (NSInteger i = roundLength - 1; i >= 0; --i)
 	{
 		HistoryItem *item = [history objectAtIndex:i];
 		if (item.historyType == actionHistoryItem)
@@ -647,7 +647,7 @@ typedef enum {
         Identifier *prev = idHistory->ConvertToIdentifier();
         Identifier *lastBid = NULL;
         
-        for (int i = roundLength - 1; i >= 0; --i)
+        for (NSInteger i = roundLength - 1; i >= 0; --i)
         {
             HistoryItem *item = [history objectAtIndex:i];
             if (item.historyType != actionHistoryItem)
@@ -742,7 +742,7 @@ typedef enum {
     }
     
     NSArray* rounds = [gameState roundHistory];
-    int numRounds = [rounds count];
+    NSInteger numRounds = [rounds count];
     
     if (numRounds == 0)
     {
@@ -1029,7 +1029,7 @@ typedef enum {
         NSLog(@"Agent performing action of type: %d", action.actionType);
         if (diceToPush != nil)
         {
-            NSLog(@"Pushing dice, count: %d", [diceToPush count]);
+            NSLog(@"Pushing dice, count: %lu", (unsigned long)[diceToPush count]);
             action.push = diceToPush;           
         }
         [game handleAction:action];
@@ -1037,7 +1037,7 @@ typedef enum {
     }
     else if (diceToPush != nil)
     {
-        NSLog(@"Agent just pushing, count: %d", [diceToPush count]);
+        NSLog(@"Agent just pushing, count: %lu", (unsigned long)[diceToPush count]);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
         [game handleAction:new_action];
     }

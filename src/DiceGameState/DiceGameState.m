@@ -34,7 +34,7 @@
         NSMutableArray *mutPlayerStates = [[[NSMutableArray alloc] init] autorelease];
         
         // Fill the player array with player states for each player in the game
-        int numPlayers = [thePlayers count];
+        NSInteger numPlayers = [thePlayers count];
         NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
         for (int i = 0; i < numPlayers; ++i)
         {
@@ -88,7 +88,7 @@
 }
 
 // Handle bids
-- (BOOL)handleBid:(int)playerID withBid:(Bid *)bid
+- (BOOL)handleBid:(NSInteger)playerID withBid:(Bid *)bid
 {
     // Make sure it is the player's turn and the bid is correct
     if ([self checkPlayer:playerID] && [self checkBid:bid playerSpecialRules:(inSpecialRules && [[self getPlayerState:playerID] numberOfDice] > 1)]) {
@@ -108,7 +108,7 @@
     }
 }
 
-- (BOOL)handlePush:(int)playerID withPush:(NSArray *)push
+- (BOOL)handlePush:(NSInteger)playerID withPush:(NSArray *)push
 {
     if (push == nil || [push count] == 0)
     {
@@ -140,7 +140,7 @@
     return YES;
 }
 
-- (BOOL)handlePass:(int)playerID
+- (BOOL)handlePass:(NSInteger)playerID
 {
     // Make sure its a valid pass.
     if ([self checkPlayer:playerID]) {
@@ -165,7 +165,7 @@
 }
 
 // Handles a challenge, whether it is a challenge of a bid or a pass
-- (BOOL)handleChallenge:(int)playerID againstTarget:(int)targetID withFirstPlayerWonOrNot:(BOOL *)didTheChallengerWin
+- (BOOL)handleChallenge:(NSInteger)playerID againstTarget:(NSInteger)targetID withFirstPlayerWonOrNot:(BOOL *)didTheChallengerWin
 {
     if (![self checkPlayer:playerID]) {
         return NO;
@@ -184,7 +184,7 @@
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                         andWithPlayer:player 
                                                           whereTypeIs:ACTION_CHALLENGE_BID
-                                                            withValue:targetID
+                                                            withValue:(int)targetID
                                                             andResult:0];
             [newItem setBid:self.previousBid];
             [newItem setLosingPlayer:playerID];
@@ -196,7 +196,7 @@
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                         andWithPlayer:player 
                                                           whereTypeIs:ACTION_CHALLENGE_BID
-                                                            withValue:targetID
+                                                            withValue:(int)targetID
                                                             andResult:1];
             [newItem setBid:self.previousBid];
             [newItem setLosingPlayer:targetID];
@@ -214,7 +214,7 @@
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                             andWithPlayer:player
                                                               whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:targetID
+                                                                withValue:(int)targetID
                                                                 andResult:0];
                 [newItem setLosingPlayer:playerID];
                 [newItem autorelease];
@@ -225,7 +225,7 @@
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                             andWithPlayer:player
                                                               whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:targetID
+                                                                withValue:(int)targetID
                                                                 andResult:1];
                 [newItem setLosingPlayer:targetID];
                 [newItem autorelease];
@@ -241,7 +241,7 @@
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                             andWithPlayer:player
                                                               whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:targetID
+                                                                withValue:(int)targetID
                                                                 andResult:0];
                 [newItem setLosingPlayer:playerID];
                 [newItem autorelease];
@@ -252,7 +252,7 @@
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                             andWithPlayer:player
                                                               whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:targetID
+                                                                withValue:(int)targetID
                                                                 andResult:1];
                 [newItem setLosingPlayer:targetID];
                 [newItem autorelease];
@@ -284,7 +284,7 @@
 }
 
 //Handle exacts
-- (BOOL)handleExact:(int)playerID andWasTheExactRight:(BOOL *)wasTheExactRight
+- (BOOL)handleExact:(NSInteger)playerID andWasTheExactRight:(BOOL *)wasTheExactRight
 {
     //Make sure its the player's turn
     if (![self checkPlayer:playerID]) {
@@ -333,7 +333,7 @@
     return YES;
 }
 
-- (BOOL)handleAccept:(int)playerID
+- (BOOL)handleAccept:(NSInteger)playerID
 {
     if ([self checkPlayer:playerID]) {
         [self moveToNextTurn];
@@ -343,7 +343,7 @@
         return NO;
 }
 
-- (id <Player>)getPlayerWithID:(int)playerID {
+- (id <Player>)getPlayerWithID:(NSInteger)playerID {
     for (id <Player> player in self.players)
     {
         if ([player getID] == playerID)
@@ -402,10 +402,10 @@
 // Returns an array of the history objects relating to the
 // last move made by the player with the playerID, or a
 // empty array if that player hasn't played this turn.
-- (NSArray *) lastMoveForPlayer:(int)playerID {
+- (NSArray *) lastMoveForPlayer:(NSInteger)playerID {
     NSMutableArray *mut = [NSMutableArray array];
     bool inPlayer = NO;
-    for (int i = [history count] - 1; i >= 0; --i) {
+    for (NSInteger i = [history count] - 1; i >= 0; --i) {
         HistoryItem *item = [history objectAtIndex:i];
         int itemPlayerID = item.player.playerID;
         if (itemPlayerID == playerID) {
@@ -478,14 +478,14 @@
 }
 
 // Number of history items in the current round (number of turns taken this round)
-- (int)historySize
+- (NSInteger)historySize
 {
     if (!history)
         return 0;
     return [history count];
 }
 
-- (int) getNumberOfPlayers:(BOOL)includeLostPlayers
+- (NSInteger) getNumberOfPlayers:(BOOL)includeLostPlayers
 {
     if (includeLostPlayers)
     {
@@ -523,7 +523,7 @@
 }
 
 
-- (NSString *) historyText:(int)playerID {
+- (NSString *) historyText:(NSInteger)playerID {
     NSString *labelText;
     // What playerID goes in this slot
     id <Player> player = [self getPlayerWithID:playerID];
@@ -535,7 +535,7 @@
         labelText = playerName;
     } else {
         NSMutableString *moveString = [NSMutableString string];
-        for (int i = [lastMove count] - 1; i >= 0; --i) {
+        for (NSInteger i = [lastMove count] - 1; i >= 0; --i) {
             HistoryItem *item = [lastMove objectAtIndex:i];
             [moveString appendFormat:@"%@", [item asString]];
             //if (i > 0) {
@@ -606,7 +606,7 @@
 }
 
 //Make a player lose the round (set the flags that they've lost)
-- (void)playerLosesRound:(int)playerID
+- (void)playerLosesRound:(NSInteger)playerID
 {
     [history addObject:[[[HistoryItem alloc]
                          initWithMetaInformation:[self stateString:-1]]
@@ -623,7 +623,7 @@
 }
 
 //Make a player lose the game (set the flags that they've lost the game)
-- (void)playerLosesGame:(int)playerID
+- (void)playerLosesGame:(NSInteger)playerID
 {
     [self.losers addObject:[NSNumber numberWithInt:[self getIndexOfPlayerWithId:playerID]]];
     NSLog(@"%@ lost the game.", [[self getPlayerState:playerID] asString]);
@@ -665,7 +665,7 @@
 }
 
 // Return true if playerID is the current player id.
-- (BOOL)checkPlayer:(int)playerID
+- (BOOL)checkPlayer:(NSInteger)playerID
 {
     return [[self.players objectAtIndex:self.currentTurn] getID] == playerID;
 }
@@ -680,7 +680,7 @@
 }
 
 // Get a player's PlayerState by their playerID
-- (PlayerState *) getPlayerState:(int)playerID
+- (PlayerState *) getPlayerState:(NSInteger)playerID
 {
     for (PlayerState *state in self.playerStates)
     {
@@ -734,7 +734,7 @@
 }
 
 // Gets the total number of dice of the given face, as seen by the given player.
-- (int)countSeenDice:(int)playerIDorMinusOne rank:(int)rank {
+- (int)countSeenDice:(NSInteger)playerIDorMinusOne rank:(int)rank {
     int ret = 0;
     for (PlayerState *playerState in playerStates) {
         for (Die *die in playerState.arrayOfDice) {
@@ -751,7 +751,7 @@
 }
 
 // Gets the number of dice that are invisible to the given player
-- (int)countUnknownDice:(int)playerIDorMinusOne {
+- (int)countUnknownDice:(NSInteger)playerIDorMinusOne {
     int ret = 0;
     for (PlayerState *playerState in playerStates) {
         for (Die *die in playerState.arrayOfDice) {
@@ -782,7 +782,7 @@
 }
 
 // Get the playerID of the person who last passed however if they didn't pass last turn it will return -1.  Basically a check to see whether the last player passed and if so what was their playerID
-- (int)lastPassPlayerID
+- (NSInteger)lastPassPlayerID
 {
     HistoryItem *item = [self lastHistoryItem];
     if (item == nil || [item actionType] != ACTION_PASS)
@@ -791,7 +791,7 @@
 }
 
 // Get the playerID of the player who passed two turns ago.
-- (int)secondLastPassPlayerID
+- (NSInteger)secondLastPassPlayerID
 {
     if ([self lastPassPlayerID] == -1)
         return -1;
@@ -826,7 +826,7 @@
     return array;
 }
 
-- (int) getIndexOfPlayerWithId:(int)playerID
+- (int) getIndexOfPlayerWithId:(NSInteger)playerID
 {
     for (int i = 0; i < [playerStates count]; ++i)
     {

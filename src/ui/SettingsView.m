@@ -178,20 +178,6 @@
 	[self doLayout];
 }
 
-- (void)viewDidUnload
-{
-    [self setScrollView:nil];
-    [self setBackground:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (void)dealloc {
     [scrollView release];
     [background release];

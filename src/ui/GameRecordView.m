@@ -42,18 +42,6 @@
 
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -80,7 +68,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    int row = [indexPath row];
+    NSInteger row = [indexPath row];
     if (row == 0) {
         UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0,0,200, 30)] autorelease];
         label.text = @"First row";

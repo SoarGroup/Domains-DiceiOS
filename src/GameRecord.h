@@ -34,7 +34,7 @@ typedef struct GameTime {
 @property (readwrite, assign) GameTime gameTime;
 
 - (id) initWithGameTime:(GameTime)gameTime
-             NumPlayers:(int)numPlayers
+             NumPlayers:(NSInteger)numPlayers
              firstPlace:(int)firstPlace
             secondPlace:(int)secondPlace
              thirdPlace:(int)thirdPlace

@@ -222,7 +222,7 @@ void executeSql(const char *sqlStatement) {
     return playerName;
 }
 
-- (void) setDifficulty:(int)difficulty
+- (void) setDifficulty:(NSInteger)difficulty
 {
 	NSString* name = [self getPlayerName];
 	
@@ -231,7 +231,7 @@ void executeSql(const char *sqlStatement) {
 	
 	executeSql("delete from settings;");
 	
-	executeSql([[NSString stringWithFormat:@"insert into settings (player_name, difficulty) values ('%@', %i);", name, difficulty] UTF8String]);
+	executeSql([[NSString stringWithFormat:@"insert into settings (player_name, difficulty) values ('%@', %li);", name, (long)difficulty] UTF8String]);
 }
 
 - (int) getDifficulty

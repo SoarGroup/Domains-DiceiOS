@@ -70,7 +70,7 @@
 		{
 			int number = 0;
 			
-			int startLocation = i;
+			NSInteger startLocation = i;
 			
 			for (;i < [headerString length];i++)
 			{
@@ -211,24 +211,8 @@
     }
 }
 
-- (void)viewDidUnload
-{
-    [self setTitleLabel:nil];
-    [self setDiceView:nil];
-    [self setDoneButton:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 - (IBAction)donePressed:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 
     if ([self.game.gameState usingSpecialRules]) {
         NSString *title = [NSString stringWithFormat:@"Special Rules!"];
