@@ -34,7 +34,6 @@
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:self.rootViewController] autorelease];
 
     self.navigationController.navigationBarHidden = YES;
-    self.rootViewController.wantsFullScreenLayout = YES;
     
     [self.navigationController pushViewController:self.mainMenu animated:NO];
     

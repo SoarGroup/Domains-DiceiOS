@@ -37,6 +37,7 @@
 		4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */; };
 		4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */; };
 		4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */; };
+		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		C6013656152B8A6F00854485 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6013654152B8A6F00854485 /* LoadingGameView.m */; };
@@ -139,7 +140,6 @@
 		C6F66162143BA9BD00EF3AD2 /* DiceSoarPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F66161143BA9BD00EF3AD2 /* DiceSoarPlayer.m */; };
 		C6F66165143BA9D800EF3AD2 /* DiceClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F66164143BA9D800EF3AD2 /* DiceClient.m */; };
 		C6F6616B143BBF4C00EF3AD2 /* DiceAction.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F6616A143BBF4C00EF3AD2 /* DiceAction.m */; };
-		CD548D3313C612B700D70176 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD548D3213C612B700D70176 /* GameKit.framework */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
 		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
 		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
@@ -183,6 +183,7 @@
 		4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hard.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-hard.soar"; sourceTree = "<group>"; };
 		4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hardest.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-hardest.soar"; sourceTree = "<group>"; };
 		4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-medium.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-medium.soar"; sourceTree = "<group>"; };
+		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "UM Liars Dice/Images.xcassets"; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C6013653152B8A6F00854485 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
@@ -324,7 +325,6 @@
 		C6F66164143BA9D800EF3AD2 /* DiceClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceClient.m; sourceTree = "<group>"; };
 		C6F66169143BBF4C00EF3AD2 /* DiceAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceAction.h; sourceTree = "<group>"; };
 		C6F6616A143BBF4C00EF3AD2 /* DiceAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceAction.m; sourceTree = "<group>"; };
-		CD548D3213C612B700D70176 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CD86D64913BB9E450005A182 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CD86D64B13BB9E450005A182 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -340,7 +340,6 @@
 			files = (
 				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
 				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
-				CD548D3313C612B700D70176 /* GameKit.framework in Frameworks */,
 				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,
 				CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */,
 				CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */,
@@ -584,6 +583,7 @@
 		CD86D63813BB9E450005A182 = {
 			isa = PBXGroup;
 			children = (
+				4DB7B1DB17EB45C000CA94CE /* Images.xcassets */,
 				4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */,
 				4D12BDDB15F1098400265801 /* Default.png */,
 				C66E167515548AEF002190BD /* Default@2x.png */,
@@ -606,7 +606,6 @@
 			children = (
 				4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */,
 				4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */,
-				CD548D3213C612B700D70176 /* GameKit.framework */,
 				CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */,
 				CD86D71C13BBB1B60005A182 /* OpenGLES.framework */,
 				CD86D64713BB9E450005A182 /* UIKit.framework */,
@@ -664,6 +663,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
+				TargetAttributes = {
+					CD86D64213BB9E450005A182 = {
+						DevelopmentTeam = RYTB7X84GA;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "UM Liars Dice" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -738,6 +747,7 @@
 				C6031A671550B33A00186B8E /* dice-model-bot-new.soar in Resources */,
 				C6031A681550B33A00186B8E /* dice-p0-m0-c0.soar in Resources */,
 				C6031A691550B33A00186B8E /* dice-p0-m1-c0.soar in Resources */,
+				4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */,
 				C6031A6A1550B33A00186B8E /* dice-p1-m1-c0.soar in Resources */,
 				C6031A6B1550B33A00186B8E /* dice-rl in Resources */,
 				C6031A6C1550B33A00186B8E /* dice-rl.soar in Resources */,
@@ -837,7 +847,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -849,12 +859,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/include\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7s]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7s\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lSoar",
@@ -862,11 +869,10 @@
 				);
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = iphoneos;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
+				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
 			name = "Ad Hoc";
 		};
@@ -874,14 +880,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Liars-Dice/UM Liars Dice-Prefix.pch";
@@ -895,13 +904,13 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -914,7 +923,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -927,23 +936,19 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/include\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7s]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7s\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lSoar",
 					"-lsqlite3.0",
 				);
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
-				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = iphoneos;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
+				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
 			name = Debug;
 		};
@@ -951,7 +956,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -962,12 +967,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/include\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*][arch=armv7s]" = "\"$(SRCROOT)/Soar931-iOS43/lib-armv7s\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lSoar",
@@ -975,11 +977,10 @@
 				);
 				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				REZ_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
-				SDKROOT = iphoneos;
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Soar931-iOS43/lib-simulator\"";
+				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
 			name = Release;
 		};
@@ -987,14 +988,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1009,13 +1013,13 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wall";
@@ -1027,14 +1031,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Liars-Dice/UM Liars Dice-Prefix.pch";
@@ -1048,13 +1055,13 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
