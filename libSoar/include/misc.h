@@ -229,9 +229,9 @@ struct Dangerous_Pointer_Cast {
 class soar_timer {
 public:
 	soar_timer()
-	: enabled_ptr(NULL), t1(0), elapsed(0) 
+	: t1(0), elapsed(0), enabled_ptr(NULL)
 	{
-		raw_per_usec = get_raw_time_per_usec();
+		raw_per_usec = get_raw_time_per_usec();	
 	}
 
 	void set_enabled(int64_t* new_enabled) {
