@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RulesView">
+            <connections>
+                <outlet property="view" destination="1" id="4E7-F2-NTm"/>
+                <outlet property="webView" destination="TH9-Sj-rKc" id="ge3-w1-wsw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView opaque="NO" contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TH9-Sj-rKc">
+                    <rect key="frame" x="20" y="0.0" width="280" height="548"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="0.0" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                </webView>
+            </subviews>
+            <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="TH9-Sj-rKc" secondAttribute="trailing" constant="20" id="NjG-bV-vxW"/>
+                <constraint firstAttribute="bottom" secondItem="TH9-Sj-rKc" secondAttribute="bottom" constant="20" id="Vwf-i5-y2Z"/>
+                <constraint firstItem="TH9-Sj-rKc" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="bgo-5K-3Tu"/>
+                <constraint firstItem="TH9-Sj-rKc" firstAttribute="top" secondItem="1" secondAttribute="top" id="j54-aF-pg5"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

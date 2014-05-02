@@ -19,7 +19,7 @@
 #import "PlayGame.h"
 #import "GameRecord.h"
 
-@class DiceApplicationDelegate;
+@class ApplicationDelegate;
 
 typedef enum DiceGameType {
     SERVER_ONLY,
@@ -31,7 +31,7 @@ typedef enum DiceGameType {
 @interface DiceGame : NSObject {
     
     // Properties
-    DiceApplicationDelegate *appDelegate;
+    ApplicationDelegate *appDelegate;
     id <PlayGame> gameView;
     DiceGameType type;
     
@@ -53,7 +53,7 @@ typedef enum DiceGameType {
 	int nextID;
 }
 
--(DiceGame*)initWithType:(DiceGameType)type appDelegate:(DiceApplicationDelegate*)appDelegate username:(NSString*)usernameOrNil;
+-(DiceGame*)initWithType:(DiceGameType)type appDelegate:(ApplicationDelegate*)appDelegate username:(NSString*)usernameOrNil;
 
 // Adding and removing players.
 -(void)addPlayer:(id <Player>)player;
@@ -74,7 +74,7 @@ typedef enum DiceGameType {
 -(id <Player>)getPlayerAtIndex:(int)index;
 -(void) notifyCurrentPlayer;
 
-@property(readwrite, retain) DiceApplicationDelegate *appDelegate;
+@property(readwrite, retain) ApplicationDelegate *appDelegate;
 @property(readwrite, assign) DiceGameType type;
 @property(readwrite, retain) DiceServer *server;
 @property(readwrite, retain) DiceGameState *gameState;

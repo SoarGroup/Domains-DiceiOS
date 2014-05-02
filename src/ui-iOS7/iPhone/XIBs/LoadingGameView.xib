@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingGameView">
+            <connections>
+                <outlet property="spinnerView" destination="1eb-Ho-a5o" id="CtN-MP-ZWX"/>
+                <outlet property="view" destination="1" id="D68-Sg-eAz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting game, please wait..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icE-YC-m3i">
+                    <rect key="frame" x="51" y="175" width="218" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="1eb-Ho-a5o">
+                    <rect key="frame" x="142" y="265" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="1eb-Ho-a5o" secondAttribute="centerX" constant="-0.5" id="1XR-MZ-gvR"/>
+                <constraint firstAttribute="centerY" secondItem="1eb-Ho-a5o" secondAttribute="centerY" constant="0.5" id="cRk-iO-Lu0"/>
+                <constraint firstItem="1eb-Ho-a5o" firstAttribute="centerX" secondItem="icE-YC-m3i" secondAttribute="centerX" id="o7r-Dl-Udf"/>
+                <constraint firstItem="1eb-Ho-a5o" firstAttribute="top" secondItem="icE-YC-m3i" secondAttribute="bottom" constant="69" id="wd6-Pc-eyc"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

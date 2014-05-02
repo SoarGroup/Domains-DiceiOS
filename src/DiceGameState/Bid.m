@@ -92,8 +92,33 @@
     [super dealloc];
 }
 
+-(NSString *)stringForDieFace:(NSInteger)die andIsPlural:(BOOL)plural {
+	switch (die)
+	{
+		case 1:
+			return [@"one" stringByAppendingString:(plural ? @"s" : @"")];
+		case 2:
+			return [@"two" stringByAppendingString:(plural ? @"s" : @"")];
+		case 3:
+			return [@"three" stringByAppendingString:(plural ? @"s" : @"")];
+		case 4:
+			return [@"four" stringByAppendingString:(plural ? @"s" : @"")];
+		case 5:
+			return [@"five" stringByAppendingString:(plural ? @"s" : @"")];
+		case 6:
+			return [@"six" stringByAppendingString:(plural ? @"es" : @"")];
+		default:
+			return [@"unknown" stringByAppendingString:(plural ? @"s" : @"")];
+	}
+}
+
     //Ourself as a human readable string
 - (NSString *)asString
+{
+    return [NSString stringWithFormat:@"%@ bid %d %@", self.playerName, self.numberOfDice, [self stringForDieFace:self.rankOfDie andIsPlural:(self.numberOfDice > 1)]];
+}
+
+- (NSString *)asStringOldStyle
 {
     return [NSString stringWithFormat:@"%@ bid %d %ds", self.playerName, self.numberOfDice, self.rankOfDie];
 }

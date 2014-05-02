@@ -23,54 +23,6 @@
 + (UIImage *) imageWithType:(DiceImageType) type {
     NSString *imageName;
     switch (type) {
-        case BACKGROUND:
-            imageName = @"background";
-            break;
-        case BAR:
-            imageName = @"bar";
-            break;
-        case BID_PAD:
-            imageName = @"bid-pad";
-            break;
-        case BUTTON_BID:
-            imageName = @"button-bid";
-            break;
-        case BUTTON_CHALLENGE:
-            imageName = @"button-challenge";
-            break;
-        case BUTTON_EXACT:
-            imageName = @"button-exact";
-            break;
-        case BUTTON_PASS:
-            imageName = @"button-pass";
-            break;
-        case BUTTON_QUIT:
-            imageName = @"button-quit";
-            break;
-        case BID_PAD_PRESSED:
-            imageName = @"bid-pad-pressed";
-            break;
-        case BUTTON_BID_PRESSED:
-            imageName = @"button-bid-pressed";
-            break;
-        case BUTTON_CHALLENGE_PRESSED:
-            imageName = @"button-challenge-pressed";
-            break;
-        case BUTTON_EXACT_PRESSED:
-            imageName = @"button-exact-pressed";
-            break;
-        case BUTTON_PASS_PRESSED:
-            imageName = @"button-pass-pressed";
-            break;
-        case BUTTON_QUIT_PRESSED:
-            imageName = @"button-quit-pressed";
-            break;
-        case BUTTON_DONE:
-            imageName = @"button-done";
-            break;
-        case BUTTON_DONE_PRESSED:
-            imageName = @"button-done-pressed";
-            break;
         case DIE_1:
             imageName = @"die-1";
             break;
@@ -91,12 +43,6 @@
             break;
         case DIE_UNKNOWN:
             imageName = @"die-unknown";
-            break;
-        case SPINNER:
-            imageName = @"spinner";
-            break;
-        case STAR:
-            imageName = @"star";
             break;
         default:
 			imageName = @"unknown";

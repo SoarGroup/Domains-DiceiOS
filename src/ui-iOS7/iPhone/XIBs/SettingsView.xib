@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsView">
+            <connections>
+                <outlet property="difficultyLabel" destination="n0f-YB-MzL" id="HCa-ag-NgF"/>
+                <outlet property="difficultySelector" destination="rkV-vO-4zX" id="2fk-5X-3Dj"/>
+                <outlet property="nameLabel" destination="BCe-5S-Q0C" id="MXT-CA-KxR"/>
+                <outlet property="nameTextField" destination="kph-0R-feg" id="8yt-AJ-RYn"/>
+                <outlet property="view" destination="1" id="3B6-wB-cFT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCe-5S-Q0C">
+                    <rect key="frame" x="20" y="84" width="55" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Player" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kph-0R-feg">
+                    <rect key="frame" x="83" y="80" width="217" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="done"/>
+                    <connections>
+                        <action selector="nameTextFieldTextFinalize:" destination="-1" eventType="editingDidEnd" id="BDE-eW-8jU"/>
+                        <action selector="textFieldFinished:" destination="-1" eventType="editingDidEndOnExit" id="bsB-LH-lrw"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0f-YB-MzL">
+                    <rect key="frame" x="127" y="118" width="67" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rkV-vO-4zX">
+                    <rect key="frame" x="20" y="147" width="280" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="Easy"/>
+                        <segment title="Second"/>
+                        <segment title="Hard"/>
+                        <segment title="Harder"/>
+                        <segment title="Hardest"/>
+                    </segments>
+                    <color key="tintColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    <connections>
+                        <action selector="difficultySelectorValueChanged:" destination="-1" eventType="valueChanged" id="cxc-3y-HR8"/>
+                    </connections>
+                </segmentedControl>
+            </subviews>
+            <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="rkV-vO-4zX" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="Ba8-rq-baf"/>
+                <constraint firstItem="BCe-5S-Q0C" firstAttribute="top" secondItem="1" secondAttribute="top" constant="84" id="SgW-rv-loj"/>
+                <constraint firstItem="kph-0R-feg" firstAttribute="leading" secondItem="BCe-5S-Q0C" secondAttribute="trailing" constant="8" id="StZ-bH-NNM"/>
+                <constraint firstItem="n0f-YB-MzL" firstAttribute="top" secondItem="kph-0R-feg" secondAttribute="bottom" constant="8" id="Tir-yp-QeY"/>
+                <constraint firstItem="rkV-vO-4zX" firstAttribute="top" secondItem="n0f-YB-MzL" secondAttribute="bottom" constant="8" id="XjQ-Qa-Aiy"/>
+                <constraint firstItem="n0f-YB-MzL" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="127" id="bQl-5p-D0U"/>
+                <constraint firstAttribute="trailing" secondItem="n0f-YB-MzL" secondAttribute="trailing" constant="126" id="ege-Tg-uLw"/>
+                <constraint firstItem="kph-0R-feg" firstAttribute="top" secondItem="1" secondAttribute="top" constant="80" id="iTR-7i-suj"/>
+                <constraint firstItem="BCe-5S-Q0C" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="lBu-yM-a0y"/>
+                <constraint firstAttribute="trailing" secondItem="rkV-vO-4zX" secondAttribute="trailing" constant="20" id="lbd-HE-h6s"/>
+                <constraint firstItem="n0f-YB-MzL" firstAttribute="top" secondItem="BCe-5S-Q0C" secondAttribute="bottom" constant="13" id="qZU-o5-Mc4"/>
+                <constraint firstAttribute="trailing" secondItem="kph-0R-feg" secondAttribute="trailing" constant="20" id="ugt-EB-uSS"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="rkV-vO-4zX" secondAttribute="bottom" constant="393" id="z9o-xT-jc9"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

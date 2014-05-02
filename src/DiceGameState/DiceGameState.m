@@ -522,9 +522,14 @@
     return string;
 }
 
+- (NSString *) historyText:(NSInteger)playerID
+{
+	return [[self historyText:playerID colorName:NO] string];
+}
 
-- (NSString *) historyText:(NSInteger)playerID {
-    NSString *labelText;
+
+- (NSMutableAttributedString *) historyText:(NSInteger)playerID colorName:(BOOL)colorThePlayer {
+    NSMutableAttributedString *labelText;
     // What playerID goes in this slot
     id <Player> player = [self getPlayerWithID:playerID];
     NSString *playerName = [player getName];
@@ -532,25 +537,49 @@
     if ([lastMove count] == 0) {
         // This player hasn't bid yet.
         // Figure out what playerID goes in this slot.
-        labelText = playerName;
+		NSDictionary * attributes;
+
+		if (colorThePlayer)
+			attributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:0.96862745098039 green:0.75294117647059 blue:0.10980392156863 alpha:1.0] forKey:NSForegroundColorAttributeName];
+		else
+			attributes = [NSDictionary dictionary];
+
+		labelText = [[NSMutableAttributedString alloc] initWithString:playerName attributes:attributes];
     } else {
-        NSMutableString *moveString = [NSMutableString string];
+		labelText = [[NSMutableAttributedString alloc] init];
+
         for (NSInteger i = [lastMove count] - 1; i >= 0; --i) {
             HistoryItem *item = [lastMove objectAtIndex:i];
-            [moveString appendFormat:@"%@", [item asString]];
-            //if (i > 0) {
-            //    [moveString appendFormat:@" "];
-            //}
+
+			NSDictionary * attributes;
+			NSMutableAttributedString* move = [[NSMutableAttributedString alloc] init];
+
+			NSArray *array = [[item asString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+
+			for (int j = 0;j < [array count];j++)
+			{
+				if (colorThePlayer && j == 0)
+				{
+					attributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:0.96862745098039 green:	0.75294117647059 blue:0.10980392156863 alpha:1.0] forKey:NSForegroundColorAttributeName];
+				}
+				else
+					attributes = [NSDictionary dictionary];
+
+				[move appendAttributedString:[[[NSAttributedString alloc] initWithString:[array objectAtIndex:j] attributes:attributes] autorelease]];
+				[move appendAttributedString:[[[NSAttributedString alloc] initWithString:@" "] autorelease]];
+			}
+
+            [labelText appendAttributedString:move];
         }
-        labelText = moveString;
     }
-    return labelText;
+    return [labelText autorelease];
 }
 
 - (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine {
     int totalDice = [self countAllDice];
     int unknownDice = [self countUnknownDice:playerIDorMinusOne];
-    NSString *conj = singleLine ? @". There were " : @".\n";
+    NSString *conj = singleLine ? @".\nThere were " : @".\n";
     if (self.previousBid == nil) {
         return [NSString stringWithFormat:@"No current bid%@%d dice, %d unknown.", conj, totalDice, unknownDice];
     }

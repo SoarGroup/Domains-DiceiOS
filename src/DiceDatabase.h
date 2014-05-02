@@ -10,6 +10,9 @@
 #import "GameRecord.h"
 
 @interface DiceDatabase : NSObject
+{
+	NSUbiquitousKeyValueStore *defaults;
+}
 
 + (GameTime) getCurrentGameTime;
 - (void) addGameRecord:(GameRecord *)gameRecord;
@@ -19,6 +22,8 @@
 - (NSString *) getPlayerName;
 
 - (void) setDifficulty:(NSInteger)difficulty;
-- (int) getDifficulty;
+- (NSInteger) getDifficulty;
+
+- (void)reload;
 
 @end

@@ -130,7 +130,7 @@ typedef enum {
 		
 		DiceDatabase *database = [[DiceDatabase alloc] init];
 		
-		int difficulty = [database getDifficulty];
+		int difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
 		
         NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
         

@@ -32,5 +32,6 @@
 - (BOOL)isLegalRaise:(Bid *)previousBid specialRules:(BOOL)specialRules playerSpecialRules:(BOOL)playerSpecialRules;
 
 - (NSString *)asString;
+- (NSString *)asStringOldStyle;
 
 @end

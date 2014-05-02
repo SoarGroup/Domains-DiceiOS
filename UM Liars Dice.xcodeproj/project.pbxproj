@@ -7,46 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC815F0F8B100265801 /* button-about-pressed.png */; };
-		4D12BDCB15F0F8B100265801 /* button-about.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDC915F0F8B100265801 /* button-about.png */; };
 		4D12BDD115F0FDF200265801 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD015F0FDF200265801 /* about.html */; };
-		4D12BDD515F0FFC100265801 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BDD315F0FFC000265801 /* AboutView.m */; };
-		4D12BDD615F0FFC100265801 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD415F0FFC000265801 /* AboutView.xib */; };
-		4D12BDD915F1094B00265801 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDD715F1094B00265801 /* icon.png */; };
-		4D12BDDC15F1098400265801 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BDDB15F1098400265801 /* Default.png */; };
 		4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF815EFB3A200829BC6 /* dice-easy.soar */; };
 		4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4D55DFF915EFB3A200829BC6 /* dice-harder.soar */; };
-		4D956E4C160D0DFD00E7A7C2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E4B160D0DFD00E7A7C2 /* Default-568h@2x.png */; };
-		4D956E52160D23A400E7A7C2 /* DiceMainMenu-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E51160D23A400E7A7C2 /* DiceMainMenu-i5.xib */; };
-		4D956E61160D28CD00E7A7C2 /* AboutView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E54160D28CD00E7A7C2 /* AboutView-i5.xib */; };
-		4D956E62160D28CD00E7A7C2 /* DiceApplication-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E55160D28CD00E7A7C2 /* DiceApplication-i5.xib */; };
-		4D956E63160D28CD00E7A7C2 /* DiceHistoryView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E56160D28CD00E7A7C2 /* DiceHistoryView-i5.xib */; };
-		4D956E65160D28CD00E7A7C2 /* DicePeekView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E58160D28CD00E7A7C2 /* DicePeekView-i5.xib */; };
-		4D956E66160D28CD00E7A7C2 /* DiceServerView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E59160D28CD00E7A7C2 /* DiceServerView-i5.xib */; };
-		4D956E67160D28CD00E7A7C2 /* HowToPlayView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5A160D28CD00E7A7C2 /* HowToPlayView-i5.xib */; };
-		4D956E68160D28CD00E7A7C2 /* JoinGameView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5B160D28CD00E7A7C2 /* JoinGameView-i5.xib */; };
-		4D956E69160D28CD00E7A7C2 /* LoadingGameView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5C160D28CD00E7A7C2 /* LoadingGameView-i5.xib */; };
-		4D956E6A160D28CD00E7A7C2 /* PlayGameView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5D160D28CD00E7A7C2 /* PlayGameView-i5.xib */; };
-		4D956E6B160D28CD00E7A7C2 /* RecordStatsView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5E160D28CD00E7A7C2 /* RecordStatsView-i5.xib */; };
-		4D956E6C160D28CD00E7A7C2 /* RoundOverView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E5F160D28CD00E7A7C2 /* RoundOverView-i5.xib */; };
-		4D956E6D160D28CD00E7A7C2 /* SettingsView-i5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D956E60160D28CD00E7A7C2 /* SettingsView-i5.xib */; };
-		4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */; };
-		4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */; };
-		4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2315E6C13300D2CED9 /* SettingsView.m */; };
-		4DA8DA2815E8282A00D2CED9 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */; };
+		4D7501C717F0BA4E00D5DF3A /* SingleplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D7501C617F0BA4E00D5DF3A /* SingleplayerView.xib */; };
+		4D7501CA17F0EC5900D5DF3A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */; };
+		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */; };
 		4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */; };
 		4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
+		4DBD2A5117EE089F006806D0 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A5017EE089F006806D0 /* Application.xib */; };
+		4DBD2A5517EE0AA7006806D0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A5417EE0AA7006806D0 /* MainMenu.xib */; };
+		4DBD2A5B17EE6286006806D0 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A5A17EE6286006806D0 /* AboutView.xib */; };
+		4DBD2A5D17EE6D42006806D0 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A5C17EE6D42006806D0 /* SettingsView.xib */; };
+		4DBD2A5F17EE6FC9006806D0 /* RulesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A5E17EE6FC9006806D0 /* RulesView.xib */; };
+		4DBD2A6317EE719C006806D0 /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6217EE719C006806D0 /* StatsView.xib */; };
+		4DBD2A6517EE76AD006806D0 /* PlayGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6417EE76AD006806D0 /* PlayGameView.xib */; };
+		4DBD2A6717EE7B77006806D0 /* LoadingGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6617EE7B77006806D0 /* LoadingGameView.xib */; };
+		4DBD2A6917EE7C7E006806D0 /* HistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6817EE7C7E006806D0 /* HistoryView.xib */; };
+		4DBD2A6B17EE8172006806D0 /* RoundOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6A17EE8172006806D0 /* RoundOverView.xib */; };
+		4DBD2A8917EF4BD2006806D0 /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A6F17EF4BD2006806D0 /* AboutView.m */; };
+		4DBD2A8A17EF4BD2006806D0 /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7117EF4BD2006806D0 /* Application.m */; };
+		4DBD2A8B17EF4BD2006806D0 /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7317EF4BD2006806D0 /* ApplicationDelegate.m */; };
+		4DBD2A8C17EF4BD2006806D0 /* DiceHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7517EF4BD2006806D0 /* DiceHistoryView.m */; };
+		4DBD2A8D17EF4BD2006806D0 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7717EF4BD2006806D0 /* MainMenu.m */; };
+		4DBD2A8F17EF4BD2006806D0 /* RulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7B17EF4BD2006806D0 /* RulesView.m */; };
+		4DBD2A9017EF4BD2006806D0 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7D17EF4BD2006806D0 /* LoadingGameView.m */; };
+		4DBD2A9117EF4BD2006806D0 /* PlayGameTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */; };
+		4DBD2A9217EF4BD2006806D0 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */; };
+		4DBD2A9317EF4BD2006806D0 /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8417EF4BD2006806D0 /* StatsView.m */; };
+		4DBD2A9417EF4BD2006806D0 /* RoundOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8617EF4BD2006806D0 /* RoundOverView.m */; };
+		4DBD2A9517EF4BD2006806D0 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8817EF4BD2006806D0 /* SettingsView.m */; };
+		4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC1BE411878A694007A17D3 /* GameKit.framework */; };
+		4DD146E217F0B8CF000A4A4E /* SingleplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD146E117F0B8CF000A4A4E /* SingleplayerView.m */; };
+		4DD146E517F0B8E5000A4A4E /* MultiplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD146E417F0B8E5000A4A4E /* MultiplayerView.m */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
-		C6013656152B8A6F00854485 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6013654152B8A6F00854485 /* LoadingGameView.m */; };
-		C6013657152B8A6F00854485 /* LoadingGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6013655152B8A6F00854485 /* LoadingGameView.xib */; };
 		C602E0931552F1C2005B7D70 /* database.db in Resources */ = {isa = PBXBuildFile; fileRef = C61F629E1552D6660065D8BB /* database.db */; };
-		C602E09815530148005B7D70 /* RecordStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C602E09615530148005B7D70 /* RecordStatsView.m */; };
-		C602E09915530148005B7D70 /* RecordStatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C602E09715530148005B7D70 /* RecordStatsView.xib */; };
-		C602E09C15531E38005B7D70 /* button-stats-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C602E09A15531E38005B7D70 /* button-stats-pressed.png */; };
-		C602E09D15531E38005B7D70 /* button-stats.png in Resources */ = {isa = PBXBuildFile; fileRef = C602E09B15531E38005B7D70 /* button-stats.png */; };
 		C6031803155066C900186B8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C61DD3241550659E0049A84C /* main.m */; };
 		C6031A641550B33A00186B8E /* default in Resources */ = {isa = PBXBuildFile; fileRef = C6031A571550B33A00186B8E /* default */; };
 		C6031A651550B33A00186B8E /* dice in Resources */ = {isa = PBXBuildFile; fileRef = C6031A581550B33A00186B8E /* dice */; };
@@ -62,40 +60,9 @@
 		C6031A701550B33A00186B8E /* improvements.soar in Resources */ = {isa = PBXBuildFile; fileRef = C6031A631550B33A00186B8E /* improvements.soar */; };
 		C61F62A11552D6870065D8BB /* DiceDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C61F62A01552D6870065D8BB /* DiceDatabase.m */; };
 		C61F62A81552DFE20065D8BB /* GameRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C61F62A71552DFE20065D8BB /* GameRecord.m */; };
-		C61F62AB1552E5C20065D8BB /* GameRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = C61F62AA1552E5C20065D8BB /* GameRecordView.m */; };
 		C642BD8A15542FB000643A5B /* dice-model-bot-new in Resources */ = {isa = PBXBuildFile; fileRef = C642BD8915542FB000643A5B /* dice-model-bot-new */; };
 		C642BD8C155430F300643A5B /* dice-model-bot-new-old in Resources */ = {isa = PBXBuildFile; fileRef = C642BD8B155430F300643A5B /* dice-model-bot-new-old */; };
 		C642BD8E1554348900643A5B /* dice-p1-m0-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = C642BD8D1554348800643A5B /* dice-p1-m0-c0.soar */; };
-		C646803E1520C2E50054B8C5 /* PlayGameTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C646803D1520C2E50054B8C5 /* PlayGameTableView.m */; };
-		C65704321525FD3E00E5C7D6 /* RoundOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = C65704301525FD3D00E5C7D6 /* RoundOverView.m */; };
-		C65704331525FD3E00E5C7D6 /* RoundOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C65704311525FD3D00E5C7D6 /* RoundOverView.xib */; };
-		C66E167615548AEF002190BD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C66E167515548AEF002190BD /* Default@2x.png */; };
-		C67C213D1448D86A0040F5D8 /* DiceHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = C67C213B1448D8690040F5D8 /* DiceHistoryView.m */; };
-		C67C213E1448D86A0040F5D8 /* DiceHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67C213C1448D86A0040F5D8 /* DiceHistoryView.xib */; };
-		C6808975154F56CF0068E477 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808953154F56CF0068E477 /* background.png */; };
-		C6808976154F56CF0068E477 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808954154F56CF0068E477 /* bar.png */; };
-		C6808977154F56CF0068E477 /* bid-pad-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808955154F56CF0068E477 /* bid-pad-pressed.png */; };
-		C6808978154F56CF0068E477 /* bid-pad.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808956154F56CF0068E477 /* bid-pad.png */; };
-		C6808979154F56CF0068E477 /* button-bid-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808957154F56CF0068E477 /* button-bid-pressed.png */; };
-		C680897A154F56CF0068E477 /* button-bid.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808958154F56CF0068E477 /* button-bid.png */; };
-		C680897B154F56CF0068E477 /* button-challenge-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808959154F56CF0068E477 /* button-challenge-pressed.png */; };
-		C680897C154F56CF0068E477 /* button-challenge.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895A154F56CF0068E477 /* button-challenge.png */; };
-		C680897D154F56CF0068E477 /* button-done-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895B154F56CF0068E477 /* button-done-pressed.png */; };
-		C680897E154F56CF0068E477 /* button-done.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895C154F56CF0068E477 /* button-done.png */; };
-		C680897F154F56CF0068E477 /* button-exact-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895D154F56CF0068E477 /* button-exact-pressed.png */; };
-		C6808980154F56CF0068E477 /* button-exact.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895E154F56CF0068E477 /* button-exact.png */; };
-		C6808981154F56CF0068E477 /* button-how-to-play-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C680895F154F56CF0068E477 /* button-how-to-play-pressed.png */; };
-		C6808982154F56CF0068E477 /* button-how-to-play.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808960154F56CF0068E477 /* button-how-to-play.png */; };
-		C6808983154F56CF0068E477 /* button-one-opponent-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808961154F56CF0068E477 /* button-one-opponent-pressed.png */; };
-		C6808984154F56CF0068E477 /* button-one-opponent.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808962154F56CF0068E477 /* button-one-opponent.png */; };
-		C6808985154F56CF0068E477 /* button-pass-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808963154F56CF0068E477 /* button-pass-pressed.png */; };
-		C6808986154F56CF0068E477 /* button-pass.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808964154F56CF0068E477 /* button-pass.png */; };
-		C6808987154F56CF0068E477 /* button-quit-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808965154F56CF0068E477 /* button-quit-pressed.png */; };
-		C6808988154F56CF0068E477 /* button-quit.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808966154F56CF0068E477 /* button-quit.png */; };
-		C6808989154F56CF0068E477 /* button-three-opponents-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808967154F56CF0068E477 /* button-three-opponents-pressed.png */; };
-		C680898A154F56CF0068E477 /* button-three-opponents.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808968154F56CF0068E477 /* button-three-opponents.png */; };
-		C680898B154F56CF0068E477 /* button-two-opponents-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808969154F56CF0068E477 /* button-two-opponents-pressed.png */; };
-		C680898C154F56CF0068E477 /* button-two-opponents.png in Resources */ = {isa = PBXBuildFile; fileRef = C680896A154F56CF0068E477 /* button-two-opponents.png */; };
 		C680898D154F56CF0068E477 /* die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = C680896B154F56CF0068E477 /* die-1.png */; };
 		C680898E154F56CF0068E477 /* die-2.png in Resources */ = {isa = PBXBuildFile; fileRef = C680896C154F56CF0068E477 /* die-2.png */; };
 		C680898F154F56CF0068E477 /* die-3.png in Resources */ = {isa = PBXBuildFile; fileRef = C680896D154F56CF0068E477 /* die-3.png */; };
@@ -103,36 +70,17 @@
 		C6808991154F56CF0068E477 /* die-5.png in Resources */ = {isa = PBXBuildFile; fileRef = C680896F154F56CF0068E477 /* die-5.png */; };
 		C6808992154F56CF0068E477 /* die-6.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808970154F56CF0068E477 /* die-6.png */; };
 		C6808993154F56CF0068E477 /* die-unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808971154F56CF0068E477 /* die-unknown.png */; };
-		C6808994154F56CF0068E477 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808972154F56CF0068E477 /* spinner.png */; };
-		C6808995154F56CF0068E477 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808973154F56CF0068E477 /* star.png */; };
-		C6808996154F56CF0068E477 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = C6808974154F56CF0068E477 /* title.png */; };
 		C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */; };
 		C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */ = {isa = PBXBuildFile; fileRef = C68C288215CB22A400EB07B7 /* dice-agent-p */; };
 		C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */ = {isa = PBXBuildFile; fileRef = C68C288415CB22AC00EB07B7 /* dice-pmh.soar */; };
 		C690D5B0152CD60500AC3020 /* DiceGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = C690D5AF152CD60500AC3020 /* DiceGraphics.m */; };
-		C6951838154F9F3400BD15DA /* HowToPlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6951837154F9F3400BD15DA /* HowToPlayView.m */; };
 		C695183B154F9F9400BD15DA /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = C695183A154F9F9400BD15DA /* rules.html */; };
-		C695183D154FAE6100BD15DA /* HowToPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C695183C154FAE6000BD15DA /* HowToPlayView.xib */; };
-		C6951841155042AC00BD15DA /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6951840155042AC00BD15DA /* icon@2x.png */; };
-		C69B5C13143BC8C80013B1E0 /* DiceApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C69B5C12143BC8C80013B1E0 /* DiceApplication.m */; };
-		C69B5C17143BCAB80013B1E0 /* DiceMainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C69B5C15143BCAB70013B1E0 /* DiceMainMenu.m */; };
-		C69B5C18143BCAB80013B1E0 /* DiceMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C69B5C16143BCAB70013B1E0 /* DiceMainMenu.xib */; };
-		C6BA375C143BCF24001E6A6D /* DiceServerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA375A143BCF24001E6A6D /* DiceServerView.m */; };
-		C6BA375D143BCF24001E6A6D /* DiceServerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BA375B143BCF24001E6A6D /* DiceServerView.xib */; };
-		C6BA3762143BDA1C001E6A6D /* JoinGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3760143BDA1B001E6A6D /* JoinGameView.m */; };
-		C6BA3763143BDA1C001E6A6D /* JoinGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BA3761143BDA1B001E6A6D /* JoinGameView.xib */; };
-		C6BA3767143CA19B001E6A6D /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3765143CA19B001E6A6D /* PlayGameView.m */; };
-		C6BA3768143CA19B001E6A6D /* PlayGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BA3766143CA19B001E6A6D /* PlayGameView.xib */; };
 		C6BA3778143D18C2001E6A6D /* Bid.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA376F143D18C2001E6A6D /* Bid.m */; };
 		C6BA3779143D18C2001E6A6D /* DiceGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3771143D18C2001E6A6D /* DiceGameState.m */; };
 		C6BA377A143D18C2001E6A6D /* Die.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3773143D18C2001E6A6D /* Die.m */; };
 		C6BA377B143D18C2001E6A6D /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3775143D18C2001E6A6D /* HistoryItem.m */; };
 		C6BA377C143D18C2001E6A6D /* PlayerState.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3777143D18C2001E6A6D /* PlayerState.m */; };
 		C6BA377F143D18CF001E6A6D /* SoarPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6BA377E143D18CF001E6A6D /* SoarPlayer.mm */; };
-		C6BA3787143E658D001E6A6D /* DicePeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6BA3785143E658B001E6A6D /* DicePeekView.m */; };
-		C6BA3788143E658D001E6A6D /* DicePeekView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6BA3786143E658C001E6A6D /* DicePeekView.xib */; };
-		C6F6614D143BA68E00EF3AD2 /* DiceApplication.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F6614C143BA68E00EF3AD2 /* DiceApplication.xib */; };
-		C6F66150143BA6DF00EF3AD2 /* DiceApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F6614F143BA6DF00EF3AD2 /* DiceApplicationDelegate.m */; };
 		C6F66153143BA95300EF3AD2 /* DiceGame.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F66152143BA95300EF3AD2 /* DiceGame.m */; };
 		C6F66156143BA98000EF3AD2 /* DiceServer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F66155143BA98000EF3AD2 /* DiceServer.m */; };
 		C6F6615C143BA9A200EF3AD2 /* DiceLocalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F6615B143BA9A100EF3AD2 /* DiceLocalPlayer.m */; };
@@ -149,51 +97,61 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D12BDC815F0F8B100265801 /* button-about-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about-pressed.png"; sourceTree = "<group>"; };
-		4D12BDC915F0F8B100265801 /* button-about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-about.png"; sourceTree = "<group>"; };
 		4D12BDD015F0FDF200265801 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
-		4D12BDD215F0FFC000265801 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
-		4D12BDD315F0FFC000265801 /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
-		4D12BDD415F0FFC000265801 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
-		4D12BDD715F1094B00265801 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		4D12BDDB15F1098400265801 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4D55DFF815EFB3A200829BC6 /* dice-easy.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-easy.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-easy.soar"; sourceTree = "<group>"; };
 		4D55DFF915EFB3A200829BC6 /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-harder.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-harder.soar"; sourceTree = "<group>"; };
+		4D7501C617F0BA4E00D5DF3A /* SingleplayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerView.xib; sourceTree = "<group>"; };
+		4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		4D7501C917F0EC5900D5DF3A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
-		4D956E4B160D0DFD00E7A7C2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		4D956E51160D23A400E7A7C2 /* DiceMainMenu-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiceMainMenu-i5.xib"; sourceTree = "<group>"; };
-		4D956E54160D28CD00E7A7C2 /* AboutView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "AboutView-i5.xib"; sourceTree = "<group>"; };
-		4D956E55160D28CD00E7A7C2 /* DiceApplication-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiceApplication-i5.xib"; sourceTree = "<group>"; };
-		4D956E56160D28CD00E7A7C2 /* DiceHistoryView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiceHistoryView-i5.xib"; sourceTree = "<group>"; };
-		4D956E58160D28CD00E7A7C2 /* DicePeekView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DicePeekView-i5.xib"; sourceTree = "<group>"; };
-		4D956E59160D28CD00E7A7C2 /* DiceServerView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "DiceServerView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5A160D28CD00E7A7C2 /* HowToPlayView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "HowToPlayView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5B160D28CD00E7A7C2 /* JoinGameView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "JoinGameView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5C160D28CD00E7A7C2 /* LoadingGameView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LoadingGameView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5D160D28CD00E7A7C2 /* PlayGameView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PlayGameView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5E160D28CD00E7A7C2 /* RecordStatsView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RecordStatsView-i5.xib"; sourceTree = "<group>"; };
-		4D956E5F160D28CD00E7A7C2 /* RoundOverView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "RoundOverView-i5.xib"; sourceTree = "<group>"; };
-		4D956E60160D28CD00E7A7C2 /* SettingsView-i5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "SettingsView-i5.xib"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings-pressed.png"; sourceTree = "<group>"; };
-		4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-settings.png"; sourceTree = "<group>"; };
-		4DA8DA2215E6C13300D2CED9 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
-		4DA8DA2315E6C13300D2CED9 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
-		4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hard.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-hard.soar"; sourceTree = "<group>"; };
 		4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hardest.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-hardest.soar"; sourceTree = "<group>"; };
 		4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-medium.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-medium.soar"; sourceTree = "<group>"; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "UM Liars Dice/Images.xcassets"; sourceTree = "<group>"; };
+		4DBD2A5017EE089F006806D0 /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
+		4DBD2A5417EE0AA7006806D0 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		4DBD2A5A17EE6286006806D0 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		4DBD2A5C17EE6D42006806D0 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		4DBD2A5E17EE6FC9006806D0 /* RulesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesView.xib; sourceTree = "<group>"; };
+		4DBD2A6217EE719C006806D0 /* StatsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
+		4DBD2A6417EE76AD006806D0 /* PlayGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayGameView.xib; sourceTree = "<group>"; };
+		4DBD2A6617EE7B77006806D0 /* LoadingGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingGameView.xib; sourceTree = "<group>"; };
+		4DBD2A6817EE7C7E006806D0 /* HistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryView.xib; sourceTree = "<group>"; };
+		4DBD2A6A17EE8172006806D0 /* RoundOverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundOverView.xib; sourceTree = "<group>"; };
+		4DBD2A6E17EF4BD2006806D0 /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		4DBD2A6F17EF4BD2006806D0 /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
+		4DBD2A7017EF4BD2006806D0 /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		4DBD2A7117EF4BD2006806D0 /* Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Application.m; sourceTree = "<group>"; };
+		4DBD2A7217EF4BD2006806D0 /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
+		4DBD2A7317EF4BD2006806D0 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationDelegate.m; sourceTree = "<group>"; };
+		4DBD2A7417EF4BD2006806D0 /* DiceHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceHistoryView.h; sourceTree = "<group>"; };
+		4DBD2A7517EF4BD2006806D0 /* DiceHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceHistoryView.m; sourceTree = "<group>"; };
+		4DBD2A7617EF4BD2006806D0 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
+		4DBD2A7717EF4BD2006806D0 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
+		4DBD2A7A17EF4BD2006806D0 /* RulesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulesView.h; sourceTree = "<group>"; };
+		4DBD2A7B17EF4BD2006806D0 /* RulesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RulesView.m; sourceTree = "<group>"; };
+		4DBD2A7C17EF4BD2006806D0 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
+		4DBD2A7D17EF4BD2006806D0 /* LoadingGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingGameView.m; sourceTree = "<group>"; };
+		4DBD2A7E17EF4BD2006806D0 /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
+		4DBD2A7F17EF4BD2006806D0 /* PlayGameTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameTableView.h; sourceTree = "<group>"; };
+		4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameTableView.m; sourceTree = "<group>"; };
+		4DBD2A8117EF4BD2006806D0 /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
+		4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
+		4DBD2A8317EF4BD2006806D0 /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsView.h; sourceTree = "<group>"; };
+		4DBD2A8417EF4BD2006806D0 /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsView.m; sourceTree = "<group>"; };
+		4DBD2A8517EF4BD2006806D0 /* RoundOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundOverView.h; sourceTree = "<group>"; };
+		4DBD2A8617EF4BD2006806D0 /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
+		4DBD2A8717EF4BD2006806D0 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		4DBD2A8817EF4BD2006806D0 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		4DC1BE411878A694007A17D3 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		4DD146E017F0B8CF000A4A4E /* SingleplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleplayerView.h; sourceTree = "<group>"; };
+		4DD146E117F0B8CF000A4A4E /* SingleplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleplayerView.m; sourceTree = "<group>"; };
+		4DD146E317F0B8E5000A4A4E /* MultiplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerView.h; sourceTree = "<group>"; };
+		4DD146E417F0B8E5000A4A4E /* MultiplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerView.m; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		C6013653152B8A6F00854485 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
-		C6013654152B8A6F00854485 /* LoadingGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingGameView.m; sourceTree = "<group>"; };
-		C6013655152B8A6F00854485 /* LoadingGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingGameView.xib; sourceTree = "<group>"; };
-		C602E09515530148005B7D70 /* RecordStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordStatsView.h; sourceTree = "<group>"; };
-		C602E09615530148005B7D70 /* RecordStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordStatsView.m; sourceTree = "<group>"; };
-		C602E09715530148005B7D70 /* RecordStatsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordStatsView.xib; sourceTree = "<group>"; };
-		C602E09A15531E38005B7D70 /* button-stats-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-stats-pressed.png"; sourceTree = "<group>"; };
-		C602E09B15531E38005B7D70 /* button-stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-stats.png"; sourceTree = "<group>"; };
 		C60318011550663C00186B8E /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "UM Liars Dice-Info.plist"; path = "Liars-Dice/UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		C6031A571550B33A00186B8E /* default */ = {isa = PBXFileReference; lastKnownFileType = folder; name = default; path = "Liars-Dice/Soar Code/Soar Rules/default"; sourceTree = "<group>"; };
 		C6031A581550B33A00186B8E /* dice */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dice; path = "Liars-Dice/Soar Code/Soar Rules/dice"; sourceTree = "<group>"; };
@@ -217,44 +175,9 @@
 		C61F62A01552D6870065D8BB /* DiceDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceDatabase.m; sourceTree = "<group>"; };
 		C61F62A61552DFE20065D8BB /* GameRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRecord.h; sourceTree = "<group>"; };
 		C61F62A71552DFE20065D8BB /* GameRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRecord.m; sourceTree = "<group>"; };
-		C61F62A91552E5C20065D8BB /* GameRecordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRecordView.h; sourceTree = "<group>"; };
-		C61F62AA1552E5C20065D8BB /* GameRecordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRecordView.m; sourceTree = "<group>"; };
 		C642BD8915542FB000643A5B /* dice-model-bot-new */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-model-bot-new"; path = "Liars-Dice/Soar Code/Soar Rules/dice-model-bot-new"; sourceTree = "<group>"; };
 		C642BD8B155430F300643A5B /* dice-model-bot-new-old */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-model-bot-new-old"; path = "Liars-Dice/Soar Code/Soar Rules/dice-model-bot-new-old"; sourceTree = "<group>"; };
 		C642BD8D1554348800643A5B /* dice-p1-m0-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-p1-m0-c0.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-p1-m0-c0.soar"; sourceTree = "<group>"; };
-		C646803C1520C2E50054B8C5 /* PlayGameTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameTableView.h; sourceTree = "<group>"; };
-		C646803D1520C2E50054B8C5 /* PlayGameTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameTableView.m; sourceTree = "<group>"; };
-		C657042F1525FD3D00E5C7D6 /* RoundOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundOverView.h; sourceTree = "<group>"; };
-		C65704301525FD3D00E5C7D6 /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
-		C65704311525FD3D00E5C7D6 /* RoundOverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundOverView.xib; sourceTree = "<group>"; };
-		C66E167515548AEF002190BD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		C67C213A1448D8690040F5D8 /* DiceHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceHistoryView.h; sourceTree = "<group>"; };
-		C67C213B1448D8690040F5D8 /* DiceHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceHistoryView.m; sourceTree = "<group>"; };
-		C67C213C1448D86A0040F5D8 /* DiceHistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiceHistoryView.xib; sourceTree = "<group>"; };
-		C6808953154F56CF0068E477 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		C6808954154F56CF0068E477 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
-		C6808955154F56CF0068E477 /* bid-pad-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bid-pad-pressed.png"; sourceTree = "<group>"; };
-		C6808956154F56CF0068E477 /* bid-pad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bid-pad.png"; sourceTree = "<group>"; };
-		C6808957154F56CF0068E477 /* button-bid-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bid-pressed.png"; sourceTree = "<group>"; };
-		C6808958154F56CF0068E477 /* button-bid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-bid.png"; sourceTree = "<group>"; };
-		C6808959154F56CF0068E477 /* button-challenge-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-challenge-pressed.png"; sourceTree = "<group>"; };
-		C680895A154F56CF0068E477 /* button-challenge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-challenge.png"; sourceTree = "<group>"; };
-		C680895B154F56CF0068E477 /* button-done-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-done-pressed.png"; sourceTree = "<group>"; };
-		C680895C154F56CF0068E477 /* button-done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-done.png"; sourceTree = "<group>"; };
-		C680895D154F56CF0068E477 /* button-exact-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-exact-pressed.png"; sourceTree = "<group>"; };
-		C680895E154F56CF0068E477 /* button-exact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-exact.png"; sourceTree = "<group>"; };
-		C680895F154F56CF0068E477 /* button-how-to-play-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-how-to-play-pressed.png"; sourceTree = "<group>"; };
-		C6808960154F56CF0068E477 /* button-how-to-play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-how-to-play.png"; sourceTree = "<group>"; };
-		C6808961154F56CF0068E477 /* button-one-opponent-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-one-opponent-pressed.png"; sourceTree = "<group>"; };
-		C6808962154F56CF0068E477 /* button-one-opponent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-one-opponent.png"; sourceTree = "<group>"; };
-		C6808963154F56CF0068E477 /* button-pass-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-pass-pressed.png"; sourceTree = "<group>"; };
-		C6808964154F56CF0068E477 /* button-pass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-pass.png"; sourceTree = "<group>"; };
-		C6808965154F56CF0068E477 /* button-quit-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-quit-pressed.png"; sourceTree = "<group>"; };
-		C6808966154F56CF0068E477 /* button-quit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-quit.png"; sourceTree = "<group>"; };
-		C6808967154F56CF0068E477 /* button-three-opponents-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-three-opponents-pressed.png"; sourceTree = "<group>"; };
-		C6808968154F56CF0068E477 /* button-three-opponents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-three-opponents.png"; sourceTree = "<group>"; };
-		C6808969154F56CF0068E477 /* button-two-opponents-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-two-opponents-pressed.png"; sourceTree = "<group>"; };
-		C680896A154F56CF0068E477 /* button-two-opponents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-two-opponents.png"; sourceTree = "<group>"; };
 		C680896B154F56CF0068E477 /* die-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-1.png"; sourceTree = "<group>"; };
 		C680896C154F56CF0068E477 /* die-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-2.png"; sourceTree = "<group>"; };
 		C680896D154F56CF0068E477 /* die-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-3.png"; sourceTree = "<group>"; };
@@ -262,34 +185,13 @@
 		C680896F154F56CF0068E477 /* die-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-5.png"; sourceTree = "<group>"; };
 		C6808970154F56CF0068E477 /* die-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-6.png"; sourceTree = "<group>"; };
 		C6808971154F56CF0068E477 /* die-unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-unknown.png"; sourceTree = "<group>"; };
-		C6808972154F56CF0068E477 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
-		C6808973154F56CF0068E477 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
-		C6808974154F56CF0068E477 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		C68C287F15CB229C00EB07B7 /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-agent-new.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-agent-new.soar"; sourceTree = "<group>"; };
 		C68C288215CB22A400EB07B7 /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "dice-agent-p"; path = "Liars-Dice/Soar Code/Soar Rules/dice-agent-p"; sourceTree = "<group>"; };
 		C68C288415CB22AC00EB07B7 /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-pmh.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-pmh.soar"; sourceTree = "<group>"; };
 		C690D5AE152CD60500AC3020 /* DiceGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGraphics.h; sourceTree = "<group>"; };
 		C690D5AF152CD60500AC3020 /* DiceGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGraphics.m; sourceTree = "<group>"; };
-		C6951836154F9F3400BD15DA /* HowToPlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlayView.h; sourceTree = "<group>"; };
-		C6951837154F9F3400BD15DA /* HowToPlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToPlayView.m; sourceTree = "<group>"; };
 		C695183A154F9F9400BD15DA /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
-		C695183C154FAE6000BD15DA /* HowToPlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HowToPlayView.xib; sourceTree = "<group>"; };
-		C6951840155042AC00BD15DA /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
-		C69B5C11143BC8C80013B1E0 /* DiceApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceApplication.h; sourceTree = "<group>"; };
-		C69B5C12143BC8C80013B1E0 /* DiceApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceApplication.m; sourceTree = "<group>"; };
-		C69B5C14143BCAB70013B1E0 /* DiceMainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceMainMenu.h; sourceTree = "<group>"; };
-		C69B5C15143BCAB70013B1E0 /* DiceMainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceMainMenu.m; sourceTree = "<group>"; };
-		C69B5C16143BCAB70013B1E0 /* DiceMainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiceMainMenu.xib; sourceTree = "<group>"; };
-		C6BA3759143BCF24001E6A6D /* DiceServerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceServerView.h; sourceTree = "<group>"; };
-		C6BA375A143BCF24001E6A6D /* DiceServerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceServerView.m; sourceTree = "<group>"; };
-		C6BA375B143BCF24001E6A6D /* DiceServerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiceServerView.xib; sourceTree = "<group>"; };
-		C6BA375F143BDA1B001E6A6D /* JoinGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinGameView.h; sourceTree = "<group>"; };
-		C6BA3760143BDA1B001E6A6D /* JoinGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinGameView.m; sourceTree = "<group>"; };
-		C6BA3761143BDA1B001E6A6D /* JoinGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinGameView.xib; sourceTree = "<group>"; };
-		C6BA3764143CA19A001E6A6D /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
-		C6BA3765143CA19B001E6A6D /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
-		C6BA3766143CA19B001E6A6D /* PlayGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayGameView.xib; sourceTree = "<group>"; };
 		C6BA376E143D18C2001E6A6D /* Bid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bid.h; sourceTree = "<group>"; };
 		C6BA376F143D18C2001E6A6D /* Bid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bid.m; sourceTree = "<group>"; };
 		C6BA3770143D18C2001E6A6D /* DiceGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGameState.h; sourceTree = "<group>"; };
@@ -303,14 +205,7 @@
 		C6BA377D143D18CF001E6A6D /* SoarPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoarPlayer.h; sourceTree = "<group>"; };
 		C6BA377E143D18CF001E6A6D /* SoarPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoarPlayer.mm; sourceTree = "<group>"; };
 		C6BA3783143DF87A001E6A6D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		C6BA3784143E658A001E6A6D /* DicePeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DicePeekView.h; sourceTree = "<group>"; };
-		C6BA3785143E658B001E6A6D /* DicePeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DicePeekView.m; sourceTree = "<group>"; };
-		C6BA3786143E658C001E6A6D /* DicePeekView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DicePeekView.xib; sourceTree = "<group>"; };
 		C6C636BD15263648004C4A70 /* DiceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceTypes.h; sourceTree = "<group>"; };
-		C6D14B911524B0C600BB1F67 /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
-		C6F6614C143BA68E00EF3AD2 /* DiceApplication.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiceApplication.xib; sourceTree = "<group>"; };
-		C6F6614E143BA6DF00EF3AD2 /* DiceApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceApplicationDelegate.h; sourceTree = "<group>"; };
-		C6F6614F143BA6DF00EF3AD2 /* DiceApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceApplicationDelegate.m; sourceTree = "<group>"; };
 		C6F66151143BA95300EF3AD2 /* DiceGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGame.h; sourceTree = "<group>"; };
 		C6F66152143BA95300EF3AD2 /* DiceGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGame.m; sourceTree = "<group>"; };
 		C6F66154143BA98000EF3AD2 /* DiceServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceServer.h; sourceTree = "<group>"; };
@@ -338,6 +233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */,
 				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
 				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
 				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,
@@ -346,12 +242,190 @@
 				CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */,
 				CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */,
 				CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */,
+				4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D8DC8B91877CB2800F7F0FA /* iPhone XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A5E17EE6FC9006806D0 /* RulesView.xib */,
+				4DBD2A5017EE089F006806D0 /* Application.xib */,
+				4DBD2A5417EE0AA7006806D0 /* MainMenu.xib */,
+				4DBD2A5A17EE6286006806D0 /* AboutView.xib */,
+				4DBD2A5C17EE6D42006806D0 /* SettingsView.xib */,
+				4DBD2A6217EE719C006806D0 /* StatsView.xib */,
+				4DBD2A6417EE76AD006806D0 /* PlayGameView.xib */,
+				4DBD2A6617EE7B77006806D0 /* LoadingGameView.xib */,
+				4DBD2A6817EE7C7E006806D0 /* HistoryView.xib */,
+				4DBD2A6A17EE8172006806D0 /* RoundOverView.xib */,
+				4D7501C617F0BA4E00D5DF3A /* SingleplayerView.xib */,
+			);
+			name = "iPhone XIBs";
+			sourceTree = "<group>";
+		};
+		4DBD2A4D17EE0870006806D0 /* ui-iOS7 */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A4E17EE0890006806D0 /* iPad */,
+				4DBD2A4F17EE0890006806D0 /* iPhone */,
+			);
+			path = "ui-iOS7";
+			sourceTree = "<group>";
+		};
+		4DBD2A4E17EE0890006806D0 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = iPad;
+			sourceTree = "<group>";
+		};
+		4DBD2A4F17EE0890006806D0 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A6D17EF4AD3006806D0 /* UI Source */,
+				4DBD2A6C17EF4A4B006806D0 /* XIBs */,
+			);
+			path = iPhone;
+			sourceTree = "<group>";
+		};
+		4DBD2A6C17EF4A4B006806D0 /* XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				4D8DC8B91877CB2800F7F0FA /* iPhone XIBs */,
+			);
+			path = XIBs;
+			sourceTree = "<group>";
+		};
+		4DBD2A6D17EF4AD3006806D0 /* UI Source */ = {
+			isa = PBXGroup;
+			children = (
+				4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */,
+				4D7501C917F0EC5900D5DF3A /* UIImage+ImageEffects.h */,
+				4DD146DF17F0B8AB000A4A4E /* MultiplayerView */,
+				4DD146DE17F0B8A6000A4A4E /* SingleplayerView */,
+				4DBD2A9617EF4BF8006806D0 /* AboutView */,
+				4DBD2A9717EF4C07006806D0 /* Application */,
+				4DBD2A9817EF4C14006806D0 /* HistoryView */,
+				4DBD2A9917EF4C1C006806D0 /* MainMenu */,
+				4DBD2A9A17EF4C64006806D0 /* RulesView */,
+				4DBD2A9B17EF4C6C006806D0 /* LoadingGameView */,
+				4DBD2A9C17EF4C7D006806D0 /* PlayGameView */,
+				4DBD2A9D17EF4C85006806D0 /* StatsView */,
+				4DBD2A9E17EF4C8B006806D0 /* SettingsView */,
+			);
+			path = "UI Source";
+			sourceTree = "<group>";
+		};
+		4DBD2A9617EF4BF8006806D0 /* AboutView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A6E17EF4BD2006806D0 /* AboutView.h */,
+				4DBD2A6F17EF4BD2006806D0 /* AboutView.m */,
+			);
+			name = AboutView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9717EF4C07006806D0 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7017EF4BD2006806D0 /* Application.h */,
+				4DBD2A7117EF4BD2006806D0 /* Application.m */,
+				4DBD2A7217EF4BD2006806D0 /* ApplicationDelegate.h */,
+				4DBD2A7317EF4BD2006806D0 /* ApplicationDelegate.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		4DBD2A9817EF4C14006806D0 /* HistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7417EF4BD2006806D0 /* DiceHistoryView.h */,
+				4DBD2A7517EF4BD2006806D0 /* DiceHistoryView.m */,
+			);
+			name = HistoryView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9917EF4C1C006806D0 /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7617EF4BD2006806D0 /* MainMenu.h */,
+				4DBD2A7717EF4BD2006806D0 /* MainMenu.m */,
+			);
+			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		4DBD2A9A17EF4C64006806D0 /* RulesView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7A17EF4BD2006806D0 /* RulesView.h */,
+				4DBD2A7B17EF4BD2006806D0 /* RulesView.m */,
+			);
+			name = RulesView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9B17EF4C6C006806D0 /* LoadingGameView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7C17EF4BD2006806D0 /* LoadingGameView.h */,
+				4DBD2A7D17EF4BD2006806D0 /* LoadingGameView.m */,
+			);
+			name = LoadingGameView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9C17EF4C7D006806D0 /* PlayGameView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A7E17EF4BD2006806D0 /* PlayGame.h */,
+				4DBD2A7F17EF4BD2006806D0 /* PlayGameTableView.h */,
+				4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */,
+				4DBD2A8117EF4BD2006806D0 /* PlayGameView.h */,
+				4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */,
+				4DBD2A8517EF4BD2006806D0 /* RoundOverView.h */,
+				4DBD2A8617EF4BD2006806D0 /* RoundOverView.m */,
+			);
+			name = PlayGameView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9D17EF4C85006806D0 /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A8317EF4BD2006806D0 /* StatsView.h */,
+				4DBD2A8417EF4BD2006806D0 /* StatsView.m */,
+			);
+			name = StatsView;
+			sourceTree = "<group>";
+		};
+		4DBD2A9E17EF4C8B006806D0 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				4DBD2A8717EF4BD2006806D0 /* SettingsView.h */,
+				4DBD2A8817EF4BD2006806D0 /* SettingsView.m */,
+			);
+			name = SettingsView;
+			sourceTree = "<group>";
+		};
+		4DD146DE17F0B8A6000A4A4E /* SingleplayerView */ = {
+			isa = PBXGroup;
+			children = (
+				4DD146E017F0B8CF000A4A4E /* SingleplayerView.h */,
+				4DD146E117F0B8CF000A4A4E /* SingleplayerView.m */,
+			);
+			name = SingleplayerView;
+			sourceTree = "<group>";
+		};
+		4DD146DF17F0B8AB000A4A4E /* MultiplayerView */ = {
+			isa = PBXGroup;
+			children = (
+				4DD146E317F0B8E5000A4A4E /* MultiplayerView.h */,
+				4DD146E417F0B8E5000A4A4E /* MultiplayerView.m */,
+			);
+			name = MultiplayerView;
+			sourceTree = "<group>";
+		};
 		C6031A561550B32E00186B8E /* Soar Rules */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,36 +478,6 @@
 		C690D57D152CD5ED00AC3020 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				4D12BDC815F0F8B100265801 /* button-about-pressed.png */,
-				4D12BDC915F0F8B100265801 /* button-about.png */,
-				C602E09A15531E38005B7D70 /* button-stats-pressed.png */,
-				4DA8DA1E15E6B1E600D2CED9 /* button-settings-pressed.png */,
-				4DA8DA1F15E6B1E600D2CED9 /* button-settings.png */,
-				C602E09B15531E38005B7D70 /* button-stats.png */,
-				C6808953154F56CF0068E477 /* background.png */,
-				C6808954154F56CF0068E477 /* bar.png */,
-				C6808955154F56CF0068E477 /* bid-pad-pressed.png */,
-				C6808956154F56CF0068E477 /* bid-pad.png */,
-				C6808957154F56CF0068E477 /* button-bid-pressed.png */,
-				C6808958154F56CF0068E477 /* button-bid.png */,
-				C6808959154F56CF0068E477 /* button-challenge-pressed.png */,
-				C680895A154F56CF0068E477 /* button-challenge.png */,
-				C680895B154F56CF0068E477 /* button-done-pressed.png */,
-				C680895C154F56CF0068E477 /* button-done.png */,
-				C680895D154F56CF0068E477 /* button-exact-pressed.png */,
-				C680895E154F56CF0068E477 /* button-exact.png */,
-				C680895F154F56CF0068E477 /* button-how-to-play-pressed.png */,
-				C6808960154F56CF0068E477 /* button-how-to-play.png */,
-				C6808961154F56CF0068E477 /* button-one-opponent-pressed.png */,
-				C6808962154F56CF0068E477 /* button-one-opponent.png */,
-				C6808963154F56CF0068E477 /* button-pass-pressed.png */,
-				C6808964154F56CF0068E477 /* button-pass.png */,
-				C6808965154F56CF0068E477 /* button-quit-pressed.png */,
-				C6808966154F56CF0068E477 /* button-quit.png */,
-				C6808967154F56CF0068E477 /* button-three-opponents-pressed.png */,
-				C6808968154F56CF0068E477 /* button-three-opponents.png */,
-				C6808969154F56CF0068E477 /* button-two-opponents-pressed.png */,
-				C680896A154F56CF0068E477 /* button-two-opponents.png */,
 				C680896B154F56CF0068E477 /* die-1.png */,
 				C680896C154F56CF0068E477 /* die-2.png */,
 				C680896D154F56CF0068E477 /* die-3.png */,
@@ -441,9 +485,6 @@
 				C680896F154F56CF0068E477 /* die-5.png */,
 				C6808970154F56CF0068E477 /* die-6.png */,
 				C6808971154F56CF0068E477 /* die-unknown.png */,
-				C6808972154F56CF0068E477 /* spinner.png */,
-				C6808973154F56CF0068E477 /* star.png */,
-				C6808974154F56CF0068E477 /* title.png */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -480,30 +521,12 @@
 			path = Soar;
 			sourceTree = "<group>";
 		};
-		C6D14B8D1524B06100BB1F67 /* PlayGameView */ = {
-			isa = PBXGroup;
-			children = (
-				C646803C1520C2E50054B8C5 /* PlayGameTableView.h */,
-				C646803D1520C2E50054B8C5 /* PlayGameTableView.m */,
-				C6BA3764143CA19A001E6A6D /* PlayGameView.h */,
-				C6BA3765143CA19B001E6A6D /* PlayGameView.m */,
-				C6BA3766143CA19B001E6A6D /* PlayGameView.xib */,
-				4D956E5D160D28CD00E7A7C2 /* PlayGameView-i5.xib */,
-				C6D14B911524B0C600BB1F67 /* PlayGame.h */,
-				C657042F1525FD3D00E5C7D6 /* RoundOverView.h */,
-				C65704301525FD3D00E5C7D6 /* RoundOverView.m */,
-				C65704311525FD3D00E5C7D6 /* RoundOverView.xib */,
-				4D956E5F160D28CD00E7A7C2 /* RoundOverView-i5.xib */,
-			);
-			name = PlayGameView;
-			sourceTree = "<group>";
-		};
 		C6F66149143BA53800EF3AD2 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				C61F62A21552DFB80065D8BB /* Database */,
 				C6BA376A143D11F1001E6A6D /* Soar */,
-				C6F6616C143BBFA100EF3AD2 /* ui */,
+				4DBD2A4D17EE0870006806D0 /* ui-iOS7 */,
 				CD86D6ED13BBA32D0005A182 /* DiceGameState */,
 				C6F66151143BA95300EF3AD2 /* DiceGame.h */,
 				C6F66152143BA95300EF3AD2 /* DiceGame.m */,
@@ -524,75 +547,14 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		C6F6616C143BBFA100EF3AD2 /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				C6D14B8D1524B06100BB1F67 /* PlayGameView */,
-				C6F6614C143BA68E00EF3AD2 /* DiceApplication.xib */,
-				4D956E55160D28CD00E7A7C2 /* DiceApplication-i5.xib */,
-				C6F6614E143BA6DF00EF3AD2 /* DiceApplicationDelegate.h */,
-				C6F6614F143BA6DF00EF3AD2 /* DiceApplicationDelegate.m */,
-				C69B5C11143BC8C80013B1E0 /* DiceApplication.h */,
-				C69B5C12143BC8C80013B1E0 /* DiceApplication.m */,
-				C69B5C14143BCAB70013B1E0 /* DiceMainMenu.h */,
-				C69B5C15143BCAB70013B1E0 /* DiceMainMenu.m */,
-				C69B5C16143BCAB70013B1E0 /* DiceMainMenu.xib */,
-				4D956E51160D23A400E7A7C2 /* DiceMainMenu-i5.xib */,
-				C6BA3759143BCF24001E6A6D /* DiceServerView.h */,
-				C6BA375A143BCF24001E6A6D /* DiceServerView.m */,
-				C6BA375B143BCF24001E6A6D /* DiceServerView.xib */,
-				4D956E59160D28CD00E7A7C2 /* DiceServerView-i5.xib */,
-				C6BA375F143BDA1B001E6A6D /* JoinGameView.h */,
-				C6BA3760143BDA1B001E6A6D /* JoinGameView.m */,
-				C6BA3761143BDA1B001E6A6D /* JoinGameView.xib */,
-				4D956E5B160D28CD00E7A7C2 /* JoinGameView-i5.xib */,
-				C6BA3784143E658A001E6A6D /* DicePeekView.h */,
-				C6BA3785143E658B001E6A6D /* DicePeekView.m */,
-				C6BA3786143E658C001E6A6D /* DicePeekView.xib */,
-				4D956E58160D28CD00E7A7C2 /* DicePeekView-i5.xib */,
-				C67C213A1448D8690040F5D8 /* DiceHistoryView.h */,
-				C67C213B1448D8690040F5D8 /* DiceHistoryView.m */,
-				C67C213C1448D86A0040F5D8 /* DiceHistoryView.xib */,
-				4D956E56160D28CD00E7A7C2 /* DiceHistoryView-i5.xib */,
-				C6013653152B8A6F00854485 /* LoadingGameView.h */,
-				C6013654152B8A6F00854485 /* LoadingGameView.m */,
-				C6013655152B8A6F00854485 /* LoadingGameView.xib */,
-				4D956E5C160D28CD00E7A7C2 /* LoadingGameView-i5.xib */,
-				C6951836154F9F3400BD15DA /* HowToPlayView.h */,
-				C6951837154F9F3400BD15DA /* HowToPlayView.m */,
-				C695183C154FAE6000BD15DA /* HowToPlayView.xib */,
-				4D956E5A160D28CD00E7A7C2 /* HowToPlayView-i5.xib */,
-				C61F62A91552E5C20065D8BB /* GameRecordView.h */,
-				C61F62AA1552E5C20065D8BB /* GameRecordView.m */,
-				C602E09515530148005B7D70 /* RecordStatsView.h */,
-				C602E09615530148005B7D70 /* RecordStatsView.m */,
-				C602E09715530148005B7D70 /* RecordStatsView.xib */,
-				4D956E5E160D28CD00E7A7C2 /* RecordStatsView-i5.xib */,
-				4DA8DA2215E6C13300D2CED9 /* SettingsView.h */,
-				4DA8DA2315E6C13300D2CED9 /* SettingsView.m */,
-				4DA8DA2715E8282A00D2CED9 /* SettingsView.xib */,
-				4D956E60160D28CD00E7A7C2 /* SettingsView-i5.xib */,
-				4D12BDD215F0FFC000265801 /* AboutView.h */,
-				4D12BDD315F0FFC000265801 /* AboutView.m */,
-				4D12BDD415F0FFC000265801 /* AboutView.xib */,
-				4D956E54160D28CD00E7A7C2 /* AboutView-i5.xib */,
-			);
-			path = ui;
-			sourceTree = "<group>";
-		};
 		CD86D63813BB9E450005A182 = {
 			isa = PBXGroup;
 			children = (
 				4DB7B1DB17EB45C000CA94CE /* Images.xcassets */,
 				4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */,
-				4D12BDDB15F1098400265801 /* Default.png */,
-				C66E167515548AEF002190BD /* Default@2x.png */,
-				4D956E4B160D0DFD00E7A7C2 /* Default-568h@2x.png */,
 				C61F629C1552D6060065D8BB /* Database */,
 				C6031A561550B32E00186B8E /* Soar Rules */,
 				C6951844155045D900BD15DA /* Supporting Files */,
-				C6951840155042AC00BD15DA /* icon@2x.png */,
-				4D12BDD715F1094B00265801 /* icon.png */,
 				C6951839154F9F9300BD15DA /* html */,
 				C690D57D152CD5ED00AC3020 /* Graphics */,
 				C6F66149143BA53800EF3AD2 /* src */,
@@ -604,6 +566,8 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DC1BE411878A694007A17D3 /* GameKit.framework */,
+				4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */,
 				4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */,
 				4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */,
 				CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */,
@@ -662,13 +626,22 @@
 		CD86D63A13BB9E450005A182 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					CD86D64213BB9E450005A182 = {
 						DevelopmentTeam = RYTB7X84GA;
 						SystemCapabilities = {
-							com.apple.GameCenter = {
+							com.apple.BackgroundModes = {
 								enabled = 0;
+							};
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
 							};
 						};
 					};
@@ -696,52 +669,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F6614D143BA68E00EF3AD2 /* DiceApplication.xib in Resources */,
-				C69B5C18143BCAB80013B1E0 /* DiceMainMenu.xib in Resources */,
-				C6BA375D143BCF24001E6A6D /* DiceServerView.xib in Resources */,
-				C6BA3763143BDA1C001E6A6D /* JoinGameView.xib in Resources */,
-				C6BA3768143CA19B001E6A6D /* PlayGameView.xib in Resources */,
-				C6BA3788143E658D001E6A6D /* DicePeekView.xib in Resources */,
-				C67C213E1448D86A0040F5D8 /* DiceHistoryView.xib in Resources */,
-				C65704331525FD3E00E5C7D6 /* RoundOverView.xib in Resources */,
-				C6013657152B8A6F00854485 /* LoadingGameView.xib in Resources */,
-				C6808975154F56CF0068E477 /* background.png in Resources */,
-				C6808976154F56CF0068E477 /* bar.png in Resources */,
-				C6808977154F56CF0068E477 /* bid-pad-pressed.png in Resources */,
-				C6808978154F56CF0068E477 /* bid-pad.png in Resources */,
-				C6808979154F56CF0068E477 /* button-bid-pressed.png in Resources */,
-				C680897A154F56CF0068E477 /* button-bid.png in Resources */,
-				C680897B154F56CF0068E477 /* button-challenge-pressed.png in Resources */,
-				C680897C154F56CF0068E477 /* button-challenge.png in Resources */,
-				C680897D154F56CF0068E477 /* button-done-pressed.png in Resources */,
-				C680897E154F56CF0068E477 /* button-done.png in Resources */,
-				C680897F154F56CF0068E477 /* button-exact-pressed.png in Resources */,
-				C6808980154F56CF0068E477 /* button-exact.png in Resources */,
-				C6808981154F56CF0068E477 /* button-how-to-play-pressed.png in Resources */,
-				C6808982154F56CF0068E477 /* button-how-to-play.png in Resources */,
-				C6808983154F56CF0068E477 /* button-one-opponent-pressed.png in Resources */,
-				C6808984154F56CF0068E477 /* button-one-opponent.png in Resources */,
-				C6808985154F56CF0068E477 /* button-pass-pressed.png in Resources */,
-				C6808986154F56CF0068E477 /* button-pass.png in Resources */,
-				C6808987154F56CF0068E477 /* button-quit-pressed.png in Resources */,
-				C6808988154F56CF0068E477 /* button-quit.png in Resources */,
-				C6808989154F56CF0068E477 /* button-three-opponents-pressed.png in Resources */,
-				C680898A154F56CF0068E477 /* button-three-opponents.png in Resources */,
-				C680898B154F56CF0068E477 /* button-two-opponents-pressed.png in Resources */,
-				C680898C154F56CF0068E477 /* button-two-opponents.png in Resources */,
+				4DBD2A6B17EE8172006806D0 /* RoundOverView.xib in Resources */,
+				4DBD2A6917EE7C7E006806D0 /* HistoryView.xib in Resources */,
+				4D7501C717F0BA4E00D5DF3A /* SingleplayerView.xib in Resources */,
 				C680898D154F56CF0068E477 /* die-1.png in Resources */,
 				C680898E154F56CF0068E477 /* die-2.png in Resources */,
+				4DBD2A5117EE089F006806D0 /* Application.xib in Resources */,
 				C680898F154F56CF0068E477 /* die-3.png in Resources */,
 				C6808990154F56CF0068E477 /* die-4.png in Resources */,
 				C6808991154F56CF0068E477 /* die-5.png in Resources */,
 				C6808992154F56CF0068E477 /* die-6.png in Resources */,
 				C6808993154F56CF0068E477 /* die-unknown.png in Resources */,
-				C6808994154F56CF0068E477 /* spinner.png in Resources */,
-				C6808995154F56CF0068E477 /* star.png in Resources */,
-				C6808996154F56CF0068E477 /* title.png in Resources */,
+				4DBD2A5B17EE6286006806D0 /* AboutView.xib in Resources */,
 				C695183B154F9F9400BD15DA /* rules.html in Resources */,
-				C695183D154FAE6100BD15DA /* HowToPlayView.xib in Resources */,
-				C6951841155042AC00BD15DA /* icon@2x.png in Resources */,
+				4DBD2A6317EE719C006806D0 /* StatsView.xib in Resources */,
 				C6031A641550B33A00186B8E /* default in Resources */,
 				C6031A651550B33A00186B8E /* dice in Resources */,
 				C6031A671550B33A00186B8E /* dice-model-bot-new.soar in Resources */,
@@ -751,49 +692,28 @@
 				C6031A6A1550B33A00186B8E /* dice-p1-m1-c0.soar in Resources */,
 				C6031A6B1550B33A00186B8E /* dice-rl in Resources */,
 				C6031A6C1550B33A00186B8E /* dice-rl.soar in Resources */,
+				4DBD2A5517EE0AA7006806D0 /* MainMenu.xib in Resources */,
 				C6031A6D1550B33A00186B8E /* dice-rl.vsa in Resources */,
 				C6031A6E1550B33A00186B8E /* dice.soar in Resources */,
 				C6031A6F1550B33A00186B8E /* dice.vsa in Resources */,
 				C6031A701550B33A00186B8E /* improvements.soar in Resources */,
 				C602E0931552F1C2005B7D70 /* database.db in Resources */,
-				C602E09915530148005B7D70 /* RecordStatsView.xib in Resources */,
-				C602E09C15531E38005B7D70 /* button-stats-pressed.png in Resources */,
-				C602E09D15531E38005B7D70 /* button-stats.png in Resources */,
+				4DBD2A6717EE7B77006806D0 /* LoadingGameView.xib in Resources */,
 				C642BD8A15542FB000643A5B /* dice-model-bot-new in Resources */,
 				C642BD8C155430F300643A5B /* dice-model-bot-new-old in Resources */,
+				4DBD2A6517EE76AD006806D0 /* PlayGameView.xib in Resources */,
 				C642BD8E1554348900643A5B /* dice-p1-m0-c0.soar in Resources */,
-				C66E167615548AEF002190BD /* Default@2x.png in Resources */,
 				C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */,
 				C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */,
 				C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */,
-				4DA8DA2015E6B1E600D2CED9 /* button-settings-pressed.png in Resources */,
-				4DA8DA2115E6B1E600D2CED9 /* button-settings.png in Resources */,
-				4DA8DA2815E8282A00D2CED9 /* SettingsView.xib in Resources */,
 				4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */,
 				4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */,
 				4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */,
 				4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */,
 				4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */,
-				4D12BDCA15F0F8B100265801 /* button-about-pressed.png in Resources */,
-				4D12BDCB15F0F8B100265801 /* button-about.png in Resources */,
 				4D12BDD115F0FDF200265801 /* about.html in Resources */,
-				4D12BDD615F0FFC100265801 /* AboutView.xib in Resources */,
-				4D12BDD915F1094B00265801 /* icon.png in Resources */,
-				4D12BDDC15F1098400265801 /* Default.png in Resources */,
-				4D956E4C160D0DFD00E7A7C2 /* Default-568h@2x.png in Resources */,
-				4D956E52160D23A400E7A7C2 /* DiceMainMenu-i5.xib in Resources */,
-				4D956E61160D28CD00E7A7C2 /* AboutView-i5.xib in Resources */,
-				4D956E62160D28CD00E7A7C2 /* DiceApplication-i5.xib in Resources */,
-				4D956E63160D28CD00E7A7C2 /* DiceHistoryView-i5.xib in Resources */,
-				4D956E65160D28CD00E7A7C2 /* DicePeekView-i5.xib in Resources */,
-				4D956E66160D28CD00E7A7C2 /* DiceServerView-i5.xib in Resources */,
-				4D956E67160D28CD00E7A7C2 /* HowToPlayView-i5.xib in Resources */,
-				4D956E68160D28CD00E7A7C2 /* JoinGameView-i5.xib in Resources */,
-				4D956E69160D28CD00E7A7C2 /* LoadingGameView-i5.xib in Resources */,
-				4D956E6A160D28CD00E7A7C2 /* PlayGameView-i5.xib in Resources */,
-				4D956E6B160D28CD00E7A7C2 /* RecordStatsView-i5.xib in Resources */,
-				4D956E6C160D28CD00E7A7C2 /* RoundOverView-i5.xib in Resources */,
-				4D956E6D160D28CD00E7A7C2 /* SettingsView-i5.xib in Resources */,
+				4DBD2A5D17EE6D42006806D0 /* SettingsView.xib in Resources */,
+				4DBD2A5F17EE6FC9006806D0 /* RulesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -804,39 +724,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F66150143BA6DF00EF3AD2 /* DiceApplicationDelegate.m in Sources */,
+				4D7501CA17F0EC5900D5DF3A /* UIImage+ImageEffects.m in Sources */,
 				C6F66153143BA95300EF3AD2 /* DiceGame.m in Sources */,
 				C6F66156143BA98000EF3AD2 /* DiceServer.m in Sources */,
+				4DBD2A9417EF4BD2006806D0 /* RoundOverView.m in Sources */,
 				C6F6615C143BA9A200EF3AD2 /* DiceLocalPlayer.m in Sources */,
+				4DBD2A8F17EF4BD2006806D0 /* RulesView.m in Sources */,
+				4DBD2A8917EF4BD2006806D0 /* AboutView.m in Sources */,
+				4DBD2A8C17EF4BD2006806D0 /* DiceHistoryView.m in Sources */,
 				C6F6615F143BA9B300EF3AD2 /* DiceRemotePlayer.m in Sources */,
 				C6F66162143BA9BD00EF3AD2 /* DiceSoarPlayer.m in Sources */,
+				4DBD2A9117EF4BD2006806D0 /* PlayGameTableView.m in Sources */,
 				C6F66165143BA9D800EF3AD2 /* DiceClient.m in Sources */,
+				4DBD2A8B17EF4BD2006806D0 /* ApplicationDelegate.m in Sources */,
+				4DBD2A8D17EF4BD2006806D0 /* MainMenu.m in Sources */,
 				C6F6616B143BBF4C00EF3AD2 /* DiceAction.m in Sources */,
-				C69B5C13143BC8C80013B1E0 /* DiceApplication.m in Sources */,
-				C69B5C17143BCAB80013B1E0 /* DiceMainMenu.m in Sources */,
-				C6BA375C143BCF24001E6A6D /* DiceServerView.m in Sources */,
-				C6BA3762143BDA1C001E6A6D /* JoinGameView.m in Sources */,
-				C6BA3767143CA19B001E6A6D /* PlayGameView.m in Sources */,
 				C6BA3778143D18C2001E6A6D /* Bid.m in Sources */,
+				4DBD2A9517EF4BD2006806D0 /* SettingsView.m in Sources */,
 				C6BA3779143D18C2001E6A6D /* DiceGameState.m in Sources */,
 				C6BA377A143D18C2001E6A6D /* Die.m in Sources */,
 				C6BA377B143D18C2001E6A6D /* HistoryItem.m in Sources */,
 				C6BA377C143D18C2001E6A6D /* PlayerState.m in Sources */,
 				C6BA377F143D18CF001E6A6D /* SoarPlayer.mm in Sources */,
-				C6BA3787143E658D001E6A6D /* DicePeekView.m in Sources */,
-				C67C213D1448D86A0040F5D8 /* DiceHistoryView.m in Sources */,
-				C646803E1520C2E50054B8C5 /* PlayGameTableView.m in Sources */,
-				C65704321525FD3E00E5C7D6 /* RoundOverView.m in Sources */,
-				C6013656152B8A6F00854485 /* LoadingGameView.m in Sources */,
+				4DBD2A9017EF4BD2006806D0 /* LoadingGameView.m in Sources */,
 				C690D5B0152CD60500AC3020 /* DiceGraphics.m in Sources */,
-				C6951838154F9F3400BD15DA /* HowToPlayView.m in Sources */,
+				4DD146E217F0B8CF000A4A4E /* SingleplayerView.m in Sources */,
+				4DBD2A9317EF4BD2006806D0 /* StatsView.m in Sources */,
 				C6031803155066C900186B8E /* main.m in Sources */,
+				4DBD2A9217EF4BD2006806D0 /* PlayGameView.m in Sources */,
+				4DBD2A8A17EF4BD2006806D0 /* Application.m in Sources */,
 				C61F62A11552D6870065D8BB /* DiceDatabase.m in Sources */,
+				4DD146E517F0B8E5000A4A4E /* MultiplayerView.m in Sources */,
 				C61F62A81552DFE20065D8BB /* GameRecord.m in Sources */,
-				C61F62AB1552E5C20065D8BB /* GameRecordView.m in Sources */,
-				C602E09815530148005B7D70 /* RecordStatsView.m in Sources */,
-				4DA8DA2515E6C13400D2CED9 /* SettingsView.m in Sources */,
-				4D12BDD515F0FFC100265801 /* AboutView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -847,30 +766,56 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
-				OTHER_CFLAGS = "";
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
 				OTHER_LDFLAGS = (
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
@@ -880,7 +825,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -889,6 +833,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -910,7 +855,7 @@
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -923,30 +868,58 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
-				OTHER_CFLAGS = "";
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
 				OTHER_LDFLAGS = (
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
@@ -956,29 +929,55 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = NO;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "libSoar/lib-phone";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "libSoar/lib-simulator";
-				OTHER_CFLAGS = "";
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
 				OTHER_LDFLAGS = (
 					"-lSoar",
 					"-lsqlite3.0",
 				);
-				PROVISIONING_PROFILE = "30A22BB1-5ECC-4788-A649-57FED779FE8E";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = libSoar/include/;
 			};
@@ -988,7 +987,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -997,6 +995,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -1019,7 +1018,7 @@
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WARNING_CFLAGS = "-Wall";
@@ -1031,7 +1030,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1040,6 +1038,7 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -1061,7 +1060,7 @@
 					"-D__LLP64__",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;

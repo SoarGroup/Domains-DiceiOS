@@ -100,7 +100,7 @@
                 first = [NSString stringWithFormat:@"%@ accepted.", playerName];
                 break;
             case ACTION_BID:
-                first = [self.bid asString];
+                first = [self.bid asStringOldStyle];
                 break;
             case ACTION_PUSH:
                 first = [NSString stringWithFormat:@", pushed."];

@@ -8,7 +8,7 @@
 
 #import "DiceGame.h"
 
-#import "DiceApplicationDelegate.h"
+#import "ApplicationDelegate.h"
 #import "DiceAction.h"
 #import "PlayerState.h"
 #import "PlayGame.h"
@@ -19,7 +19,7 @@
 
 @synthesize type, server, gameState, players, client, appDelegate, gameView, started, deferNotification;
 
-- (id)initWithType:(DiceGameType)aType appDelegate:(DiceApplicationDelegate*)anAppDelegate username:(NSString*)usernameOrNil
+- (id)initWithType:(DiceGameType)aType appDelegate:(ApplicationDelegate*)anAppDelegate username:(NSString*)usernameOrNil
 {
     if (!(self = [super init])) return self;
     
@@ -203,7 +203,7 @@
 
 - (void) end
 {
-    NSInteger numPlayers = self.players.count;
+    int numPlayers = (int)self.players.count; // Safe conversion due to player count being non-zero and never greater than 2 million something
     NSMutableArray *losers = self.gameState.losers;
 		
     int places[] = {-1, -1, -1, -1};

@@ -87,6 +87,7 @@
 - (int)countKnownDice:(int)rankOfDice inArray:(NSArray *)arrayToCountIn;
 
 - (NSString *) historyText:(NSInteger)playerID;
+- (NSMutableAttributedString *) historyText:(NSInteger)playerID colorName:(BOOL)colorThePlayer;
 
 @end
 

@@ -34,10 +34,16 @@ typedef struct GameTime {
 @property (readwrite, assign) GameTime gameTime;
 
 - (id) initWithGameTime:(GameTime)gameTime
-             NumPlayers:(NSInteger)numPlayers
+             NumPlayers:(int)numPlayers
              firstPlace:(int)firstPlace
             secondPlace:(int)secondPlace
              thirdPlace:(int)thirdPlace
             fourthPlace:(int)fourthPlace;
+
+- (id) initWithDictionary:(NSDictionary*)dictionary;
+- (NSDictionary*) dictionaryRepresentation;
+
++ (NSDictionary*) GameTimeToDictionary:(GameTime)time;
++ (GameTime) DictionaryToGameTime:(NSDictionary*)dictionary;
 
 @end
