@@ -62,14 +62,9 @@
 
 - (void) addGameRecord:(GameRecord *)gameRecord {
     NSMutableArray* mutableArray = [NSMutableArray arrayWithArray:[defaults objectForKey:@"Games"]];
-	[mutableArray addObject:gameRecord];
+	[mutableArray addObject:[gameRecord dictionaryRepresentation]];
 
-
-	NSMutableArray *archiveArray = [NSMutableArray arrayWithCapacity:mutableArray.count];
-    for (GameRecord *gameRecordObject in mutableArray)
-        [archiveArray addObject:[gameRecordObject dictionaryRepresentation]];
-
-	[defaults setObject:archiveArray forKey:@"Games"];
+	[defaults setObject:mutableArray forKey:@"Games"];
 
 	[defaults synchronize];
 }

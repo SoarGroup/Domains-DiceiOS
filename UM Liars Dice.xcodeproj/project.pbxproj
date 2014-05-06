@@ -13,6 +13,8 @@
 		4D7501C717F0BA4E00D5DF3A /* SingleplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D7501C617F0BA4E00D5DF3A /* SingleplayerView.xib */; };
 		4D7501CA17F0EC5900D5DF3A /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
+		4D82BFE9191827660071FF3B /* Center-Push@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D82BFE8191827660071FF3B /* Center-Push@2x.png */; };
+		4D82BFEB191827700071FF3B /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D82BFEA191827700071FF3B /* Center-Push.png */; };
 		4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */; };
 		4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2A15E84BC800D2CED9 /* dice-hardest.soar */; };
 		4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DA8DA2B15E84BC800D2CED9 /* dice-medium.soar */; };
@@ -34,12 +36,29 @@
 		4DBD2A8D17EF4BD2006806D0 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7717EF4BD2006806D0 /* MainMenu.m */; };
 		4DBD2A8F17EF4BD2006806D0 /* RulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7B17EF4BD2006806D0 /* RulesView.m */; };
 		4DBD2A9017EF4BD2006806D0 /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A7D17EF4BD2006806D0 /* LoadingGameView.m */; };
-		4DBD2A9117EF4BD2006806D0 /* PlayGameTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */; };
 		4DBD2A9217EF4BD2006806D0 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */; };
 		4DBD2A9317EF4BD2006806D0 /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8417EF4BD2006806D0 /* StatsView.m */; };
 		4DBD2A9417EF4BD2006806D0 /* RoundOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8617EF4BD2006806D0 /* RoundOverView.m */; };
 		4DBD2A9517EF4BD2006806D0 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD2A8817EF4BD2006806D0 /* SettingsView.m */; };
+		4DC1AF501919544B007CE062 /* MultiplayerViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC1AF4F1919544B007CE062 /* MultiplayerViewiPad.xib */; };
+		4DC1AF5319195B05007CE062 /* ScrollRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DC1AF5219195B05007CE062 /* ScrollRightArrow.png */; };
+		4DC1AF5819195C3D007CE062 /* MultiplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC1AF5719195C3D007CE062 /* MultiplayerView.xib */; };
+		4DC1AF5A19195D9C007CE062 /* CreateMatchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC1AF5919195D9C007CE062 /* CreateMatchView.xib */; };
+		4DC1AF5C19196119007CE062 /* FindMatchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC1AF5B19196119007CE062 /* FindMatchView.xib */; };
+		4DC1AF5F191961B3007CE062 /* CreateMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC1AF5E191961B3007CE062 /* CreateMatchView.m */; };
+		4DC1AF62191961C1007CE062 /* FindMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC1AF61191961C1007CE062 /* FindMatchView.m */; };
 		4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC1BE411878A694007A17D3 /* GameKit.framework */; };
+		4DC66D9D1913FB2800A7FF0D /* MainMenuiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66D9C1913FB2800A7FF0D /* MainMenuiPad.xib */; };
+		4DC66D9F1913FEC700A7FF0D /* ApplicationiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66D9E1913FEC700A7FF0D /* ApplicationiPad.xib */; };
+		4DC66DA91914023700A7FF0D /* AboutViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA01914023700A7FF0D /* AboutViewiPad.xib */; };
+		4DC66DAA1914023700A7FF0D /* HistoryViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA11914023700A7FF0D /* HistoryViewiPad.xib */; };
+		4DC66DAB1914023700A7FF0D /* LoadingGameViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA21914023700A7FF0D /* LoadingGameViewiPad.xib */; };
+		4DC66DAC1914023700A7FF0D /* PlayGameViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA31914023700A7FF0D /* PlayGameViewiPad.xib */; };
+		4DC66DAD1914023700A7FF0D /* RoundOverViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA41914023700A7FF0D /* RoundOverViewiPad.xib */; };
+		4DC66DAE1914023700A7FF0D /* RulesViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA51914023700A7FF0D /* RulesViewiPad.xib */; };
+		4DC66DAF1914023700A7FF0D /* SettingsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA61914023700A7FF0D /* SettingsViewiPad.xib */; };
+		4DC66DB01914023700A7FF0D /* SingleplayerViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA71914023700A7FF0D /* SingleplayerViewiPad.xib */; };
+		4DC66DB11914023700A7FF0D /* StatsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC66DA81914023700A7FF0D /* StatsViewiPad.xib */; };
 		4DD146E217F0B8CF000A4A4E /* SingleplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD146E117F0B8CF000A4A4E /* SingleplayerView.m */; };
 		4DD146E517F0B8E5000A4A4E /* MultiplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DD146E417F0B8E5000A4A4E /* MultiplayerView.m */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
@@ -104,6 +123,8 @@
 		4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		4D7501C917F0EC5900D5DF3A /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4D82BFE8191827660071FF3B /* Center-Push@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push@2x.png"; sourceTree = "<group>"; };
+		4D82BFEA191827700071FF3B /* Center-Push.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push.png"; sourceTree = "<group>"; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA8DA2915E84BC800D2CED9 /* dice-hard.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "dice-hard.soar"; path = "Liars-Dice/Soar Code/Soar Rules/dice-hard.soar"; sourceTree = "<group>"; };
@@ -135,8 +156,6 @@
 		4DBD2A7C17EF4BD2006806D0 /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
 		4DBD2A7D17EF4BD2006806D0 /* LoadingGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingGameView.m; sourceTree = "<group>"; };
 		4DBD2A7E17EF4BD2006806D0 /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
-		4DBD2A7F17EF4BD2006806D0 /* PlayGameTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameTableView.h; sourceTree = "<group>"; };
-		4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameTableView.m; sourceTree = "<group>"; };
 		4DBD2A8117EF4BD2006806D0 /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
 		4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4DBD2A8317EF4BD2006806D0 /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsView.h; sourceTree = "<group>"; };
@@ -145,7 +164,27 @@
 		4DBD2A8617EF4BD2006806D0 /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
 		4DBD2A8717EF4BD2006806D0 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		4DBD2A8817EF4BD2006806D0 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		4DC1AF4F1919544B007CE062 /* MultiplayerViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiplayerViewiPad.xib; sourceTree = "<group>"; };
+		4DC1AF5219195B05007CE062 /* ScrollRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScrollRightArrow.png; sourceTree = "<group>"; };
+		4DC1AF5719195C3D007CE062 /* MultiplayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiplayerView.xib; sourceTree = "<group>"; };
+		4DC1AF5919195D9C007CE062 /* CreateMatchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateMatchView.xib; sourceTree = "<group>"; };
+		4DC1AF5B19196119007CE062 /* FindMatchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FindMatchView.xib; sourceTree = "<group>"; };
+		4DC1AF5D191961B3007CE062 /* CreateMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateMatchView.h; sourceTree = "<group>"; };
+		4DC1AF5E191961B3007CE062 /* CreateMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateMatchView.m; sourceTree = "<group>"; };
+		4DC1AF60191961C1007CE062 /* FindMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindMatchView.h; sourceTree = "<group>"; };
+		4DC1AF61191961C1007CE062 /* FindMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindMatchView.m; sourceTree = "<group>"; };
 		4DC1BE411878A694007A17D3 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		4DC66D9C1913FB2800A7FF0D /* MainMenuiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuiPad.xib; sourceTree = "<group>"; };
+		4DC66D9E1913FEC700A7FF0D /* ApplicationiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationiPad.xib; sourceTree = "<group>"; };
+		4DC66DA01914023700A7FF0D /* AboutViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA11914023700A7FF0D /* HistoryViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA21914023700A7FF0D /* LoadingGameViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingGameViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA31914023700A7FF0D /* PlayGameViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayGameViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA41914023700A7FF0D /* RoundOverViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundOverViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA51914023700A7FF0D /* RulesViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA61914023700A7FF0D /* SettingsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA71914023700A7FF0D /* SingleplayerViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerViewiPad.xib; sourceTree = "<group>"; };
+		4DC66DA81914023700A7FF0D /* StatsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewiPad.xib; sourceTree = "<group>"; };
 		4DD146E017F0B8CF000A4A4E /* SingleplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleplayerView.h; sourceTree = "<group>"; };
 		4DD146E117F0B8CF000A4A4E /* SingleplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleplayerView.m; sourceTree = "<group>"; };
 		4DD146E317F0B8E5000A4A4E /* MultiplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerView.h; sourceTree = "<group>"; };
@@ -249,7 +288,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D8DC8B91877CB2800F7F0FA /* iPhone XIBs */ = {
+		4DBD2A4D17EE0870006806D0 /* ui-iOS7 */ = {
+			isa = PBXGroup;
+			children = (
+				4DC66D851913FA1000A7FF0D /* iPad-XIBs */,
+				4DBD2A6D17EF4AD3006806D0 /* UI Source */,
+				4DBD2A4F17EE0890006806D0 /* iPhone-XIBs */,
+			);
+			path = "ui-iOS7";
+			sourceTree = "<group>";
+		};
+		4DBD2A4F17EE0890006806D0 /* iPhone-XIBs */ = {
 			isa = PBXGroup;
 			children = (
 				4DBD2A5E17EE6FC9006806D0 /* RulesView.xib */,
@@ -263,41 +312,11 @@
 				4DBD2A6817EE7C7E006806D0 /* HistoryView.xib */,
 				4DBD2A6A17EE8172006806D0 /* RoundOverView.xib */,
 				4D7501C617F0BA4E00D5DF3A /* SingleplayerView.xib */,
+				4DC1AF5719195C3D007CE062 /* MultiplayerView.xib */,
+				4DC1AF5919195D9C007CE062 /* CreateMatchView.xib */,
+				4DC1AF5B19196119007CE062 /* FindMatchView.xib */,
 			);
-			name = "iPhone XIBs";
-			sourceTree = "<group>";
-		};
-		4DBD2A4D17EE0870006806D0 /* ui-iOS7 */ = {
-			isa = PBXGroup;
-			children = (
-				4DBD2A4E17EE0890006806D0 /* iPad */,
-				4DBD2A4F17EE0890006806D0 /* iPhone */,
-			);
-			path = "ui-iOS7";
-			sourceTree = "<group>";
-		};
-		4DBD2A4E17EE0890006806D0 /* iPad */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = iPad;
-			sourceTree = "<group>";
-		};
-		4DBD2A4F17EE0890006806D0 /* iPhone */ = {
-			isa = PBXGroup;
-			children = (
-				4DBD2A6D17EF4AD3006806D0 /* UI Source */,
-				4DBD2A6C17EF4A4B006806D0 /* XIBs */,
-			);
-			path = iPhone;
-			sourceTree = "<group>";
-		};
-		4DBD2A6C17EF4A4B006806D0 /* XIBs */ = {
-			isa = PBXGroup;
-			children = (
-				4D8DC8B91877CB2800F7F0FA /* iPhone XIBs */,
-			);
-			path = XIBs;
+			path = "iPhone-XIBs";
 			sourceTree = "<group>";
 		};
 		4DBD2A6D17EF4AD3006806D0 /* UI Source */ = {
@@ -305,7 +324,7 @@
 			children = (
 				4D7501C817F0EC5900D5DF3A /* UIImage+ImageEffects.m */,
 				4D7501C917F0EC5900D5DF3A /* UIImage+ImageEffects.h */,
-				4DD146DF17F0B8AB000A4A4E /* MultiplayerView */,
+				4DD146DF17F0B8AB000A4A4E /* Multiplayer */,
 				4DD146DE17F0B8A6000A4A4E /* SingleplayerView */,
 				4DBD2A9617EF4BF8006806D0 /* AboutView */,
 				4DBD2A9717EF4C07006806D0 /* Application */,
@@ -380,8 +399,6 @@
 			isa = PBXGroup;
 			children = (
 				4DBD2A7E17EF4BD2006806D0 /* PlayGame.h */,
-				4DBD2A7F17EF4BD2006806D0 /* PlayGameTableView.h */,
-				4DBD2A8017EF4BD2006806D0 /* PlayGameTableView.m */,
 				4DBD2A8117EF4BD2006806D0 /* PlayGameView.h */,
 				4DBD2A8217EF4BD2006806D0 /* PlayGameView.m */,
 				4DBD2A8517EF4BD2006806D0 /* RoundOverView.h */,
@@ -408,6 +425,25 @@
 			name = SettingsView;
 			sourceTree = "<group>";
 		};
+		4DC66D851913FA1000A7FF0D /* iPad-XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				4DC66DA01914023700A7FF0D /* AboutViewiPad.xib */,
+				4DC66DA11914023700A7FF0D /* HistoryViewiPad.xib */,
+				4DC66DA21914023700A7FF0D /* LoadingGameViewiPad.xib */,
+				4DC66DA31914023700A7FF0D /* PlayGameViewiPad.xib */,
+				4DC66DA41914023700A7FF0D /* RoundOverViewiPad.xib */,
+				4DC66DA51914023700A7FF0D /* RulesViewiPad.xib */,
+				4DC66DA61914023700A7FF0D /* SettingsViewiPad.xib */,
+				4DC66DA71914023700A7FF0D /* SingleplayerViewiPad.xib */,
+				4DC66DA81914023700A7FF0D /* StatsViewiPad.xib */,
+				4DC66D9C1913FB2800A7FF0D /* MainMenuiPad.xib */,
+				4DC66D9E1913FEC700A7FF0D /* ApplicationiPad.xib */,
+				4DC1AF4F1919544B007CE062 /* MultiplayerViewiPad.xib */,
+			);
+			path = "iPad-XIBs";
+			sourceTree = "<group>";
+		};
 		4DD146DE17F0B8A6000A4A4E /* SingleplayerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,13 +453,17 @@
 			name = SingleplayerView;
 			sourceTree = "<group>";
 		};
-		4DD146DF17F0B8AB000A4A4E /* MultiplayerView */ = {
+		4DD146DF17F0B8AB000A4A4E /* Multiplayer */ = {
 			isa = PBXGroup;
 			children = (
 				4DD146E317F0B8E5000A4A4E /* MultiplayerView.h */,
 				4DD146E417F0B8E5000A4A4E /* MultiplayerView.m */,
+				4DC1AF5D191961B3007CE062 /* CreateMatchView.h */,
+				4DC1AF5E191961B3007CE062 /* CreateMatchView.m */,
+				4DC1AF60191961C1007CE062 /* FindMatchView.h */,
+				4DC1AF61191961C1007CE062 /* FindMatchView.m */,
 			);
-			name = MultiplayerView;
+			name = Multiplayer;
 			sourceTree = "<group>";
 		};
 		C6031A561550B32E00186B8E /* Soar Rules */ = {
@@ -485,6 +525,9 @@
 				C680896F154F56CF0068E477 /* die-5.png */,
 				C6808970154F56CF0068E477 /* die-6.png */,
 				C6808971154F56CF0068E477 /* die-unknown.png */,
+				4D82BFEA191827700071FF3B /* Center-Push.png */,
+				4D82BFE8191827660071FF3B /* Center-Push@2x.png */,
+				4DC1AF5219195B05007CE062 /* ScrollRightArrow.png */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -675,23 +718,35 @@
 				C680898D154F56CF0068E477 /* die-1.png in Resources */,
 				C680898E154F56CF0068E477 /* die-2.png in Resources */,
 				4DBD2A5117EE089F006806D0 /* Application.xib in Resources */,
+				4DC66DA91914023700A7FF0D /* AboutViewiPad.xib in Resources */,
+				4DC1AF5319195B05007CE062 /* ScrollRightArrow.png in Resources */,
 				C680898F154F56CF0068E477 /* die-3.png in Resources */,
 				C6808990154F56CF0068E477 /* die-4.png in Resources */,
+				4DC1AF501919544B007CE062 /* MultiplayerViewiPad.xib in Resources */,
+				4D82BFE9191827660071FF3B /* Center-Push@2x.png in Resources */,
 				C6808991154F56CF0068E477 /* die-5.png in Resources */,
+				4DC66DAC1914023700A7FF0D /* PlayGameViewiPad.xib in Resources */,
 				C6808992154F56CF0068E477 /* die-6.png in Resources */,
+				4DC66DAB1914023700A7FF0D /* LoadingGameViewiPad.xib in Resources */,
+				4DC1AF5819195C3D007CE062 /* MultiplayerView.xib in Resources */,
 				C6808993154F56CF0068E477 /* die-unknown.png in Resources */,
+				4DC66D9D1913FB2800A7FF0D /* MainMenuiPad.xib in Resources */,
 				4DBD2A5B17EE6286006806D0 /* AboutView.xib in Resources */,
 				C695183B154F9F9400BD15DA /* rules.html in Resources */,
+				4DC66D9F1913FEC700A7FF0D /* ApplicationiPad.xib in Resources */,
 				4DBD2A6317EE719C006806D0 /* StatsView.xib in Resources */,
 				C6031A641550B33A00186B8E /* default in Resources */,
 				C6031A651550B33A00186B8E /* dice in Resources */,
+				4DC66DAA1914023700A7FF0D /* HistoryViewiPad.xib in Resources */,
 				C6031A671550B33A00186B8E /* dice-model-bot-new.soar in Resources */,
 				C6031A681550B33A00186B8E /* dice-p0-m0-c0.soar in Resources */,
 				C6031A691550B33A00186B8E /* dice-p0-m1-c0.soar in Resources */,
 				4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */,
+				4DC66DB01914023700A7FF0D /* SingleplayerViewiPad.xib in Resources */,
 				C6031A6A1550B33A00186B8E /* dice-p1-m1-c0.soar in Resources */,
 				C6031A6B1550B33A00186B8E /* dice-rl in Resources */,
 				C6031A6C1550B33A00186B8E /* dice-rl.soar in Resources */,
+				4DC1AF5C19196119007CE062 /* FindMatchView.xib in Resources */,
 				4DBD2A5517EE0AA7006806D0 /* MainMenu.xib in Resources */,
 				C6031A6D1550B33A00186B8E /* dice-rl.vsa in Resources */,
 				C6031A6E1550B33A00186B8E /* dice.soar in Resources */,
@@ -702,15 +757,21 @@
 				C642BD8A15542FB000643A5B /* dice-model-bot-new in Resources */,
 				C642BD8C155430F300643A5B /* dice-model-bot-new-old in Resources */,
 				4DBD2A6517EE76AD006806D0 /* PlayGameView.xib in Resources */,
+				4DC66DAE1914023700A7FF0D /* RulesViewiPad.xib in Resources */,
+				4D82BFEB191827700071FF3B /* Center-Push.png in Resources */,
 				C642BD8E1554348900643A5B /* dice-p1-m0-c0.soar in Resources */,
+				4DC66DB11914023700A7FF0D /* StatsViewiPad.xib in Resources */,
 				C68C288015CB229C00EB07B7 /* dice-agent-new.soar in Resources */,
 				C68C288315CB22A400EB07B7 /* dice-agent-p in Resources */,
 				C68C288515CB22AC00EB07B7 /* dice-pmh.soar in Resources */,
 				4DA8DA2C15E84BC800D2CED9 /* dice-hard.soar in Resources */,
+				4DC66DAF1914023700A7FF0D /* SettingsViewiPad.xib in Resources */,
 				4DA8DA2D15E84BC800D2CED9 /* dice-hardest.soar in Resources */,
 				4DA8DA2E15E84BC800D2CED9 /* dice-medium.soar in Resources */,
 				4D55DFFA15EFB3A200829BC6 /* dice-easy.soar in Resources */,
+				4DC66DAD1914023700A7FF0D /* RoundOverViewiPad.xib in Resources */,
 				4D55DFFB15EFB3A200829BC6 /* dice-harder.soar in Resources */,
+				4DC1AF5A19195D9C007CE062 /* CreateMatchView.xib in Resources */,
 				4D12BDD115F0FDF200265801 /* about.html in Resources */,
 				4DBD2A5D17EE6D42006806D0 /* SettingsView.xib in Resources */,
 				4DBD2A5F17EE6FC9006806D0 /* RulesView.xib in Resources */,
@@ -727,6 +788,7 @@
 				4D7501CA17F0EC5900D5DF3A /* UIImage+ImageEffects.m in Sources */,
 				C6F66153143BA95300EF3AD2 /* DiceGame.m in Sources */,
 				C6F66156143BA98000EF3AD2 /* DiceServer.m in Sources */,
+				4DC1AF62191961C1007CE062 /* FindMatchView.m in Sources */,
 				4DBD2A9417EF4BD2006806D0 /* RoundOverView.m in Sources */,
 				C6F6615C143BA9A200EF3AD2 /* DiceLocalPlayer.m in Sources */,
 				4DBD2A8F17EF4BD2006806D0 /* RulesView.m in Sources */,
@@ -734,7 +796,6 @@
 				4DBD2A8C17EF4BD2006806D0 /* DiceHistoryView.m in Sources */,
 				C6F6615F143BA9B300EF3AD2 /* DiceRemotePlayer.m in Sources */,
 				C6F66162143BA9BD00EF3AD2 /* DiceSoarPlayer.m in Sources */,
-				4DBD2A9117EF4BD2006806D0 /* PlayGameTableView.m in Sources */,
 				C6F66165143BA9D800EF3AD2 /* DiceClient.m in Sources */,
 				4DBD2A8B17EF4BD2006806D0 /* ApplicationDelegate.m in Sources */,
 				4DBD2A8D17EF4BD2006806D0 /* MainMenu.m in Sources */,
@@ -751,6 +812,7 @@
 				4DD146E217F0B8CF000A4A4E /* SingleplayerView.m in Sources */,
 				4DBD2A9317EF4BD2006806D0 /* StatsView.m in Sources */,
 				C6031803155066C900186B8E /* main.m in Sources */,
+				4DC1AF5F191961B3007CE062 /* CreateMatchView.m in Sources */,
 				4DBD2A9217EF4BD2006806D0 /* PlayGameView.m in Sources */,
 				4DBD2A8A17EF4BD2006806D0 /* Application.m in Sources */,
 				C61F62A11552D6870065D8BB /* DiceDatabase.m in Sources */,
@@ -827,6 +889,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
@@ -836,9 +899,11 @@
 				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Liars-Dice/UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
@@ -849,15 +914,19 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LLVM_LTO = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
+					"-Wno-gnu",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -989,6 +1058,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
@@ -999,9 +1069,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Liars-Dice/UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
@@ -1012,15 +1084,19 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LLVM_LTO = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
+					"-Wno-gnu",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1032,6 +1108,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
@@ -1041,9 +1118,11 @@
 				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Liars-Dice/UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
@@ -1054,15 +1133,19 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Liars-Dice/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LLVM_LTO = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
 					"-D__LLP64__",
+					"-Wno-gnu",
 				);
 				PRODUCT_NAME = "UM Liars Dice";
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
 				SKIP_INSTALL = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;

@@ -84,31 +84,28 @@ typedef enum {
     if (self) {     
         self.turnLock = aLock;
         self.game = aGame;
-        //kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kDefaultLibraryName, 0);
+
+		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
         [turnLock lock];
-        //kernel = sml::Kernel::CreateKernelInCurrentThread();
-		
-        kernel = sml::Kernel::CreateKernelInNewThread();
-        
-        if (kernel->HadError())
-        {
-            [turnLock unlock];
-            return nil;
-        }
-        
-        
-        static int number = 1;
+
+		if (kernel->HadError())
+		{
+			NSLog(@"Kernel: %s", kernel->GetLastErrorDescription());
+			[turnLock unlock];
+			return nil;
+		}
+
         self.name = aName;
-        number++;
-        
+
         const char* string = [name UTF8String];
         agent = kernel->CreateAgent(string);
         if (agent == nil)
         {
+			NSLog(@"Kernel (Agent): %s", kernel->GetLastErrorDescription());
             [turnLock unlock];
             return nil;
         }
-        
+
 #if TARGET_IPHONE_SIMULATOR
         agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 #endif
@@ -204,10 +201,11 @@ typedef enum {
 - (void) end
 {
     [turnLock lock];
-        kernel->Shutdown();
-        delete kernel;
-        kernel = nil;
         agent = nil;
+
+		kernel->Shutdown();
+		delete kernel;
+		kernel = nil;
     [turnLock unlock];
 }
 

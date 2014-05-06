@@ -36,7 +36,7 @@
 	<key>NSMainNibFile</key>
 	<string>Application</string>
 	<key>NSMainNibFile~ipad</key>
-	<string>DiceApplication</string>
+	<string>ApplicationiPad</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>gamekit</string>
@@ -59,6 +59,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

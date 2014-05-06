@@ -28,8 +28,8 @@
 
 @interface SoarPlayer : NSObject <Player> {
 #ifdef __cplusplus
-    sml::Kernel *kernel;
-    sml::Agent *agent;
+	sml::Agent *agent;
+	sml::Kernel *kernel;
 #endif
     
     BOOL remoteConnected;

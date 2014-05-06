@@ -68,7 +68,8 @@
         gameWinner = nil;
         self.currentTurn = 0;
         inSpecialRules = NO;
-        [self goToNextPlayerWhoHasntLost];
+        //[self goToNextPlayerWhoHasntLost];
+		self.currentTurn = arc4random() % ([players count] - 1);
         [self createNewRound];
     }
     return self;
@@ -527,6 +528,16 @@
 	return [[self historyText:playerID colorName:NO] string];
 }
 
+- (PlayerState*) playerStateForPlayerID:(NSInteger)playerID
+{
+	for (PlayerState* state in playerStates)
+	{
+		if ([state playerID] == playerID)
+			return state;
+	}
+
+	return nil;
+}
 
 - (NSMutableAttributedString *) historyText:(NSInteger)playerID colorName:(BOOL)colorThePlayer {
     NSMutableAttributedString *labelText;
@@ -573,6 +584,13 @@
             [labelText appendAttributedString:move];
         }
     }
+
+	if ([[self playerStateForPlayerID:playerID] playerHasExacted])
+		[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\nHas exacted in the match"] autorelease]];
+
+	if ([[self playerStateForPlayerID:playerID] playerHasPassed])
+		[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\nHas passed this round"] autorelease]];
+
     return [labelText autorelease];
 }
 
