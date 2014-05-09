@@ -41,7 +41,8 @@
      */
 }
 
-- (BOOL) hasWon {
+- (BOOL) hasWon
+{
     return self.gameState.gameWinner == self;
 }
 

@@ -14,12 +14,99 @@
 #import "Player.h"
 #import "DiceTypes.h"
 #import "DiceGame.h"
+#import "SoarPlayer.h"
 
 @implementation DiceGameState
 
 @synthesize playerStates;
 @synthesize players, currentTurn, previousBid;
 @synthesize playersLeft, theNewRoundListeners, game, losers;
+
+-(id)initWithCoder:(NSCoder*)decoder
+{
+	self = [super init];
+
+	if (self)
+	{
+		history = [decoder decodeObjectForKey:@"DiceGameState:history"];
+		rounds = [decoder decodeObjectForKey:@"DiceGameState:rounds"];
+		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
+		currentTurn = [decoder decodeIntForKey:@"DiceGameState:currentTurn"];
+		playersLeft = [decoder decodeIntegerForKey:@"DiceGameState:playersLeft"];
+		previousBid = [decoder decodeObjectForKey:@"DiceGameState:previousBid"];
+
+		playerStates = [decoder decodeObjectForKey:@"DiceGameState:playerStates"];
+
+		playersArrayToDecode = [decoder decodeObjectForKey:@"DiceGameState:players"];
+	}
+
+	return self;
+}
+
+- (void) decodePlayers
+{
+	NSMutableArray* finalPlayersArray = [[NSMutableArray alloc] init];
+	NSLock* lock = [[NSLock alloc] init];
+
+	for (NSString* player in playersArrayToDecode)
+	{
+		if (![player isEqualToString:@"Soar"])
+		{
+			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:player])
+			{
+				// Local Player
+				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil]];
+			}
+			else
+				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil]];
+		}
+		else
+		{
+			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil]];
+		}
+	}
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder
+{
+	/*
+	 id <Player> gameWinner;
+
+	 NSMutableArray *history;
+	 NSMutableArray *rounds;
+
+	 BOOL inSpecialRules;
+	 
+	 @property (readwrite, retain) NSArray *players;
+	 @property (readwrite, retain) NSArray *playerStates;
+	 @property (readwrite, retain) NSMutableArray *losers;
+	 @property (readwrite, assign) int currentTurn;
+	 @property (readwrite, assign) NSInteger playersLeft;
+	 @property (readwrite, retain) Bid *previousBid;
+	 @property (readwrite, retain) NSMutableArray *theNewRoundListeners;
+	 @property (readwrite, retain) DiceGame *game;
+	 */
+
+	[encoder encodeObject:history forKey:@"DiceGameState:history"];
+	[encoder encodeObject:rounds forKey:@"DiceGameState:rounds"];
+	[encoder encodeBool:inSpecialRules forKey:@"DiceGameState:inSpecialRules"];
+	[encoder encodeInt:currentTurn forKey:@"DiceGameState:currentTurn"];
+	[encoder encodeInteger:playersLeft forKey:@"DiceGameState:playersLeft"];
+	[encoder encodeObject:previousBid forKey:@"DiceGameState:previousBid"];
+
+	[encoder encodeObject:playerStates forKey:@"DiceGameState:playerStates"];
+
+	NSMutableArray* playersArray = [[[NSMutableArray alloc] init] autorelease];
+
+	for (id<Player> player in players)
+	{
+		if ([player isKindOfClass:DiceLocalPlayer.class] | [player isKindOfClass:DiceRemotePlayer.class])
+			[playersArray addObject:[player getName]];
+		else if ([player isKindOfClass:SoarPlayer.class])
+			[playersArray addObject:@"Soar"];
+	}
+	[encoder encodeObject:playersArray forKey:@"DiceGameState:players"];
+}
 
 /*** DiceGameState
  Takes a NSArray of player names and the maximum number of dice.
@@ -582,14 +669,14 @@
 			}
 
             [labelText appendAttributedString:move];
+
+			if ([[self playerStateForPlayerID:playerID] playerHasExacted])
+				[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted in the match", playerName]] autorelease]];
+
+			if ([[self playerStateForPlayerID:playerID] playerHasPassed])
+				[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed this round", playerName]] autorelease]];
         }
     }
-
-	if ([[self playerStateForPlayerID:playerID] playerHasExacted])
-		[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\nHas exacted in the match"] autorelease]];
-
-	if ([[self playerStateForPlayerID:playerID] playerHasPassed])
-		[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\nHas passed this round"] autorelease]];
 
     return [labelText autorelease];
 }
@@ -598,15 +685,17 @@
     int totalDice = [self countAllDice];
     int unknownDice = [self countUnknownDice:playerIDorMinusOne];
     NSString *conj = singleLine ? @".\nThere were " : @".\n";
-    if (self.previousBid == nil) {
+
+    if (self.previousBid == nil)
         return [NSString stringWithFormat:@"No current bid%@%d dice, %d unknown.", conj, totalDice, unknownDice];
-    }
+
     NSString *previousBidPlayerName = self.previousBid.playerName;
     int bidDice = [self countSeenDice:playerIDorMinusOne rank:previousBid.rankOfDie];
-    if (playerIDorMinusOne < 0) {
+
+    if (playerIDorMinusOne < 0)
         return [NSString stringWithFormat:@"%@ bid %d %ds%@%d dice, %d %ds.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, totalDice, bidDice, previousBid.rankOfDie];
-    }
-    return [NSString stringWithFormat:@"%@ bid %d %ds%@%d dice, %d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, totalDice, bidDice, previousBid.rankOfDie, unknownDice];
+
+	return [NSString stringWithFormat:@"%@ bid %d %ds%@%d dice, %d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, totalDice, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods
@@ -663,10 +752,11 @@
     PlayerState *player = [self getPlayerState:playerID];
     player.numberOfDice = player.numberOfDice - 1;
     NSLog(@"%@ has %i dice", [player playerName], [player numberOfDice]);
-    if (player.numberOfDice == 0) {
+
+	[self goToNextPlayerWhoHasntLost];
+
+    if (player.numberOfDice == 0)
         [self playerLosesGame:playerID];
-    }
-    [self goToNextPlayerWhoHasntLost];
 }
 
 //Make a player lose the game (set the flags that they've lost the game)
@@ -676,14 +766,16 @@
     NSLog(@"%@ lost the game.", [[self getPlayerState:playerID] asString]);
     PlayerState *player = [self getPlayerState:playerID];
     player.hasLost = YES;
+	[[self.game getPlayerAtIndex:(int)playerID] notifyHasLost];
     --playersLeft;
-    // [player setNumberOfDice:0];
+
     if (playersLeft <= 1)
     {
         [self goToNextPlayerWhoHasntLost];
         
         NSLog(@"%@ won!", [[self getCurrentPlayer] getName]);
         gameWinner = [self getCurrentPlayer];
+		[gameWinner notifyHasWon];
     }
 }
 

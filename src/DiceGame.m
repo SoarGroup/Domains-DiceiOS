@@ -14,52 +14,86 @@
 #import "PlayGame.h"
 #import "DiceDatabase.h"
 #import "GameRecord.h"
+#import "HistoryItem.h"
 
 @implementation DiceGame
 
-@synthesize type, server, gameState, players, client, appDelegate, gameView, started, deferNotification;
+@synthesize gameState, players, appDelegate, gameView, started, deferNotification;
 
-- (id)initWithType:(DiceGameType)aType appDelegate:(ApplicationDelegate*)anAppDelegate username:(NSString*)usernameOrNil
+- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
 {
     if (!(self = [super init])) return self;
     
     self.appDelegate = anAppDelegate;
-    self.type = aType;
     self.gameState = nil;
     started = NO;
+
     time = [DiceDatabase getCurrentGameTime];
 	nextID = 0;
     
-    switch (aType) {
-        case SERVER_ONLY:
-            self.server = [[[DiceServer alloc] init] autorelease];
-            //self.gameState = [[[DiceGameState alloc] init] autorelease];
-            self.players = [[[NSArray alloc] init] autorelease];
-            self.client = nil;
-            break;
-        case LOCAL_PRIVATE:
-            self.server = nil;
-            //self.gameState = [[[DiceGameState alloc] init] autorelease];
-            self.players = [[[NSArray alloc] init] autorelease];
-            [self addPlayer:[[[DiceLocalPlayer alloc] initWithName:usernameOrNil] autorelease]];
-            self.client = nil;
-            break;
-        case LOCAL_PUBLIC:
-            self.server = [[[DiceServer alloc] init] autorelease];
-            //self.gameState = [[[DiceGameState alloc] init] autorelease];
-            self.players = [[[NSArray alloc] init] autorelease];
-            [self addPlayer:[[[DiceLocalPlayer alloc] initWithName:usernameOrNil] autorelease]];
-            self.client = nil;   
-            break;
-        case CLIENT:
-            self.server = nil;
-            //self.gameState = nil;
-            self.players = nil;
-            self.client = [[[DiceClient alloc] init] autorelease];   
-            break;
-    }
-    
+    self.players = [[[NSArray alloc] init] autorelease];
     return self;
+}
+
+-(NSString*)gameNameString
+{
+	NSString* name = @"";
+
+	for (int i = 0;i < [players count];++i)
+	{
+		name = [name stringByAppendingString:[[players objectAtIndex:i] name]];
+
+		if (i != ([players count] - 1))
+			name = [name stringByAppendingString:@" vs "];
+	}
+
+	return name;
+}
+
+-(NSString*)lastTurnInfo
+{
+	return [[gameState lastHistoryItem] state];
+}
+
+// Encoding
+-(id)initWithCoder:(NSCoder*)decoder
+{
+	self = [super init];
+
+	if (self)
+	{
+		started = [decoder decodeBoolForKey:@"DiceGame:started"];
+		deferNotification = [decoder decodeBoolForKey:@"DiceGame:deferNotification"];
+		[[decoder decodeObjectForKey:@"DiceGame:time"] getValue:&time];
+		nextID = [decoder decodeIntForKey:@"DiceGame:nextID"];
+
+		gameState = [decoder decodeObjectForKey:@"DiceGame:gameState"];
+		gameState.game = self;
+
+		[gameState decodePlayers];
+	}
+
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder
+{
+	[encoder encodeBool:started forKey:@"DiceGame:started"];
+	[encoder encodeBool:deferNotification forKey:@"DiceGame:deferNotification"];
+	[encoder encodeObject:[NSValue valueWithBytes:&time objCType:@encode(struct GameTime)] forKey:@"DiceGame:time"];
+	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
+
+	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
+}
+
+- (void)updateGame:(DiceGame *)remote
+{
+	started = remote.started;
+	deferNotification = remote.deferNotification;
+	time = remote->time;
+	nextID = remote->nextID;
+
+	gameState = remote.gameState;
 }
 
 - (void) setGameView:(id <PlayGame>)aGameView
@@ -100,25 +134,11 @@
 
 -(void)startGame
 {
-    assert(!self.started);
-	
-//	NSMutableArray *mut = [[[NSMutableArray alloc] initWithArray:self.players] autorelease];
-//	
-//	//Shuffle the array
-//	for (int i = 0;i < 16;i++)
-//		[mut exchangeObjectAtIndex:(rand()%([mut count]-1)+1) withObjectAtIndex:(rand()%([mut count]-1)+1)];
-//	
-//	int shouldMovePlayer = rand()%100;
-//	
-//	if (shouldMovePlayer >= 49)
-//		[mut exchangeObjectAtIndex:0 withObjectAtIndex:([mut count]-1)];
-//	
-//	self.players = [[[NSArray alloc] initWithArray:mut] autorelease];
+    if (self.started)
+		return;
 
     self.started = YES;
-    self.gameState = [[[DiceGameState alloc] initWithPlayers:self.players
-                                                numberOfDice:5 game:self]
-                      autorelease];
+    self.gameState = [[[DiceGameState alloc] initWithPlayers:self.players numberOfDice:5 game:self] autorelease];
 		
     [self publishState];
     [self notifyCurrentPlayer];

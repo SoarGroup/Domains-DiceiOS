@@ -10,13 +10,10 @@
 #import "DiceDatabase.h"
 #import "MainMenu.h"
 
+#import "GameKitListener.h"
+
 @interface ApplicationDelegate : NSObject <UIApplicationDelegate>
 {
-    UIButton *setupPressed;
-    UIWindow *window;
-    MainMenu *mainMenu;
-    UIViewController *rootViewController;
-    UINavigationController *navigationController;
 	NSMutableArray* databaseInstances;
 }
 
@@ -25,6 +22,8 @@
 @property (readwrite, retain) MainMenu *mainMenu;
 @property (readwrite, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) NSLock* databaseArrayLock;
+@property (nonatomic, retain) GameKitListener* listener;
+@property (nonatomic, retain) UIViewController* gameCenterLoginViewController;
 
 - (void)addInstance:(DiceDatabase*)database;
 - (void)removeInstance:(DiceDatabase*)database;

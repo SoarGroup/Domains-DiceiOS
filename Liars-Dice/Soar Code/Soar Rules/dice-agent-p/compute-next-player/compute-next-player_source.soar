@@ -1,3 +1,0 @@
-source initialize-compute-next-player.soar
-source next-player.soar
-source found-next-player.soar

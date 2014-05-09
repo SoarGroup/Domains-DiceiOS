@@ -7,22 +7,36 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
+#import "MainMenu.h"
 
-@interface MultiplayerView : UIViewController
+@interface MultiplayerView : UIViewController <GKLocalPlayerListener, UIAlertViewDelegate>
 {
 	UIPopoverController* createMatchPopoverViewController;
 	UIPopoverController* findMatchPopoverViewController;
 
 	NSMutableArray* miniGamesViewArray;
+	NSMutableArray* handlerArray; // One-To-One Correspondence with miniGamesViewArray
+	NSMutableArray* playGameViews;
+	NSTimer* updateTimer;
+
+	BOOL iPad;
 }
 
-@property (nonatomic, retain) IBOutlet UIButton* createMatchButton;
-@property (nonatomic, retain) IBOutlet UIButton* findMatchButton;
+- (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)appDelegate;
+
+@property (nonatomic, retain) ApplicationDelegate* appDelegate;
+@property (nonatomic, retain) MainMenu* mainMenu;
+@property (nonatomic, retain) IBOutlet UIButton* joinMatchButton;
 @property (nonatomic, retain) IBOutlet UIScrollView* gamesScrollView;
 @property (nonatomic, retain) IBOutlet UIButton* scrollToTheFarRightButton;
 
-- (IBAction)createMatchButtonPressed:(id)sender;
-- (IBAction)findMatchButtonPressed:(id)sender;
+- (IBAction)joinMatchButtonPressed:(id)sender;
 - (IBAction)scrollToTheFarRightButtonPressed:(id)sender;
+
+// GKTurnBasedEventListener methods
+- (void)player:(GKPlayer*)player didRequestMatchWithPlayers:(NSArray *)playerIDsToInvite;
+- (void)player:(GKPlayer*)player matchEnded:(GKTurnBasedMatch *)match;
+- (void)player:(GKPlayer*)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive;
 
 @end

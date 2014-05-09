@@ -1,3 +1,0 @@
-pushd dice-agent-p
-source dice-model-bot-new_source.soar
-popd

@@ -16,28 +16,26 @@
 @class PlayerState;
 @class DiceGame;
 
-@protocol NewRoundListener <NSObject> 
+@protocol NewRoundListener <NSObject, NSCoding>
 - (BOOL) roundEnding;
 - (BOOL) roundBeginning;
 @end
 
 @interface DiceGameState : NSObject {
 @private
-    NSArray *players; // of type Player
-    NSArray *playerStates; // of type PlayerState
-    DiceGame *game;
-    int currentTurn;
-    NSInteger playersLeft;
-    Bid *previousBid;
     id <Player> gameWinner;
     
     NSMutableArray *history;
     NSMutableArray *rounds;
-    NSMutableArray *theNewRoundListeners;
-    NSMutableArray *losers;
-    
+	NSArray* playersArrayToDecode;
+
     BOOL inSpecialRules;
 }
+
+// Encoding
+-(id)initWithCoder:(NSCoder*)decoder;
+-(void)encodeWithCoder:(NSCoder*)encoder;
+-(void)decodePlayers;
 
 - (id)initWithPlayers:(NSArray *)players numberOfDice:(int)numberOfDice game:(DiceGame*)game;
 - (void)dealloc;

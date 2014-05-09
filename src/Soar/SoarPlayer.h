@@ -20,6 +20,7 @@
 #import "DiceAction.h"
 
 #import "Player.h"
+#import "GameKitGameHandler.h"
 
 @class DiceGameState;
 @class DiceGame;
@@ -43,7 +44,7 @@
     NSLock *turnLock;
 }
 
-- (id)initWithName:(NSString *)name game:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock;
+- (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler;
 - (void)dealloc;
 - (NSString*)name;
 - (void)drop;
@@ -51,6 +52,10 @@
 - (void)showPublicInformation:(DiceGameState *)gameState;
 - (void) handleAgentCommandsWithRefresh:(BOOL *)needsRefresh sleep:(BOOL *)sleep;
 
++ (NSString*) makePlayerName;
+
+@property (nonatomic, retain) GKTurnBasedParticipant* participant;
+@property (nonatomic, retain) GameKitGameHandler* handler;
 @property (readwrite, retain) NSString* name;
 @property (readwrite, retain) PlayerState *playerState;
 @property (readwrite, assign) int playerID;

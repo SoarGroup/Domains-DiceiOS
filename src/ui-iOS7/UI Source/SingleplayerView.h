@@ -13,9 +13,6 @@
 @class MainMenu;
 
 @interface SingleplayerView : UIViewController
-{
-	NSString *username;
-}
 
 -(id)initWithAppDelegate:(ApplicationDelegate*)appDelegate andWithMainMenu:(MainMenu*)mainMenu;
 
@@ -33,5 +30,7 @@
 - (IBAction)fiveOpponentsPressed:(id)sender;
 - (IBAction)sixOpponentsPressed:(id)sender;
 - (IBAction)sevenOpponentsPressed:(id)sender;
+
++ (void) startGameWithOpponents:(int)opponents withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu;
 
 @end

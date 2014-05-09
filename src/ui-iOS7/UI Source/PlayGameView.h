@@ -33,7 +33,7 @@ const int pushMargin();
 }
 
 // Utility Functions
-- (UIImage*)barImage;
++(UIImage*)barImage;
 -(UIImage *)imageForDie:(NSInteger)die;
 -(UIImage *)blurredSnapshot;
 
@@ -46,6 +46,7 @@ const int pushMargin();
 @property (nonatomic, retain) IBOutlet UIButton *exactButton;
 @property (nonatomic, retain) IBOutlet UIButton *passButton;
 @property (nonatomic, retain) IBOutlet UIButton *quitButton;
+@property (nonatomic, retain) IBOutlet UIButton *fullscreenButton;
 
 // Properties based on lables
 @property (nonatomic, retain) IBOutlet UILabel *gameStateLabel;
@@ -58,11 +59,12 @@ const int pushMargin();
 @property (readwrite, retain) NSArray *images;
 @property (readwrite, retain) PlayerState *state;
 @property (readwrite, retain) NSMutableArray *tempViews;
+@property (readwrite, assign) BOOL isCustom;
 
 // Properties based on views
 @property (nonatomic, retain) IBOutlet UIImageView *bidFaceLabel;
 @property (nonatomic, retain) IBOutlet UIView *controlStateView;
-@property (nonatomic, retain) IBOutlet UIView *gameStateView;
+@property (nonatomic, retain) IBOutlet UIScrollView *gameStateView;
 
 // Interface Builder Linked Actions
 - (IBAction)backPressed:(id)sender;
@@ -77,10 +79,7 @@ const int pushMargin();
 
 // Initialization Functions
 - (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler;
-- (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler withCustomMainView:(UIView*)view;
-
-- (void)fullScreenViewInitialization;
-- (void)fullScreenViewGameInitialization;
+- (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler withCustomMainView:(BOOL)custom;
 
 @end
 

@@ -11,17 +11,16 @@
 #import "DiceGame.h"
 
 @class MainMenu;
+@class GameKitGameHandler;
 
 @interface LoadingGameView : UIViewController {
-    int numOpponents; // How many soar players, not total players;
     DiceGame *game;
     MainMenu *menu;
     UIActivityIndicatorView *spinnerView;
 }
 
-- (id) initWithGame:(DiceGame *)game numOpponents:(int)numOpponents mainMenu:(MainMenu*)aMenu;
+- (id) initWithGame:(DiceGame *)game mainMenu:(MainMenu*)aMenu;
 
-@property (readwrite, assign) int numOpponents;
 @property (readwrite, retain) DiceGame *game;
 @property (readwrite, retain) MainMenu *menu;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;

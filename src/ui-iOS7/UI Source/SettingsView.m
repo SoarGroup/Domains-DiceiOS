@@ -9,6 +9,8 @@
 #import "SettingsView.h"
 #import "DiceDatabase.h"
 
+#import <GameKit/GameKit.h>
+
 @interface SettingsView ()
 
 @end
@@ -47,6 +49,9 @@
 		self.nameTextField.text = [database getPlayerName];
 
 	self.difficultySelector.selectedSegmentIndex = [database getDifficulty];
+
+	if ([GKLocalPlayer localPlayer].authenticated)
+		self.nameTextField.enabled = NO;
 }
 
 - (void)nameTextFieldTextFinalize:(id)sender
@@ -70,6 +75,14 @@
 
 	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 	[database setDifficulty:difficultySelector.selectedSegmentIndex];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	if ([GKLocalPlayer localPlayer].authenticated)
+		return NO;
+
+	return YES;
 }
 
 - (IBAction)textFieldFinished:(id)sender

@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GameKit/GameKit.h>
+
 #import "Player.h"
 #import "PlayGame.h"
 
+@class GameKitGameHandler;
 @class PlayerState;
 @class PlayGameView;
 
@@ -18,14 +21,16 @@
     NSString *name;
     PlayerState *playerState;
     int playerID;
-    id <PlayGame> gameView;
+    NSObject<PlayGame> *gameView;
 }
 
+@property (nonatomic, retain) GKTurnBasedParticipant* participant;
+@property (nonatomic, retain) GameKitGameHandler* handler;
 @property (readwrite, retain) NSString *name;
 @property (readwrite, retain) PlayerState *playerState;
-@property (readwrite, retain) id <PlayGame> gameView;
+@property (readwrite, retain) NSObject<PlayGame> *gameView;
 
-- (id)initWithName:(NSString*)aName;
+- (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 
 
 @end

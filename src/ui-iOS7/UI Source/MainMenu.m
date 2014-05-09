@@ -21,6 +21,7 @@
 #import "AboutView.h"
 #import "DiceDatabase.h"
 #import "SingleplayerView.h"
+#import "MultiplayerView.h"
 
 @implementation MainMenu
 
@@ -47,6 +48,7 @@
         self.appDelegate = anAppDelegate;
 
 		self.title = @"Main Menu";
+		self.multiplayerEnabled = NO;
 	}
 	
     return self;
@@ -90,10 +92,31 @@
 
 - (IBAction)multiplayerGameButtonPressed:(id)sender
 {
-	UIAlertView *noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Multiplayer Not Implemented." message:@"Unfortunately, multiplayer hasn't quite been implemented." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	if (!self.multiplayerEnabled)
+	{
+		UIAlertView *noMultiplayer;
 
-	[noMultiplayer show];
-	[noMultiplayer release];
+		if (self.appDelegate.gameCenterLoginViewController)
+			noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  You are not logged into Game Center.  Would you like to log into Game Center to access Multiplayer?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] autorelease];
+		else
+			noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  Authentication with Game Center failed.  If you would like to play multiplayer, please make sure that you are connected to the internet and logged into Game Center." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
+
+		[noMultiplayer show];
+	}
+	else
+		[self.navigationController pushViewController:[[[MultiplayerView alloc] initWithMainMenu:self withAppDelegate:self.appDelegate] autorelease] animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 1 && self.appDelegate.gameCenterLoginViewController)
+	{
+		[self.navigationController presentViewController:self.appDelegate.gameCenterLoginViewController animated:YES completion:^(void)
+		 {
+			 if (self.multiplayerEnabled)
+				 [self multiplayerGameButtonPressed:nil];
+		 }];
+	}
 }
 
 - (IBAction)rulesButtonPressed:(id)sender
@@ -119,6 +142,16 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
 	return UIStatusBarStyleLightContent;
+}
+
+- (void)setMultiplayerEnabled:(BOOL)multiplayerEnabled
+{
+	return;
+}
+
+- (BOOL)multiplayerEnabled
+{
+	return [GKLocalPlayer localPlayer].authenticated;
 }
 
 @end

@@ -37,7 +37,7 @@
 
 - (void)roll
 {
-    dieValue = (rand() % ((unsigned)NUMBER_OF_SIDES) + 1);
+    dieValue = (arc4random() % ((unsigned)NUMBER_OF_SIDES) + 1);
 }
 
 - (void)push

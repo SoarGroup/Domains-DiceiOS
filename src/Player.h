@@ -7,14 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
 
 @class PlayerState;
+@class GameKitGameHandler;
 
 @protocol Player <NSObject>
 - (NSString*) getName;
 - (void) updateState:(PlayerState*)state;
 - (int) getID;
 - (void) setID:(int)anID;
+
 - (void) itsYourTurn;
+
 - (void) end;
+
+- (void)notifyHasLost;
+- (void)notifyHasWon;
+
+- (void)setHandler:(GameKitGameHandler*)handler;
+- (void)setParticipant:(GKTurnBasedParticipant*)participant;
 @end

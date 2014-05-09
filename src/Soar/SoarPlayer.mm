@@ -74,16 +74,48 @@ typedef enum {
 
 @end
 
+static int agentCount = 0;
+
 @implementation SoarPlayer
 
-@synthesize name, playerState, playerID, game, turnLock;
+@synthesize name, playerState, playerID, game, turnLock, handler, participant;
 
-- (id)initWithName:(NSString *)aName game:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock;
++ (NSString*) makePlayerName
+{
+    switch (agentCount) {
+        case 1:
+            return @"Alice";
+            break;
+        case 2:
+            return @"Bob";
+        case 3:
+            return @"Carol";
+		case 4:
+			return @"Chuck";
+		case 5:
+			return @"Craig";
+		case 6:
+			return @"Dan";
+		case 7:
+			return @"Erin";
+        default:
+		{
+			DiceDatabase *database = [[DiceDatabase alloc] init];
+
+            return [database getPlayerName];
+            break;
+		}
+    }
+}
+
+- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler *)gkgHandler;
 {
     self = [super init];
-    if (self) {     
+    if (self)
+	{
         self.turnLock = aLock;
         self.game = aGame;
+		handler = gkgHandler;
 
 		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
         [turnLock lock];
@@ -95,7 +127,8 @@ typedef enum {
 			return nil;
 		}
 
-        self.name = aName;
+		agentCount++;
+        self.name = [SoarPlayer makePlayerName];
 
         const char* string = [name UTF8String];
         agent = kernel->CreateAgent(string);
@@ -220,8 +253,8 @@ typedef enum {
     [NSThread detachNewThreadSelector:@selector(doTurn:) toTarget:self withObject:nil];
 }
 
-- (void) doTurn:(id)arg {
-
+- (void) doTurn:(id)arg
+{
     [turnLock lock];
     if (agent == nil) {
         [turnLock unlock];
@@ -1039,7 +1072,9 @@ typedef enum {
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
         [game handleAction:new_action];
     }
-    
+
+	if (handler)
+		[handler saveMatchData];
 }
 
 - (void)newRound:(NSArray *)arrayOfDice
@@ -1074,5 +1109,11 @@ typedef enum {
 - (void) setID:(int)anID {
     self.playerID = anID;
 }
+
+- (void) notifyHasLost
+{}
+
+- (void) notifyHasWon
+{}
 
 @end

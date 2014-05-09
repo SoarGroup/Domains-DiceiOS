@@ -10,18 +10,21 @@
 
 #import "PlayerState.h"
 #import "PlayGame.h"
+#import "GameKitGameHandler.h"
 
 @implementation DiceLocalPlayer
 
-@synthesize name, playerState, gameView;
+@synthesize name, playerState, gameView, handler, participant;
 
-- (id)initWithName:(NSString*)aName
+- (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler *)newHandler withParticipant:(GKTurnBasedParticipant *)localPlayer
 {
     self = [super init];
     if (self) {
         // Initialization code here.
         self.name = aName;
         playerID = -1;
+		handler = newHandler;
+		participant = localPlayer;
     }
     
     return self;
@@ -50,8 +53,21 @@
 
 - (void) itsYourTurn
 {
-    [self.gameView updateUI];
+	[self.gameView updateUI];
 }
+
+- (void)notifyHasLost
+{
+	if (handler)
+		[handler playerQuitMatch:self];
+}
+
+- (void)notifyHasWon
+{
+	if (handler)
+		[handler endMatchForAllParticipants];
+}
+
 - (void) end { }
 
 @end

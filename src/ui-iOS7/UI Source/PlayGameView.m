@@ -87,9 +87,12 @@
 -(void)constrainAndUpdateBidFace;
 -(NSArray*)makePushedDiceArray;
 -(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger) buttonIndex;
--(void)updateiPadUI;
--(void)updateiPhoneUI:(UIView*)controlStateView gameStateView:(UIView*)gameStateView;
+-(void)updateFullScreenUI;
+-(void)updateNonFullScreenUI:(UIView*)controlStateView gameStateView:(UIScrollView*)gameStateView;
 -(void)initializeUI;
+
+- (void)fullScreenViewInitialization;
+- (void)fullScreenViewGameInitialization;
 
 @end
 
@@ -108,9 +111,10 @@
 @synthesize controlStateView;
 @synthesize gameStateLabel;
 @synthesize challengeButtons;
+@synthesize fullscreenButton;
 @synthesize tempViews, images;
 
-@synthesize game, state;
+@synthesize game, state, isCustom;
 
 const int pushMargin() { return 48 / 2; }
 
@@ -140,12 +144,12 @@ NSArray *buildDiceImages() {
 
 - (id)initWithGame:(DiceGame *)theGame withQuitHandler:(void (^)(void))QuitHandler
 {
-	return [self initWithGame:theGame withQuitHandler:QuitHandler withCustomMainView:nil];
+	return [self initWithGame:theGame withQuitHandler:QuitHandler withCustomMainView:NO];
 }
 
-- (id)initWithGame:(DiceGame*)aGame withQuitHandler:(void (^)(void))QuitHandler withCustomMainView:(UIView *)view
+- (id)initWithGame:(DiceGame*)aGame withQuitHandler:(void (^)(void))QuitHandler withCustomMainView:(BOOL)custom
 {
-	if (view == nil)
+	if (!custom)
 	{
 		NSString* device = [UIDevice currentDevice].model;
 		device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
@@ -154,9 +158,13 @@ NSArray *buildDiceImages() {
 			device = @"";
 
 		self = [super initWithNibName:[@"PlayGameView" stringByAppendingString:device] bundle:nil];
+		self.isCustom = NO;
 	}
 	else
-		self.view = view;
+	{
+		self = [super initWithNibName:@"PlayGameView" bundle:nil];
+		self.isCustom = YES;
+	}
 
     if (self)
 	{
@@ -347,11 +355,23 @@ NSArray *buildDiceImages() {
 	if (fullScreenView)
 		[self fullScreenViewInitialization];
 
+	for (id<Player> player in self.game.players)
+	{
+		if ([player isKindOfClass:DiceLocalPlayer.class])
+		{
+			[(DiceLocalPlayer*)player setGameView:self];
+			break;
+		}
+	}
+
     [self.game startGame];
     [self.game.gameState addNewRoundListener:self];
 
 	if (fullScreenView)
 		[self fullScreenViewGameInitialization];
+
+	if (isCustom && !fullScreenView)
+		fullscreenButton.hidden = NO;
 }
 
 -(BOOL) navigationShouldPopOnBackButton {
@@ -444,7 +464,7 @@ NSArray *buildDiceImages() {
 - (void)updateState:(PlayerState*)newState
 {
     self.state = newState;
-    [self updateUI];
+	[self updateUI];
 }
 
 - (void) updateCurrentBidLabels {
@@ -487,6 +507,13 @@ NSArray *buildDiceImages() {
 
 - (void)updateUI
 {
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+
+		return;
+	}
+
 	// State initialization
     if (self.state == nil)
     {
@@ -581,11 +608,7 @@ NSArray *buildDiceImages() {
 		}
 	}
 
-	// Add special rules to the bid string if in special rules
-	if ([self.state.gameState usingSpecialRules])
-		self.gameStateLabel.text = [NSString stringWithFormat:@"%@\n(SPECIAL RULES)", headerString];
-	else
-		self.gameStateLabel.text = headerString;
+	self.gameStateLabel.text = headerString;
 
 	// Add the die images to the player info label
 	if ([locations count] > 0)
@@ -630,6 +653,21 @@ NSArray *buildDiceImages() {
     self.bidFaceMinusButton.enabled = canBid;
     self.exactButton.enabled = canBid && [self.state canExact];
 
+	if (self.exactButton.enabled)
+		[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+	else
+		[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
+	if (self.passButton.enabled)
+		[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+	else
+		[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
+	if (self.bidButton.enabled)
+		[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+	else
+		[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
     if (previousBid != nil)
     {
@@ -648,12 +686,17 @@ NSArray *buildDiceImages() {
     // Update the contents of the gameStateView
 	// iPad and iPhone specific
 	if (!fullScreenView)
-		[self updateiPhoneUI:controlStateView gameStateView:gameStateView];
+		[self updateNonFullScreenUI:controlStateView gameStateView:gameStateView];
 	else
-		[self updateiPadUI];
+		[self updateFullScreenUI];
 }
 
-- (void)updateiPhoneUI:(UIView*)controlStateViewToUpdate gameStateView:(UIView*)gameStateViewToUpdate
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView
+{
+    [aScrollView setContentOffset: CGPointMake(0, aScrollView.contentOffset.y)];
+}
+
+- (void)updateNonFullScreenUI:(UIView*)controlStateViewToUpdate gameStateView:(UIScrollView*)gameStateViewToUpdate
 {
 	// Remove all challenge buttons and all unused images
     for (id subview in tempViews)
@@ -696,7 +739,7 @@ NSArray *buildDiceImages() {
 		int width = parent.frame.size.width;
         int height = labelHeight;
 
-        UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[self barImage]] autorelease];
+        UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[PlayGameView barImage]] autorelease];
         dividerView.frame = CGRectMake(0, y, width, dividerHeight);
         [parent addSubview:dividerView];
         y += dividerHeight;
@@ -847,9 +890,11 @@ NSArray *buildDiceImages() {
             [tempViews addObject:challengeButton];
         }
     }
+
+	gameStateViewToUpdate.contentSize = CGSizeMake(gameStateViewToUpdate.frame.size.width, i*dy);
 }
 
-- (void)updateiPadUI
+- (void)updateFullScreenUI
 {
 	// Remove all challenge buttons and all unused images
     for (id subview in tempViews)
@@ -1399,6 +1444,32 @@ NSArray *buildDiceImages() {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
+		// Enable the buttons if we actually can do those actions at this update cycle
+		BOOL canBid = [self.state canBid];
+
+		self.passButton.enabled = canBid && [self.state canPass];
+		self.bidButton.enabled = canBid;
+		self.bidCountPlusButton.enabled = canBid;
+		self.bidCountMinusButton.enabled = canBid;
+		self.bidFacePlusButton.enabled = canBid;
+		self.bidFaceMinusButton.enabled = canBid;
+		self.exactButton.enabled = canBid && [self.state canExact];
+
+		if (self.exactButton.enabled)
+			[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+		else
+			[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
+		if (self.passButton.enabled)
+			[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+		else
+			[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
+		if (self.bidButton.enabled)
+			[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
+		else
+			[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+
         return;
     }
     switch (alertView.tag)
@@ -1510,7 +1581,7 @@ NSArray *buildDiceImages() {
 	return UIStatusBarStyleLightContent;
 }
 
-- (UIImage*)barImage
++ (UIImage*)barImage
 {
 	CGSize size = CGSizeMake(1, 1);
 	UIGraphicsBeginImageContextWithOptions(size, YES, 0);
@@ -1522,7 +1593,7 @@ NSArray *buildDiceImages() {
 	return barImage;
 }
 
--(UIImage *)blurredSnapshot
+- (UIImage *)blurredSnapshot
 {
     // Create the image context
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, self.view.window.screen.scale);

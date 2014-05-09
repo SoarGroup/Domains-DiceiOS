@@ -88,6 +88,9 @@
 
 - (void) setPlayerName:(NSString *)playerName
 {
+	if ([GKLocalPlayer localPlayer].authenticated)
+		playerName = [GKLocalPlayer localPlayer].playerID;
+
 	[defaults setObject:playerName forKey:@"PlayerName"];
 
 	[defaults synchronize];
@@ -95,6 +98,9 @@
 
 - (NSString *) getPlayerName
 {
+	if ([GKLocalPlayer localPlayer].authenticated)
+		return [GKLocalPlayer localPlayer].playerID;
+
     return [defaults objectForKey:@"PlayerName"];
 }
 

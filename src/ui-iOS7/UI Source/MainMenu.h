@@ -10,8 +10,9 @@
 
 @class ApplicationDelegate;
 
-@interface MainMenu : UIViewController
+@interface MainMenu : UIViewController <UIAlertViewDelegate>
 
+@property (nonatomic, assign) BOOL multiplayerEnabled;
 @property (readwrite, retain) ApplicationDelegate *appDelegate;
 
 -(id)initWithAppDelegate:(ApplicationDelegate*)appDelegate;

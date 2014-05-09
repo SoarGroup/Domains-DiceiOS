@@ -6,9 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerView">
             <connections>
-                <outlet property="createMatchButton" destination="6gK-HJ-eiH" id="yWN-d6-v1u"/>
-                <outlet property="findMatchButton" destination="9E3-ic-AIU" id="BW1-VP-OGP"/>
                 <outlet property="gamesScrollView" destination="Z7Z-gg-Oi2" id="BQa-5Y-Cdi"/>
+                <outlet property="joinMatchButton" destination="6gK-HJ-eiH" id="BKY-t1-Gb9"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Kfr-Nb-MFs"/>
             </connections>
         </placeholder>
@@ -22,25 +21,14 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-HJ-eiH">
-                    <rect key="frame" x="20" y="454" width="93" height="30"/>
+                    <rect key="frame" x="105" y="454" width="111" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Create Match">
+                    <state key="normal" title="Join New Match">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="createMatchButtonPressed:" destination="-1" eventType="touchUpInside" id="cqn-8f-J1t"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9E3-ic-AIU">
-                    <rect key="frame" x="222" y="454" width="78" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Find Match">
-                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="findMatchButtonPressed:" destination="-1" eventType="touchUpInside" id="gGZ-LN-JQJ"/>
+                        <action selector="joinMatchButtonPressed:" destination="-1" eventType="touchUpInside" id="XSo-ip-sbC"/>
                     </connections>
                 </button>
             </subviews>

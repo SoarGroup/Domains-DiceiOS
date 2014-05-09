@@ -33,6 +33,7 @@
         self.game = aGame;
         self.player = aPlayer;
         self.playGameView = aPlayGameView;
+		iPad = [device length] != 0;
 		
 		previousBidImageViews = [[NSMutableArray alloc] init];
     }
@@ -59,7 +60,12 @@
 
     NSString *headerString = [self.game.gameState headerString:-1 singleLine:YES];
     NSString *lastMoveString = [self.game.gameState historyText:[self.game.gameState lastHistoryItem].player.playerID];
-	
+
+	NSUInteger numberOfLines, index, stringLength = [headerString length];
+
+	for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
+		index = NSMaxRange([headerString lineRangeForRange:NSMakeRange(index, 0)]);
+
 	int line = 0;
 	int location = 0;
 	
@@ -104,7 +110,7 @@
 								
 				int x = (int)widthSize.width + titleLabel.frame.origin.x - (line * 10);
 				
-				int y = (int)widthSize.height * line + titleLabel.frame.origin.y + 25;
+				int y = (int)widthSize.height * line + titleLabel.frame.origin.y + (numberOfLines == 4 ? 35 : (numberOfLines == 6 ? 0 : 18));
 				
 				UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 15, 15)];
 				[imageView setImage:[self.playGameView imageForDie:number]];

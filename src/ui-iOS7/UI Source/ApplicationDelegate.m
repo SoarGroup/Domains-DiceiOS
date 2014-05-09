@@ -9,12 +9,14 @@
 #import "ApplicationDelegate.h"
 #import "Application.h"
 
+#import <GameKit/GameKit.h>
+
 @implementation ApplicationDelegate
 @synthesize rootViewController;
 
 @synthesize databaseArrayLock;
 
-@synthesize mainMenu, window, navigationController;
+@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController;
 
 - (id)init
 {
@@ -47,11 +49,44 @@
 	[self.window setRootViewController:self.navigationController];
 
 	self.rootViewController = self.window.rootViewController;
+
+	self.listener = [[GameKitListener alloc] init];
+	[self authenticateLocalPlayer];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+	self.mainMenu.multiplayerEnabled = NO;
+}
+
+- (void)authenticateLocalPlayer
+{
+	GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
+		if (error)
+			NSLog(@"Error authenticating with game center: %@\n", error.description);
+
+		if (viewController != nil)
+			gameCenterLoginViewController = viewController;
+
+		if (localPlayer.isAuthenticated)
+			self.mainMenu.multiplayerEnabled = YES;
+		else
+			self.mainMenu.multiplayerEnabled = NO;
+	};
+
+	if (localPlayer.isAuthenticated)
+		self.mainMenu.multiplayerEnabled = YES;
+
+	[localPlayer registerListener:self.listener];
 }
 
 - (void)dealloc
 {
 	[databaseArrayLock release];
+
+	[[GKLocalPlayer localPlayer] unregisterAllListeners];
+	[self.listener release];
 	
     [super dealloc];
 }

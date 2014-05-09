@@ -19,6 +19,7 @@
     UIScrollView *diceView;
 	
 	NSMutableArray *previousBidImageViews;
+	BOOL iPad;
 }
 
 - (id) initWithGame:(DiceGame*)game player:(PlayerState*)player playGameView:(PlayGameView *)playGameView;

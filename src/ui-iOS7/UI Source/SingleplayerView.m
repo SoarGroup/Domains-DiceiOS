@@ -11,6 +11,7 @@
 #import "DiceDatabase.h"
 #import "DiceGame.h"
 #import "LoadingGameView.h"
+#import "SoarPlayer.h"
 
 @interface SingleplayerView ()
 
@@ -49,10 +50,6 @@
 {
     [super viewDidLoad];
 
-	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-
-    username = [database getPlayerName];
-
 	self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = @"AI Only Game";
 }
@@ -63,28 +60,31 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
+- (void) startGameWithOpponents:(int)opponents
 {
-	[super dealloc];
-
-	[username release];
+	[SingleplayerView startGameWithOpponents:opponents withNavigationController:self.navigationController withAppDelegate:self.appDelegate withMainMenu:self.mainMenu];
 }
 
-- (void) startGameWithOpponents:(int)opponents {
++ (void) startGameWithOpponents:(int)opponents withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu
+{
 	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 
-	username = [database getPlayerName];
+	NSString* username = [database getPlayerName];
 
 	if ([username length] == 0)
 		username = @"Player";
 
-    DiceGame *game = [[[DiceGame alloc]
-                       initWithType:LOCAL_PRIVATE
-                       appDelegate:self.appDelegate
-                       username:username]
-                      autorelease];
-    UIViewController *gameView = [[[LoadingGameView alloc] initWithGame:game numOpponents:opponents mainMenu:mainMenu] autorelease];
-    [self.navigationController pushViewController:gameView animated:YES];
+    DiceGame *game = [[[DiceGame alloc] initWithAppDelegate:delegate] autorelease];
+
+	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil]];
+
+	NSLock* lock = [[[NSLock alloc] init] autorelease];
+
+	for (int i = 0;i < opponents;i++)
+		[game addPlayer:[[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] autorelease]];
+
+    UIViewController *gameView = [[[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu] autorelease];
+    [controller pushViewController:gameView animated:YES];
 }
 
 - (IBAction)oneOpponentPressed:(id)sender
