@@ -16,6 +16,7 @@
 #import "MainMenu.h"
 #import "DiceGraphics.h"
 #import "UIImage+ImageEffects.h"
+#import "HistoryItem.h"
 
 #import <Foundation/NSObjCRuntime.h>
 
@@ -653,6 +654,47 @@ NSArray *buildDiceImages() {
     self.bidFaceMinusButton.enabled = canBid;
     self.exactButton.enabled = canBid && [self.state canExact];
 
+	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
+	if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
+	{
+		currentBidFace = previousBid.rankOfDie;
+		self.bidFacePlusButton.enabled = NO;
+		self.bidFaceMinusButton.enabled = NO;
+	}
+	else if (![self nextLegalBid:previousBid])
+	{
+		currentBidFace = previousBid.rankOfDie;
+		self.bidFacePlusButton.enabled = NO;
+		self.bidFaceMinusButton.enabled = NO;
+
+		currentBidCount = previousBid.numberOfDice;
+		self.bidCountMinusButton.enabled = NO;
+		self.bidCountPlusButton.enabled = NO;
+	}
+	else
+	{
+		Bid* previousBidToUse = previousBid;
+
+		NSArray* lastPlayerMoves = [self.game.gameState lastMoveForPlayer:self.state.playerID];
+		if ([lastPlayerMoves count] > 0)
+		{
+			for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
+			{
+				HistoryItem* item = [lastPlayerMoves objectAtIndex:i];
+
+				if ([item actionType] == ACTION_BID)
+				{
+					previousBidToUse = [item bid];
+					break;
+				}
+			}
+		}
+
+		Bid* nextLegalBid = [self nextLegalBid:previousBidToUse];
+		currentBidFace = [nextLegalBid rankOfDie];
+		currentBidCount = [nextLegalBid numberOfDice];
+	}
+
 	if (self.exactButton.enabled)
 		[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
 	else
@@ -668,18 +710,6 @@ NSArray *buildDiceImages() {
 	else
 		[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
 
-	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
-    if (previousBid != nil)
-    {
-        currentBidCount = previousBid.numberOfDice;
-        currentBidFace = previousBid.rankOfDie;
-    }
-    else
-    {
-        currentBidCount = 1;
-        currentBidFace = 2;
-    }
-
 	// Update the bid "scroller" labels, the die image and number for the bid chooser
     [self updateCurrentBidLabels];
     
@@ -689,6 +719,64 @@ NSArray *buildDiceImages() {
 		[self updateNonFullScreenUI:controlStateView gameStateView:gameStateView];
 	else
 		[self updateFullScreenUI];
+}
+
+- (Bid*)nextLegalBid:(Bid*)previousBid
+{
+	Bid* lastActualBid = self.game.gameState.previousBid;
+
+	int nextBidCount = 0;
+	int nextBidFaceCount = 0;
+
+	if (!lastActualBid)
+		return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
+	else if (lastActualBid.rankOfDie == previousBid.rankOfDie) //Equal Faces
+	{
+		nextBidCount = lastActualBid.numberOfDice+1;
+		nextBidFaceCount = lastActualBid.rankOfDie;
+	}
+	else
+	{
+		nextBidFaceCount = previousBid.rankOfDie;
+
+		// Different faces
+		if (lastActualBid.rankOfDie == 1)
+			nextBidCount = (lastActualBid.numberOfDice * 2) + 1;
+		else if (lastActualBid.rankOfDie > previousBid.rankOfDie)
+			nextBidCount = lastActualBid.numberOfDice+1;
+		else
+			nextBidCount = lastActualBid.numberOfDice;
+	}
+
+	int maxBidCount = 0;
+
+	for (PlayerState* pstate in game.gameState.playerStates)
+	{
+		if ([pstate isKindOfClass:[PlayerState class]])
+			maxBidCount += [[pstate arrayOfDice] count];
+	}
+
+	if (nextBidCount > maxBidCount)
+	{
+		nextBidCount--;
+
+		if (nextBidFaceCount == 1)
+			return nil;
+		else if ((++nextBidFaceCount) == 7)
+		{
+			nextBidFaceCount = 1;
+
+			double nextCount = nextBidCount / 2.0;
+			if (ceil(nextCount) > nextCount)
+				nextCount = ceil(nextCount);
+			else
+				nextCount++;
+
+			nextBidCount = (int)nextCount;
+		}
+	}
+
+	return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:nextBidCount rank:nextBidFaceCount] autorelease];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView

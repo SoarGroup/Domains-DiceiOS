@@ -99,7 +99,7 @@
 - (NSString *) getPlayerName
 {
 	if ([GKLocalPlayer localPlayer].authenticated)
-		return [GKLocalPlayer localPlayer].playerID;
+		return [GKLocalPlayer localPlayer].alias;
 
     return [defaults objectForKey:@"PlayerName"];
 }

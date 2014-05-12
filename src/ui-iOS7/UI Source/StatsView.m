@@ -150,7 +150,7 @@ typedef struct {
 	[self.scrollView addSubview:label];
 }
 
-- (void)addSegmentedLine:(NSString*)firstItem secondItem:(NSString*)secondItem thirdItem:(NSString*)thirdItem fourthItem:(NSString*)fourthItem withBoldFirst:(BOOL)boldFirst
+- (void)addSegmentedLine:(NSString*)firstItem secondItem:(NSString*)secondItem thirdItem:(NSString*)thirdItem fourthItem:(NSString*)fourthItem withBoldFirst:(BOOL)boldFirst withFirstItemWidthMinimum:(int)minimumWidth
 {
 	UIFont* font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
 
@@ -187,7 +187,7 @@ typedef struct {
 
 	[self.scrollView addSubview:label];
 
-	frame.origin.x += sectionWidth;
+	frame.origin.x += (sectionWidth < minimumWidth ? minimumWidth : sectionWidth);
 
 	label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
@@ -230,16 +230,22 @@ typedef struct {
 
 	[self addLine:@"Single Player Stats" withBold:YES withFontSizeAddition:1];
 
+	NSString* playerNameLength = names[0];
+	NSDictionary* attributes = @{ NSFontAttributeName: [UIFont systemFontOfSize:[UIFont systemFontSize]+1] };
+
+	CGSize size = [playerNameLength sizeWithAttributes:attributes];
+	size.width += 10;
+
 	for (int playerCount = 2;playerCount <= 4; playerCount++)
 	{
 		[self addBlankLine];
-		[self addSegmentedLine:[NSString stringWithFormat:@"%d-Players", playerCount] secondItem:@"Wins" thirdItem:@"Losses" fourthItem:@"Quit" withBoldFirst:YES];
+		[self addSegmentedLine:[NSString stringWithFormat:@"%d-Players", playerCount] secondItem:@"Wins" thirdItem:@"Losses" fourthItem:@"Quit" withBoldFirst:YES withFirstItemWidthMinimum:size.width];
 
 		for (int playerID = 0;playerID < playerCount;playerID++)
 		{
 			PlayerInformationStruct playerInfo = [self calculatePlayerInformation:playerID forNumberOfPlayers:playerCount];
 
-			[self addSegmentedLine:names[playerID] secondItem:[NSString stringWithFormat:@"%d", playerInfo.wins] thirdItem:[NSString stringWithFormat:@"%d", playerInfo.losses] fourthItem:[NSString stringWithFormat:@"%d", playerInfo.incompletes] withBoldFirst:NO];
+			[self addSegmentedLine:names[playerID] secondItem:[NSString stringWithFormat:@"%d", playerInfo.wins] thirdItem:[NSString stringWithFormat:@"%d", playerInfo.losses] fourthItem:[NSString stringWithFormat:@"%d", playerInfo.incompletes] withBoldFirst:NO withFirstItemWidthMinimum:size.width];
 		}
 	}
 	

@@ -18,6 +18,7 @@
 @property (nonatomic, retain) GKTurnBasedParticipant* participant;
 @property (nonatomic, retain) GameKitGameHandler* handler;
 @property (readwrite, assign) int playerID;
+@property (nonatomic, retain) NSString* displayName;
 
 - (id) initWithGameKitParticipant:(GKTurnBasedParticipant*)participant withGameKitGameHandler:(GameKitGameHandler*)handler;
 

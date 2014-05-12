@@ -51,7 +51,10 @@
 	self.difficultySelector.selectedSegmentIndex = [database getDifficulty];
 
 	if ([GKLocalPlayer localPlayer].authenticated)
+	{
 		self.nameTextField.enabled = NO;
+		self.nameTextField.textColor = [UIColor grayColor];
+	}
 }
 
 - (void)nameTextFieldTextFinalize:(id)sender

@@ -22,9 +22,8 @@
 @synthesize appDelegate;
 @synthesize mainMenu;
 
-@synthesize oneOpponentButton;
-@synthesize twoOpponentButton;
-@synthesize threeOpponentButton;
+@synthesize playButton;
+@synthesize aiPlayers;
 
 - (id)initWithAppDelegate:(id)anAppDelegate andWithMainMenu:(MainMenu *)aMainMenu
 {
@@ -87,39 +86,9 @@
     [controller pushViewController:gameView animated:YES];
 }
 
-- (IBAction)oneOpponentPressed:(id)sender
+- (IBAction)playButtonPressed:(id)sender
 {
-	[self startGameWithOpponents:1];
-}
-
-- (IBAction)twoOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:2];
-}
-
-- (IBAction)threeOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:3];
-}
-
-- (IBAction)fourOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:4];
-}
-
-- (IBAction)fiveOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:5];
-}
-
-- (IBAction)sixOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:6];
-}
-
-- (IBAction)sevenOpponentsPressed:(id)sender
-{
-	[self startGameWithOpponents:7];
+	[self startGameWithOpponents:((int)self.aiPlayers.selectedSegmentIndex+1)];
 }
 
 @end

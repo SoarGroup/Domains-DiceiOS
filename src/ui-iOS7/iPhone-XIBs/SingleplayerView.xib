@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SingleplayerView">
             <connections>
+                <outlet property="aiPlayers" destination="F13-iF-WdH" id="GDs-9e-zz3"/>
+                <outlet property="playButton" destination="mpH-rQ-vLn" id="6A1-F1-y3I"/>
                 <outlet property="view" destination="1" id="6ZC-0Y-6oM"/>
             </connections>
         </placeholder>
@@ -14,64 +16,41 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5PT-Ag-5t5">
-                    <rect key="frame" x="20" y="82" width="280" height="51"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F13-iF-WdH">
+                    <rect key="frame" x="20" y="126" width="280" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="51" id="L8q-Dz-8Sw"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="One Opponent">
+                    <segments>
+                        <segment title="1"/>
+                        <segment title="2"/>
+                        <segment title="3"/>
+                        <segment title="4"/>
+                        <segment title="5"/>
+                        <segment title="6"/>
+                        <segment title="7"/>
+                    </segments>
+                    <color key="tintColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                </segmentedControl>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of AI Opponents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6F-IP-bmP">
+                    <rect key="frame" x="64" y="97" width="192" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpH-rQ-vLn">
+                    <rect key="frame" x="139" y="162" width="43" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Play!">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="oneOpponentPressed:" destination="-1" eventType="touchUpInside" id="f7x-cf-FW9"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F91-9L-Yl7">
-                    <rect key="frame" x="20" y="171" width="280" height="51"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="51" id="HSs-I4-bYm"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="Two Opponents">
-                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="twoOpponentsPressed:" destination="-1" eventType="touchUpInside" id="y6r-eZ-Cfr"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8St-Ev-TkT">
-                    <rect key="frame" x="20" y="260" width="280" height="51"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="51" id="Dyi-2a-lXX"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="Three Opponents">
-                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="threeOpponentsPressed:" destination="-1" eventType="touchUpInside" id="p4B-Ec-KFf"/>
+                        <action selector="playButtonPressed:" destination="-1" eventType="touchUpInside" id="R2V-D0-cAL"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
-            <constraints>
-                <constraint firstItem="5PT-Ag-5t5" firstAttribute="trailing" secondItem="F91-9L-Yl7" secondAttribute="trailing" id="03s-Vw-uox"/>
-                <constraint firstItem="5PT-Ag-5t5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Bqr-IS-pjo"/>
-                <constraint firstItem="F91-9L-Yl7" firstAttribute="trailing" secondItem="8St-Ev-TkT" secondAttribute="trailing" id="GU7-uv-ion"/>
-                <constraint firstAttribute="trailing" secondItem="5PT-Ag-5t5" secondAttribute="trailing" constant="20" symbolic="YES" id="MeU-FJ-nIP"/>
-                <constraint firstItem="F91-9L-Yl7" firstAttribute="leading" secondItem="5PT-Ag-5t5" secondAttribute="leading" id="N7b-Pc-mBN"/>
-                <constraint firstItem="F91-9L-Yl7" firstAttribute="top" secondItem="5PT-Ag-5t5" secondAttribute="bottom" constant="38" id="O3t-hs-M4M"/>
-                <constraint firstItem="F91-9L-Yl7" firstAttribute="leading" secondItem="8St-Ev-TkT" secondAttribute="leading" id="WC8-D0-yeF"/>
-                <constraint firstItem="5PT-Ag-5t5" firstAttribute="top" secondItem="1" secondAttribute="top" constant="82" id="Xgj-5u-gnw"/>
-                <constraint firstItem="8St-Ev-TkT" firstAttribute="top" secondItem="F91-9L-Yl7" secondAttribute="bottom" constant="38" id="fhc-1J-K9T"/>
-            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

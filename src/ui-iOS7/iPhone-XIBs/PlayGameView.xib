@@ -216,8 +216,8 @@
                         <action selector="backPressed:" destination="-1" eventType="touchUpInside" id="Ise-bk-qV0"/>
                     </connections>
                 </button>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Hj-zeF">
-                    <rect key="frame" x="20" y="220" width="280" height="328"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Hj-zeF">
+                    <rect key="frame" x="20" y="220" width="280" height="348"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="wBd-sn-JwR"/>
@@ -230,7 +230,6 @@
                 <constraint firstItem="Q0u-Hj-zeF" firstAttribute="top" secondItem="8qZ-W6-P3A" secondAttribute="bottom" constant="12" id="DqG-0w-eHM"/>
                 <constraint firstItem="kDR-Mr-xSj" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="FFr-Xn-IbK"/>
                 <constraint firstItem="kDR-Mr-xSj" firstAttribute="top" secondItem="uRI-uY-tAZ" secondAttribute="top" id="HMh-ow-lkO"/>
-                <constraint firstAttribute="bottom" secondItem="Q0u-Hj-zeF" secondAttribute="bottom" constant="20" symbolic="YES" id="NAO-2W-O71"/>
                 <constraint firstItem="8qZ-W6-P3A" firstAttribute="trailing" secondItem="Q0u-Hj-zeF" secondAttribute="trailing" id="TjN-Um-kaU"/>
                 <constraint firstItem="kDR-Mr-xSj" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="W7b-Hc-72u"/>
                 <constraint firstItem="uRI-uY-tAZ" firstAttribute="trailing" secondItem="8qZ-W6-P3A" secondAttribute="trailing" id="Wdx-jE-Fgt"/>

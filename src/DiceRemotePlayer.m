@@ -12,7 +12,7 @@
 
 @implementation DiceRemotePlayer
 
-@synthesize playerID, handler, participant;
+@synthesize playerID, handler, participant, displayName;
 
 - (id) initWithGameKitParticipant:(GKTurnBasedParticipant*)remotePlayer withGameKitGameHandler:(GameKitGameHandler *)newHandler
 {
@@ -23,6 +23,15 @@
 		participant = remotePlayer;
 		self.handler = newHandler;
 		self.playerID = -2;
+		self.displayName = participant.playerID;
+
+		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer] withCompletionHandler:^(NSArray* array, NSError* error)
+		 {
+			 if (error)
+				 NSLog(@"Error loading player identifiers: %@", error.description);
+			 else
+				 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+		 }];
 	}
 
 	return self;
@@ -30,7 +39,7 @@
 
 - (NSString*) getName
 {
-	return [participant playerID];
+	return self.displayName;
 }
 
 - (void) updateState:(PlayerState*)state
