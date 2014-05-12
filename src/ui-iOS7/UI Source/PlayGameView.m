@@ -237,7 +237,8 @@ NSArray *buildDiceImages() {
 	controlStateView.userInteractionEnabled = YES;
 
 	self.exactButton = [[UIButton alloc] init];
-	exactButton.frame = CGRectMake(2, 64, 60, 44);
+	exactButton.frame = CGRectMake(2, 50, 60, 60);
+	//[exactButton setBackgroundColor:[UIColor redColor]];
 	[exactButton setTitle:@"Exact" forState:UIControlStateNormal];
 	[exactButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	exactButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -245,7 +246,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:exactButton];
 
 	self.passButton = [[UIButton alloc] init];
-	passButton.frame = CGRectMake(70, 64, 60, 44);
+	passButton.frame = CGRectMake(70, 50, 60, 60);
+	//[passButton setBackgroundColor:[UIColor redColor]];
 	[passButton setTitle:@"Pass" forState:UIControlStateNormal];
 	[passButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	passButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -253,7 +255,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:passButton];
 
 	self.bidButton = [[UIButton alloc] init];
-	bidButton.frame = CGRectMake(138, 64, 60, 44);
+	bidButton.frame = CGRectMake(138, 50, 60, 60);
+	//[bidButton setBackgroundColor:[UIColor redColor]];
 	[bidButton setTitle:@"Bid" forState:UIControlStateNormal];
 	[bidButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	bidButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -261,7 +264,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:bidButton];
 
 	self.bidCountPlusButton = [[UIButton alloc] init];
-	bidCountPlusButton.frame = CGRectMake(200, 0, 40, 36);
+	bidCountPlusButton.frame = CGRectMake(200, -15, 40, 50);
+	//[bidCountPlusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountPlusButton setTitle:@"+" forState:UIControlStateNormal];
 	[bidCountPlusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	bidCountPlusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
@@ -269,7 +273,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:bidCountPlusButton];
 
 	self.bidCountMinusButton = [[UIButton alloc] init];
-	bidCountMinusButton.frame = CGRectMake(200, 68, 40, 36);
+	bidCountMinusButton.frame = CGRectMake(200, 58, 40, 50);
+	//[bidCountMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountMinusButton setTitle:@"-" forState:UIControlStateNormal];
 	[bidCountMinusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	bidCountMinusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
@@ -277,7 +282,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:bidCountMinusButton];
 
 	self.bidFacePlusButton = [[UIButton alloc] init];
-	bidFacePlusButton.frame = CGRectMake(239, 0, 40, 36);
+	bidFacePlusButton.frame = CGRectMake(245, -15, 40, 50);
+	//[bidFacePlusButton setBackgroundColor:[UIColor redColor]];
 	[bidFacePlusButton setTitle:@"+" forState:UIControlStateNormal];
 	[bidFacePlusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	bidFacePlusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
@@ -285,7 +291,8 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:bidFacePlusButton];
 
 	self.bidFaceMinusButton = [[UIButton alloc] init];
-	bidFaceMinusButton.frame = CGRectMake(239, 68, 40, 36);
+	bidFaceMinusButton.frame = CGRectMake(245, 58, 40, 50);
+	//[bidFaceMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidFaceMinusButton setTitle:@"-" forState:UIControlStateNormal];
 	[bidFaceMinusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 	bidFaceMinusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
@@ -293,11 +300,11 @@ NSArray *buildDiceImages() {
 	[self.controlStateView addSubview:bidFaceMinusButton];
 
 	self.bidFaceLabel = [[UIImageView alloc] initWithImage:[self imageForDie:2]];
-	bidFaceLabel.frame = CGRectMake(247, 44, 25, 21);
+	bidFaceLabel.frame = CGRectMake(253, 34, 25, 21);
 	[self.controlStateView addSubview:bidFaceLabel];
 
 	self.bidCountLabel = [[UILabel alloc] init];
-	bidCountLabel.frame = CGRectMake(215, 44, 30, 21);
+	bidCountLabel.frame = CGRectMake(215, 34, 30, 21);
 	[bidCountLabel setText:@"1"];
 	[bidCountLabel setTextColor:[UIColor whiteColor]];
 	bidCountLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -327,7 +334,7 @@ NSArray *buildDiceImages() {
 											 self.gameStateLabel.frame.size.height)];
 
 	[self.controlStateView setFrame:CGRectMake(screenSize.width / divisionFactor - self.controlStateView.frame.size.width / 2.0,
-											   screenSize.height * 7.6/ 8.0 - self.controlStateView.frame.size.height / 2.0 - 40,
+											   screenSize.height * 7.6/ 8.0 - self.controlStateView.frame.size.height / 2.0 - 50,
 											   self.controlStateView.frame.size.width,
 											   self.controlStateView.frame.size.height)];
 
@@ -482,11 +489,16 @@ NSArray *buildDiceImages() {
         return;
     
     dieObject.markedToPush = ! dieObject.markedToPush;
-    CGRect newFrame = button.frame;
-    if (dieObject.markedToPush)
-        newFrame.origin.y = fullScreenView ? 30 - pushMargin() : 0;
-    else
-        newFrame.origin.y = fullScreenView ? 30 : pushMargin();
+
+	if (fullScreenView)
+		button = [[button subviews] objectAtIndex:0];
+
+	CGRect newFrame = button.frame;
+
+	if (dieObject.markedToPush)
+		newFrame.origin.y = 0;
+	else
+		newFrame.origin.y = fullScreenView ? 15 : pushMargin();
 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3f];
@@ -1004,8 +1016,8 @@ NSArray *buildDiceImages() {
 	// Location mapping based on the number of players
 	// Unfortunately there isn't a good way to debug this or come up with an algorithm for this so I just hard coded it
 	CGPoint player1Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
-	CGRect player1TextLabelFrame = {{0, 0}, {280, 90}};
-	CGRect player1DiceFrame = {{0, 90}, {280, 80}};
+	CGRect player1TextLabelFrame = {{0, 0}, {195, 50}};
+	CGRect player1DiceFrame = {{0, 115}, {280, 65}};
 	CGRect player1PushFrame = {{171, 198}, {100, 100}};
 
 	CGPoint player2Location = {screenSize.width * 0.1/8.0, screenSize.height / 2.0 - viewSize.height / 2.0};
@@ -1025,8 +1037,8 @@ NSArray *buildDiceImages() {
 
 
 	CGPoint player1AltLocation = {screenSize.width / 3.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
-	CGRect player1AltTextLabelFrame = {{0, 0}, {280, 90}};
-	CGRect player1AltDiceFrame = {{0, 90}, {280, 50}};
+	CGRect player1AltTextLabelFrame = {{0, 0}, {195, 50}};
+	CGRect player1AltDiceFrame = {{0, 115}, {280, 65}};
 	CGRect player1AltPushFrame = {{117, 198}, {100, 100}};
 
 	CGPoint player2AltLocation = {screenSize.width * 0.1/8.0, screenSize.height * 1.8 / 3.0 - viewSize.height / 2.0};
@@ -1277,6 +1289,7 @@ NSArray *buildDiceImages() {
 		nameLabel.frame = CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + 1, textFrames[i].size.width, nameLabel.frame.size.height);
 		[nameLabel sizeToFit];
 		nameLabel.frame = CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y, textFrames[i].size.width, nameLabel.frame.size.height);
+		//[nameLabel setBackgroundColor:[UIColor redColor]];
 
 		if ([playerStates[i] isMyTurn] && i != 0)
 		{
@@ -1323,7 +1336,7 @@ NSArray *buildDiceImages() {
 				dieFrame.origin.x = incrementer;
 
 			if (i == 0)
-				dieFrame.origin.y = 30;
+				dieFrame.origin.y = 0;
 
 			int dieFace = -1;
 			if (die.hasBeenPushed || i == 0)
@@ -1333,8 +1346,19 @@ NSArray *buildDiceImages() {
 			if (i == 0 && !die.hasBeenPushed)
 			{
 				UIButton *dieButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
+				dieFrame.size.height += 30;
 				dieButton.frame = dieFrame;
-				[dieButton setImage:dieImage forState:UIControlStateNormal];
+
+				//[dieButton setBackgroundColor:[UIColor redColor]];
+
+				CGRect imageFrame = CGRectMake(0, 15, dieSize, dieSize);
+
+				UIImageView* dieView = [[[UIImageView alloc] initWithFrame:imageFrame] autorelease];
+				[dieView setImage:dieImage];
+				[dieView setUserInteractionEnabled:NO];
+
+				[dieButton addSubview:dieView];
 				dieButton.tag = dieIndex;
 
 				if (canBid)
@@ -1403,12 +1427,49 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)bidFacePlusPressed:(id)sender {
+	if (currentBidFace == 6 && !game.gameState.usingSpecialRules)
+	{
+		double bidCount = currentBidCount;
+		bidCount /= 2.0;
+
+		if (ceil(bidCount) != bidCount)
+			bidCount = ceil(bidCount);
+
+		currentBidCount = (int)bidCount;
+	}
+	else if (currentBidFace == 1 && !game.gameState.usingSpecialRules)
+	{
+		currentBidCount *= 2;
+
+		if (game.gameState.previousBid.rankOfDie == 1)
+			currentBidCount++;
+	}
+
     ++currentBidFace;
     [self constrainAndUpdateBidFace];
 }
 
 - (IBAction)bidFaceMinusPressed:(id)sender {
-    --currentBidFace;
+	if (currentBidFace == 2 && !game.gameState.usingSpecialRules)
+	{
+		double bidCount = currentBidCount;
+		bidCount /= 2.0;
+
+		if (ceil(bidCount) != bidCount)
+			bidCount = ceil(bidCount);
+
+		currentBidCount = (int)bidCount;
+	}
+	else if (currentBidFace == 1 && !game.gameState.usingSpecialRules)
+	{
+		currentBidCount *= 2;
+
+		if (game.gameState.previousBid.rankOfDie == 1)
+			currentBidCount++;
+	}
+
+	--currentBidFace;
+
     [self constrainAndUpdateBidFace];
 }
 

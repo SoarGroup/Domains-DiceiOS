@@ -91,6 +91,9 @@
 	if ([GKLocalPlayer localPlayer].authenticated)
 		playerName = [GKLocalPlayer localPlayer].playerID;
 
+	if ([playerName length] > 10)
+		playerName = [playerName substringWithRange:NSMakeRange(0, 10)];
+
 	[defaults setObject:playerName forKey:@"PlayerName"];
 
 	[defaults synchronize];
@@ -98,10 +101,16 @@
 
 - (NSString *) getPlayerName
 {
+	NSString* playerName = nil;
 	if ([GKLocalPlayer localPlayer].authenticated)
-		return [GKLocalPlayer localPlayer].alias;
+		playerName = [GKLocalPlayer localPlayer].alias;
+	else
+		playerName = [defaults objectForKey:@"PlayerName"];
 
-    return [defaults objectForKey:@"PlayerName"];
+	if ([playerName length] > 10)
+		playerName = [playerName substringWithRange:NSMakeRange(0, 10)];
+
+	return playerName;
 }
 
 - (void) setDifficulty:(NSInteger)difficulty

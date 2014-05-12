@@ -66,6 +66,13 @@
 	
 	if ([playerName length] == 0 || [playerName isEqualToString:@"\n"])
 		playerName = @"Player";
+	else if ([playerName length] > 10)
+	{
+		playerName = [playerName substringWithRange:NSMakeRange(0, 10)];
+		[nameTextField setText:playerName];
+
+		[[[[UIAlertView alloc] initWithTitle:@"Player Name Too Long" message:@"Due to the limitations of some of the UI elements, the maximum player name is 10 characters.  Your player name has been cut down to 10 characters." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
+	}
 	
 	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 	[database setPlayerName:playerName];
