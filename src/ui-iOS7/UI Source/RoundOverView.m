@@ -226,6 +226,7 @@
 
 - (IBAction)donePressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+	self.game.gameState.canContinueGame = YES;
 
     if ([self.game.gameState usingSpecialRules]) {
         NSString *title = [NSString stringWithFormat:@"Special Rules!"];

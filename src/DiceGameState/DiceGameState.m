@@ -20,7 +20,7 @@
 
 @synthesize playerStates;
 @synthesize players, currentTurn, previousBid;
-@synthesize playersLeft, theNewRoundListeners, game, losers;
+@synthesize playersLeft, theNewRoundListeners, game, losers, canContinueGame;
 
 -(id)initWithCoder:(NSCoder*)decoder
 {
@@ -38,6 +38,7 @@
 		playerStates = [decoder decodeObjectForKey:@"DiceGameState:playerStates"];
 
 		playersArrayToDecode = [decoder decodeObjectForKey:@"DiceGameState:players"];
+		self.canContinueGame = [decoder decodeBoolForKey:@"DiceGameState:CanContinueGame"];
 	}
 
 	return self;
@@ -106,6 +107,7 @@
 			[playersArray addObject:@"Soar"];
 	}
 	[encoder encodeObject:playersArray forKey:@"DiceGameState:players"];
+	[encoder encodeBool:canContinueGame forKey:@"DiceGameState:CanContinueGame"];
 }
 
 /*** DiceGameState
@@ -157,6 +159,7 @@
         inSpecialRules = NO;
         //[self goToNextPlayerWhoHasntLost];
 		self.currentTurn = arc4random() % ([players count] - 1);
+		self.canContinueGame = YES;
         [self createNewRound];
     }
     return self;
@@ -709,6 +712,10 @@
             deferNotification = YES;
         }
     }
+
+	while (!canContinueGame)
+		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
     inSpecialRules = NO;
     
     for (PlayerState *player in self.playerStates) {

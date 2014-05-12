@@ -43,7 +43,6 @@
 			[self popViewControllerAnimated:YES];
 		});
 	} else {
-		// Workaround for iOS7.1. Thanks to @boliva - http://stackoverflow.com/posts/comments/34452906
 		for(UIView *subview in [navigationBar subviews]) {
 			if(subview.alpha < 1.) {
 				[UIView animateWithDuration:.25 animations:^{
@@ -88,12 +87,14 @@
 -(void)constrainAndUpdateBidFace;
 -(NSArray*)makePushedDiceArray;
 -(NSInteger)getChallengeTarget:(UIAlertView*)alertOrNil buttonIndex:(NSInteger) buttonIndex;
--(void)updateFullScreenUI;
+-(void)updateFullScreenUI:(BOOL)showAllDice;
 -(void)updateNonFullScreenUI:(UIView*)controlStateView gameStateView:(UIScrollView*)gameStateView;
 -(void)initializeUI;
 
 - (void)fullScreenViewInitialization;
 - (void)fullScreenViewGameInitialization;
+
+- (void)realRoundEnding;
 
 @end
 
@@ -189,12 +190,163 @@ NSArray *buildDiceImages() {
 }
 
 - (BOOL) roundEnding {
-    RoundOverView *overView = [[[RoundOverView alloc]
-                                initWithGame:self.game
-                                player:state playGameView:self]
-                               autorelease];
-    [self.navigationController presentViewController:overView animated:YES completion:nil];
-    return YES;
+	self.game.gameState.canContinueGame = !fullScreenView;
+
+	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
+
+    return NO;
+}
+
+- (void)realRoundEnding
+{
+	if (!fullScreenView)
+	{
+		RoundOverView *overView = [[[RoundOverView alloc]
+									initWithGame:self.game
+									player:state playGameView:self]
+								   autorelease];
+		[self.navigationController presentViewController:overView animated:YES completion:nil];
+	}
+	else
+	{
+		[self updateFullScreenUI:YES];
+
+		for (UIView* view in tempViews)
+		{
+			if ([view isKindOfClass:UIActivityIndicatorView.class])
+				view.hidden = YES;
+		}
+
+		for (UIView* view in previousBidImageViews)
+			view.hidden = YES;
+
+		UIImage* snapshot = [self blurredSnapshot];
+		UIImageView* snapshotSubview = [[[UIImageView alloc] initWithImage:snapshot] autorelease];
+		snapshotSubview.frame = self.view.bounds;
+		//[self.view addSubview:snapshotSubview];
+		//[self.view sendSubviewToBack:snapshotSubview];
+
+		CGRect frame = centerPush.bounds;
+		frame.origin.x += 20;
+		frame.size.width -= 20;
+		UILabel* titleLabel = [[[UILabel alloc] initWithFrame:frame] autorelease];
+		[titleLabel setTextColor:[UIColor whiteColor]];
+		titleLabel.numberOfLines = 0;
+
+		NSString *headerString = [self.game.gameState headerString:-1 singleLine:YES];
+		NSString *lastMoveString = [self.game.gameState historyText:[self.game.gameState lastHistoryItem].player.playerID];
+
+		NSUInteger numberOfLines, index, stringLength = [headerString length];
+
+		for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
+			index = NSMaxRange([headerString lineRangeForRange:NSMakeRange(index, 0)]);
+
+		int line = 0;
+		int location = 0;
+
+		for (NSUInteger i = 0;i < [headerString length];i++)
+		{
+			if (isdigit([headerString characterAtIndex:i]))
+			{
+				int number = 0;
+
+				NSInteger startLocation = i;
+
+				for (;i < [headerString length];i++)
+				{
+					if (!isdigit([headerString characterAtIndex:i]))
+						break;
+
+					number *= 10;
+					number += (int)([headerString characterAtIndex:i] - '0');
+				}
+
+				if (i == [headerString length])
+					continue;
+
+				if ([headerString characterAtIndex:i] == 's')
+				{
+					NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
+
+					for (NSUInteger g = startLocation;g > 0;g--)
+					{
+						if ([headerString characterAtIndex:g] != '\n')
+						{
+							unichar* characters = (unichar*)malloc(sizeof(unichar));
+							characters[0] = [headerString characterAtIndex:g];
+
+							[previousPart insertString:[NSString stringWithCharacters:characters length:1] atIndex:0];
+						}
+						else
+							break;
+					}
+
+					CGSize widthSize = [previousPart sizeWithAttributes:[NSDictionary dictionaryWithObject:titleLabel.font forKey: NSFontAttributeName]];
+
+					int x = (int)widthSize.width + titleLabel.frame.origin.x - (line * 10);
+
+					int y = (int)widthSize.height * line + titleLabel.frame.origin.y + (numberOfLines == 4 ? 35 : (numberOfLines == 6 ? 0 : 18));
+
+					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 15, 15)];
+					[imageView setImage:[self imageForDie:number]];
+
+					[self.view addSubview:imageView];
+
+					[previousBidImageViews addObject:imageView];
+
+					NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
+
+					for (int j = 0;j < (i - startLocation) + 3;j++)
+						[spaces insertString:@" " atIndex:0];
+
+					headerString = [headerString stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
+				}
+			}
+
+			location++;
+
+			if ([headerString characterAtIndex:i] == '\n')
+			{
+				line++;
+				location = 0;
+			}
+		}
+
+		titleLabel.text = [NSString stringWithFormat:@"%@\n%@", headerString, lastMoveString];
+
+		self.gameStateLabel.hidden = YES;
+
+		UIButton* continueButton = [[[UIButton alloc] initWithFrame:CGRectMake(275, 250, 150, 60)] autorelease];
+		[continueButton setTitle:@"Continue Round" forState:UIControlStateNormal];
+		[continueButton addTarget:self action:@selector(continueRoundPressed:) forControlEvents:UIControlEventTouchUpInside];
+		[continueButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+		continueButton.hidden = NO;
+		continueButton.userInteractionEnabled = YES;
+		[centerPush addSubview:continueButton];
+
+		[centerPush addSubview:titleLabel];
+		[centerPush sendSubviewToBack:titleLabel];
+
+		canContinueRound = NO;
+
+		[[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
+	}
+}
+
+- (void)continueRoundPressed:(id)sender
+{
+	canContinueRound = YES;
+
+	for (UIView* view in centerPush.subviews)
+	{
+		if (view != self.gameStateLabel && ![view isKindOfClass:UIImageView.class])
+			[view removeFromSuperview];
+	}
+
+	self.gameStateLabel.hidden = NO;
+	self.game.gameState.canContinueGame = YES;
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
 }
 
 - (BOOL) roundBeginning {
@@ -730,7 +882,7 @@ NSArray *buildDiceImages() {
 	if (!fullScreenView)
 		[self updateNonFullScreenUI:controlStateView gameStateView:gameStateView];
 	else
-		[self updateFullScreenUI];
+		[self updateFullScreenUI:NO];
 }
 
 - (Bid*)nextLegalBid:(Bid*)previousBid
@@ -994,7 +1146,7 @@ NSArray *buildDiceImages() {
 	gameStateViewToUpdate.contentSize = CGSizeMake(gameStateViewToUpdate.frame.size.width, i*dy);
 }
 
-- (void)updateFullScreenUI
+- (void)updateFullScreenUI:(BOOL)showAllDice
 {
 	// Remove all challenge buttons and all unused images
     for (id subview in tempViews)
@@ -1018,63 +1170,51 @@ NSArray *buildDiceImages() {
 	CGPoint player1Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
 	CGRect player1TextLabelFrame = {{0, 0}, {195, 50}};
 	CGRect player1DiceFrame = {{0, 115}, {280, 65}};
-	CGRect player1PushFrame = {{171, 198}, {100, 100}};
 
 	CGPoint player2Location = {screenSize.width * 0.1/8.0, screenSize.height / 2.0 - viewSize.height / 2.0};
-	CGRect player2TextLabelFrame = {{55, 0}, {230, 140}};
-	CGRect player2DiceFrame = {{0, -55}, {50, 195}};
-	CGRect player2PushFrame = {{15, 104}, {100, 100}};
+	CGRect player2TextLabelFrame = {{70, 0}, {230, 140}};
+	CGRect player2DiceFrame = {{0, -55}, {65, 195}};
 
 	CGPoint player3Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 1.0 / 8.0 * screenSize.height};
-	CGRect player3TextLabelFrame = {{0, 50}, {280, 90}};
-	CGRect player3DiceFrame = {{0, 0}, {280, 50}};
-	CGRect player3PushFrame = {{171, 10}, {100, 100}};
+	CGRect player3TextLabelFrame = {{0, 70}, {280, 90}};
+	CGRect player3DiceFrame = {{0, 0}, {280, 65}};
 
 	CGPoint player4Location = {screenSize.width * 7.9/8.0 - viewSize.width, screenSize.height / 2.0 - viewSize.height / 2.0};
-	CGRect player4TextLabelFrame = {{0, 0}, {230, 140}};
-	CGRect player4DiceFrame = {{230, -55}, {50, 195}};
-	CGRect player4PushFrame = {{322, 104}, {100, 100}};
+	CGRect player4TextLabelFrame = {{0, 0}, {215, 140}};
+	CGRect player4DiceFrame = {{215, -55}, {65, 195}};
 
 
 	CGPoint player1AltLocation = {screenSize.width / 3.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
 	CGRect player1AltTextLabelFrame = {{0, 0}, {195, 50}};
 	CGRect player1AltDiceFrame = {{0, 115}, {280, 65}};
-	CGRect player1AltPushFrame = {{117, 198}, {100, 100}};
 
 	CGPoint player2AltLocation = {screenSize.width * 0.1/8.0, screenSize.height * 1.8 / 3.0 - viewSize.height / 2.0};
-	CGRect player2AltTextLabelFrame = {{55, 0}, {230, 140}};
-	CGRect player2AltDiceFrame = {{0, 0}, {50, 250}};
-	CGRect player2AltPushFrame = {{15, 155}, {100, 100}};
+	CGRect player2AltTextLabelFrame = {{70, 0}, {230, 140}};
+	CGRect player2AltDiceFrame = {{0, 0}, {65, 250}};
 
 	CGPoint player3AltLocation = {screenSize.width * 0.1/8.0, screenSize.height * 1.2 / 3.0 - viewSize.height / 2.0};
-	CGRect player3AltTextLabelFrame = {{55, 0}, {230, 140}};
-	CGRect player3AltDiceFrame = {{0, -110}, {50, 250}};
-	CGRect player3AltPushFrame = {{15, 53}, {100, 100}};
+	CGRect player3AltTextLabelFrame = {{70, 0}, {230, 140}};
+	CGRect player3AltDiceFrame = {{0, -110}, {65, 250}};
 
 	CGPoint player4AltLocation = {screenSize.width / 3.0 - viewSize.width / 2.0, 0.8 / 8.0 * screenSize.height};
-	CGRect player4AltTextLabelFrame = {{0, 50}, {280, 90}};
-	CGRect player4AltDiceFrame = {{0, 0}, {280, 50}};
-	CGRect player4AltPushFrame = {{117, 10}, {100, 100}};
+	CGRect player4AltTextLabelFrame = {{0, 70}, {280, 90}};
+	CGRect player4AltDiceFrame = {{0, 0}, {280, 65}};
 
 	CGPoint player5Location = {screenSize.width * 2.0 / 3.0 - viewSize.width / 2.0, 0.8 / 8.0 * screenSize.height};
-	CGRect player5TextLabelFrame = {{0, 50}, {280, 90}};
-	CGRect player5DiceFrame = {{0, 0}, {280, 50}};
-	CGRect player5PushFrame = {{220, 10}, {100, 100}};
+	CGRect player5TextLabelFrame = {{0, 70}, {280, 90}};
+	CGRect player5DiceFrame = {{0, 0}, {280, 65}};
 
 	CGPoint player6Location = {screenSize.width * 7.9/8.0 - viewSize.width, screenSize.height * 1.2 / 3.0 - viewSize.height / 2.0};
-	CGRect player6TextLabelFrame = {{0, 0}, {230, 140}};
-	CGRect player6DiceFrame = {{230, -110}, {50, 250}};
-	CGRect player6PushFrame = {{322, 53}, {100, 100}};
+	CGRect player6TextLabelFrame = {{0, 0}, {215, 140}};
+	CGRect player6DiceFrame = {{215, -110}, {65, 250}};
 
 	CGPoint player7Location = {screenSize.width * 7.9/8.0 - viewSize.width, screenSize.height * 1.8 / 3.0 - viewSize.height / 2.0};
-	CGRect player7TextLabelFrame = {{0, 0}, {230, 140}};
-	CGRect player7DiceFrame = {{230, 0}, {50, 250}};
-	CGRect player7PushFrame = {{322, 155}, {100, 100}};
+	CGRect player7TextLabelFrame = {{0, 0}, {215, 140}};
+	CGRect player7DiceFrame = {{215, 0}, {65, 250}};
 
 	CGPoint player8Location = {screenSize.width * 2.0 / 3.0 - viewSize.width / 2.0, 7.6 / 8.0 * screenSize.height - viewSize.height / 2.0 - 10};
-	CGRect player8TextLabelFrame = {{0, 0}, {280, 90}};
-	CGRect player8DiceFrame = {{0, 90}, {280, 50}};
-	CGRect player8PushFrame = {{220, 198}, {100, 100}};
+	CGRect player8TextLabelFrame = {{0, 0}, {280, 75}};
+	CGRect player8DiceFrame = {{0, 75}, {280, 65}};
 
 	switch (playerCount)
 	{
@@ -1082,86 +1222,70 @@ NSArray *buildDiceImages() {
 			player2Location = player3Location;
 			player2DiceFrame = player3DiceFrame;
 			player2TextLabelFrame = player3TextLabelFrame;
-			player2PushFrame = player3PushFrame;
 			break;
 		case 5:
 			player5Location = player4Location;
 			player5DiceFrame = player4DiceFrame;
 			player5TextLabelFrame = player4TextLabelFrame;
-			player5PushFrame = player4PushFrame;
 
 			player4Location = player3Location;
 			player4DiceFrame = player3DiceFrame;
 			player4TextLabelFrame = player3TextLabelFrame;
-			player4PushFrame = player3PushFrame;
 
 			player2Location = player2AltLocation;
 			player2DiceFrame = player2AltDiceFrame;
 			player2TextLabelFrame = player2AltTextLabelFrame;
-			player2PushFrame = player2AltPushFrame;
 
 			player3Location = player3AltLocation;
 			player3DiceFrame = player3AltDiceFrame;
 			player3TextLabelFrame = player3AltTextLabelFrame;
-			player3PushFrame = player3AltPushFrame;
 			break;
 		case 6:
 			player6Location = player4Location;
 			player6DiceFrame = player4DiceFrame;
 			player6TextLabelFrame = player4TextLabelFrame;
-			player6PushFrame = player4PushFrame;
 
 			player2Location = player2AltLocation;
 			player2DiceFrame = player2AltDiceFrame;
 			player2TextLabelFrame = player2AltTextLabelFrame;
-			player2PushFrame = player2AltPushFrame;
 
 			player3Location = player3AltLocation;
 			player3DiceFrame = player3AltDiceFrame;
 			player3TextLabelFrame = player3AltTextLabelFrame;
-			player3PushFrame = player3AltPushFrame;
 
 			player4Location = player4AltLocation;
 			player4DiceFrame = player4AltDiceFrame;
 			player4TextLabelFrame = player4AltTextLabelFrame;
-			player4PushFrame = player4AltPushFrame;
 			break;
 		case 7:
 			player2Location = player2AltLocation;
 			player2DiceFrame = player2AltDiceFrame;
 			player2TextLabelFrame = player2AltTextLabelFrame;
-			player2PushFrame = player2AltPushFrame;
 
 			player3Location = player3AltLocation;
 			player3DiceFrame = player3AltDiceFrame;
 			player3TextLabelFrame = player3AltTextLabelFrame;
-			player3PushFrame = player3AltPushFrame;
 
 			player4Location = player4AltLocation;
 			player4DiceFrame = player4AltDiceFrame;
 			player4TextLabelFrame = player4AltTextLabelFrame;
-			player4PushFrame = player4AltPushFrame;
 			break;
 		case 8:
 			player1Location = player1AltLocation;
 			player1TextLabelFrame = player1AltTextLabelFrame;
 			player1DiceFrame = player1AltDiceFrame;
-			player1PushFrame = player1AltPushFrame;
 
 			player2Location = player2AltLocation;
 			player2DiceFrame = player2AltDiceFrame;
 			player2TextLabelFrame = player2AltTextLabelFrame;
-			player2PushFrame = player2AltPushFrame;
 
 			player3Location = player3AltLocation;
 			player3DiceFrame = player3AltDiceFrame;
 			player3TextLabelFrame = player3AltTextLabelFrame;
-			player3PushFrame = player3AltPushFrame;
 
 			player4Location = player4AltLocation;
 			player4DiceFrame = player4AltDiceFrame;
 			player4TextLabelFrame = player4AltTextLabelFrame;
-			player4PushFrame = player4AltPushFrame;
 			break;
 		default:
 			break;
@@ -1192,20 +1316,6 @@ NSArray *buildDiceImages() {
 							player6DiceFrame,
 							player7DiceFrame,
 							player8DiceFrame};
-
-	CGRect pushFrames[] = {	player1PushFrame,
-							player2PushFrame,
-							player3PushFrame,
-							player4PushFrame,
-							player5PushFrame,
-							player6PushFrame,
-							player7PushFrame,
-							player8PushFrame};
-
-	CGPoint pushLocations[] = { {0,50},
-								{50,50},
-								{0,0},
-								{50,0}};
 
 	// Add all the players with their locations
 	for (int i = 0;i < playerCount;++i)
@@ -1316,7 +1426,6 @@ NSArray *buildDiceImages() {
 		[playerLocation addSubview:nameLabel];
 
 		UIView *diceView = [[[UIView alloc] initWithFrame:diceFrames[i]] autorelease];
-		UIView *pushView = [[[UIView alloc] initWithFrame:pushFrames[i]] autorelease];
 		int pushCount = 0;
 
 		int dieSize = 50;
@@ -1339,7 +1448,7 @@ NSArray *buildDiceImages() {
 				dieFrame.origin.y = 0;
 
 			int dieFace = -1;
-			if (die.hasBeenPushed || i == 0)
+			if (die.hasBeenPushed || i == 0 || showAllDice)
 				dieFace = die.dieValue;
 
 			UIImage *dieImage = [self imageForDie:dieFace];
@@ -1370,25 +1479,69 @@ NSArray *buildDiceImages() {
 			}
 			else
 			{
-				UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
-				[dieView setImage:[self imageForDie:dieFace]];
-
 				if (die.hasBeenPushed)
 				{
-					dieView.frame = CGRectMake(pushLocations[pushCount].x, pushLocations[pushCount].y, dieView.frame.size.width, dieView.frame.size.height);
-					pushCount++;
-
-					[pushView addSubview:dieView];
+					if (i == 0)
+						dieFrame.origin.y = 0;
+					else if (playerCount == 2 && i == 1)
+						dieFrame.origin.y = 15;
+					else if (playerCount == 3 || playerCount == 4)
+					{
+						if (i == 1)
+							dieFrame.origin.x = 15;
+						else if (i == 2)
+							dieFrame.origin.y = 15;
+						else if (i == 3)
+							dieFrame.origin.x = 0;
+					}
+					else
+					{
+						if (i == 1 || i == 2)
+							dieFrame.origin.x = 15;
+						else if (i == 3 || i == 4)
+							dieFrame.origin.y = 15;
+						else if (i == 5 || i == 6)
+							dieFrame.origin.x = 0;
+						else if (i == 7)
+							dieFrame.origin.y = 0;
+					}
 				}
 				else
-					[diceView addSubview:dieView];
+				{
+					if (i == 0)
+						dieFrame.origin.y = 15;
+					else if (playerCount == 2 && i == 1)
+						dieFrame.origin.y = 0;
+					else if (playerCount == 3 || playerCount == 4)
+					{
+						if (i == 1)
+							dieFrame.origin.x = 0;
+						else if (i == 2)
+							dieFrame.origin.y = 0;
+						else if (i == 3)
+							dieFrame.origin.x = 15;
+					}
+					else
+					{
+						if (i == 1 || i == 2)
+							dieFrame.origin.x = 0;
+						else if (i == 3 || i == 4)
+							dieFrame.origin.y = 0;
+						else if (i == 5 || i == 6)
+							dieFrame.origin.x = 15;
+						else if (i == 7)
+							dieFrame.origin.y = 15;
+					}
+				}
+
+				UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+				[dieView setImage:[self imageForDie:dieFace]];
+				[diceView addSubview:dieView];
 			}
 		}
 
 		[playerLocation addSubview:diceView];
-		[centerPush addSubview:pushView];
 		[tempViews addObject:diceView];
-		[tempViews addObject:pushView];
 
 		// Possibly add challenge button.
 		if (canBid && [self canChallengePlayer:((PlayerState*)playerStates[i]).playerID]) {

@@ -30,6 +30,8 @@ const int pushMargin();
     NSMutableArray *tempViews;
 
 	UIView* centerPush;
+
+	BOOL canContinueRound;
 }
 
 // Utility Functions

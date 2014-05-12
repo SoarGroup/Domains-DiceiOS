@@ -33,6 +33,8 @@ void sdb(char * command, sml::Agent *agent)
 }
 
 void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m) {
+	[[NSThread currentThread] setName:@"Soar Agent Thread"];
+
     NSLog(@"> %s", m);
 }
 
@@ -118,6 +120,7 @@ static int agentCount = 0;
 		handler = gkgHandler;
 
 		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
+
         [turnLock lock];
 
 		if (kernel->HadError())
@@ -255,6 +258,8 @@ static int agentCount = 0;
 
 - (void) doTurn:(id)arg
 {
+	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
+
     [turnLock lock];
     if (agent == nil) {
         [turnLock unlock];

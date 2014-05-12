@@ -56,6 +56,7 @@
 @property (readwrite, retain) Bid *previousBid;
 @property (readwrite, retain) NSMutableArray *theNewRoundListeners;
 @property (readwrite, retain) DiceGame *game;
+@property (readwrite, atomic, assign) BOOL canContinueGame;
 
 - (id <Player>)getCurrentPlayer;
 - (id <Player>)getPlayerWithID:(NSInteger)playerID;

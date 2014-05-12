@@ -138,67 +138,46 @@
 {
     [self.lock lock];
     playerHasPassed = NO;
-    NSMutableArray *arrayOfDiceActual = [[NSMutableArray alloc] initWithArray:arrayOfDice];
-    for (Die *dieToPush in diceToPush) {        
-        for (int i = 0;i < [arrayOfDiceActual count];i++)
-        {
-            Die *actualDie = [arrayOfDiceActual objectAtIndex:i];
-            if ([actualDie isKindOfClass:[Die class]]) // Make sure the actualDie is a Die
-            {
-                // Make sure the die is *exactly* equal
-                if ([dieToPush isEqual:actualDie]) 
-                {
-                    // Push it if not already pushed, makes no sense to do
-                    // another check since it will just be pushed again and
-                    // the check should have been done earlier in our program
-                    // execution.
-                    [actualDie push];
-                    
-                    // Make sure we do not push unlimited dice of real dice
-                    // (ie. we have a die with a face value of 5.  Make sure
-                    // we do not allow pushing of more than the number of die
-                    // with that face value (5 in this case) )
-                    [arrayOfDiceActual removeObjectAtIndex:i];
-                    
-                    break;
-                }
-            }
-        }
-    }
-    
-        //release our temporary array
-    [arrayOfDiceActual release];
-    
-    BOOL isThereDiceLeft = NO;
-    
-        //Roll all non-pushed dice
-    for (Die *die in arrayOfDice) {
-        if ([die isKindOfClass:[Die class]]) { // make sure it really is a die probably is but best to check to make sure otherwise we would crash which would be bad
-            if (!die.hasBeenPushed) { // make sure it wasn't pushed
-                isThereDiceLeft = YES;
-                [die roll]; //roll the die since it wasn't pushed
-            }
-        }
-    }
-	
-	if ([[gameState getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
+	for (Die* die in diceToPush)
 	{
-		for (int i = 1;i < [arrayOfDice count];i++)
+		for (Die* arrayDie in arrayOfDice)
 		{
-			Die* die = [arrayOfDice objectAtIndex:i];
-			int dieValue = [die dieValue];
-			int hole = i;
-			
-			while (hole > 0 && [[arrayOfDice objectAtIndex:(hole - 1)] dieValue] > dieValue)
+			if ([die isEqual:arrayDie] && !die.hasBeenPushed)
 			{
-				[arrayOfDice exchangeObjectAtIndex:hole withObjectAtIndex:(hole-1)];
-				hole -= 1;
+				[arrayDie push];
+				break;
 			}
 		}
 	}
+
+	for (Die* arrayDie in arrayOfDice)
+	{
+		if (!arrayDie.hasBeenPushed)
+			[arrayDie roll];
+	}
+
+	// Sort dice
+	arrayOfDice = [NSMutableArray arrayWithArray:[arrayOfDice sortedArrayUsingComparator:^(Die* obj1, Die* obj2)
+				   {
+					   if (obj1.hasBeenPushed && !obj2.hasBeenPushed)
+						   return (NSComparisonResult)NSOrderedAscending;
+					   else if (obj2.hasBeenPushed && !obj1.hasBeenPushed)
+						   return (NSComparisonResult)NSOrderedDescending;
+					   else
+					   {
+						   if (obj1.dieValue > obj2.dieValue)
+							   return (NSComparisonResult)NSOrderedDescending;
+						   else if (obj1.dieValue < obj2.dieValue)
+							   return (NSComparisonResult)NSOrderedAscending;
+
+						   return (NSComparisonResult)NSOrderedSame;
+					   }
+				   }]];
+
+	[arrayOfDice retain];
     
         //Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
-    playerHasPushedAllDice = !isThereDiceLeft;
+    playerHasPushedAllDice = NO;
     [self.lock unlock];
 }
 
