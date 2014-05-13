@@ -10,12 +10,7 @@
 
 #define NUMBER_OF_SIDES 6
 
-@interface Die : NSObject {
-@private
-    int dieValue;
-    BOOL hasBeenPushed;
-    BOOL markedToPush;
-}
+@interface Die : NSObject
 
 @property (readonly) int dieValue;
 @property (readonly) BOOL hasBeenPushed;

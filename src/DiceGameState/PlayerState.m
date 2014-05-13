@@ -145,6 +145,7 @@
 			if ([die isEqual:arrayDie] && !die.hasBeenPushed)
 			{
 				[arrayDie push];
+				arrayDie.markedToPush = YES;
 				break;
 			}
 		}

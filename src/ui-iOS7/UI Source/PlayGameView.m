@@ -116,7 +116,7 @@
 @synthesize fullscreenButton;
 @synthesize tempViews, images;
 
-@synthesize game, state, isCustom;
+@synthesize game, state, isCustom, animationFinished;
 
 const int pushMargin() { return 48 / 2; }
 
@@ -347,6 +347,56 @@ NSArray *buildDiceImages() {
 	self.game.gameState.canContinueGame = YES;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
+
+	if ([self.game.gameState usingSpecialRules]) {
+        NSString *title = [NSString stringWithFormat:@"Special Rules!"];
+        NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+                                                         message:message
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Okay"
+                                               otherButtonTitles:nil]
+                              autorelease];
+        // alert.tag = ACTION_QUIT;
+        [alert show];
+    }
+    else if ([self.state hasWon]) {
+        NSString *title = [NSString stringWithFormat:@"You Win!"];
+        //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+                                                         message:nil
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles:@"Okay", nil]
+                              autorelease];
+        alert.tag = ACTION_QUIT;
+        [alert show];
+    }
+    else if ([self.state.gameState hasAPlayerWonTheGame]) {
+        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [self.game.gameState.gameWinner getName]];
+        //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+                                                         message:nil
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles:@"Okay", nil]
+                              autorelease];
+        alert.tag = ACTION_QUIT;
+        [alert show];
+	}
+    else if ([self.state hasLost] && !self.hasPromptedEnd) {
+        self.hasPromptedEnd = YES;
+        NSString *title = [NSString stringWithFormat:@"You Lost the Game"];
+        NSString *message = @"Quit or keep watching?"; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+                                                         message:message
+                                                        delegate:self
+                                               cancelButtonTitle:@"Watch"
+                                               otherButtonTitles:@"Quit", nil]
+                              autorelease];
+        alert.tag = ACTION_QUIT;
+        [alert show];
+    }
 
 	[self.game notifyCurrentPlayer];
 }
@@ -1319,6 +1369,10 @@ NSArray *buildDiceImages() {
 							player7DiceFrame,
 							player8DiceFrame};
 
+	self.animationFinished = YES;
+	NSMutableArray* dieViewAnimated = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray* dieFramesAnimated = [[[NSMutableArray alloc] init] autorelease];
+
 	// Add all the players with their locations
 	for (int i = 0;i < playerCount;++i)
 	{
@@ -1434,7 +1488,7 @@ NSArray *buildDiceImages() {
 
 		int incrementer = 0;
 
-		for (int dieIndex = 0; dieIndex < ((PlayerState*)playerStates[i]).numberOfDice; ++dieIndex)
+		for (int dieIndex = 0; dieIndex < [((PlayerState*)playerStates[i]).arrayOfDice count]; ++dieIndex)
 		{
 			incrementer = (dieIndex - pushCount) * (dieSize);
 			Die *die = [((PlayerState*)playerStates[i]) getDie:dieIndex];
@@ -1450,6 +1504,7 @@ NSArray *buildDiceImages() {
 				dieFrame.origin.y = 0;
 
 			int dieFace = -1;
+
 			if (die.hasBeenPushed || i == 0 || showAllDice)
 				dieFace = die.dieValue;
 
@@ -1481,6 +1536,10 @@ NSArray *buildDiceImages() {
 			}
 			else
 			{
+				UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+				[dieView setImage:[self imageForDie:dieFace]];
+				[diceView addSubview:dieView];
+
 				if (die.hasBeenPushed)
 				{
 					if (i == 0)
@@ -1536,9 +1595,15 @@ NSArray *buildDiceImages() {
 					}
 				}
 
-				UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
-				[dieView setImage:[self imageForDie:dieFace]];
-				[diceView addSubview:dieView];
+				if (die.markedToPush && i != 0)
+				{
+					die.markedToPush = NO;
+
+					[dieViewAnimated addObject:dieView];
+					[dieFramesAnimated addObject:[NSValue valueWithCGRect:dieFrame]];
+				}
+				else
+					dieView.frame = dieFrame;
 			}
 		}
 
@@ -1568,6 +1633,24 @@ NSArray *buildDiceImages() {
 
 		[self.view addSubview:playerLocation];
 		[tempViews addObject:playerLocation];
+	}
+
+	if ([dieFramesAnimated count] > 0)
+	{
+		self.animationFinished = NO;
+
+		[UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionOverrideInheritedDuration animations:^(void)
+		 {
+			 for (int i = 0;i < [dieFramesAnimated count];i++)
+				 ((UIImageView*)[dieViewAnimated objectAtIndex:i]).frame = [((NSValue*)[dieFramesAnimated objectAtIndex:i]) CGRectValue];
+
+		 } completion:^(BOOL finished)
+		 {
+			 self.animationFinished = finished;
+		 }];
+
+		while (!self.animationFinished)
+			[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 	}
 }
 

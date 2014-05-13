@@ -32,6 +32,7 @@
 	nextID = 0;
     
     self.players = [[[NSArray alloc] init] autorelease];
+
     return self;
 }
 
@@ -174,12 +175,6 @@
 
 -(void)handleAction:(DiceAction*)action
 {
-	if (![NSThread isMainThread])
-	{
-		[self performSelectorOnMainThread:@selector(handleAction:) withObject:action waitUntilDone:NO];
-		return;
-	}
-
     NSLog(@"Handling action: %i", action.actionType);
     self.deferNotification = NO;
     switch (action.actionType)

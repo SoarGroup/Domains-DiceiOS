@@ -713,11 +713,8 @@
         }
     }
 
-	while (!canContinueGame)
-		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+	inSpecialRules = NO;
 
-    inSpecialRules = NO;
-    
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
         if ([player isInSpecialRules] && playersLeft > 2)
@@ -726,6 +723,10 @@
         }
     }
     self.previousBid = nil;
+
+	while (!canContinueGame)
+		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
     if (history)
     {
         [rounds addObject:history];

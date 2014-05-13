@@ -62,6 +62,7 @@ const int pushMargin();
 @property (readwrite, retain) PlayerState *state;
 @property (readwrite, retain) NSMutableArray *tempViews;
 @property (readwrite, assign) BOOL isCustom;
+@property (readwrite, atomic, assign) BOOL animationFinished;
 
 // Properties based on views
 @property (nonatomic, retain) IBOutlet UIImageView *bidFaceLabel;

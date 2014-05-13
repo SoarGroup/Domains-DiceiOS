@@ -131,6 +131,10 @@ static int agentCount = 0;
 		}
 
 		agentCount++;
+
+		if (agentCount >= 8)
+			agentCount = 1;
+
         self.name = [SoarPlayer makePlayerName];
 
         const char* string = [name UTF8String];
