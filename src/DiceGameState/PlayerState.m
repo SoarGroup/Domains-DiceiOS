@@ -16,7 +16,7 @@
 
 @implementation PlayerState
 
-@synthesize playerID, playerHasPassed, playerHasExacted, playerHasPushedAllDice, gameState, numberOfDice, maxNumberOfDice, hasLost, playerName, arrayOfDice, lock;
+@synthesize playerID, playerHasPassed, playerHasExacted, playerHasPushedAllDice, gameState, numberOfDice, maxNumberOfDice, hasLost, playerName, arrayOfDice, lock, hasDoneSpecialRules;
 
 // Set the number of dice that the player has while making sure its 1)
 // not more than the max number of dice and 2) not less than 0.
@@ -51,6 +51,7 @@
 {
         //Same deal as the DiceGameState initialization, make sure our super class initializes properly, otherwise return ourself which will be nil (it will be the correct address if it initilized properly
     self = [super init];
+
     if (self) {
             //Set our local variables
         self.lock = [[[NSLock alloc] init] autorelease];
@@ -69,17 +70,13 @@
         
             //Set our dice
         for (int i = 0;i < dice;i++)
-        {
-            Die *die1 = [[Die alloc] init];
-            [die1 autorelease];
-            
-            [arrayOfDice addObject:die1];
-        }
+            [arrayOfDice addObject:[[[Die alloc] init] autorelease]];
         
         specialRules = NO;
         hasDoneSpecialRules = NO;
         [self.lock unlock];
     }
+
     return self;
 }
 
@@ -206,7 +203,7 @@
 - (NSArray *)pushedDice
 {
     [self.lock lock];
-    NSMutableArray *pushedDice = [[NSMutableArray alloc] init];
+    NSMutableArray *pushedDice = [[[NSMutableArray alloc] init] autorelease];
     for (Die *die in arrayOfDice) {
         if ([die isKindOfClass:[Die class]]) {
             if ([die hasBeenPushed]) {
@@ -215,9 +212,7 @@
         }
     }
     
-    NSArray *array = [[NSArray alloc] initWithArray:pushedDice];
-    [pushedDice release];
-    [array autorelease];
+    NSArray *array = [NSArray arrayWithArray:pushedDice];
     [self.lock unlock];
     return array;
 }

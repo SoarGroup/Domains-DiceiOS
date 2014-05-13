@@ -78,7 +78,7 @@
 				  MultiplayerMatchData* data = [[[MultiplayerMatchData alloc] initWithData:matchData] autorelease];
 
 				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
-				  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil];
+				  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil] autorelease];
 				  [self.appDelegate.listener addGameKitGameHandler:handler];
 
 				  [game updateGame:[data theGame]];
@@ -175,7 +175,7 @@
 				  MultiplayerMatchData* data = [[[MultiplayerMatchData alloc] initWithData:matchData] autorelease];
 
 				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
-				  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil];
+				  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil] autorelease];
 				  [self.appDelegate.listener addGameKitGameHandler:handler];
 
 				  [game updateGame:[data theGame]];

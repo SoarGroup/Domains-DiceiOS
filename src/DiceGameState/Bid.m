@@ -37,12 +37,13 @@
     //Initialize ourself by calling our default method but also set some other properties
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing
 {
-    id ret = [self initWithPlayerID:playerID name:aPlayerName dice:dice rank:rank];
-    if (ret) {
+    self = [self initWithPlayerID:playerID name:aPlayerName dice:dice rank:rank];
+    if (self)
+	{
         diceToPush = dicePushing;
         [diceToPush retain];
     }
-    return ret;
+    return self;
 }
 
     //Is this bid legal?

@@ -60,19 +60,23 @@
 //Initialize ourself with specialized information
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid
 {
-    [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_BID];
-    if (self)
+    self = [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_BID];
+
+	if (self)
         self.bid = newBid;
+
     return self;
 }
 
 //Initialize ourself with specialized information
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid andWithResult:(int)newResult
 {
-    [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_EXACT withValue:-1 andResult:result];
-    if (self)
+    self = [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_EXACT withValue:-1 andResult:result];
+
+	if (self)
         self.bid = newBid;
-    return self;
+
+	return self;
 }
 
 //Set the losing playerID if someone lost this turn

@@ -28,11 +28,11 @@
 - (id)initWithNumber:(int)dieValueToSet
 {
         //Call our own initialization routine then set our dieValue
-    id ret = [self init];
-    if (ret) {
+    self = [self init];
+    if (self)
         dieValue = dieValueToSet;
-    }
-    return ret;
+
+    return self;
 }
 
 - (void)roll

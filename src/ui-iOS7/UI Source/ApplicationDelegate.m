@@ -50,7 +50,7 @@
 
 	self.rootViewController = self.window.rootViewController;
 
-	self.listener = [[GameKitListener alloc] init];
+	self.listener = [[[GameKitListener alloc] init] autorelease];
 	[self authenticateLocalPlayer];
 }
 
@@ -86,8 +86,7 @@
 	[databaseArrayLock release];
 
 	[[GKLocalPlayer localPlayer] unregisterAllListeners];
-	[self.listener release];
-	
+
     [super dealloc];
 }
 

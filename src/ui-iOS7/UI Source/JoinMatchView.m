@@ -92,7 +92,7 @@
 					  }
 
 					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:self.delegate];
-					  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil];
+					  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil] autorelease];
 
 					  if (mmd)
 					  {
@@ -150,7 +150,7 @@
 					  }
 
 					  DiceLocalPlayer* localPlayer = nil;
-					  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
+					  NSMutableArray* remotePlayers = [[[NSMutableArray alloc] init] autorelease];
 
 					  for (id<Player> player in newGame.players)
 					  {
@@ -162,6 +162,8 @@
 					  
 					  [handler setLocalPlayer:localPlayer];
 					  [handler setRemotePlayers:remotePlayers];
+
+					  [self.delegate.listener addGameKitGameHandler:handler];
 
 					  [self.navigationController pushViewController:[[[LoadingGameView alloc] initWithGame:newGame mainMenu:self.mainMenu] autorelease] animated:YES];
 				}];

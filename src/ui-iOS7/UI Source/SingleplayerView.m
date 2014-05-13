@@ -75,7 +75,7 @@
 
     DiceGame *game = [[[DiceGame alloc] initWithAppDelegate:delegate] autorelease];
 
-	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil]];
+	[game addPlayer:[[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] autorelease]];
 
 	NSLock* lock = [[[NSLock alloc] init] autorelease];
 

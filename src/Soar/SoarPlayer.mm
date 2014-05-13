@@ -102,10 +102,9 @@ static int agentCount = 0;
 			return @"Erin";
         default:
 		{
-			DiceDatabase *database = [[DiceDatabase alloc] init];
+			DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 
             return [database getPlayerName];
-            break;
 		}
     }
 }
@@ -155,7 +154,7 @@ static int agentCount = 0;
         /*agent->ExecuteCommandLine("timers -d");
          agent->SetOutputLinkChangeTracking(true);*/
         
-        int seed = rand();
+        int seed = arc4random();
         
         agent->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
         
@@ -165,7 +164,7 @@ static int agentCount = 0;
         // We want this to be dice-agent-new, but right now that breaks the agent
         // so we're loading dice-p0-m0-c0 instead.
 		
-		DiceDatabase *database = [[DiceDatabase alloc] init];
+		DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
 		
 		int difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
 		
@@ -210,24 +209,7 @@ static int agentCount = 0;
             path = @"source \"\"/Users/bluechill/Desktop/2011 Soar Summer Work/Liar's Dice/Liar's Dice/Soar/Soar Rules/dice-p0-m0-c0.soar\"";
         }
         
-        NSLog(@"Path:%@", path);
-        
-        int fileLength = 18;
-        
-        NSString *directory;
-        if (!remoteConnected)
-        {
-            NSString *substring = [path substringToIndex:[path length] - fileLength];
-            directory = [NSString stringWithFormat:@"cd \"%@\"", substring];
-        }
-        else
-        {
-            directory = @"cd \"/Users/bluechill/Desktop/2011 Soar Summer Work/Liar's Dice/Liar's Dice/Soar/Soar Rules/\"";
-        }
-        
-        // NSLog(@"About to source:\n%@\n%@", directory, path);
-        
-        // std::cout << agent->ExecuteCommandLine([directory UTF8String]) << std::endl;
+        NSLog(@"Path: %@", path);
         
         std::cout << agent->ExecuteCommandLine([path UTF8String]) << std::endl;
         std::cout << agent->ExecuteCommandLine("watch 0") << std::endl;
@@ -877,7 +859,6 @@ static int agentCount = 0;
 - (void) handleAgentCommandsWithRefresh:(BOOL *)needsRefresh sleep:(BOOL *)sleep;
 {
     NSLog(@"Agent handling agent commands");
-    DiceGameState *gameState = self.playerState.gameState;
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
@@ -972,7 +953,7 @@ static int agentCount = 0;
                     for (int i = 0;i < ident->GetNumberChildren();i++) {
                         NSNumber *number = [NSNumber numberWithInt:faces[i]];
                         if ([number isKindOfClass:[NSNumber class]]) {
-                            Die *newDie = [[Die alloc] initWithNumber:[number intValue]];
+                            Die *newDie = [[[Die alloc] initWithNumber:[number intValue]] autorelease];
                             [newDie autorelease];
                             [mut addObject:newDie];
                         }
@@ -988,7 +969,7 @@ static int agentCount = 0;
                     // action = [DiceAction pushAction:self.playerID push:diceToPush];
                 }
 				
-				delete faces;
+				delete[] faces;
             }
             else if ([attrName isEqualToString:@"challenge"])
             {
@@ -1008,25 +989,7 @@ static int agentCount = 0;
                 }
                 
                 if (target != -1)
-                {
-                    ActionType challengeType;
-                    if ([[[gameState lastHistoryItem] player] playerID] == target)
-                    {
-                        challengeType = [gameState lastHistoryItem].actionType == ACTION_PASS ? ACTION_CHALLENGE_PASS : ACTION_CHALLENGE_BID;
-                    }
-                    else if ([[[[gameState history] objectAtIndex:[[gameState history] count] - 2] player] playerID] == target)
-                    {
-                        HistoryItem* item = [[gameState history] objectAtIndex:[[gameState history] count] - 2];
-                        challengeType = item.actionType == ACTION_PASS ? ACTION_CHALLENGE_PASS : ACTION_CHALLENGE_BID;
-                    }
-                    else
-                    {
-                        NSLog(@"Input Link: %s", agent->ExecuteCommandLine("print -d 10 i2"));
-                        NSLog(@"Output Link: %s", agent->ExecuteCommandLine("print -d 10 i3"));
-                    }
-                    
-                    action = [DiceAction challengeAction:self.playerID target:target];
-                }
+					action = [DiceAction challengeAction:self.playerID target:target];
             }
             else if ([attrName isEqualToString:@"pass"])
             {

@@ -94,7 +94,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[UILabel alloc] initWithFrame:frame];
+	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	[label setAttributedText:line];
 	[label setTextColor:[UIColor whiteColor]];
@@ -112,7 +112,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[UILabel alloc] initWithFrame:frame];
+	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 
 	if (bolded)
@@ -136,7 +136,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[UILabel alloc] initWithFrame:frame];
+	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 
 	if (bolded)
@@ -165,9 +165,7 @@ typedef struct {
 							  boldFont, NSFontAttributeName, nil];
     const NSRange range = NSMakeRange(0,[firstItem length]);
 
-    NSMutableAttributedString *attributedText =
-	[[NSMutableAttributedString alloc] initWithString:firstItem
-										   attributes:attrs];
+    NSMutableAttributedString *attributedText = [[[NSMutableAttributedString alloc] initWithString:firstItem attributes:attrs] autorelease];
 
 	if (boldFirst)
 		[attributedText setAttributes:subAttrs range:range];
@@ -180,7 +178,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[UILabel alloc] initWithFrame:frame];
+	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	[label setAttributedText:attributedText];
 	[label setTextColor:[UIColor whiteColor]];
@@ -189,7 +187,7 @@ typedef struct {
 
 	frame.origin.x += (sectionWidth < minimumWidth ? minimumWidth : sectionWidth);
 
-	label = [[UILabel alloc] initWithFrame:frame];
+	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:secondItem];
 	[label setTextColor:[UIColor whiteColor]];
@@ -198,7 +196,7 @@ typedef struct {
 
 	frame.origin.x += sectionWidth;
 
-	label = [[UILabel alloc] initWithFrame:frame];
+	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:thirdItem];
 	[label setTextColor:[UIColor whiteColor]];
@@ -207,7 +205,7 @@ typedef struct {
 
 	frame.origin.x += sectionWidth;
 
-	label = [[UILabel alloc] initWithFrame:frame];
+	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:fourthItem];
 	[label setTextColor:[UIColor whiteColor]];

@@ -26,7 +26,6 @@ const int pushMargin();
     int currentBidFace;
 
 	NSMutableArray *challengeButtons;
-	NSMutableArray *previousBidImageViews;
     NSMutableArray *tempViews;
 
 	UIView* centerPush;
@@ -67,6 +66,7 @@ const int pushMargin();
 @property (readwrite, retain) NSMutableArray *tempViews;
 @property (readwrite, assign) BOOL isCustom;
 @property (readwrite, atomic, assign) BOOL animationFinished;
+@property (readwrite, retain) NSMutableArray* previousBidImageViews;
 
 // Properties based on views
 @property (nonatomic, retain) IBOutlet UIImageView *bidFaceLabel;

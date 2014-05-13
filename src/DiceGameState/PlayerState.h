@@ -28,10 +28,11 @@
     BOOL playerHasPushedAllDice;
     
     BOOL specialRules;
-    BOOL hasDoneSpecialRules;
     
     NSLock *lock;
 }
+
+@property (readwrite, assign) BOOL hasDoneSpecialRules;
 
 @property (readwrite, assign) int playerID;
 @property (readwrite, retain) NSString *playerName;

@@ -28,16 +28,16 @@
 
 	if (self)
 	{
-		history = [decoder decodeObjectForKey:@"DiceGameState:history"];
-		rounds = [decoder decodeObjectForKey:@"DiceGameState:rounds"];
+		history = [[decoder decodeObjectForKey:@"DiceGameState:history"] retain];
+		rounds = [[decoder decodeObjectForKey:@"DiceGameState:rounds"] retain];
 		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
 		currentTurn = [decoder decodeIntForKey:@"DiceGameState:currentTurn"];
 		playersLeft = [decoder decodeIntegerForKey:@"DiceGameState:playersLeft"];
-		previousBid = [decoder decodeObjectForKey:@"DiceGameState:previousBid"];
+		previousBid = [[decoder decodeObjectForKey:@"DiceGameState:previousBid"] retain];
 
-		playerStates = [decoder decodeObjectForKey:@"DiceGameState:playerStates"];
+		playerStates = [[decoder decodeObjectForKey:@"DiceGameState:playerStates"] retain];
 
-		playersArrayToDecode = [decoder decodeObjectForKey:@"DiceGameState:players"];
+		playersArrayToDecode = [[decoder decodeObjectForKey:@"DiceGameState:players"] retain];
 		self.canContinueGame = [decoder decodeBoolForKey:@"DiceGameState:CanContinueGame"];
 	}
 
@@ -46,8 +46,8 @@
 
 - (void) decodePlayers
 {
-	NSMutableArray* finalPlayersArray = [[NSMutableArray alloc] init];
-	NSLock* lock = [[NSLock alloc] init];
+	NSMutableArray* finalPlayersArray = [[[NSMutableArray alloc] init] autorelease];
+	NSLock* lock = [[[NSLock alloc] init] autorelease];
 
 	for (NSString* player in playersArrayToDecode)
 	{
@@ -56,16 +56,18 @@
 			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:player])
 			{
 				// Local Player
-				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil]];
+				[finalPlayersArray addObject:[[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil] autorelease]];
 			}
 			else
-				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil]];
+				[finalPlayersArray addObject:[[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil] autorelease]];
 		}
 		else
 		{
-			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil]];
+			[finalPlayersArray addObject:[[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] autorelease]];
 		}
 	}
+
+	self.players = finalPlayersArray;
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
@@ -119,7 +121,7 @@
     if (self) {
         self.game = aGame;
         self.players = thePlayers;
-        self.losers = [[NSMutableArray alloc] init];
+        self.losers = [[[NSMutableArray alloc] init] autorelease];
         NSMutableArray *mutPlayerStates = [[[NSMutableArray alloc] init] autorelease];
         
         // Fill the player array with player states for each player in the game
@@ -170,7 +172,7 @@
 {
     [rounds release];
     [history release];
-	[losers release];
+
     // Make sure our super class deallocs too
     [super dealloc];
 }
@@ -264,7 +266,7 @@
     }
     PlayerState *player = [self getPlayerState:playerID];
     HistoryItem *item = [self lastHistoryItem];
-    HistoryItem *secondLast;
+    HistoryItem *secondLast = nil;
     
     if ([[self history] count] >= 2)
         secondLast = [[self history] objectAtIndex:[[self history] count] - 2];
@@ -296,8 +298,9 @@
             [history addObject:newItem];
             *didTheChallengerWin = YES;
         }
-    } else if ((item.actionType == ACTION_PASS && item.player.playerID == targetID) || 
-               (secondLast.actionType == ACTION_PASS && secondLast.player.playerID == targetID)) {
+    } else if (((item && (item.actionType == ACTION_PASS && item.player.playerID == targetID)) ||
+               (secondLast && secondLast.actionType == ACTION_PASS && secondLast.player.playerID == targetID)))
+	{
         if (item.player.playerID == targetID)
         {
             if (item.result == 1) // Pass was legal
@@ -327,7 +330,7 @@
         }
         else
         {
-            if (secondLast.result == 1) // Pass was legal
+            if (secondLast && secondLast.result == 1) // Pass was legal
             {
                 [self playerLosesRound:playerID];
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
@@ -519,7 +522,7 @@
 // the last one the oldest
 - (NSArray *)flatHistory
 {
-    NSMutableArray *ret = [[NSMutableArray alloc] init];
+    NSMutableArray *ret = [[[NSMutableArray alloc] init] autorelease];
     for (NSMutableArray *array in rounds) {
         if ([array isKindOfClass:[NSMutableArray class]]) {
             for (HistoryItem *item in array) {
@@ -540,10 +543,7 @@
     NSRange range;
     range.location = 0;
     range.length = [ret count];
-    NSArray *array = [ret subarrayWithRange:range];
-    [ret release];
-    [array autorelease];
-    return array;
+    return [ret subarrayWithRange:range];
 }
 
 // Last history item (useful shortcut function)
@@ -654,7 +654,7 @@
             HistoryItem *item = [lastMove objectAtIndex:i];
 
 			NSDictionary * attributes;
-			NSMutableAttributedString* move = [[NSMutableAttributedString alloc] init];
+			NSMutableAttributedString* move = [[[NSMutableAttributedString alloc] init] autorelease];
 
 			NSArray *array = [[item asString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
@@ -714,6 +714,9 @@
         }
     }
 
+	while (!canContinueGame)
+		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
 	inSpecialRules = NO;
 
     for (PlayerState *player in self.playerStates) {
@@ -723,11 +726,8 @@
             inSpecialRules = YES;
         }
     }
-    self.previousBid = nil;
 
-	while (!canContinueGame)
-		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-
+	self.previousBid = nil;
     if (history)
     {
         [rounds addObject:history];
@@ -803,7 +803,8 @@
 		return NO;
     
     //Check if there is a previous bid, otherwise the bid is automatically valid
-    if (!self.previousBid) return YES;
+    if (!self.previousBid)
+		return YES;
     
     //Make sure the bid is a legal raise over the previous bid
     if (![bid isLegalRaise:self.previousBid specialRules:[self usingSpecialRules] playerSpecialRules:playerSpecialRules])

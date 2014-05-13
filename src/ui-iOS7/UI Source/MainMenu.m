@@ -73,12 +73,14 @@
     srand(seed);
     NSLog(@"Seed:%i", seed);
 
+	self.navigationController.navigationBarHidden = YES;
+
 	self.navigationController.title = @"Main Menu";
 	self.navigationItem.title = @"Main Menu";
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = YES;
+- (void)viewWillAppear:(BOOL)animated
+{
 }
 
 - (void)dealloc {    

@@ -78,10 +78,10 @@
 - (NSArray *) getGameRecords {
 	NSArray* gameRecordEncodedArray = [defaults objectForKey:@"Games"];
 
-	NSMutableArray* gameRecords = [[NSMutableArray alloc] initWithCapacity:gameRecordEncodedArray.count];
+	NSMutableArray* gameRecords = [[[NSMutableArray alloc] initWithCapacity:gameRecordEncodedArray.count] autorelease];
 
 	for (NSDictionary* gameRecordEncodedObject in gameRecordEncodedArray)
-		[gameRecords addObject:[[GameRecord alloc] initWithDictionary:gameRecordEncodedObject]];
+		[gameRecords addObject:[[[GameRecord alloc] initWithDictionary:gameRecordEncodedObject] autorelease]];
 
     return gameRecords;
 }
