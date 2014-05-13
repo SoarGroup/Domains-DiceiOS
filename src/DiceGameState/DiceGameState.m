@@ -119,7 +119,7 @@
     if (self) {
         self.game = aGame;
         self.players = thePlayers;
-        self.losers = [[[NSMutableArray alloc] init] autorelease];
+        self.losers = [[NSMutableArray alloc] init];
         NSMutableArray *mutPlayerStates = [[[NSMutableArray alloc] init] autorelease];
         
         // Fill the player array with player states for each player in the game
@@ -170,6 +170,7 @@
 {
     [rounds release];
     [history release];
+	[losers release];
     // Make sure our super class deallocs too
     [super dealloc];
 }
@@ -761,10 +762,10 @@
     player.numberOfDice = player.numberOfDice - 1;
     NSLog(@"%@ has %i dice", [player playerName], [player numberOfDice]);
 
-	[self goToNextPlayerWhoHasntLost];
-
-    if (player.numberOfDice == 0)
+	if (player.numberOfDice == 0)
         [self playerLosesGame:playerID];
+
+	[self goToNextPlayerWhoHasntLost];
 }
 
 //Make a player lose the game (set the flags that they've lost the game)

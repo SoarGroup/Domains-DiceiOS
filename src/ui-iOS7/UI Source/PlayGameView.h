@@ -32,6 +32,10 @@ const int pushMargin();
 	UIView* centerPush;
 
 	BOOL canContinueRound;
+
+	// Temporary stuff
+	UIAlertView* alertView2;
+	NSInteger buttonIndex2;
 }
 
 // Utility Functions

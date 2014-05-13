@@ -192,7 +192,7 @@ NSArray *buildDiceImages() {
 - (BOOL) roundEnding {
 	self.game.gameState.canContinueGame = !fullScreenView;
 
-	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
+	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
     return YES;
 }
@@ -1837,6 +1837,22 @@ NSArray *buildDiceImages() {
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if ([NSThread isMainThread])
+	{
+		alertView2 = alertView;
+		buttonIndex2 = buttonIndex;
+
+		[self performSelectorInBackground:@selector(alertView:clickedButtonAtIndex:) withObject:nil];
+
+		return;
+	}
+
+	if (!alertView)
+	{
+		alertView = alertView2;
+		buttonIndex = buttonIndex2;
+	}
+
     if (buttonIndex == alertView.cancelButtonIndex)
     {
 		// Enable the buttons if we actually can do those actions at this update cycle
