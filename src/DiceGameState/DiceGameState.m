@@ -207,7 +207,7 @@
     }
     // Get the last history item to make sure they can push.
     HistoryItem *item = [self lastHistoryItem];
-    if (!item || item.player.playerID != playerID || item.actionType != ACTION_BID)
+    if (!item || item.player.playerID != playerID || (item.actionType != ACTION_BID && item.actionType != ACTION_PASS))
         return NO;
     
     // Get the player state of the player pushing.

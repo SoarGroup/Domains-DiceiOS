@@ -194,7 +194,7 @@ NSArray *buildDiceImages() {
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
 
-    return NO;
+    return YES;
 }
 
 - (void)realRoundEnding
@@ -347,6 +347,8 @@ NSArray *buildDiceImages() {
 	self.game.gameState.canContinueGame = YES;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
+
+	[self.game notifyCurrentPlayer];
 }
 
 - (BOOL) roundBeginning {
@@ -1679,8 +1681,16 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)passPressed:(id)sender {
+	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[state markedToPushDice]];
+	[markedToPushDiceWithPushedDice addObjectsFromArray:[state pushedDice]];
+
+	NSString* message = nil;
+
+	if ([[state markedToPushDice] count] > 0)
+		message = [NSString stringWithFormat:@"Pass and push %lu %@?", [[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
+
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Pass?"
-                                                     message:nil
+                                                     message:message
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles:@"Pass", nil]

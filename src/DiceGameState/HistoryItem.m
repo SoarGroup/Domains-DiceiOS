@@ -121,7 +121,7 @@
                 first = [NSString stringWithFormat:@"%@ exacted.", playerName];
                 break;
             case ACTION_PASS:
-                first = [NSString stringWithFormat:@"%@ passed.", playerName];
+                first = [NSString stringWithFormat:@"%@ passed", playerName];
                 break;
             case ACTION_ILLEGAL:
                 first = [NSString stringWithFormat:@"%@ made illegal move.", playerName];

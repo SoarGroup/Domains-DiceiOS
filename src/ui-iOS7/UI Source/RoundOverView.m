@@ -277,6 +277,7 @@
         alert.tag = ACTION_QUIT;
         [alert show];
     }
+	
     [self.game notifyCurrentPlayer];
 }
 
