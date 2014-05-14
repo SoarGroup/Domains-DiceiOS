@@ -297,7 +297,7 @@
 		4DF394611923C51C00A523FB /* MultiplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerView.m; sourceTree = "<group>"; };
 		4DF394631923C51C00A523FB /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
 		4DF394641923C51C00A523FB /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
-		4DF394651923C51C00A523FB /* PlayGameView.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = PlayGameView.m; sourceTree = "<group>"; };
+		4DF394651923C51C00A523FB /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlayGameView.m; sourceTree = "<group>"; usesTabs = 1; wrapsLines = 1; };
 		4DF394661923C51C00A523FB /* RoundOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundOverView.h; sourceTree = "<group>"; };
 		4DF394671923C51C00A523FB /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
 		4DF394691923C51C00A523FB /* RulesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulesView.h; sourceTree = "<group>"; };

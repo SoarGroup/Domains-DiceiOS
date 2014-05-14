@@ -374,6 +374,8 @@ NSArray *buildDiceImages() {
 }
 
 - (BOOL) roundBeginning {
+	hasTouchedBidCounterThisRound = NO;
+
     return NO;
 }
 
@@ -789,6 +791,7 @@ NSArray *buildDiceImages() {
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
 	if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
 	{
+		currentBidCount = previousBid.numberOfDice + 1;
 		currentBidFace = previousBid.rankOfDie;
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
@@ -855,31 +858,6 @@ NSArray *buildDiceImages() {
 
 - (Bid*)nextLegalBid:(Bid*)previousBid
 {
-	Bid* lastActualBid = self.game.gameState.previousBid;
-
-	int nextBidCount = 0;
-	int nextBidFaceCount = 0;
-
-	if (!lastActualBid)
-		return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
-	else if (lastActualBid.rankOfDie == previousBid.rankOfDie) //Equal Faces
-	{
-		nextBidCount = lastActualBid.numberOfDice+1;
-		nextBidFaceCount = lastActualBid.rankOfDie;
-	}
-	else
-	{
-		nextBidFaceCount = previousBid.rankOfDie;
-
-		// Different faces
-		if (lastActualBid.rankOfDie == 1)
-			nextBidCount = (lastActualBid.numberOfDice * 2) + 1;
-		else if (lastActualBid.rankOfDie > previousBid.rankOfDie)
-			nextBidCount = lastActualBid.numberOfDice+1;
-		else
-			nextBidCount = lastActualBid.numberOfDice;
-	}
-
 	int maxBidCount = 0;
 
 	for (PlayerState* pstate in game.gameState.playerStates)
@@ -888,27 +866,36 @@ NSArray *buildDiceImages() {
 			maxBidCount += [[pstate arrayOfDice] count];
 	}
 
-	if (nextBidCount > maxBidCount)
+	Bid* lastActualBid = self.game.gameState.previousBid;
+
+	if (previousBid == nil)
+		previousBid = lastActualBid;
+
+	if (previousBid)
 	{
-		nextBidCount--;
-
-		if (nextBidFaceCount == 1)
-			return nil;
-		else if ((++nextBidFaceCount) == 7)
+		do
 		{
-			nextBidFaceCount = 1;
+			if (previousBid.numberOfDice > maxBidCount)
+			{
+				if (previousBid.rankOfDie == 1)
+					return nil;
 
-			double nextCount = nextBidCount / 2.0;
-			if (ceil(nextCount) > nextCount)
-				nextCount = ceil(nextCount);
+				int nextRank = (previousBid.rankOfDie + 1);
+
+				if (nextRank > 6)
+					nextRank = 1;
+
+				previousBid = [[[Bid alloc] initWithPlayerID:previousBid.playerID name:previousBid.playerName dice:lastActualBid.numberOfDice rank:nextRank] autorelease];
+			}
 			else
-				nextCount++;
-
-			nextBidCount = (int)nextCount;
+				previousBid = [[[Bid alloc] initWithPlayerID:previousBid.playerID name:previousBid.playerName dice:(previousBid.numberOfDice + 1) rank:previousBid.rankOfDie] autorelease];
 		}
+		while (![previousBid isLegalRaise:lastActualBid specialRules:self.game.gameState.usingSpecialRules playerSpecialRules:NO]);
 	}
+	else
+		previousBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
 
-	return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:nextBidCount rank:nextBidFaceCount] autorelease];
+	return previousBid;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
@@ -1292,10 +1279,10 @@ NSArray *buildDiceImages() {
 		NSMutableAttributedString* nameLabelText = [self.game.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
 
 		if ([playerStates[i] playerHasExacted])
-			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] name]]] autorelease]];
+			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] playerName]]] autorelease]];
 
 		if ([playerStates[i] playerHasPassed])
-			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] name]]] autorelease]];
+			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] playerName]]] autorelease]];
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;
@@ -1336,7 +1323,6 @@ NSArray *buildDiceImages() {
 
 					[nameLabel addSubview:imageView];
 					[previousBidImageViews addObject:imageView];
-					NSLog(@"Match: '%@'\n", [line substringWithRange:result.range]);
 				}
 
 				y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
@@ -1562,19 +1548,37 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)bidCountPlusPressed:(id)sender {
+	hasTouchedBidCounterThisRound = YES;
+
     ++currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
 - (IBAction)bidCountMinusPressed:(id)sender {
+	hasTouchedBidCounterThisRound = YES;
+
     --currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
 - (IBAction)bidFacePlusPressed:(id)sender {
+	double bidCount = currentBidCount;
+
+	if (!hasTouchedBidCounterThisRound)
+	{
+		if (currentBidFace == 6)
+			bidCount = self.game.gameState.previousBid.numberOfDice;
+		else
+		{
+			currentBidCount = [self nextLegalBid:self.game.gameState.previousBid].numberOfDice;
+
+			if (self.game.gameState.previousBid.rankOfDie == 1)
+				currentBidCount = (currentBidCount - 1) * 2;
+		}
+	}
+
 	if (currentBidFace == 6 && !game.gameState.usingSpecialRules)
 	{
-		double bidCount = currentBidCount;
 		bidCount /= 2.0;
 
 		if (ceil(bidCount) != bidCount)
@@ -1582,7 +1586,7 @@ NSArray *buildDiceImages() {
 
 		currentBidCount = (int)bidCount;
 	}
-	else if (currentBidFace == 1 && !game.gameState.usingSpecialRules)
+	else if (hasTouchedBidCounterThisRound && currentBidFace == 1 && !game.gameState.usingSpecialRules)
 	{
 		currentBidCount *= 2;
 
@@ -1591,13 +1595,31 @@ NSArray *buildDiceImages() {
 	}
 
     ++currentBidFace;
+
+	if (currentBidCount == 0)
+		currentBidCount = 1;
+
     [self constrainAndUpdateBidFace];
 }
 
 - (IBAction)bidFaceMinusPressed:(id)sender {
+	double bidCount = currentBidCount;
+
+	if (!hasTouchedBidCounterThisRound)
+	{
+		if (currentBidFace == 2)
+			bidCount = self.game.gameState.previousBid.numberOfDice;
+		else
+		{
+			currentBidCount = [self nextLegalBid:self.game.gameState.previousBid].numberOfDice;
+
+			if (self.game.gameState.previousBid.rankOfDie == 1)
+				currentBidCount = (currentBidCount - 1) * 2;
+		}
+	}
+
 	if (currentBidFace == 2 && !game.gameState.usingSpecialRules)
 	{
-		double bidCount = currentBidCount;
 		bidCount /= 2.0;
 
 		if (ceil(bidCount) != bidCount)
@@ -1605,7 +1627,7 @@ NSArray *buildDiceImages() {
 
 		currentBidCount = (int)bidCount;
 	}
-	else if (currentBidFace == 1 && !game.gameState.usingSpecialRules)
+	else if (hasTouchedBidCounterThisRound && currentBidFace == 1 && !game.gameState.usingSpecialRules)
 	{
 		currentBidCount *= 2;
 
@@ -1614,6 +1636,9 @@ NSArray *buildDiceImages() {
 	}
 
 	--currentBidFace;
+
+	if (currentBidCount == 0)
+		currentBidCount = 1;
 
     [self constrainAndUpdateBidFace];
 }
