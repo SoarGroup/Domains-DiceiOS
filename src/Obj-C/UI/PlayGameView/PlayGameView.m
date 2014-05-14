@@ -287,12 +287,25 @@ NSArray *buildDiceImages() {
 		canContinueRound = NO;
 
 		self.exactButton.enabled = NO;
+		[self.exactButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.passButton.enabled = NO;
+		[self.passButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.bidButton.enabled = NO;
+		[self.bidButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.bidCountPlusButton.enabled = NO;
+		[self.bidCountPlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.bidCountMinusButton.enabled = NO;
+		[self.bidCountMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.bidFacePlusButton.enabled = NO;
+		[self.bidFacePlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
+
 		self.bidFaceMinusButton.enabled = NO;
+		[self.bidFaceMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
 
 		[[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
 	}
