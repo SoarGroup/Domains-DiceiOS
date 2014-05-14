@@ -68,7 +68,7 @@ typedef enum {
 @interface SoarPlayer()
 
 - (DiceSMLData *) GameStateToWM:(sml::Identifier *) inputLink;
-- (void) doTurn:(id)arg;
+- (void) doTurn:(NSNumber*)arg;
 
 /*
  - (BOOL) handleAgentCommandsWithGameState:(DiceGameState *)gameState andPlayerID:(int)playerID withNeedsRefreshBool:(BOOL *)refreshAr withInformation:(turnInformationSentFromTheClient *)information withErrors:(int)errors;
@@ -239,10 +239,21 @@ static int agentCount = 0;
 
 - (void)itsYourTurn
 {
-    [NSThread detachNewThreadSelector:@selector(doTurn:) toTarget:self withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(doTurn:) toTarget:self withObject:[NSNumber numberWithInt:0]];
 }
 
-- (void) doTurn:(id)arg
+- (void)showErrorAlert
+{
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(showErrorAlert) withObject:nil waitUntilDone:YES];
+		return;
+	}
+
+	[[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has someone managed to get into a situation where it can no longer continue.  After trying to restart it five times, it still continues to do this and so we consider Soar to be 'crashed.'  Unfortunately, this means your game will no longer function, therefore we recommend you quit the game." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
+}
+
+- (void) doTurn:(NSNumber*)turnCount
 {
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
@@ -283,6 +294,8 @@ static int agentCount = 0;
             
             needsRefresh = NO;
         }
+
+		double startTime = [[NSDate date] timeIntervalSince1970];
         
         do {   
             //if (!remoteConnected)
@@ -292,6 +305,16 @@ static int agentCount = 0;
             
             sml::smlRunState agentState = agent->GetRunState();
             agentHalted = (agentState == sml::sml_RUNSTATE_HALTED || agentState == sml::sml_RUNSTATE_INTERRUPTED);
+
+			if ((startTime + 5) < [[NSDate date] timeIntervalSince1970])
+			{
+				[turnLock unlock];
+
+				if ([turnCount intValue] > 5)
+					return [self showErrorAlert];
+				else
+					return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
+			}
 
         } while (!agentHalted && (agent->GetNumberCommands() == 0));
         
