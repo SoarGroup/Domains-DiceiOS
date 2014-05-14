@@ -7,7 +7,6 @@
 //
 
 #import "StatsView.h"
-#import "DiceDatabase.h"
 
 const int lineHeight = 21;
 const int sectionWidth = 80;
@@ -24,7 +23,7 @@ typedef struct {
 @end
 
 @implementation StatsView
-@synthesize scrollView;
+@synthesize scrollView, database;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,15 +36,23 @@ typedef struct {
 	self = [super initWithNibName:[@"StatsView" stringByAppendingString:device] bundle:nil];
 
 	if (self)
+	{
 		lineCount = 0;
+
+		self.database = [[[DiceDatabase alloc] init] autorelease];
+		self.database.reloadHandler =^
+		{
+			lineCount = 0;
+			[self doLayout];
+		};
+	}
 
 	return self;
 }
 
 - (PlayerInformationStruct)calculatePlayerInformation:(int)playerID forNumberOfPlayers:(int)playerCount
 {
-	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-	NSArray* games = [database getGameRecords];
+	NSArray* games = [self.database getGameRecords];
 
 	PlayerInformationStruct info;
 	info.incompletes = 0;
@@ -218,8 +225,7 @@ typedef struct {
         [subview removeFromSuperview];
     }
 
-    DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-	NSString* username = [database getPlayerName];
+	NSString* username = [self.database getPlayerName];
 	
 	if ([username length] == 0)
 		username = @"Player";
@@ -254,8 +260,8 @@ typedef struct {
     if (buttonIndex == 0) {
         return;
     }
-    DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-    [database reset];
+
+    [self.database reset];
 	lineCount = 0;
     [self doLayout];
 }

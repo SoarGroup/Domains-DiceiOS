@@ -11,6 +11,8 @@
 
 @implementation DiceDatabase
 
+@synthesize reloadHandler;
+
 - (id)init
 {
     self = [super init];
@@ -128,6 +130,9 @@
 - (void)reload
 {
 	[defaults synchronize];
+
+	if (reloadHandler)
+		reloadHandler();
 }
 
 @end

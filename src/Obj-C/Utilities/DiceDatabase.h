@@ -14,6 +14,8 @@
 	NSUbiquitousKeyValueStore *defaults;
 }
 
+@property (atomic, copy) void (^reloadHandler)();
+
 + (GameTime) getCurrentGameTime;
 - (void) addGameRecord:(GameRecord *)gameRecord;
 - (NSArray *) getGameRecords;

@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DiceDatabase.h"
+
 @interface StatsView : UIViewController
 {
 	int lineCount;
 }
 
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (retain, atomic) DiceDatabase* database;
 
 @end
