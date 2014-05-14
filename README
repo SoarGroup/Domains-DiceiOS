@@ -1,3 +1,6 @@
-Open the Xcode Workspace for the Latest Version
+Michigan Liar's Dice Repository
 
-If you want to use the MSoar Provisioning Profile, make sure to change the bundle identifier to be "org.msoar.<leave the original part here>" instead of "edu.umich.".
+Latest Release on App Store: 1.1
+Trunk Version: 2.0-Development
+
+Michigan Liar's Dice is a Dice game for iOS devices including iPad and iPhone. It is a version of Liar's Dice with an Artificial Intelligence using the Soar Cognitive Architecture.  The game also features Game Center-Based Turn-Based Multiplayer.  Liar's Dice has been worked on by several people but mainly by Alex Turner.

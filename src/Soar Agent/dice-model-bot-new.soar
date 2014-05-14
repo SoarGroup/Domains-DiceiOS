@@ -1,0 +1,11 @@
+pwd
+ls
+
+# Using new soar code isn't working
+#pushd dice-model-bot-new
+
+# So use old soar code
+pushd dice-model-bot-new-old
+
+source dice-model-bot-new_source.soar
+popd

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:UM Liars Dice.xcodeproj">
+      location = "container:UM Liars Dice/UM Liars Dice.xcodeproj">
    </FileRef>
 </Workspace>

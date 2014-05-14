@@ -1,0 +1,1436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
+		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
+		4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC1BE411878A694007A17D3 /* GameKit.framework */; };
+		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
+		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
+		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
+		4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393871923C4F400A523FB /* Center-Push@2x.png */; };
+		4DF393A51923C4F400A523FB /* die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393881923C4F400A523FB /* die-1.png */; };
+		4DF393A61923C4F400A523FB /* die-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393891923C4F400A523FB /* die-2.png */; };
+		4DF393A71923C4F400A523FB /* die-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938A1923C4F400A523FB /* die-3.png */; };
+		4DF393A81923C4F400A523FB /* die-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938B1923C4F400A523FB /* die-4.png */; };
+		4DF393A91923C4F400A523FB /* die-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938C1923C4F400A523FB /* die-5.png */; };
+		4DF393AA1923C4F400A523FB /* die-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938D1923C4F400A523FB /* die-6.png */; };
+		4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938E1923C4F400A523FB /* die-unknown.png */; };
+		4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */; };
+		4DF393AD1923C4F400A523FB /* Icon-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393911923C4F400A523FB /* Icon-iPad.png */; };
+		4DF393AE1923C4F400A523FB /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393921923C4F400A523FB /* Icon-iPad@2x.png */; };
+		4DF393AF1923C4F400A523FB /* Icon-iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */; };
+		4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393941923C4F400A523FB /* Icon-Settings.png */; };
+		4DF393B11923C4F400A523FB /* Icon-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393951923C4F400A523FB /* Icon-Settings@2x.png */; };
+		4DF393B21923C4F400A523FB /* Icon-Spotlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393961923C4F400A523FB /* Icon-Spotlight.png */; };
+		4DF393B31923C4F400A523FB /* Icon-Spotlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */; };
+		4DF393B41923C4F400A523FB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393981923C4F400A523FB /* Icon.png */; };
+		4DF393B51923C4F400A523FB /* icon.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393991923C4F400A523FB /* icon.psd */; };
+		4DF393B61923C4F400A523FB /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939A1923C4F400A523FB /* iTunesArtwork.png */; };
+		4DF393B71923C4F400A523FB /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */; };
+		4DF393B81923C4F400A523FB /* Prototype 1 in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939D1923C4F400A523FB /* Prototype 1 */; };
+		4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939E1923C4F400A523FB /* Prototype 2.psd */; };
+		4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939F1923C4F400A523FB /* Prototype 3.psd */; };
+		4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A01923C4F400A523FB /* Prototype 4.psd */; };
+		4DF393BC1923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */; };
+		4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */; };
+		4DF396141923C51D00A523FB /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393C01923C51C00A523FB /* about.html */; };
+		4DF396151923C51D00A523FB /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393C11923C51C00A523FB /* rules.html */; };
+		4DF396191923C51D00A523FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394161923C51C00A523FB /* main.m */; };
+		4DF3961A1923C51D00A523FB /* Application.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3941A1923C51C00A523FB /* Application.m */; };
+		4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3941C1923C51C00A523FB /* ApplicationDelegate.m */; };
+		4DF3961C1923C51D00A523FB /* DiceGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3941F1923C51C00A523FB /* DiceGame.m */; };
+		4DF3961D1923C51D00A523FB /* Bid.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394221923C51C00A523FB /* Bid.m */; };
+		4DF3961E1923C51D00A523FB /* DiceAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394241923C51C00A523FB /* DiceAction.m */; };
+		4DF3961F1923C51D00A523FB /* DiceGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394261923C51C00A523FB /* DiceGameState.m */; };
+		4DF396201923C51D00A523FB /* Die.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394291923C51C00A523FB /* Die.m */; };
+		4DF396211923C51D00A523FB /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3942B1923C51C00A523FB /* HistoryItem.m */; };
+		4DF396221923C51D00A523FB /* PlayerState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3942D1923C51C00A523FB /* PlayerState.m */; };
+		4DF396231923C51D00A523FB /* DiceGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3942F1923C51C00A523FB /* DiceGraphics.m */; };
+		4DF396261923C51D00A523FB /* GameRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394351923C51C00A523FB /* GameRecord.m */; };
+		4DF396281923C51D00A523FB /* AboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3943C1923C51C00A523FB /* AboutView.m */; };
+		4DF396291923C51D00A523FB /* AboutViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3943E1923C51C00A523FB /* AboutViewiPad.xib */; };
+		4DF3962A1923C51D00A523FB /* ApplicationiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3943F1923C51C00A523FB /* ApplicationiPad.xib */; };
+		4DF3962B1923C51D00A523FB /* LoadingGameViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394401923C51C00A523FB /* LoadingGameViewiPad.xib */; };
+		4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394411923C51C00A523FB /* MainMenuiPad.xib */; };
+		4DF3962D1923C51D00A523FB /* MultiplayerViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394421923C51C00A523FB /* MultiplayerViewiPad.xib */; };
+		4DF3962E1923C51D00A523FB /* PlayGameViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394431923C51C00A523FB /* PlayGameViewiPad.xib */; };
+		4DF3962F1923C51D00A523FB /* RoundOverViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394441923C51C00A523FB /* RoundOverViewiPad.xib */; };
+		4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394451923C51C00A523FB /* RulesViewiPad.xib */; };
+		4DF396311923C51D00A523FB /* SettingsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394461923C51C00A523FB /* SettingsViewiPad.xib */; };
+		4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */; };
+		4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394481923C51C00A523FB /* StatsViewiPad.xib */; };
+		4DF396341923C51D00A523FB /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944A1923C51C00A523FB /* AboutView.xib */; };
+		4DF396351923C51D00A523FB /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944B1923C51C00A523FB /* Application.xib */; };
+		4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944C1923C51C00A523FB /* JoinMatchView.xib */; };
+		4DF396371923C51D00A523FB /* LoadingGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944D1923C51C00A523FB /* LoadingGameView.xib */; };
+		4DF396381923C51D00A523FB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944E1923C51C00A523FB /* MainMenu.xib */; };
+		4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944F1923C51C00A523FB /* MultiplayerView.xib */; };
+		4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394501923C51C00A523FB /* PlayGameView.xib */; };
+		4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394511923C51C00A523FB /* RoundOverView.xib */; };
+		4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394521923C51C00A523FB /* RulesView.xib */; };
+		4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394531923C51C00A523FB /* SettingsView.xib */; };
+		4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394541923C51C00A523FB /* SingleplayerView.xib */; };
+		4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394551923C51C00A523FB /* StatsView.xib */; };
+		4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394581923C51C00A523FB /* JoinMatchView.m */; };
+		4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945B1923C51C00A523FB /* LoadingGameView.m */; };
+		4DF396421923C51D00A523FB /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945E1923C51C00A523FB /* MainMenu.m */; };
+		4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394611923C51C00A523FB /* MultiplayerView.m */; };
+		4DF396441923C51D00A523FB /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394651923C51C00A523FB /* PlayGameView.m */; };
+		4DF396451923C51D00A523FB /* RoundOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394671923C51C00A523FB /* RoundOverView.m */; };
+		4DF396461923C51D00A523FB /* RulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946A1923C51C00A523FB /* RulesView.m */; };
+		4DF396471923C51D00A523FB /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946D1923C51C00A523FB /* SettingsView.m */; };
+		4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394701923C51C00A523FB /* SingleplayerView.m */; };
+		4DF396491923C51D00A523FB /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394731923C51C00A523FB /* StatsView.m */; };
+		4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */; };
+		4DF3964B1923C51D00A523FB /* DiceDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394781923C51C00A523FB /* DiceDatabase.m */; };
+		4DF3964C1923C51D00A523FB /* GameKitGameHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3947A1923C51C00A523FB /* GameKitGameHandler.m */; };
+		4DF3964D1923C51D00A523FB /* GameKitListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3947C1923C51C00A523FB /* GameKitListener.m */; };
+		4DF3964E1923C51D00A523FB /* MultiplayerMatchData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3947E1923C51C00A523FB /* MultiplayerMatchData.m */; };
+		4DF397B41923C5B800A523FB /* DiceLocalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */; };
+		4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397B11923C5B800A523FB /* DiceRemotePlayer.m */; };
+		4DF397B61923C5B800A523FB /* SoarPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397B31923C5B800A523FB /* SoarPlayer.mm */; };
+		4DF397D81923C9A600A523FB /* default in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C11923C9A600A523FB /* default */; };
+		4DF397D91923C9A600A523FB /* dice in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C21923C9A600A523FB /* dice */; };
+		4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C31923C9A600A523FB /* dice-agent-new.soar */; };
+		4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C41923C9A600A523FB /* dice-agent-p */; };
+		4DF397DC1923C9A600A523FB /* dice-easy.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C51923C9A600A523FB /* dice-easy.soar */; };
+		4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C61923C9A600A523FB /* dice-hard.soar */; };
+		4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C71923C9A600A523FB /* dice-harder.soar */; };
+		4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C81923C9A600A523FB /* dice-hardest.soar */; };
+		4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C91923C9A600A523FB /* dice-medium.soar */; };
+		4DF397E11923C9A600A523FB /* dice-model-bot-new in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CA1923C9A600A523FB /* dice-model-bot-new */; };
+		4DF397E21923C9A600A523FB /* dice-model-bot-new-old in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */; };
+		4DF397E31923C9A600A523FB /* dice-model-bot-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */; };
+		4DF397E41923C9A600A523FB /* dice-p0-m0-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */; };
+		4DF397E51923C9A600A523FB /* dice-p0-m1-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */; };
+		4DF397E61923C9A600A523FB /* dice-p1-m0-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */; };
+		4DF397E71923C9A600A523FB /* dice-p1-m1-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */; };
+		4DF397E81923C9A600A523FB /* dice-pmh.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D11923C9A600A523FB /* dice-pmh.soar */; };
+		4DF397E91923C9A600A523FB /* dice-rl in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D21923C9A600A523FB /* dice-rl */; };
+		4DF397EA1923C9A600A523FB /* dice-rl.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D31923C9A600A523FB /* dice-rl.soar */; };
+		4DF397EB1923C9A600A523FB /* dice-rl.vsa in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D41923C9A600A523FB /* dice-rl.vsa */; };
+		4DF397EC1923C9A600A523FB /* dice.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D51923C9A600A523FB /* dice.soar */; };
+		4DF397ED1923C9A600A523FB /* dice.vsa in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D61923C9A600A523FB /* dice.vsa */; };
+		4DF397EE1923C9A600A523FB /* improvements.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D71923C9A600A523FB /* improvements.soar */; };
+		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
+		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
+		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
+		CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64D13BB9E450005A182 /* CoreData.framework */; };
+		CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71C13BBB1B60005A182 /* OpenGLES.framework */; };
+		CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
+		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
+		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
+		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4DC1BE411878A694007A17D3 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4DF393861923C4F400A523FB /* Center-Push.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push.png"; sourceTree = "<group>"; };
+		4DF393871923C4F400A523FB /* Center-Push@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push@2x.png"; sourceTree = "<group>"; };
+		4DF393881923C4F400A523FB /* die-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-1.png"; sourceTree = "<group>"; };
+		4DF393891923C4F400A523FB /* die-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-2.png"; sourceTree = "<group>"; };
+		4DF3938A1923C4F400A523FB /* die-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-3.png"; sourceTree = "<group>"; };
+		4DF3938B1923C4F400A523FB /* die-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-4.png"; sourceTree = "<group>"; };
+		4DF3938C1923C4F400A523FB /* die-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-5.png"; sourceTree = "<group>"; };
+		4DF3938D1923C4F400A523FB /* die-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-6.png"; sourceTree = "<group>"; };
+		4DF3938E1923C4F400A523FB /* die-unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-unknown.png"; sourceTree = "<group>"; };
+		4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScrollRightArrow.png; sourceTree = "<group>"; };
+		4DF393911923C4F400A523FB /* Icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad.png"; sourceTree = "<group>"; };
+		4DF393921923C4F400A523FB /* Icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad@2x.png"; sourceTree = "<group>"; };
+		4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPhone@2x.png"; sourceTree = "<group>"; };
+		4DF393941923C4F400A523FB /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings.png"; sourceTree = "<group>"; };
+		4DF393951923C4F400A523FB /* Icon-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings@2x.png"; sourceTree = "<group>"; };
+		4DF393961923C4F400A523FB /* Icon-Spotlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight.png"; sourceTree = "<group>"; };
+		4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight@2x.png"; sourceTree = "<group>"; };
+		4DF393981923C4F400A523FB /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		4DF393991923C4F400A523FB /* icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.psd; sourceTree = "<group>"; };
+		4DF3939A1923C4F400A523FB /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		4DF3939D1923C4F400A523FB /* Prototype 1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 1"; sourceTree = "<group>"; };
+		4DF3939E1923C4F400A523FB /* Prototype 2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 2.psd"; sourceTree = "<group>"; };
+		4DF3939F1923C4F400A523FB /* Prototype 3.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 3.psd"; sourceTree = "<group>"; };
+		4DF393A01923C4F400A523FB /* Prototype 4.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 4.psd"; sourceTree = "<group>"; };
+		4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype iPhone Interface Multiplayer Selection"; sourceTree = "<group>"; };
+		4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2014.05.05 16.02.56.png"; sourceTree = "<group>"; };
+		4DF393C01923C51C00A523FB /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		4DF393C11923C51C00A523FB /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
+		4DF393CB1923C51C00A523FB /* ElementXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementXML.h; sourceTree = "<group>"; };
+		4DF393CC1923C51C00A523FB /* ElementXMLHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementXMLHandle.h; sourceTree = "<group>"; };
+		4DF393CD1923C51C00A523FB /* ElementXMLImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementXMLImpl.h; sourceTree = "<group>"; };
+		4DF393CE1923C51C00A523FB /* ElementXMLInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementXMLInterface.h; sourceTree = "<group>"; };
+		4DF393CF1923C51C00A523FB /* EmbeddedSMLInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmbeddedSMLInterface.h; sourceTree = "<group>"; };
+		4DF393D01923C51C00A523FB /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
+		4DF393D11923C51C00A523FB /* misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = misc.h; sourceTree = "<group>"; };
+		4DF393D51923C51C00A523FB /* ParseXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseXML.h; sourceTree = "<group>"; };
+		4DF393D61923C51C00A523FB /* ParseXMLFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseXMLFile.h; sourceTree = "<group>"; };
+		4DF393D71923C51C00A523FB /* ParseXMLString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseXMLString.h; sourceTree = "<group>"; };
+		4DF393D81923C51C00A523FB /* pcreposix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcreposix.h; sourceTree = "<group>"; };
+		4DF393D91923C51C00A523FB /* portability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portability.h; sourceTree = "<group>"; };
+		4DF393DA1923C51C00A523FB /* portability_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portability_posix.h; sourceTree = "<group>"; };
+		4DF393DB1923C51C00A523FB /* portability_windows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portability_windows.h; sourceTree = "<group>"; };
+		4DF393DC1923C51C00A523FB /* sml_AnalyzeXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_AnalyzeXML.h; sourceTree = "<group>"; };
+		4DF393DD1923C51C00A523FB /* sml_ArgMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ArgMap.h; sourceTree = "<group>"; };
+		4DF393DE1923C51C00A523FB /* sml_Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Client.h; sourceTree = "<group>"; };
+		4DF393DF1923C51C00A523FB /* sml_ClientAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientAgent.h; sourceTree = "<group>"; };
+		4DF393E01923C51C00A523FB /* sml_ClientAnalyzedXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientAnalyzedXML.h; sourceTree = "<group>"; };
+		4DF393E11923C51C00A523FB /* sml_ClientDirect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientDirect.h; sourceTree = "<group>"; };
+		4DF393E21923C51C00A523FB /* sml_ClientErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientErrors.h; sourceTree = "<group>"; };
+		4DF393E31923C51C00A523FB /* sml_ClientEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientEvents.h; sourceTree = "<group>"; };
+		4DF393E41923C51C00A523FB /* sml_ClientFloatElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientFloatElement.h; sourceTree = "<group>"; };
+		4DF393E51923C51C00A523FB /* sml_ClientIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientIdentifier.h; sourceTree = "<group>"; };
+		4DF393E61923C51C00A523FB /* sml_ClientIntElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientIntElement.h; sourceTree = "<group>"; };
+		4DF393E71923C51C00A523FB /* sml_ClientKernel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientKernel.h; sourceTree = "<group>"; };
+		4DF393E81923C51C00A523FB /* sml_ClientStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientStringElement.h; sourceTree = "<group>"; };
+		4DF393E91923C51C00A523FB /* sml_ClientTraceXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientTraceXML.h; sourceTree = "<group>"; };
+		4DF393EA1923C51C00A523FB /* sml_ClientWMElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientWMElement.h; sourceTree = "<group>"; };
+		4DF393EB1923C51C00A523FB /* sml_ClientWorkingMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientWorkingMemory.h; sourceTree = "<group>"; };
+		4DF393EC1923C51C00A523FB /* sml_ClientXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ClientXML.h; sourceTree = "<group>"; };
+		4DF393ED1923C51C00A523FB /* sml_Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Connection.h; sourceTree = "<group>"; };
+		4DF393EE1923C51C00A523FB /* sml_DeltaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_DeltaList.h; sourceTree = "<group>"; };
+		4DF393EF1923C51C00A523FB /* sml_EmbeddedConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_EmbeddedConnection.h; sourceTree = "<group>"; };
+		4DF393F01923C51C00A523FB /* sml_EmbeddedConnectionAsynch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_EmbeddedConnectionAsynch.h; sourceTree = "<group>"; };
+		4DF393F11923C51C00A523FB /* sml_EmbeddedConnectionSynch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_EmbeddedConnectionSynch.h; sourceTree = "<group>"; };
+		4DF393F21923C51C00A523FB /* sml_Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Errors.h; sourceTree = "<group>"; };
+		4DF393F31923C51C00A523FB /* sml_Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Events.h; sourceTree = "<group>"; };
+		4DF393F41923C51C00A523FB /* sml_EventThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_EventThread.h; sourceTree = "<group>"; };
+		4DF393F51923C51C00A523FB /* sml_Handles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Handles.h; sourceTree = "<group>"; };
+		4DF393F61923C51C00A523FB /* sml_ListMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ListMap.h; sourceTree = "<group>"; };
+		4DF393F71923C51C00A523FB /* sml_MessageSML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_MessageSML.h; sourceTree = "<group>"; };
+		4DF393F81923C51C00A523FB /* sml_Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Names.h; sourceTree = "<group>"; };
+		4DF393F91923C51C00A523FB /* sml_ObjectMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_ObjectMap.h; sourceTree = "<group>"; };
+		4DF393FA1923C51C00A523FB /* sml_OutputDeltaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_OutputDeltaList.h; sourceTree = "<group>"; };
+		4DF393FB1923C51C00A523FB /* sml_RemoteConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_RemoteConnection.h; sourceTree = "<group>"; };
+		4DF393FC1923C51C00A523FB /* sml_StringOps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_StringOps.h; sourceTree = "<group>"; };
+		4DF393FD1923C51C00A523FB /* sml_TagArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagArg.h; sourceTree = "<group>"; };
+		4DF393FE1923C51C00A523FB /* sml_TagCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagCommand.h; sourceTree = "<group>"; };
+		4DF393FF1923C51C00A523FB /* sml_TagError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagError.h; sourceTree = "<group>"; };
+		4DF394001923C51C00A523FB /* sml_TagFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagFilter.h; sourceTree = "<group>"; };
+		4DF394011923C51C00A523FB /* sml_TagName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagName.h; sourceTree = "<group>"; };
+		4DF394021923C51C00A523FB /* sml_TagResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagResult.h; sourceTree = "<group>"; };
+		4DF394031923C51C00A523FB /* sml_TagWme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_TagWme.h; sourceTree = "<group>"; };
+		4DF394041923C51C00A523FB /* sml_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sml_Utils.h; sourceTree = "<group>"; };
+		4DF394051923C51C00A523FB /* soar_TraceNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soar_TraceNames.h; sourceTree = "<group>"; };
+		4DF394061923C51C00A523FB /* soarversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soarversion.h; sourceTree = "<group>"; };
+		4DF394071923C51C00A523FB /* sock_ClientNamedPipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_ClientNamedPipe.h; sourceTree = "<group>"; };
+		4DF394081923C51C00A523FB /* sock_ClientSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_ClientSocket.h; sourceTree = "<group>"; };
+		4DF394091923C51C00A523FB /* sock_DataSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_DataSender.h; sourceTree = "<group>"; };
+		4DF3940A1923C51C00A523FB /* sock_ListenerNamedPipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_ListenerNamedPipe.h; sourceTree = "<group>"; };
+		4DF3940B1923C51C00A523FB /* sock_ListenerSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_ListenerSocket.h; sourceTree = "<group>"; };
+		4DF3940C1923C51C00A523FB /* sock_NamedPipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_NamedPipe.h; sourceTree = "<group>"; };
+		4DF3940D1923C51C00A523FB /* sock_OSspecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_OSspecific.h; sourceTree = "<group>"; };
+		4DF3940E1923C51C00A523FB /* sock_Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_Socket.h; sourceTree = "<group>"; };
+		4DF3940F1923C51C00A523FB /* sock_SocketLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sock_SocketLib.h; sourceTree = "<group>"; };
+		4DF394101923C51C00A523FB /* thread_Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_Event.h; sourceTree = "<group>"; };
+		4DF394111923C51C00A523FB /* thread_Lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_Lock.h; sourceTree = "<group>"; };
+		4DF394121923C51C00A523FB /* thread_OSspecific.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_OSspecific.h; sourceTree = "<group>"; };
+		4DF394131923C51C00A523FB /* thread_Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_Thread.h; sourceTree = "<group>"; };
+		4DF394141923C51C00A523FB /* tokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tokenizer.h; sourceTree = "<group>"; };
+		4DF394151923C51C00A523FB /* XMLTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLTrace.h; sourceTree = "<group>"; };
+		4DF394161923C51C00A523FB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../main.m; sourceTree = "<group>"; };
+		4DF394191923C51C00A523FB /* Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
+		4DF3941A1923C51C00A523FB /* Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Application.m; sourceTree = "<group>"; };
+		4DF3941B1923C51C00A523FB /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
+		4DF3941C1923C51C00A523FB /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationDelegate.m; sourceTree = "<group>"; };
+		4DF3941E1923C51C00A523FB /* DiceGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGame.h; sourceTree = "<group>"; };
+		4DF3941F1923C51C00A523FB /* DiceGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGame.m; sourceTree = "<group>"; };
+		4DF394211923C51C00A523FB /* Bid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bid.h; sourceTree = "<group>"; };
+		4DF394221923C51C00A523FB /* Bid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bid.m; sourceTree = "<group>"; };
+		4DF394231923C51C00A523FB /* DiceAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceAction.h; sourceTree = "<group>"; };
+		4DF394241923C51C00A523FB /* DiceAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceAction.m; sourceTree = "<group>"; };
+		4DF394251923C51C00A523FB /* DiceGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGameState.h; sourceTree = "<group>"; };
+		4DF394261923C51C00A523FB /* DiceGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGameState.m; sourceTree = "<group>"; };
+		4DF394271923C51C00A523FB /* DiceTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceTypes.h; sourceTree = "<group>"; };
+		4DF394281923C51C00A523FB /* Die.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Die.h; sourceTree = "<group>"; };
+		4DF394291923C51C00A523FB /* Die.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Die.m; sourceTree = "<group>"; };
+		4DF3942A1923C51C00A523FB /* HistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryItem.h; sourceTree = "<group>"; };
+		4DF3942B1923C51C00A523FB /* HistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryItem.m; sourceTree = "<group>"; };
+		4DF3942C1923C51C00A523FB /* PlayerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerState.h; sourceTree = "<group>"; };
+		4DF3942D1923C51C00A523FB /* PlayerState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerState.m; sourceTree = "<group>"; };
+		4DF3942E1923C51C00A523FB /* DiceGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceGraphics.h; sourceTree = "<group>"; };
+		4DF3942F1923C51C00A523FB /* DiceGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceGraphics.m; sourceTree = "<group>"; };
+		4DF394341923C51C00A523FB /* GameRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRecord.h; sourceTree = "<group>"; };
+		4DF394351923C51C00A523FB /* GameRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameRecord.m; sourceTree = "<group>"; };
+		4DF394361923C51C00A523FB /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		4DF3943B1923C51C00A523FB /* AboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutView.h; sourceTree = "<group>"; };
+		4DF3943C1923C51C00A523FB /* AboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutView.m; sourceTree = "<group>"; };
+		4DF3943E1923C51C00A523FB /* AboutViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewiPad.xib; sourceTree = "<group>"; };
+		4DF3943F1923C51C00A523FB /* ApplicationiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplicationiPad.xib; sourceTree = "<group>"; };
+		4DF394401923C51C00A523FB /* LoadingGameViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingGameViewiPad.xib; sourceTree = "<group>"; };
+		4DF394411923C51C00A523FB /* MainMenuiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuiPad.xib; sourceTree = "<group>"; };
+		4DF394421923C51C00A523FB /* MultiplayerViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiplayerViewiPad.xib; sourceTree = "<group>"; };
+		4DF394431923C51C00A523FB /* PlayGameViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayGameViewiPad.xib; sourceTree = "<group>"; };
+		4DF394441923C51C00A523FB /* RoundOverViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundOverViewiPad.xib; sourceTree = "<group>"; };
+		4DF394451923C51C00A523FB /* RulesViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesViewiPad.xib; sourceTree = "<group>"; };
+		4DF394461923C51C00A523FB /* SettingsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewiPad.xib; sourceTree = "<group>"; };
+		4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerViewiPad.xib; sourceTree = "<group>"; };
+		4DF394481923C51C00A523FB /* StatsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewiPad.xib; sourceTree = "<group>"; };
+		4DF3944A1923C51C00A523FB /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		4DF3944B1923C51C00A523FB /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
+		4DF3944C1923C51C00A523FB /* JoinMatchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMatchView.xib; sourceTree = "<group>"; };
+		4DF3944D1923C51C00A523FB /* LoadingGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingGameView.xib; sourceTree = "<group>"; };
+		4DF3944E1923C51C00A523FB /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		4DF3944F1923C51C00A523FB /* MultiplayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiplayerView.xib; sourceTree = "<group>"; };
+		4DF394501923C51C00A523FB /* PlayGameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayGameView.xib; sourceTree = "<group>"; };
+		4DF394511923C51C00A523FB /* RoundOverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundOverView.xib; sourceTree = "<group>"; };
+		4DF394521923C51C00A523FB /* RulesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesView.xib; sourceTree = "<group>"; };
+		4DF394531923C51C00A523FB /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		4DF394541923C51C00A523FB /* SingleplayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerView.xib; sourceTree = "<group>"; };
+		4DF394551923C51C00A523FB /* StatsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
+		4DF394571923C51C00A523FB /* JoinMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinMatchView.h; sourceTree = "<group>"; };
+		4DF394581923C51C00A523FB /* JoinMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinMatchView.m; sourceTree = "<group>"; };
+		4DF3945A1923C51C00A523FB /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
+		4DF3945B1923C51C00A523FB /* LoadingGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingGameView.m; sourceTree = "<group>"; };
+		4DF3945D1923C51C00A523FB /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
+		4DF3945E1923C51C00A523FB /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
+		4DF394601923C51C00A523FB /* MultiplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerView.h; sourceTree = "<group>"; };
+		4DF394611923C51C00A523FB /* MultiplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerView.m; sourceTree = "<group>"; };
+		4DF394631923C51C00A523FB /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
+		4DF394641923C51C00A523FB /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
+		4DF394651923C51C00A523FB /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
+		4DF394661923C51C00A523FB /* RoundOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundOverView.h; sourceTree = "<group>"; };
+		4DF394671923C51C00A523FB /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
+		4DF394691923C51C00A523FB /* RulesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulesView.h; sourceTree = "<group>"; };
+		4DF3946A1923C51C00A523FB /* RulesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RulesView.m; sourceTree = "<group>"; };
+		4DF3946C1923C51C00A523FB /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		4DF3946D1923C51C00A523FB /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		4DF3946F1923C51C00A523FB /* SingleplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleplayerView.h; sourceTree = "<group>"; };
+		4DF394701923C51C00A523FB /* SingleplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleplayerView.m; sourceTree = "<group>"; };
+		4DF394721923C51C00A523FB /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsView.h; sourceTree = "<group>"; };
+		4DF394731923C51C00A523FB /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsView.m; sourceTree = "<group>"; };
+		4DF394741923C51C00A523FB /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		4DF394771923C51C00A523FB /* DiceDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceDatabase.h; sourceTree = "<group>"; };
+		4DF394781923C51C00A523FB /* DiceDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceDatabase.m; sourceTree = "<group>"; };
+		4DF394791923C51C00A523FB /* GameKitGameHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitGameHandler.h; sourceTree = "<group>"; };
+		4DF3947A1923C51C00A523FB /* GameKitGameHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitGameHandler.m; sourceTree = "<group>"; };
+		4DF3947B1923C51C00A523FB /* GameKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitListener.h; sourceTree = "<group>"; };
+		4DF3947C1923C51C00A523FB /* GameKitListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitListener.m; sourceTree = "<group>"; };
+		4DF3947D1923C51C00A523FB /* MultiplayerMatchData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerMatchData.h; sourceTree = "<group>"; };
+		4DF3947E1923C51C00A523FB /* MultiplayerMatchData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerMatchData.m; sourceTree = "<group>"; };
+		4DF397AE1923C5B800A523FB /* DiceLocalPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceLocalPlayer.h; sourceTree = "<group>"; };
+		4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceLocalPlayer.m; sourceTree = "<group>"; };
+		4DF397B01923C5B800A523FB /* DiceRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceRemotePlayer.h; sourceTree = "<group>"; };
+		4DF397B11923C5B800A523FB /* DiceRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceRemotePlayer.m; sourceTree = "<group>"; };
+		4DF397B21923C5B800A523FB /* SoarPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoarPlayer.h; sourceTree = "<group>"; };
+		4DF397B31923C5B800A523FB /* SoarPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoarPlayer.mm; sourceTree = "<group>"; };
+		4DF397BE1923C7BD00A523FB /* libSoar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSoar.a; sourceTree = "<group>"; };
+		4DF397C01923C7BD00A523FB /* libSoar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSoar.a; sourceTree = "<group>"; };
+		4DF397C11923C9A600A523FB /* default */ = {isa = PBXFileReference; lastKnownFileType = folder; path = default; sourceTree = "<group>"; };
+		4DF397C21923C9A600A523FB /* dice */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dice; sourceTree = "<group>"; };
+		4DF397C31923C9A600A523FB /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-agent-new.soar"; sourceTree = "<group>"; };
+		4DF397C41923C9A600A523FB /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-agent-p"; sourceTree = "<group>"; };
+		4DF397C51923C9A600A523FB /* dice-easy.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-easy.soar"; sourceTree = "<group>"; };
+		4DF397C61923C9A600A523FB /* dice-hard.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-hard.soar"; sourceTree = "<group>"; };
+		4DF397C71923C9A600A523FB /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-harder.soar"; sourceTree = "<group>"; };
+		4DF397C81923C9A600A523FB /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-hardest.soar"; sourceTree = "<group>"; };
+		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
+		4DF397CA1923C9A600A523FB /* dice-model-bot-new */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-model-bot-new"; sourceTree = "<group>"; };
+		4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-model-bot-new-old"; sourceTree = "<group>"; };
+		4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-model-bot-new.soar"; sourceTree = "<group>"; };
+		4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p0-m0-c0.soar"; sourceTree = "<group>"; };
+		4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p0-m1-c0.soar"; sourceTree = "<group>"; };
+		4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p1-m0-c0.soar"; sourceTree = "<group>"; };
+		4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p1-m1-c0.soar"; sourceTree = "<group>"; };
+		4DF397D11923C9A600A523FB /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-pmh.soar"; sourceTree = "<group>"; };
+		4DF397D21923C9A600A523FB /* dice-rl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-rl"; sourceTree = "<group>"; };
+		4DF397D31923C9A600A523FB /* dice-rl.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-rl.soar"; sourceTree = "<group>"; };
+		4DF397D41923C9A600A523FB /* dice-rl.vsa */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-rl.vsa"; sourceTree = "<group>"; };
+		4DF397D51923C9A600A523FB /* dice.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dice.soar; sourceTree = "<group>"; };
+		4DF397D61923C9A600A523FB /* dice.vsa */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dice.vsa; sourceTree = "<group>"; };
+		4DF397D71923C9A600A523FB /* improvements.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = improvements.soar; sourceTree = "<group>"; };
+		C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
+		C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
+		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CD86D64913BB9E450005A182 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CD86D64B13BB9E450005A182 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CD86D64D13BB9E450005A182 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		CD86D71C13BBB1B60005A182 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CD86D64013BB9E450005A182 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */,
+				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
+				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
+				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,
+				CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */,
+				CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */,
+				CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */,
+				CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */,
+				CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */,
+				4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4DF393841923C4F400A523FB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393851923C4F400A523FB /* Graphics */,
+				4DF393901923C4F400A523FB /* icons */,
+				4DF3939C1923C4F400A523FB /* Prototype iPad Interfaces */,
+			);
+			name = Assets;
+			path = ../Assets;
+			sourceTree = "<group>";
+		};
+		4DF393851923C4F400A523FB /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393861923C4F400A523FB /* Center-Push.png */,
+				4DF393871923C4F400A523FB /* Center-Push@2x.png */,
+				4DF393881923C4F400A523FB /* die-1.png */,
+				4DF393891923C4F400A523FB /* die-2.png */,
+				4DF3938A1923C4F400A523FB /* die-3.png */,
+				4DF3938B1923C4F400A523FB /* die-4.png */,
+				4DF3938C1923C4F400A523FB /* die-5.png */,
+				4DF3938D1923C4F400A523FB /* die-6.png */,
+				4DF3938E1923C4F400A523FB /* die-unknown.png */,
+				4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		4DF393901923C4F400A523FB /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393911923C4F400A523FB /* Icon-iPad.png */,
+				4DF393921923C4F400A523FB /* Icon-iPad@2x.png */,
+				4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */,
+				4DF393941923C4F400A523FB /* Icon-Settings.png */,
+				4DF393951923C4F400A523FB /* Icon-Settings@2x.png */,
+				4DF393961923C4F400A523FB /* Icon-Spotlight.png */,
+				4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */,
+				4DF393981923C4F400A523FB /* Icon.png */,
+				4DF393991923C4F400A523FB /* icon.psd */,
+				4DF3939A1923C4F400A523FB /* iTunesArtwork.png */,
+				4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+		4DF3939C1923C4F400A523FB /* Prototype iPad Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3939D1923C4F400A523FB /* Prototype 1 */,
+				4DF3939E1923C4F400A523FB /* Prototype 2.psd */,
+				4DF3939F1923C4F400A523FB /* Prototype 3.psd */,
+				4DF393A01923C4F400A523FB /* Prototype 4.psd */,
+				4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */,
+				4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */,
+			);
+			path = "Prototype iPad Interfaces";
+			sourceTree = "<group>";
+		};
+		4DF393BE1923C51C00A523FB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393BF1923C51C00A523FB /* HTML */,
+				4DF393C21923C51C00A523FB /* Libraries */,
+				4DF394171923C51C00A523FB /* Obj-C */,
+				4DF3947F1923C51C00A523FB /* Soar Agent */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		4DF393BF1923C51C00A523FB /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393C01923C51C00A523FB /* about.html */,
+				4DF393C11923C51C00A523FB /* rules.html */,
+			);
+			path = HTML;
+			sourceTree = "<group>";
+		};
+		4DF393C21923C51C00A523FB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393C31923C51C00A523FB /* Soar */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		4DF393C31923C51C00A523FB /* Soar */ = {
+			isa = PBXGroup;
+			children = (
+				4DF397BD1923C7BD00A523FB /* Device */,
+				4DF397BF1923C7BD00A523FB /* Simulator */,
+				4DF393CA1923C51C00A523FB /* Soar Headers */,
+			);
+			path = Soar;
+			sourceTree = "<group>";
+		};
+		4DF393CA1923C51C00A523FB /* Soar Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4DF393CB1923C51C00A523FB /* ElementXML.h */,
+				4DF393CC1923C51C00A523FB /* ElementXMLHandle.h */,
+				4DF393CD1923C51C00A523FB /* ElementXMLImpl.h */,
+				4DF393CE1923C51C00A523FB /* ElementXMLInterface.h */,
+				4DF393CF1923C51C00A523FB /* EmbeddedSMLInterface.h */,
+				4DF393D01923C51C00A523FB /* Export.h */,
+				4DF393D11923C51C00A523FB /* misc.h */,
+				4DF393D51923C51C00A523FB /* ParseXML.h */,
+				4DF393D61923C51C00A523FB /* ParseXMLFile.h */,
+				4DF393D71923C51C00A523FB /* ParseXMLString.h */,
+				4DF393D81923C51C00A523FB /* pcreposix.h */,
+				4DF393D91923C51C00A523FB /* portability.h */,
+				4DF393DA1923C51C00A523FB /* portability_posix.h */,
+				4DF393DB1923C51C00A523FB /* portability_windows.h */,
+				4DF393DC1923C51C00A523FB /* sml_AnalyzeXML.h */,
+				4DF393DD1923C51C00A523FB /* sml_ArgMap.h */,
+				4DF393DE1923C51C00A523FB /* sml_Client.h */,
+				4DF393DF1923C51C00A523FB /* sml_ClientAgent.h */,
+				4DF393E01923C51C00A523FB /* sml_ClientAnalyzedXML.h */,
+				4DF393E11923C51C00A523FB /* sml_ClientDirect.h */,
+				4DF393E21923C51C00A523FB /* sml_ClientErrors.h */,
+				4DF393E31923C51C00A523FB /* sml_ClientEvents.h */,
+				4DF393E41923C51C00A523FB /* sml_ClientFloatElement.h */,
+				4DF393E51923C51C00A523FB /* sml_ClientIdentifier.h */,
+				4DF393E61923C51C00A523FB /* sml_ClientIntElement.h */,
+				4DF393E71923C51C00A523FB /* sml_ClientKernel.h */,
+				4DF393E81923C51C00A523FB /* sml_ClientStringElement.h */,
+				4DF393E91923C51C00A523FB /* sml_ClientTraceXML.h */,
+				4DF393EA1923C51C00A523FB /* sml_ClientWMElement.h */,
+				4DF393EB1923C51C00A523FB /* sml_ClientWorkingMemory.h */,
+				4DF393EC1923C51C00A523FB /* sml_ClientXML.h */,
+				4DF393ED1923C51C00A523FB /* sml_Connection.h */,
+				4DF393EE1923C51C00A523FB /* sml_DeltaList.h */,
+				4DF393EF1923C51C00A523FB /* sml_EmbeddedConnection.h */,
+				4DF393F01923C51C00A523FB /* sml_EmbeddedConnectionAsynch.h */,
+				4DF393F11923C51C00A523FB /* sml_EmbeddedConnectionSynch.h */,
+				4DF393F21923C51C00A523FB /* sml_Errors.h */,
+				4DF393F31923C51C00A523FB /* sml_Events.h */,
+				4DF393F41923C51C00A523FB /* sml_EventThread.h */,
+				4DF393F51923C51C00A523FB /* sml_Handles.h */,
+				4DF393F61923C51C00A523FB /* sml_ListMap.h */,
+				4DF393F71923C51C00A523FB /* sml_MessageSML.h */,
+				4DF393F81923C51C00A523FB /* sml_Names.h */,
+				4DF393F91923C51C00A523FB /* sml_ObjectMap.h */,
+				4DF393FA1923C51C00A523FB /* sml_OutputDeltaList.h */,
+				4DF393FB1923C51C00A523FB /* sml_RemoteConnection.h */,
+				4DF393FC1923C51C00A523FB /* sml_StringOps.h */,
+				4DF393FD1923C51C00A523FB /* sml_TagArg.h */,
+				4DF393FE1923C51C00A523FB /* sml_TagCommand.h */,
+				4DF393FF1923C51C00A523FB /* sml_TagError.h */,
+				4DF394001923C51C00A523FB /* sml_TagFilter.h */,
+				4DF394011923C51C00A523FB /* sml_TagName.h */,
+				4DF394021923C51C00A523FB /* sml_TagResult.h */,
+				4DF394031923C51C00A523FB /* sml_TagWme.h */,
+				4DF394041923C51C00A523FB /* sml_Utils.h */,
+				4DF394051923C51C00A523FB /* soar_TraceNames.h */,
+				4DF394061923C51C00A523FB /* soarversion.h */,
+				4DF394071923C51C00A523FB /* sock_ClientNamedPipe.h */,
+				4DF394081923C51C00A523FB /* sock_ClientSocket.h */,
+				4DF394091923C51C00A523FB /* sock_DataSender.h */,
+				4DF3940A1923C51C00A523FB /* sock_ListenerNamedPipe.h */,
+				4DF3940B1923C51C00A523FB /* sock_ListenerSocket.h */,
+				4DF3940C1923C51C00A523FB /* sock_NamedPipe.h */,
+				4DF3940D1923C51C00A523FB /* sock_OSspecific.h */,
+				4DF3940E1923C51C00A523FB /* sock_Socket.h */,
+				4DF3940F1923C51C00A523FB /* sock_SocketLib.h */,
+				4DF394101923C51C00A523FB /* thread_Event.h */,
+				4DF394111923C51C00A523FB /* thread_Lock.h */,
+				4DF394121923C51C00A523FB /* thread_OSspecific.h */,
+				4DF394131923C51C00A523FB /* thread_Thread.h */,
+				4DF394141923C51C00A523FB /* tokenizer.h */,
+				4DF394151923C51C00A523FB /* XMLTrace.h */,
+			);
+			path = "Soar Headers";
+			sourceTree = "<group>";
+		};
+		4DF394171923C51C00A523FB /* Obj-C */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394161923C51C00A523FB /* main.m */,
+				4DF394181923C51C00A523FB /* Application Loading */,
+				4DF3941D1923C51C00A523FB /* Dice Engine */,
+				4DF394391923C51C00A523FB /* UI */,
+				4DF394761923C51C00A523FB /* Utilities */,
+			);
+			path = "Obj-C";
+			sourceTree = "<group>";
+		};
+		4DF394181923C51C00A523FB /* Application Loading */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394191923C51C00A523FB /* Application.h */,
+				4DF3941A1923C51C00A523FB /* Application.m */,
+				4DF3941B1923C51C00A523FB /* ApplicationDelegate.h */,
+				4DF3941C1923C51C00A523FB /* ApplicationDelegate.m */,
+			);
+			path = "Application Loading";
+			sourceTree = "<group>";
+		};
+		4DF3941D1923C51C00A523FB /* Dice Engine */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3941E1923C51C00A523FB /* DiceGame.h */,
+				4DF3941F1923C51C00A523FB /* DiceGame.m */,
+				4DF394201923C51C00A523FB /* DiceGameState */,
+				4DF3942E1923C51C00A523FB /* DiceGraphics.h */,
+				4DF3942F1923C51C00A523FB /* DiceGraphics.m */,
+				4DF394341923C51C00A523FB /* GameRecord.h */,
+				4DF394351923C51C00A523FB /* GameRecord.m */,
+				4DF394361923C51C00A523FB /* Player.h */,
+				4DF397AD1923C5B800A523FB /* Players */,
+			);
+			path = "Dice Engine";
+			sourceTree = "<group>";
+		};
+		4DF394201923C51C00A523FB /* DiceGameState */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394211923C51C00A523FB /* Bid.h */,
+				4DF394221923C51C00A523FB /* Bid.m */,
+				4DF394231923C51C00A523FB /* DiceAction.h */,
+				4DF394241923C51C00A523FB /* DiceAction.m */,
+				4DF394251923C51C00A523FB /* DiceGameState.h */,
+				4DF394261923C51C00A523FB /* DiceGameState.m */,
+				4DF394271923C51C00A523FB /* DiceTypes.h */,
+				4DF394281923C51C00A523FB /* Die.h */,
+				4DF394291923C51C00A523FB /* Die.m */,
+				4DF3942A1923C51C00A523FB /* HistoryItem.h */,
+				4DF3942B1923C51C00A523FB /* HistoryItem.m */,
+				4DF3942C1923C51C00A523FB /* PlayerState.h */,
+				4DF3942D1923C51C00A523FB /* PlayerState.m */,
+			);
+			path = DiceGameState;
+			sourceTree = "<group>";
+		};
+		4DF394391923C51C00A523FB /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3943A1923C51C00A523FB /* AboutView */,
+				4DF3943D1923C51C00A523FB /* iPad-XIBs */,
+				4DF394491923C51C00A523FB /* iPhone-XIBs */,
+				4DF394561923C51C00A523FB /* JoinMatchView */,
+				4DF394591923C51C00A523FB /* LoadingGameView */,
+				4DF3945C1923C51C00A523FB /* MainMenu */,
+				4DF3945F1923C51C00A523FB /* MultiplayerView */,
+				4DF394621923C51C00A523FB /* PlayGameView */,
+				4DF394681923C51C00A523FB /* RulesView */,
+				4DF3946B1923C51C00A523FB /* SettingsView */,
+				4DF3946E1923C51C00A523FB /* SingleplayerView */,
+				4DF394711923C51C00A523FB /* StatsView */,
+				4DF394741923C51C00A523FB /* UIImage+ImageEffects.h */,
+				4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4DF3943A1923C51C00A523FB /* AboutView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3943B1923C51C00A523FB /* AboutView.h */,
+				4DF3943C1923C51C00A523FB /* AboutView.m */,
+			);
+			path = AboutView;
+			sourceTree = "<group>";
+		};
+		4DF3943D1923C51C00A523FB /* iPad-XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3943E1923C51C00A523FB /* AboutViewiPad.xib */,
+				4DF3943F1923C51C00A523FB /* ApplicationiPad.xib */,
+				4DF394401923C51C00A523FB /* LoadingGameViewiPad.xib */,
+				4DF394411923C51C00A523FB /* MainMenuiPad.xib */,
+				4DF394421923C51C00A523FB /* MultiplayerViewiPad.xib */,
+				4DF394431923C51C00A523FB /* PlayGameViewiPad.xib */,
+				4DF394441923C51C00A523FB /* RoundOverViewiPad.xib */,
+				4DF394451923C51C00A523FB /* RulesViewiPad.xib */,
+				4DF394461923C51C00A523FB /* SettingsViewiPad.xib */,
+				4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */,
+				4DF394481923C51C00A523FB /* StatsViewiPad.xib */,
+			);
+			path = "iPad-XIBs";
+			sourceTree = "<group>";
+		};
+		4DF394491923C51C00A523FB /* iPhone-XIBs */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3944A1923C51C00A523FB /* AboutView.xib */,
+				4DF3944B1923C51C00A523FB /* Application.xib */,
+				4DF3944C1923C51C00A523FB /* JoinMatchView.xib */,
+				4DF3944D1923C51C00A523FB /* LoadingGameView.xib */,
+				4DF3944E1923C51C00A523FB /* MainMenu.xib */,
+				4DF3944F1923C51C00A523FB /* MultiplayerView.xib */,
+				4DF394501923C51C00A523FB /* PlayGameView.xib */,
+				4DF394511923C51C00A523FB /* RoundOverView.xib */,
+				4DF394521923C51C00A523FB /* RulesView.xib */,
+				4DF394531923C51C00A523FB /* SettingsView.xib */,
+				4DF394541923C51C00A523FB /* SingleplayerView.xib */,
+				4DF394551923C51C00A523FB /* StatsView.xib */,
+			);
+			path = "iPhone-XIBs";
+			sourceTree = "<group>";
+		};
+		4DF394561923C51C00A523FB /* JoinMatchView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394571923C51C00A523FB /* JoinMatchView.h */,
+				4DF394581923C51C00A523FB /* JoinMatchView.m */,
+			);
+			path = JoinMatchView;
+			sourceTree = "<group>";
+		};
+		4DF394591923C51C00A523FB /* LoadingGameView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3945A1923C51C00A523FB /* LoadingGameView.h */,
+				4DF3945B1923C51C00A523FB /* LoadingGameView.m */,
+			);
+			path = LoadingGameView;
+			sourceTree = "<group>";
+		};
+		4DF3945C1923C51C00A523FB /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3945D1923C51C00A523FB /* MainMenu.h */,
+				4DF3945E1923C51C00A523FB /* MainMenu.m */,
+			);
+			path = MainMenu;
+			sourceTree = "<group>";
+		};
+		4DF3945F1923C51C00A523FB /* MultiplayerView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394601923C51C00A523FB /* MultiplayerView.h */,
+				4DF394611923C51C00A523FB /* MultiplayerView.m */,
+			);
+			path = MultiplayerView;
+			sourceTree = "<group>";
+		};
+		4DF394621923C51C00A523FB /* PlayGameView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394631923C51C00A523FB /* PlayGame.h */,
+				4DF394641923C51C00A523FB /* PlayGameView.h */,
+				4DF394651923C51C00A523FB /* PlayGameView.m */,
+				4DF394661923C51C00A523FB /* RoundOverView.h */,
+				4DF394671923C51C00A523FB /* RoundOverView.m */,
+			);
+			path = PlayGameView;
+			sourceTree = "<group>";
+		};
+		4DF394681923C51C00A523FB /* RulesView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394691923C51C00A523FB /* RulesView.h */,
+				4DF3946A1923C51C00A523FB /* RulesView.m */,
+			);
+			path = RulesView;
+			sourceTree = "<group>";
+		};
+		4DF3946B1923C51C00A523FB /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3946C1923C51C00A523FB /* SettingsView.h */,
+				4DF3946D1923C51C00A523FB /* SettingsView.m */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
+		4DF3946E1923C51C00A523FB /* SingleplayerView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF3946F1923C51C00A523FB /* SingleplayerView.h */,
+				4DF394701923C51C00A523FB /* SingleplayerView.m */,
+			);
+			path = SingleplayerView;
+			sourceTree = "<group>";
+		};
+		4DF394711923C51C00A523FB /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394721923C51C00A523FB /* StatsView.h */,
+				4DF394731923C51C00A523FB /* StatsView.m */,
+			);
+			path = StatsView;
+			sourceTree = "<group>";
+		};
+		4DF394761923C51C00A523FB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4DF394771923C51C00A523FB /* DiceDatabase.h */,
+				4DF394781923C51C00A523FB /* DiceDatabase.m */,
+				4DF394791923C51C00A523FB /* GameKitGameHandler.h */,
+				4DF3947A1923C51C00A523FB /* GameKitGameHandler.m */,
+				4DF3947B1923C51C00A523FB /* GameKitListener.h */,
+				4DF3947C1923C51C00A523FB /* GameKitListener.m */,
+				4DF3947D1923C51C00A523FB /* MultiplayerMatchData.h */,
+				4DF3947E1923C51C00A523FB /* MultiplayerMatchData.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4DF3947F1923C51C00A523FB /* Soar Agent */ = {
+			isa = PBXGroup;
+			children = (
+				4DF397C11923C9A600A523FB /* default */,
+				4DF397C21923C9A600A523FB /* dice */,
+				4DF397C31923C9A600A523FB /* dice-agent-new.soar */,
+				4DF397C41923C9A600A523FB /* dice-agent-p */,
+				4DF397C51923C9A600A523FB /* dice-easy.soar */,
+				4DF397C61923C9A600A523FB /* dice-hard.soar */,
+				4DF397C71923C9A600A523FB /* dice-harder.soar */,
+				4DF397C81923C9A600A523FB /* dice-hardest.soar */,
+				4DF397C91923C9A600A523FB /* dice-medium.soar */,
+				4DF397CA1923C9A600A523FB /* dice-model-bot-new */,
+				4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */,
+				4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */,
+				4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */,
+				4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */,
+				4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */,
+				4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */,
+				4DF397D11923C9A600A523FB /* dice-pmh.soar */,
+				4DF397D21923C9A600A523FB /* dice-rl */,
+				4DF397D31923C9A600A523FB /* dice-rl.soar */,
+				4DF397D41923C9A600A523FB /* dice-rl.vsa */,
+				4DF397D51923C9A600A523FB /* dice.soar */,
+				4DF397D61923C9A600A523FB /* dice.vsa */,
+				4DF397D71923C9A600A523FB /* improvements.soar */,
+			);
+			path = "Soar Agent";
+			sourceTree = "<group>";
+		};
+		4DF397AD1923C5B800A523FB /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				4DF397AE1923C5B800A523FB /* DiceLocalPlayer.h */,
+				4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */,
+				4DF397B01923C5B800A523FB /* DiceRemotePlayer.h */,
+				4DF397B11923C5B800A523FB /* DiceRemotePlayer.m */,
+				4DF397B21923C5B800A523FB /* SoarPlayer.h */,
+				4DF397B31923C5B800A523FB /* SoarPlayer.mm */,
+			);
+			path = Players;
+			sourceTree = "<group>";
+		};
+		4DF397BD1923C7BD00A523FB /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				4DF397BE1923C7BD00A523FB /* libSoar.a */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		4DF397BF1923C7BD00A523FB /* Simulator */ = {
+			isa = PBXGroup;
+			children = (
+				4DF397C01923C7BD00A523FB /* libSoar.a */,
+			);
+			path = Simulator;
+			sourceTree = "<group>";
+		};
+		C6951844155045D900BD15DA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */,
+				4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */,
+				C61DD3291550659E0049A84C /* Liar_s_Dice.xcdatamodeld */,
+				C6951845155045E900BD15DA /* Liar_s_Dice.xcdatamodeld */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CD86D63813BB9E450005A182 = {
+			isa = PBXGroup;
+			children = (
+				4DB7B1DB17EB45C000CA94CE /* Images.xcassets */,
+				4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */,
+				C6951844155045D900BD15DA /* Supporting Files */,
+				4DF393841923C4F400A523FB /* Assets */,
+				4DF393BE1923C51C00A523FB /* src */,
+				CD86D64613BB9E450005A182 /* Frameworks */,
+				4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */,
+			);
+			sourceTree = "<group>";
+		};
+		CD86D64613BB9E450005A182 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC1BE411878A694007A17D3 /* GameKit.framework */,
+				4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */,
+				4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */,
+				4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */,
+				CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */,
+				CD86D71C13BBB1B60005A182 /* OpenGLES.framework */,
+				CD86D64713BB9E450005A182 /* UIKit.framework */,
+				CD86D64913BB9E450005A182 /* Foundation.framework */,
+				CD86D64B13BB9E450005A182 /* CoreGraphics.framework */,
+				CD86D64D13BB9E450005A182 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CD86D64213BB9E450005A182 /* UM Liars Dice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD86D66E13BB9E460005A182 /* Build configuration list for PBXNativeTarget "UM Liars Dice" */;
+			buildPhases = (
+				CD86D63F13BB9E450005A182 /* Sources */,
+				CD86D64013BB9E450005A182 /* Frameworks */,
+				CD86D64113BB9E450005A182 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "UM Liars Dice";
+			productName = "Lair's Dice";
+			productReference = 4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CD86D63A13BB9E450005A182 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					CD86D64213BB9E450005A182 = {
+						DevelopmentTeam = RYTB7X84GA;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "UM Liars Dice" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CD86D63813BB9E450005A182;
+			productRefGroup = CD86D63813BB9E450005A182;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CD86D64213BB9E450005A182 /* UM Liars Dice */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD86D64113BB9E450005A182 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DF397D81923C9A600A523FB /* default in Resources */,
+				4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */,
+				4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */,
+				4DF397E91923C9A600A523FB /* dice-rl in Resources */,
+				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
+				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
+				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
+				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
+				4DF393AD1923C4F400A523FB /* Icon-iPad.png in Resources */,
+				4DF397EB1923C9A600A523FB /* dice-rl.vsa in Resources */,
+				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
+				4DF393B31923C4F400A523FB /* Icon-Spotlight@2x.png in Resources */,
+				4DF393B61923C4F400A523FB /* iTunesArtwork.png in Resources */,
+				4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */,
+				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
+				4DF397E81923C9A600A523FB /* dice-pmh.soar in Resources */,
+				4DF3962F1923C51D00A523FB /* RoundOverViewiPad.xib in Resources */,
+				4DF397E51923C9A600A523FB /* dice-p0-m1-c0.soar in Resources */,
+				4DF397D91923C9A600A523FB /* dice in Resources */,
+				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
+				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
+				4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */,
+				4DF397E11923C9A600A523FB /* dice-model-bot-new in Resources */,
+				4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */,
+				4DF396381923C51D00A523FB /* MainMenu.xib in Resources */,
+				4DF393B21923C4F400A523FB /* Icon-Spotlight.png in Resources */,
+				4DF397E71923C9A600A523FB /* dice-p1-m1-c0.soar in Resources */,
+				4DF393A51923C4F400A523FB /* die-1.png in Resources */,
+				4DF393A31923C4F400A523FB /* Center-Push.png in Resources */,
+				4DF3962B1923C51D00A523FB /* LoadingGameViewiPad.xib in Resources */,
+				4DF3962D1923C51D00A523FB /* MultiplayerViewiPad.xib in Resources */,
+				4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */,
+				4DF397EA1923C9A600A523FB /* dice-rl.soar in Resources */,
+				4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */,
+				4DF396291923C51D00A523FB /* AboutViewiPad.xib in Resources */,
+				4DF396371923C51D00A523FB /* LoadingGameView.xib in Resources */,
+				4DF396141923C51D00A523FB /* about.html in Resources */,
+				4DF393A81923C4F400A523FB /* die-4.png in Resources */,
+				4DF396151923C51D00A523FB /* rules.html in Resources */,
+				4DF393BC1923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection in Resources */,
+				4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */,
+				4DF393A61923C4F400A523FB /* die-2.png in Resources */,
+				4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */,
+				4DF393B51923C4F400A523FB /* icon.psd in Resources */,
+				4DF393B41923C4F400A523FB /* Icon.png in Resources */,
+				4DF393B71923C4F400A523FB /* iTunesArtwork@2x.png in Resources */,
+				4DF396311923C51D00A523FB /* SettingsViewiPad.xib in Resources */,
+				4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */,
+				4DF393B11923C4F400A523FB /* Icon-Settings@2x.png in Resources */,
+				4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */,
+				4DF397DC1923C9A600A523FB /* dice-easy.soar in Resources */,
+				4DF3962A1923C51D00A523FB /* ApplicationiPad.xib in Resources */,
+				4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */,
+				4DF397E41923C9A600A523FB /* dice-p0-m0-c0.soar in Resources */,
+				4DF393A71923C4F400A523FB /* die-3.png in Resources */,
+				4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */,
+				4DF393AA1923C4F400A523FB /* die-6.png in Resources */,
+				4DF397EE1923C9A600A523FB /* improvements.soar in Resources */,
+				4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */,
+				4DF397E31923C9A600A523FB /* dice-model-bot-new.soar in Resources */,
+				4DF393AF1923C4F400A523FB /* Icon-iPhone@2x.png in Resources */,
+				4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */,
+				4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */,
+				4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */,
+				4DF393AE1923C4F400A523FB /* Icon-iPad@2x.png in Resources */,
+				4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */,
+				4DF396351923C51D00A523FB /* Application.xib in Resources */,
+				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
+				4DF397ED1923C9A600A523FB /* dice.vsa in Resources */,
+				4DF397EC1923C9A600A523FB /* dice.soar in Resources */,
+				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
+				4DF3962E1923C51D00A523FB /* PlayGameViewiPad.xib in Resources */,
+				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
+				4DF397E21923C9A600A523FB /* dice-model-bot-new-old in Resources */,
+				4DF397E61923C9A600A523FB /* dice-p1-m0-c0.soar in Resources */,
+				4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CD86D63F13BB9E450005A182 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DF396221923C51D00A523FB /* PlayerState.m in Sources */,
+				4DF397B41923C5B800A523FB /* DiceLocalPlayer.m in Sources */,
+				4DF3964B1923C51D00A523FB /* DiceDatabase.m in Sources */,
+				4DF396261923C51D00A523FB /* GameRecord.m in Sources */,
+				4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */,
+				4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */,
+				4DF396441923C51D00A523FB /* PlayGameView.m in Sources */,
+				4DF3964D1923C51D00A523FB /* GameKitListener.m in Sources */,
+				4DF3961A1923C51D00A523FB /* Application.m in Sources */,
+				4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */,
+				4DF396211923C51D00A523FB /* HistoryItem.m in Sources */,
+				4DF396491923C51D00A523FB /* StatsView.m in Sources */,
+				4DF396451923C51D00A523FB /* RoundOverView.m in Sources */,
+				4DF396281923C51D00A523FB /* AboutView.m in Sources */,
+				4DF396231923C51D00A523FB /* DiceGraphics.m in Sources */,
+				4DF396191923C51D00A523FB /* main.m in Sources */,
+				4DF3964E1923C51D00A523FB /* MultiplayerMatchData.m in Sources */,
+				4DF3961F1923C51D00A523FB /* DiceGameState.m in Sources */,
+				4DF396471923C51D00A523FB /* SettingsView.m in Sources */,
+				4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */,
+				4DF3961C1923C51D00A523FB /* DiceGame.m in Sources */,
+				4DF3961D1923C51D00A523FB /* Bid.m in Sources */,
+				4DF3961E1923C51D00A523FB /* DiceAction.m in Sources */,
+				4DF397B61923C5B800A523FB /* SoarPlayer.mm in Sources */,
+				4DF396421923C51D00A523FB /* MainMenu.m in Sources */,
+				4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */,
+				4DF396461923C51D00A523FB /* RulesView.m in Sources */,
+				4DF396201923C51D00A523FB /* Die.m in Sources */,
+				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
+				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,
+				4DF3964C1923C51D00A523FB /* GameKitGameHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C6951842155043DB00BD15DA /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Ad Hoc";
+		};
+		C6951843155043DB00BD15DA /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
+				LLVM_LTO = NO;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+					"-Wno-gnu",
+				);
+				OTHER_LDFLAGS = "-lSoar";
+				PRODUCT_NAME = "UM Liars Dice";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Ad Hoc";
+		};
+		CD86D66C13BB9E460005A182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CD86D66D13BB9E460005A182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LLVM_LTO = YES;
+				LLVM_VECTORIZE_LOOPS = YES;
+				OTHER_CFLAGS = (
+					"-Wall",
+					"-Wextra",
+				);
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD86D66F13BB9E460005A182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
+				LLVM_LTO = NO;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+					"-Wno-gnu",
+				);
+				OTHER_LDFLAGS = "-lSoar";
+				PRODUCT_NAME = "UM Liars Dice";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CD86D67013BB9E460005A182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
+				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "UM Liars Dice.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UM Liars Dice-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_PEDANTIC = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "";
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
+				LLVM_LTO = NO;
+				OTHER_CFLAGS = (
+					"-DIPHONE_SDK",
+					"-D__LLP64__",
+					"-Wno-gnu",
+				);
+				OTHER_LDFLAGS = "-lSoar";
+				PRODUCT_NAME = "UM Liars Dice";
+				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				SKIP_INSTALL = NO;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CD86D63D13BB9E450005A182 /* Build configuration list for PBXProject "UM Liars Dice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD86D66C13BB9E460005A182 /* Debug */,
+				CD86D66D13BB9E460005A182 /* Release */,
+				C6951842155043DB00BD15DA /* Ad Hoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD86D66E13BB9E460005A182 /* Build configuration list for PBXNativeTarget "UM Liars Dice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD86D66F13BB9E460005A182 /* Debug */,
+				CD86D67013BB9E460005A182 /* Release */,
+				C6951843155043DB00BD15DA /* Ad Hoc */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C61DD3291550659E0049A84C /* Liar_s_Dice.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */,
+			);
+			currentVersion = C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */;
+			name = Liar_s_Dice.xcdatamodeld;
+			path = "Lairs-Dice/Lair_s_Dice.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		C6951845155045E900BD15DA /* Liar_s_Dice.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */,
+			);
+			currentVersion = C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */;
+			name = Liar_s_Dice.xcdatamodeld;
+			path = "Lair's Dice/Lair_s_Dice.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = CD86D63A13BB9E450005A182 /* Project object */;
+}

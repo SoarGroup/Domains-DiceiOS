@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DFE30303-3905-488D-9940-BDDE349F3563</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LiarsDice</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9428CC21-4EE6-4286-8E6B-7BE8AEC4551B</key>
+		<string>ssh://github.com/bluechill/SoarDice-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LiarsDice.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9428CC21-4EE6-4286-8E6B-7BE8AEC4551B</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/bluechill/SoarDice-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9428CC21-4EE6-4286-8E6B-7BE8AEC4551B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9428CC21-4EE6-4286-8E6B-7BE8AEC4551B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SoarDice-iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
