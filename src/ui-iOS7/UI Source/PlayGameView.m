@@ -722,109 +722,45 @@ NSArray *buildDiceImages() {
 	// Remove them all
 	[self.previousBidImageViews removeAllObjects];
 
-	// Arrays for die images
-	NSMutableArray *locations = [[[NSMutableArray alloc] init] autorelease];
-	NSMutableArray *lines = [[[NSMutableArray alloc] init] autorelease];
-	NSMutableArray *numbers = [[[NSMutableArray alloc] init] autorelease];
-	NSMutableArray *beginning = [[[NSMutableArray alloc] init] autorelease];
-	
-	int line = 0;
-	int location = 0;
-
-	// Replace die values with spaces for images "6s" -> "   "
-	for (NSUInteger i = 0;i < [headerString length];i++)
-	{
-		if (isdigit([headerString characterAtIndex:i]))
-		{
-			int number = 0;
-			
-			NSInteger startLocation = i;
-			
-			for (;i < [headerString length];i++)
-			{
-				if (!isdigit([headerString characterAtIndex:i]))
-					break;
-				
-				number *= 10;
-				number += (int)([headerString characterAtIndex:i] - '0');
-			}
-			
-			if (i == [headerString length])
-				continue;
-			
-			if ([headerString characterAtIndex:i] == 's')
-			{
-				[locations addObject:[NSNumber numberWithInt:location]];
-				[lines addObject:[NSNumber numberWithInt:line]];
-				[numbers addObject:[NSNumber numberWithInt:number]];
-				
-				NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
-				
-				for (NSUInteger g = startLocation;g > 0;g--)
-				{
-					if ([headerString characterAtIndex:g] != '\n')
-					{
-						unichar* characters = (unichar*)malloc(sizeof(unichar));
-						characters[0] = [headerString characterAtIndex:g];
-						
-						[previousPart insertString:[NSString stringWithCharacters:characters length:1] atIndex:0];
-						free(characters);
-					}
-					else
-						break;
-				}
-				
-				[beginning addObject:[NSString stringWithString:previousPart]];
-				
-				NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
-				
-				for (int j = 0;j < (i - startLocation) + 2;j++)
-					[spaces insertString:@" " atIndex:0];
-								
-				headerString = [headerString stringByReplacingCharactersInRange:NSMakeRange(startLocation, i-startLocation+1) withString:spaces];
-			}
-		}
-		
-		location++;
-		
-		if ([headerString characterAtIndex:i] == '\n')
-		{
-			line++;
-			location = 0;
-		}
-	}
-
 	self.gameStateLabel.text = headerString;
+	[self.gameStateLabel sizeToFit];
 
-	// Add the die images to the player info label
-	if ([locations count] > 0)
+	NSArray* lines = [headerString componentsSeparatedByString:@"\n"];
+
+	NSError* error = nil;
+	NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+
+	CGSize constrainedSize = CGSizeMake(gameStateLabel.frame.size.width, 9999);
+	NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:gameStateLabel.font, NSFontAttributeName, nil];
+
+	CGFloat y = 0;
+
+	for (int i = 0;i < [lines count];i++)
 	{
-		for (int i = 0;i < [locations count];i++)
+		NSString* line = [lines objectAtIndex:i];
+
+		NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+
+		assert([matches count] <= 1);
+
+		if ([matches count] == 1) // Should only ever be one!
 		{
-			NSString* previous = [beginning objectAtIndex:i];
-			
-			CGSize widthSize = [previous sizeWithAttributes:[NSDictionary dictionaryWithObject:self.gameStateLabel.font forKey:NSFontAttributeName]];
-			
-			NSNumber *newLine = [lines objectAtIndex:i];
-			
-			int x = (int)widthSize.width + self.gameStateLabel.frame.origin.x - ([newLine integerValue] * 10);
-			
-			int y = (int)widthSize.height * [newLine integerValue] + self.gameStateLabel.frame.origin.y + (fullScreenView ? 23 : 4);
-			
-			if ([self.state.gameState usingSpecialRules])
-				y -= 10;
-			
-			NSNumber *die = [numbers objectAtIndex:i];
-			
-			NSInteger dieValue = [die integerValue];
-			
-			UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 15, 15)] autorelease];
-			[imageView setImage:[self imageForDie:dieValue]];
-			
-			[self.view addSubview:imageView];
-			
+			NSTextCheckingResult* result = [matches objectAtIndex:0];
+			CGFloat x = -1;
+
+			NSString* before = [line substringToIndex:[result range].location];
+			x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+
+			int number = [line characterAtIndex:result.range.location] - '0';
+
+			UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)] autorelease];
+			[imageView setImage:[self imageForDie:number]];
+
+			[self.gameStateLabel addSubview:imageView];
 			[previousBidImageViews addObject:imageView];
 		}
+
+		y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
 	}
 
 	// Player UI
@@ -980,7 +916,6 @@ NSArray *buildDiceImages() {
 
     NSArray *playerStates = self.state.gameState.playerStates;
 	BOOL canBid = [self.state canBid];
-	int location = 0;
     int i = -1;
     int labelHeight = 64 / 2;
     int diceHeight = 96 / 2;
@@ -1023,71 +958,48 @@ NSArray *buildDiceImages() {
 
         [tempViews addObject:nameLabel];
 
-		NSMutableAttributedString* nameLabelText = [self.game.gameState historyText:playerState.playerID colorName:control];
-		for (NSUInteger z = 0;z < [nameLabelText length];z++)
+		nameLabel.attributedText = [self.game.gameState historyText:playerState.playerID colorName:control];
+		[nameLabel sizeToFit];
+
 		{
-			if (isdigit([[nameLabelText string ]characterAtIndex:z]))
+			NSArray* lines = [nameLabel.text componentsSeparatedByString:@"\n"];
+
+			NSError* error = nil;
+			NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+
+			CGSize constrainedSize = CGSizeMake(gameStateLabel.frame.size.width, 9999);
+			NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:gameStateLabel.font, NSFontAttributeName, nil];
+
+			CGFloat y2 = 0;
+
+			for (int j = 0;j < [lines count];j++)
 			{
-				int number = 0;
+				NSString* line = [lines objectAtIndex:j];
 
-				NSInteger startLocation = z;
+				NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
 
-				for (;z < [nameLabelText length];z++)
+				assert([matches count] <= 1);
+
+				if ([matches count] == 1) // Should only ever be one!
 				{
-					if (!isdigit([[nameLabelText string] characterAtIndex:z]))
-						break;
+					NSTextCheckingResult* result = [matches objectAtIndex:0];
+					CGFloat x2 = -2;
 
-					number *= 10;
-					number += (int)([[nameLabelText string] characterAtIndex:z] - '0');
-				}
+					NSString* before = [line substringToIndex:[result range].location];
+					x2 += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
 
-				if (z == [nameLabelText length])
-					continue;
+					int number = [line characterAtIndex:result.range.location] - '0';
 
-				if ([[nameLabelText string] characterAtIndex:z] == 's')
-				{
-					NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
-
-					for (NSUInteger g = startLocation;g > 0;g--)
-					{
-						if ([[nameLabelText string] characterAtIndex:g] != '\n')
-						{
-							unichar* characters = (unichar*)malloc(sizeof(unichar));
-							characters[0] = [[nameLabelText string]characterAtIndex:g];
-
-							[previousPart insertString:[NSString stringWithCharacters:characters length:1] atIndex:0];
-							free(characters);
-						}
-						else
-							break;
-					}
-
-					NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
-
-					for (int j = 0;j < (z - startLocation) + 4;j++)
-						[spaces insertString:@" " atIndex:0];
-
-					[nameLabelText replaceCharactersInRange:NSMakeRange(startLocation, z-startLocation+1) withString:spaces];
-
-					CGSize widthSize = [previousPart sizeWithAttributes:[NSDictionary dictionaryWithObject:nameLabel.font forKey:NSFontAttributeName]];
-
-					int x_label = (int)widthSize.width + nameLabel.frame.origin.x;
-
-					int y_label = nameLabel.frame.origin.y + 5;
-
-					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x_label, y_label, 25, 25)];
+					UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x2, y2, 25, 25)] autorelease];
 					[imageView setImage:[self imageForDie:number]];
 
-					[parent addSubview:imageView];
-
+					[nameLabel addSubview:imageView];
 					[previousBidImageViews addObject:imageView];
 				}
+
+				y2 += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
 			}
-
-			location++;
 		}
-
-		nameLabel.attributedText = nameLabelText;
 
         if ([playerState isMyTurn] && ![playerState hasLost])
         {
@@ -1362,72 +1274,52 @@ NSArray *buildDiceImages() {
         [tempViews addObject:nameLabel];
 
 		NSMutableAttributedString* nameLabelText = [self.game.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
-		for (NSUInteger z = 0;z < [nameLabelText length];z++)
-		{
-			if (isdigit([[nameLabelText string ]characterAtIndex:z]))
-			{
-				int number = 0;
-
-				NSInteger startLocation = z;
-
-				for (;z < [nameLabelText length];z++)
-				{
-					if (!isdigit([[nameLabelText string] characterAtIndex:z]))
-						break;
-
-					number *= 10;
-					number += (int)([[nameLabelText string] characterAtIndex:z] - '0');
-				}
-
-				if (z == [nameLabelText length])
-					continue;
-
-				if ([[nameLabelText string] characterAtIndex:z] == 's')
-				{
-					NSMutableString *previousPart = [[[NSMutableString alloc] init] autorelease];
-
-					for (NSUInteger g = startLocation;g > 0;g--)
-					{
-						if ([[nameLabelText string] characterAtIndex:g] != '\n')
-						{
-							unichar* characters = (unichar*)malloc(sizeof(unichar));
-							characters[0] = [[nameLabelText string]characterAtIndex:g];
-
-							[previousPart insertString:[NSString stringWithCharacters:characters length:1] atIndex:0];
-							free(characters);
-						}
-						else
-							break;
-					}
-
-					NSMutableString *spaces = [[[NSMutableString alloc] init] autorelease];
-
-					for (int j = 0;j < (z - startLocation) + 3;j++)
-						[spaces insertString:@" " atIndex:0];
-
-					[nameLabelText replaceCharactersInRange:NSMakeRange(startLocation, z-startLocation+1) withString:spaces];
-
-					CGSize widthSize = [previousPart sizeWithAttributes:[NSDictionary dictionaryWithObject:nameLabel.font forKey:NSFontAttributeName]];
-
-					int x_label = (int)widthSize.width + nameLabel.frame.origin.x + 1;
-
-					int y_label = nameLabel.frame.origin.y - 1;
-
-					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x_label, y_label, 25, 25)];
-					[imageView setImage:[self imageForDie:number]];
-
-					[playerLocation addSubview:imageView];
-					[previousBidImageViews addObject:imageView];
-				}
-			}
-		}
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;
 		nameLabel.frame = CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + 1, textFrames[i].size.width, nameLabel.frame.size.height);
 		[nameLabel sizeToFit];
 		nameLabel.frame = CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y, textFrames[i].size.width, nameLabel.frame.size.height);
-		//[nameLabel setBackgroundColor:[UIColor redColor]];
+
+		{
+			NSArray* lines = [nameLabel.text componentsSeparatedByString:@"\n"];
+
+			NSError* error = nil;
+			NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+
+			CGSize constrainedSize = CGSizeMake(gameStateLabel.frame.size.width, 9999);
+			NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:gameStateLabel.font, NSFontAttributeName, nil];
+
+			CGFloat y = 0;
+
+			for (int j = 0;j < [lines count];j++)
+			{
+				NSString* line = [lines objectAtIndex:j];
+
+				NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+
+				assert([matches count] <= 1);
+
+				if ([matches count] == 1) // Should only ever be one!
+				{
+					NSTextCheckingResult* result = [matches objectAtIndex:0];
+					CGFloat x = -1;
+
+					NSString* before = [line substringToIndex:[result range].location];
+					x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+
+					int number = [line characterAtIndex:result.range.location] - '0';
+
+					UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 25, 25)] autorelease];
+					[imageView setImage:[self imageForDie:number]];
+
+					[nameLabel addSubview:imageView];
+					[previousBidImageViews addObject:imageView];
+				}
+
+				y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+			}
+		}
 
 		if ([playerStates[i] isMyTurn] && i != 0)
 		{
