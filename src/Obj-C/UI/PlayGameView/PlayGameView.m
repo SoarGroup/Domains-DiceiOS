@@ -287,25 +287,12 @@ NSArray *buildDiceImages() {
 		canContinueRound = NO;
 
 		self.exactButton.enabled = NO;
-		[self.exactButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.passButton.enabled = NO;
-		[self.passButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.bidButton.enabled = NO;
-		[self.bidButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.bidCountPlusButton.enabled = NO;
-		[self.bidCountPlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.bidCountMinusButton.enabled = NO;
-		[self.bidCountMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.bidFacePlusButton.enabled = NO;
-		[self.bidFacePlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
-
 		self.bidFaceMinusButton.enabled = NO;
-		[self.bidFaceMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateNormal];
 
 		[[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
 	}
@@ -320,6 +307,14 @@ NSArray *buildDiceImages() {
 		if (view != self.gameStateLabel && ![view isKindOfClass:UIImageView.class])
 			[view removeFromSuperview];
 	}
+
+	self.exactButton.enabled = YES;
+	self.passButton.enabled = YES;
+	self.bidButton.enabled = YES;
+	self.bidCountPlusButton.enabled = YES;
+	self.bidCountMinusButton.enabled = YES;
+	self.bidFacePlusButton.enabled = YES;
+	self.bidFaceMinusButton.enabled = YES;
 
 	self.gameStateLabel.hidden = NO;
 	self.game.gameState.canContinueGame = YES;
@@ -440,6 +435,7 @@ NSArray *buildDiceImages() {
 	//[exactButton setBackgroundColor:[UIColor redColor]];
 	[exactButton setTitle:@"Exact" forState:UIControlStateNormal];
 	[exactButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[exactButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	exactButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
 	[exactButton addTarget:self action:@selector(exactPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:exactButton];
@@ -449,6 +445,7 @@ NSArray *buildDiceImages() {
 	//[passButton setBackgroundColor:[UIColor redColor]];
 	[passButton setTitle:@"Pass" forState:UIControlStateNormal];
 	[passButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[passButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	passButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
 	[passButton addTarget:self action:@selector(passPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:passButton];
@@ -458,6 +455,7 @@ NSArray *buildDiceImages() {
 	//[bidButton setBackgroundColor:[UIColor redColor]];
 	[bidButton setTitle:@"Bid" forState:UIControlStateNormal];
 	[bidButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[bidButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	bidButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
 	[bidButton addTarget:self action:@selector(bidPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidButton];
@@ -467,6 +465,7 @@ NSArray *buildDiceImages() {
 	//[bidCountPlusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountPlusButton setTitle:@"+" forState:UIControlStateNormal];
 	[bidCountPlusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[bidCountPlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	bidCountPlusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
 	[bidCountPlusButton addTarget:self action:@selector(bidCountPlusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidCountPlusButton];
@@ -476,6 +475,7 @@ NSArray *buildDiceImages() {
 	//[bidCountMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountMinusButton setTitle:@"-" forState:UIControlStateNormal];
 	[bidCountMinusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[bidCountMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	bidCountMinusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
 	[bidCountMinusButton addTarget:self action:@selector(bidCountMinusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidCountMinusButton];
@@ -485,6 +485,7 @@ NSArray *buildDiceImages() {
 	//[bidFacePlusButton setBackgroundColor:[UIColor redColor]];
 	[bidFacePlusButton setTitle:@"+" forState:UIControlStateNormal];
 	[bidFacePlusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[bidFacePlusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	bidFacePlusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
 	[bidFacePlusButton addTarget:self action:@selector(bidFacePlusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidFacePlusButton];
@@ -494,6 +495,7 @@ NSArray *buildDiceImages() {
 	//[bidFaceMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidFaceMinusButton setTitle:@"-" forState:UIControlStateNormal];
 	[bidFaceMinusButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+	[bidFaceMinusButton setTitleColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] forState:UIControlStateDisabled];
 	bidFaceMinusButton.titleLabel.font = [UIFont boldSystemFontOfSize:25];
 	[bidFaceMinusButton addTarget:self action:@selector(bidFaceMinusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidFaceMinusButton];

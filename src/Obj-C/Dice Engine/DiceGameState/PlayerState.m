@@ -105,9 +105,8 @@
     playerHasPassed = NO;
     //Create our new dice
     for (int i = 0;i < numberOfDice;i++) {
-        Die *newDie = [[Die alloc] init];
-        [newDie autorelease];
-        
+        Die *newDie = [[[Die alloc] init] autorelease];
+
         [arrayOfDice addObject:newDie];
     }
 	
