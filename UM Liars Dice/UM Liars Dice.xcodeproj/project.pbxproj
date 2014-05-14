@@ -95,8 +95,6 @@
 		4DF397B41923C5B800A523FB /* DiceLocalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */; };
 		4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397B11923C5B800A523FB /* DiceRemotePlayer.m */; };
 		4DF397B61923C5B800A523FB /* SoarPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DF397B31923C5B800A523FB /* SoarPlayer.mm */; };
-		4DF397D81923C9A600A523FB /* default in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C11923C9A600A523FB /* default */; };
-		4DF397D91923C9A600A523FB /* dice in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C21923C9A600A523FB /* dice */; };
 		4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C31923C9A600A523FB /* dice-agent-new.soar */; };
 		4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C41923C9A600A523FB /* dice-agent-p */; };
 		4DF397DC1923C9A600A523FB /* dice-easy.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C51923C9A600A523FB /* dice-easy.soar */; };
@@ -104,20 +102,6 @@
 		4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C71923C9A600A523FB /* dice-harder.soar */; };
 		4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C81923C9A600A523FB /* dice-hardest.soar */; };
 		4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C91923C9A600A523FB /* dice-medium.soar */; };
-		4DF397E11923C9A600A523FB /* dice-model-bot-new in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CA1923C9A600A523FB /* dice-model-bot-new */; };
-		4DF397E21923C9A600A523FB /* dice-model-bot-new-old in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */; };
-		4DF397E31923C9A600A523FB /* dice-model-bot-new.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */; };
-		4DF397E41923C9A600A523FB /* dice-p0-m0-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */; };
-		4DF397E51923C9A600A523FB /* dice-p0-m1-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */; };
-		4DF397E61923C9A600A523FB /* dice-p1-m0-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */; };
-		4DF397E71923C9A600A523FB /* dice-p1-m1-c0.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */; };
-		4DF397E81923C9A600A523FB /* dice-pmh.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D11923C9A600A523FB /* dice-pmh.soar */; };
-		4DF397E91923C9A600A523FB /* dice-rl in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D21923C9A600A523FB /* dice-rl */; };
-		4DF397EA1923C9A600A523FB /* dice-rl.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D31923C9A600A523FB /* dice-rl.soar */; };
-		4DF397EB1923C9A600A523FB /* dice-rl.vsa in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D41923C9A600A523FB /* dice-rl.vsa */; };
-		4DF397EC1923C9A600A523FB /* dice.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D51923C9A600A523FB /* dice.soar */; };
-		4DF397ED1923C9A600A523FB /* dice.vsa in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D61923C9A600A523FB /* dice.vsa */; };
-		4DF397EE1923C9A600A523FB /* improvements.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397D71923C9A600A523FB /* improvements.soar */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
 		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
 		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
@@ -326,8 +310,6 @@
 		4DF397B31923C5B800A523FB /* SoarPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoarPlayer.mm; sourceTree = "<group>"; };
 		4DF397BE1923C7BD00A523FB /* libSoar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSoar.a; sourceTree = "<group>"; };
 		4DF397C01923C7BD00A523FB /* libSoar.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSoar.a; sourceTree = "<group>"; };
-		4DF397C11923C9A600A523FB /* default */ = {isa = PBXFileReference; lastKnownFileType = folder; path = default; sourceTree = "<group>"; };
-		4DF397C21923C9A600A523FB /* dice */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dice; sourceTree = "<group>"; };
 		4DF397C31923C9A600A523FB /* dice-agent-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-agent-new.soar"; sourceTree = "<group>"; };
 		4DF397C41923C9A600A523FB /* dice-agent-p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-agent-p"; sourceTree = "<group>"; };
 		4DF397C51923C9A600A523FB /* dice-easy.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-easy.soar"; sourceTree = "<group>"; };
@@ -335,20 +317,6 @@
 		4DF397C71923C9A600A523FB /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-harder.soar"; sourceTree = "<group>"; };
 		4DF397C81923C9A600A523FB /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-hardest.soar"; sourceTree = "<group>"; };
 		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
-		4DF397CA1923C9A600A523FB /* dice-model-bot-new */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-model-bot-new"; sourceTree = "<group>"; };
-		4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-model-bot-new-old"; sourceTree = "<group>"; };
-		4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-model-bot-new.soar"; sourceTree = "<group>"; };
-		4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p0-m0-c0.soar"; sourceTree = "<group>"; };
-		4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p0-m1-c0.soar"; sourceTree = "<group>"; };
-		4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p1-m0-c0.soar"; sourceTree = "<group>"; };
-		4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-p1-m1-c0.soar"; sourceTree = "<group>"; };
-		4DF397D11923C9A600A523FB /* dice-pmh.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-pmh.soar"; sourceTree = "<group>"; };
-		4DF397D21923C9A600A523FB /* dice-rl */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "dice-rl"; sourceTree = "<group>"; };
-		4DF397D31923C9A600A523FB /* dice-rl.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-rl.soar"; sourceTree = "<group>"; };
-		4DF397D41923C9A600A523FB /* dice-rl.vsa */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-rl.vsa"; sourceTree = "<group>"; };
-		4DF397D51923C9A600A523FB /* dice.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dice.soar; sourceTree = "<group>"; };
-		4DF397D61923C9A600A523FB /* dice.vsa */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dice.vsa; sourceTree = "<group>"; };
-		4DF397D71923C9A600A523FB /* improvements.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = improvements.soar; sourceTree = "<group>"; };
 		C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
 		C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
 		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -785,8 +753,6 @@
 		4DF3947F1923C51C00A523FB /* Soar Agent */ = {
 			isa = PBXGroup;
 			children = (
-				4DF397C11923C9A600A523FB /* default */,
-				4DF397C21923C9A600A523FB /* dice */,
 				4DF397C31923C9A600A523FB /* dice-agent-new.soar */,
 				4DF397C41923C9A600A523FB /* dice-agent-p */,
 				4DF397C51923C9A600A523FB /* dice-easy.soar */,
@@ -794,20 +760,6 @@
 				4DF397C71923C9A600A523FB /* dice-harder.soar */,
 				4DF397C81923C9A600A523FB /* dice-hardest.soar */,
 				4DF397C91923C9A600A523FB /* dice-medium.soar */,
-				4DF397CA1923C9A600A523FB /* dice-model-bot-new */,
-				4DF397CB1923C9A600A523FB /* dice-model-bot-new-old */,
-				4DF397CC1923C9A600A523FB /* dice-model-bot-new.soar */,
-				4DF397CD1923C9A600A523FB /* dice-p0-m0-c0.soar */,
-				4DF397CE1923C9A600A523FB /* dice-p0-m1-c0.soar */,
-				4DF397CF1923C9A600A523FB /* dice-p1-m0-c0.soar */,
-				4DF397D01923C9A600A523FB /* dice-p1-m1-c0.soar */,
-				4DF397D11923C9A600A523FB /* dice-pmh.soar */,
-				4DF397D21923C9A600A523FB /* dice-rl */,
-				4DF397D31923C9A600A523FB /* dice-rl.soar */,
-				4DF397D41923C9A600A523FB /* dice-rl.vsa */,
-				4DF397D51923C9A600A523FB /* dice.soar */,
-				4DF397D61923C9A600A523FB /* dice.vsa */,
-				4DF397D71923C9A600A523FB /* improvements.soar */,
 			);
 			path = "Soar Agent";
 			sourceTree = "<group>";
@@ -951,39 +903,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DF397D81923C9A600A523FB /* default in Resources */,
 				4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */,
 				4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */,
-				4DF397E91923C9A600A523FB /* dice-rl in Resources */,
 				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
 				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
 				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
 				4DF393AD1923C4F400A523FB /* Icon-iPad.png in Resources */,
-				4DF397EB1923C9A600A523FB /* dice-rl.vsa in Resources */,
 				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
 				4DF393B31923C4F400A523FB /* Icon-Spotlight@2x.png in Resources */,
 				4DF393B61923C4F400A523FB /* iTunesArtwork.png in Resources */,
 				4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */,
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
-				4DF397E81923C9A600A523FB /* dice-pmh.soar in Resources */,
 				4DF3962F1923C51D00A523FB /* RoundOverViewiPad.xib in Resources */,
-				4DF397E51923C9A600A523FB /* dice-p0-m1-c0.soar in Resources */,
-				4DF397D91923C9A600A523FB /* dice in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
 				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
 				4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */,
-				4DF397E11923C9A600A523FB /* dice-model-bot-new in Resources */,
 				4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */,
 				4DF396381923C51D00A523FB /* MainMenu.xib in Resources */,
 				4DF393B21923C4F400A523FB /* Icon-Spotlight.png in Resources */,
-				4DF397E71923C9A600A523FB /* dice-p1-m1-c0.soar in Resources */,
 				4DF393A51923C4F400A523FB /* die-1.png in Resources */,
 				4DF393A31923C4F400A523FB /* Center-Push.png in Resources */,
 				4DF3962B1923C51D00A523FB /* LoadingGameViewiPad.xib in Resources */,
 				4DF3962D1923C51D00A523FB /* MultiplayerViewiPad.xib in Resources */,
 				4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */,
-				4DF397EA1923C9A600A523FB /* dice-rl.soar in Resources */,
 				4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */,
 				4DF396291923C51D00A523FB /* AboutViewiPad.xib in Resources */,
 				4DF396371923C51D00A523FB /* LoadingGameView.xib in Resources */,
@@ -1004,13 +947,10 @@
 				4DF397DC1923C9A600A523FB /* dice-easy.soar in Resources */,
 				4DF3962A1923C51D00A523FB /* ApplicationiPad.xib in Resources */,
 				4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */,
-				4DF397E41923C9A600A523FB /* dice-p0-m0-c0.soar in Resources */,
 				4DF393A71923C4F400A523FB /* die-3.png in Resources */,
 				4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */,
 				4DF393AA1923C4F400A523FB /* die-6.png in Resources */,
-				4DF397EE1923C9A600A523FB /* improvements.soar in Resources */,
 				4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */,
-				4DF397E31923C9A600A523FB /* dice-model-bot-new.soar in Resources */,
 				4DF393AF1923C4F400A523FB /* Icon-iPhone@2x.png in Resources */,
 				4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */,
 				4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */,
@@ -1019,13 +959,9 @@
 				4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */,
 				4DF396351923C51D00A523FB /* Application.xib in Resources */,
 				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
-				4DF397ED1923C9A600A523FB /* dice.vsa in Resources */,
-				4DF397EC1923C9A600A523FB /* dice.soar in Resources */,
 				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
 				4DF3962E1923C51D00A523FB /* PlayGameViewiPad.xib in Resources */,
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
-				4DF397E21923C9A600A523FB /* dice-model-bot-new-old in Resources */,
-				4DF397E61923C9A600A523FB /* dice-p1-m0-c0.soar in Resources */,
 				4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

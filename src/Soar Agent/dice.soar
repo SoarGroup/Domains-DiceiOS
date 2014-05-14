@@ -1,3 +1,0 @@
-pushd dice
-source dice_source.soar
-popd
