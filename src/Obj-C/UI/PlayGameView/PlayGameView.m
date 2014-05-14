@@ -564,6 +564,14 @@ NSArray *buildDiceImages() {
 	if (fullScreenView)
 		[self fullScreenViewInitialization];
 
+	self.bidCountMinusButton.accessibilityLabel = @"Decrease Bid Die Count";
+	self.bidCountPlusButton.accessibilityLabel = @"Increase Bid Die Count";
+	self.bidFaceMinusButton.accessibilityLabel = @"Decrease Bid Die Face";
+	self.bidFacePlusButton.accessibilityLabel = @"Increase Bid Die Face";
+	self.bidFaceLabel.accessibilityLabel = @"Die Face of 2";
+	self.bidFaceLabel.isAccessibilityElement = YES;
+	self.bidCountLabel.accessibilityLabel = @"Die Count of 1";
+
 	for (id<Player> player in self.game.players)
 	{
 		if ([player isKindOfClass:DiceLocalPlayer.class])
@@ -674,7 +682,10 @@ NSArray *buildDiceImages() {
 
 - (void) updateCurrentBidLabels {
     self.bidCountLabel.text = [NSString stringWithFormat:@"%d", currentBidCount];
+	self.bidCountLabel.accessibilityLabel = [NSString stringWithFormat:@"Bid Die Count, Face Value of %i", currentBidCount];
+
 	[self.bidFaceLabel setImage:[self imageForDie:currentBidFace]];
+	self.bidFaceLabel.accessibilityLabel = [NSString stringWithFormat:@"Bid Die Face, Face Value of %i", currentBidFace];
 }
 
 - (void) dieButtonPressed:(id)sender {
@@ -1078,9 +1089,22 @@ NSArray *buildDiceImages() {
                 } else {
                     dieButton.userInteractionEnabled = NO;
                 }
+				dieButton.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i", die.dieValue];
                 [diceView addSubview:dieButton];
             } else {
                 UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+
+				NSString* name = [NSString stringWithFormat:@"%@'s", playerState.playerName];
+
+				if (control)
+					name = @"Your";
+
+				if (die.hasBeenPushed)
+					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i", name, die.dieValue];
+				else
+					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Unknown Face Value", name];
+
+				dieView.isAccessibilityElement = YES;
                 [dieView setImage:dieImage];
                 [diceView addSubview:dieView];
             }
