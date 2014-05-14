@@ -673,12 +673,6 @@
 			}
 
             [labelText appendAttributedString:move];
-
-			if ([[self playerStateForPlayerID:playerID] playerHasExacted])
-				[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted in the match", playerName]] autorelease]];
-
-			if ([[self playerStateForPlayerID:playerID] playerHasPassed])
-				[labelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed this round", playerName]] autorelease]];
         }
     }
 

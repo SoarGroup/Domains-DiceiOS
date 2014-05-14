@@ -8,16 +8,12 @@
 
 #import "PlayGameView.h"
 #import "DiceGame.h"
-#import "PlayerState.h"
-#import "Die.h"
-#import "DiceAction.h"
-#import "RoundOverView.h"
-#import "MainMenu.h"
-#import "DiceGraphics.h"
-#import "UIImage+ImageEffects.h"
+#import "DiceGameState.h"
 #import "HistoryItem.h"
-
-#import <Foundation/NSObjCRuntime.h>
+#import "RoundOverview.h"
+#import "Die.h"
+#import "DiceGraphics.h"
+#import "UIIMage+ImageEffects.h"
 
 @implementation UIViewController (BackButtonHandler)
 
@@ -746,7 +742,7 @@ NSArray *buildDiceImages() {
 
 		assert([matches count] <= 1);
 
-		if ([matches count] == 1) // Should only ever be one!
+		if ([matches count] == 1) // Should only ever be one or zero!
 		{
 			NSTextCheckingResult* result = [matches objectAtIndex:0];
 			CGFloat x = -2;
@@ -1123,7 +1119,7 @@ NSArray *buildDiceImages() {
 	// Location mapping based on the number of players
 	// Unfortunately there isn't a good way to debug this or come up with an algorithm for this so I just hard coded it
 	CGPoint player1Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
-	CGRect player1TextLabelFrame = {{0, 0}, {195, 50}};
+	CGRect player1TextLabelFrame = {{-35, 0}, {230, 50}};
 	CGRect player1DiceFrame = {{0, 115}, {280, 65}};
 
 	CGPoint player2Location = {screenSize.width * 0.1/8.0, screenSize.height / 2.0 - viewSize.height / 2.0};
@@ -1140,7 +1136,7 @@ NSArray *buildDiceImages() {
 
 
 	CGPoint player1AltLocation = {screenSize.width / 3.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
-	CGRect player1AltTextLabelFrame = {{0, 0}, {195, 50}};
+	CGRect player1AltTextLabelFrame = {{-35, -25}, {230, 75}};
 	CGRect player1AltDiceFrame = {{0, 115}, {280, 65}};
 
 	CGPoint player2AltLocation = {screenSize.width * 0.1/8.0, screenSize.height * 1.8 / 3.0 - viewSize.height / 2.0};
@@ -1294,6 +1290,12 @@ NSArray *buildDiceImages() {
         [tempViews addObject:nameLabel];
 
 		NSMutableAttributedString* nameLabelText = [self.game.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
+
+		if ([playerStates[i] playerHasExacted])
+			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] name]]] autorelease]];
+
+		if ([playerStates[i] playerHasPassed])
+			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] name]]] autorelease]];
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;
