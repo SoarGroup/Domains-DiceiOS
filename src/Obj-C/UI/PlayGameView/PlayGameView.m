@@ -185,7 +185,7 @@ NSArray *buildDiceImages() {
 }
 
 - (BOOL) roundEnding {
-	self.game.gameState.canContinueGame = !fullScreenView;
+	self.game.gameState.canContinueGame = NO;
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
