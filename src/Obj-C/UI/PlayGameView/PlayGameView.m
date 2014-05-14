@@ -286,6 +286,14 @@ NSArray *buildDiceImages() {
 
 		canContinueRound = NO;
 
+		self.exactButton.enabled = NO;
+		self.passButton.enabled = NO;
+		self.bidButton.enabled = NO;
+		self.bidCountPlusButton.enabled = NO;
+		self.bidCountMinusButton.enabled = NO;
+		self.bidFacePlusButton.enabled = NO;
+		self.bidFaceMinusButton.enabled = NO;
+
 		[[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
 	}
 }
@@ -1106,7 +1114,7 @@ NSArray *buildDiceImages() {
 	// Location mapping based on the number of players
 	// Unfortunately there isn't a good way to debug this or come up with an algorithm for this so I just hard coded it
 	CGPoint player1Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
-	CGRect player1TextLabelFrame = {{-35, 0}, {230, 50}};
+	CGRect player1TextLabelFrame = {{-35, -25}, {230, 75}};
 	CGRect player1DiceFrame = {{0, 115}, {280, 65}};
 
 	CGPoint player2Location = {screenSize.width * 0.1/8.0, screenSize.height / 2.0 - viewSize.height / 2.0};
