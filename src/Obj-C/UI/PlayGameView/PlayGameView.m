@@ -177,7 +177,7 @@ NSArray *buildDiceImages() {
         self.tempViews = [NSMutableArray array];
         self.images = buildDiceImages();
 
-		self.previousBidImageViews = [[NSMutableArray alloc] init];
+		self.previousBidImageViews = [[[NSMutableArray alloc] init] autorelease];
 
 		hasPromptedEnd = NO;
     }
@@ -780,7 +780,7 @@ NSArray *buildDiceImages() {
 		}
 
 		finalAccessibleText = [finalAccessibleText stringByAppendingString:number];
-		lastRange = result.range.location + result.range.length;
+		lastRange = (int)result.range.location + (int)result.range.length;
 	}
 
 	finalAccessibleText = [finalAccessibleText stringByAppendingString:[accessibleText substringWithRange:NSMakeRange(lastRange, accessibleText.length - lastRange)]];

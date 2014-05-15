@@ -975,11 +975,9 @@ static int agentCount = 0;
                     NSMutableArray *mut = [[[NSMutableArray alloc] init] autorelease];
                     for (int i = 0;i < ident->GetNumberChildren();i++) {
                         NSNumber *number = [NSNumber numberWithInt:faces[i]];
-                        if ([number isKindOfClass:[NSNumber class]]) {
-                            Die *newDie = [[[Die alloc] initWithNumber:[number intValue]] autorelease];
-                            [newDie autorelease];
-                            [mut addObject:newDie];
-                        }
+
+                        if ([number isKindOfClass:[NSNumber class]])
+                            [mut addObject:[[[Die alloc] initWithNumber:[number intValue]] autorelease]];
                     }
                     
                     diceToPush = [[[NSArray alloc] initWithArray:mut] autorelease];
