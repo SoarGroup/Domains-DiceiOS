@@ -18,17 +18,14 @@
 @class PlayGameView;
 
 @interface DiceLocalPlayer : NSObject <Player> {
-    NSString *name;
-    PlayerState *playerState;
     int playerID;
-    NSObject<PlayGame> *gameView;
 }
 
 @property (nonatomic, retain) GKTurnBasedParticipant* participant;
 @property (nonatomic, retain) GameKitGameHandler* handler;
 @property (readwrite, retain) NSString *name;
 @property (readwrite, retain) PlayerState *playerState;
-@property (readwrite, retain) NSObject<PlayGame> *gameView;
+@property (readwrite, retain) PlayGameView *gameView;
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 

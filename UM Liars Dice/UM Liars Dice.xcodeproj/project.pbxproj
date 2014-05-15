@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DC1BE421878A694007A17D3 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC1BE411878A694007A17D3 /* GameKit.framework */; };
@@ -81,7 +82,6 @@
 		4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945B1923C51C00A523FB /* LoadingGameView.m */; };
 		4DF396421923C51D00A523FB /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945E1923C51C00A523FB /* MainMenu.m */; };
 		4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394611923C51C00A523FB /* MultiplayerView.m */; };
-		4DF396441923C51D00A523FB /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394651923C51C00A523FB /* PlayGameView.m */; };
 		4DF396451923C51D00A523FB /* RoundOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394671923C51C00A523FB /* RoundOverView.m */; };
 		4DF396461923C51D00A523FB /* RulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946A1923C51C00A523FB /* RulesView.m */; };
 		4DF396471923C51D00A523FB /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946D1923C51C00A523FB /* SettingsView.m */; };
@@ -111,6 +111,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -281,7 +282,6 @@
 		4DF394611923C51C00A523FB /* MultiplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerView.m; sourceTree = "<group>"; };
 		4DF394631923C51C00A523FB /* PlayGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGame.h; sourceTree = "<group>"; };
 		4DF394641923C51C00A523FB /* PlayGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayGameView.h; sourceTree = "<group>"; };
-		4DF394651923C51C00A523FB /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlayGameView.m; sourceTree = "<group>"; usesTabs = 1; wrapsLines = 1; };
 		4DF394661923C51C00A523FB /* RoundOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundOverView.h; sourceTree = "<group>"; };
 		4DF394671923C51C00A523FB /* RoundOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundOverView.m; sourceTree = "<group>"; };
 		4DF394691923C51C00A523FB /* RulesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RulesView.h; sourceTree = "<group>"; };
@@ -692,7 +692,7 @@
 			children = (
 				4DF394631923C51C00A523FB /* PlayGame.h */,
 				4DF394641923C51C00A523FB /* PlayGameView.h */,
-				4DF394651923C51C00A523FB /* PlayGameView.m */,
+				4D3045C1192440900081FEC8 /* PlayGameView.m */,
 				4DF394661923C51C00A523FB /* RoundOverView.h */,
 				4DF394671923C51C00A523FB /* RoundOverView.m */,
 			);
@@ -979,13 +979,13 @@
 				4DF396261923C51D00A523FB /* GameRecord.m in Sources */,
 				4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */,
 				4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */,
-				4DF396441923C51D00A523FB /* PlayGameView.m in Sources */,
 				4DF3964D1923C51D00A523FB /* GameKitListener.m in Sources */,
 				4DF3961A1923C51D00A523FB /* Application.m in Sources */,
 				4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */,
 				4DF396211923C51D00A523FB /* HistoryItem.m in Sources */,
 				4DF396491923C51D00A523FB /* StatsView.m in Sources */,
 				4DF396451923C51D00A523FB /* RoundOverView.m in Sources */,
+				4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */,
 				4DF396281923C51D00A523FB /* AboutView.m in Sources */,
 				4DF396231923C51D00A523FB /* DiceGraphics.m in Sources */,
 				4DF396191923C51D00A523FB /* main.m in Sources */,

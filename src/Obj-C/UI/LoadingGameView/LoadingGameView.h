@@ -24,6 +24,7 @@
 @property (readwrite, retain) DiceGame *game;
 @property (readwrite, retain) MainMenu *menu;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;
+@property (nonatomic, retain) IBOutlet UILabel* startingGameLabel;
 
 @end
 

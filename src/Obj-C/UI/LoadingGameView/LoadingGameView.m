@@ -17,7 +17,7 @@
 @implementation LoadingGameView
 @synthesize spinnerView;
 
-@synthesize game, menu;
+@synthesize game, menu, startingGameLabel;
 
 - (id) initWithGame:(DiceGame *)aGame mainMenu:(MainMenu*)aMenu
 {
@@ -67,6 +67,10 @@
 		[NSThread detachNewThreadSelector:@selector(end) toTarget:game withObject:nil];
 #pragma clang diagnostic pop
 	};
+
+	UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
+                                    self.startingGameLabel.text);
+
 
     UIViewController *gameView = [[[PlayGameView alloc] initWithGame:self.game withQuitHandler:[[quitHandler copy] autorelease]] autorelease];
 

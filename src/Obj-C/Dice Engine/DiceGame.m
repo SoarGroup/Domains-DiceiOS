@@ -15,6 +15,7 @@
 #import "DiceDatabase.h"
 #import "GameRecord.h"
 #import "HistoryItem.h"
+#import "PlayGameView.h"
 
 @implementation DiceGame
 
@@ -97,7 +98,7 @@
 	gameState = remote.gameState;
 }
 
-- (void) setGameView:(id <PlayGame>)aGameView
+- (void) setGameView:(PlayGameView*)aGameView
 {
     gameView = aGameView;
     for (id <Player> player in self.players)

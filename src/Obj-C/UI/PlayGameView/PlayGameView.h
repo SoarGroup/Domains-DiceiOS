@@ -44,6 +44,8 @@ const int pushMargin();
 -(UIImage *)imageForDie:(NSInteger)die;
 -(UIImage *)blurredSnapshot;
 
+- (NSString*)accessibleTextForString:(NSString*)string;
+
 // Properties based on buttons
 @property (nonatomic, retain) IBOutlet UIButton *bidButton;
 @property (nonatomic, retain) IBOutlet UIButton *bidCountMinusButton;

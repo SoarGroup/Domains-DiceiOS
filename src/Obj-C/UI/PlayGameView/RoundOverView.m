@@ -37,6 +37,9 @@
 		finalString = finalString2;
 		
 		previousBidImageViews = [[NSMutableArray alloc] init];
+
+		self.accessibilityLabel = @"Round Over";
+		self.accessibilityHint = @"The round is over, this screen is displaying a list of the dice your opponents had.";
     }
     return self;
 }
@@ -60,6 +63,7 @@
 	[self.transparencyLevel setImage:snapshot];
 
     titleLabel.text = finalString;
+	titleLabel.accessibilityLabel = [self.playGameView accessibleTextForString:titleLabel.text];
 
 	NSArray* lines = [finalString componentsSeparatedByString:@"\n"];
 
@@ -170,20 +174,32 @@
             }
             CGRect dieFrame = CGRectMake(x, dieY, dieSize, dieSize);
             UIImage *dieImage = [self.playGameView imageForDie:die.dieValue];
-            // TODO highlight dice that go toward the bid count
-            /*
-            if (die.dieValue == bidValue || (die.dieValue == 1 && specialRules)) {
-             // TODO implement
-            }
-             */
+
             UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
             [dieView setImage:dieImage];
+
+			NSString* name = nil;
+
+			if (i == 0)
+				name = @"Your";
+			else
+				name = [NSString stringWithFormat:@"%@'s", player.playerName];
+
+			dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i", name, die.dieValue];
+			dieView.isAccessibilityElement = YES;
+
             [diceStrip addSubview:dieView];
         }
         [diceView addSubview:diceStrip];
     }
 
 	[diceView setContentSize:CGSizeMake(diceView.frame.size.width, dy * [playerStates count])];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
+                                    self.titleLabel);
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView

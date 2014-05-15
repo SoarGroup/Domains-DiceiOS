@@ -176,9 +176,9 @@ NSArray *buildDiceImages() {
         self.challengeButtons = [NSMutableArray array];
         self.tempViews = [NSMutableArray array];
         self.images = buildDiceImages();
-		
+
 		self.previousBidImageViews = [[NSMutableArray alloc] init];
-        
+
 		hasPromptedEnd = NO;
     }
     return self;
@@ -399,7 +399,7 @@ NSArray *buildDiceImages() {
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -651,7 +651,7 @@ NSArray *buildDiceImages() {
     [bidFaceMinusButton release];
 	[centerPush release];
 	[quitHandler release];
-	
+
     [super dealloc];
 }
 
@@ -691,12 +691,23 @@ NSArray *buildDiceImages() {
 - (void) dieButtonPressed:(id)sender {
     UIButton *button = (UIButton*)sender;
     NSInteger dieIndex = button.tag;
-	
+
     Die *dieObject = [self.state.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
         return;
-    
+
     dieObject.markedToPush = ! dieObject.markedToPush;
+
+	if (dieObject.markedToPush)
+	{
+		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, pushed", dieObject.dieValue];
+		button.accessibilityHint = @"Tap to unpush this die";
+	}
+	else
+	{
+		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, unpushed", dieObject.dieValue];
+		button.accessibilityHint = @"Tap to push this die";
+	}
 
 	if (fullScreenView)
 		button = [[button subviews] objectAtIndex:0];
@@ -726,6 +737,57 @@ NSArray *buildDiceImages() {
 	self.bidFaceMinusButton.enabled = NO;
 }
 
+- (NSString*)accessibleTextForString:(NSString*)string
+{
+	NSError* error = nil;
+	NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+
+	NSString* accessibleText = [NSString stringWithString:string];
+
+	NSArray* accessibleMatches = [regex matchesInString:accessibleText options:0 range:NSMakeRange(0, [accessibleText length])];
+
+	NSString* finalAccessibleText = [NSString string];
+	int lastRange = 0;
+
+	for (NSTextCheckingResult* result in accessibleMatches)
+	{
+		finalAccessibleText = [finalAccessibleText stringByAppendingString:[accessibleText substringWithRange:NSMakeRange(lastRange, result.range.location - lastRange)]];
+
+		NSString* number = nil;
+
+		switch ([accessibleText characterAtIndex:result.range.location] - '0')
+		{
+			case 1:
+				number = @"ones";
+				break;
+			case 2:
+				number = @"twos";
+				break;
+			case 3:
+				number = @"threes";
+				break;
+			case 4:
+				number = @"fours";
+				break;
+			case 5:
+				number = @"fives";
+				break;
+			case 6:
+				number = @"sixes";
+				break;
+			default:
+				break;
+		}
+
+		finalAccessibleText = [finalAccessibleText stringByAppendingString:number];
+		lastRange = result.range.location + result.range.length;
+	}
+
+	finalAccessibleText = [finalAccessibleText stringByAppendingString:[accessibleText substringWithRange:NSMakeRange(lastRange, accessibleText.length - lastRange)]];
+
+	return finalAccessibleText;
+}
+
 - (void)updateUI
 {
 	if (![NSThread isMainThread])
@@ -753,6 +815,7 @@ NSArray *buildDiceImages() {
 	[self.previousBidImageViews removeAllObjects];
 
 	self.gameStateLabel.text = headerString;
+	self.gameStateLabel.accessibilityLabel = [self accessibleTextForString:headerString];
 
 	NSArray* lines = [headerString componentsSeparatedByString:@"\n"];
 
@@ -881,7 +944,7 @@ NSArray *buildDiceImages() {
 
 	// Update the bid "scroller" labels, the die image and number for the bid chooser
     [self updateCurrentBidLabels];
-    
+
     // Update the contents of the gameStateView
 	// iPad and iPhone specific
 	if (!fullScreenView)
@@ -991,6 +1054,7 @@ NSArray *buildDiceImages() {
         [tempViews addObject:nameLabel];
 
 		nameLabel.attributedText = [self.game.gameState historyText:playerState.playerID colorName:control];
+		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
 
 		CGRect nameFrame = nameLabel.frame;
 
@@ -1089,7 +1153,9 @@ NSArray *buildDiceImages() {
                 } else {
                     dieButton.userInteractionEnabled = NO;
                 }
-				dieButton.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i", die.dieValue];
+				dieButton.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, unpushed", die.dieValue];
+				dieButton.accessibilityHint = @"Tap to push the die.";
+
                 [diceView addSubview:dieButton];
             } else {
                 UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
@@ -1100,7 +1166,7 @@ NSArray *buildDiceImages() {
 					name = @"Your";
 
 				if (die.hasBeenPushed)
-					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i", name, die.dieValue];
+					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i, pushed", name, die.dieValue];
 				else
 					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Unknown Face Value", name];
 
@@ -1277,30 +1343,30 @@ NSArray *buildDiceImages() {
 	}
 
 	CGPoint locations[] = {	player1Location,
-							player2Location,
-							player3Location,
-							player4Location,
-							player5Location,
-							player6Location,
-							player7Location,
-							player8Location};
+		player2Location,
+		player3Location,
+		player4Location,
+		player5Location,
+		player6Location,
+		player7Location,
+		player8Location};
 	CGRect textFrames[] = { player1TextLabelFrame,
-							player2TextLabelFrame,
-							player3TextLabelFrame,
-							player4TextLabelFrame,
-							player5TextLabelFrame,
-							player6TextLabelFrame,
-							player7TextLabelFrame,
-							player8TextLabelFrame};
+		player2TextLabelFrame,
+		player3TextLabelFrame,
+		player4TextLabelFrame,
+		player5TextLabelFrame,
+		player6TextLabelFrame,
+		player7TextLabelFrame,
+		player8TextLabelFrame};
 
 	CGRect diceFrames[] = { player1DiceFrame,
-							player2DiceFrame,
-							player3DiceFrame,
-							player4DiceFrame,
-							player5DiceFrame,
-							player6DiceFrame,
-							player7DiceFrame,
-							player8DiceFrame};
+		player2DiceFrame,
+		player3DiceFrame,
+		player4DiceFrame,
+		player5DiceFrame,
+		player6DiceFrame,
+		player7DiceFrame,
+		player8DiceFrame};
 
 	self.animationFinished = YES;
 	NSMutableArray* dieViewAnimated = [[[NSMutableArray alloc] init] autorelease];
@@ -1333,6 +1399,7 @@ NSArray *buildDiceImages() {
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;
+		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
 
 		CGRect nameFrame = nameLabel.frame;
 
@@ -1692,7 +1759,7 @@ NSArray *buildDiceImages() {
 
 -(void)constrainAndUpdateBidCount {
     int maxBidCount = 0;
-	
+
 	for (PlayerState* pstate in game.gameState.playerStates)
 	{
 		if ([pstate isKindOfClass:[PlayerState class]])
@@ -1716,14 +1783,14 @@ NSArray *buildDiceImages() {
 - (IBAction)challengePressed:(id)sender {
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
-	
+
 	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
                                                      message:bidStr
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles:nil]
 						  autorelease];
-	
+
     Bid *challengeableBid = [state getChallengeableBid];
     if (challengeableBid != nil)
     {
@@ -1769,15 +1836,15 @@ NSArray *buildDiceImages() {
     // Check that the bid is legal
 	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[state markedToPushDice]];
 	[markedToPushDiceWithPushedDice addObjectsFromArray:[state pushedDice]];
-	
+
     Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice] autorelease];
     if (!([game.gameState getCurrentPlayerState].playerID == state.playerID && [game.gameState checkBid:bid playerSpecialRules:([game.gameState usingSpecialRules] && [state numberOfDice] > 1)])) {
         NSString *title = @"Illegal raise";
 		NSString *pushedDice = @"";
-		
+
 		if ([markedToPushDiceWithPushedDice count] > 0)
 			pushedDice = [NSString stringWithFormat:@",\nAnd push %lu %@", (unsigned long)[[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
-		
+
         NSString *message = [NSString stringWithFormat:@"Can't bid %d %@ %@", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)], pushedDice];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
                                                          message:message
@@ -1785,11 +1852,11 @@ NSArray *buildDiceImages() {
                                                cancelButtonTitle:@"Okay"
                                                otherButtonTitles:nil]
                               autorelease];
-		
+
         [alert show];
         return;
     }
-    
+
     NSString *title = [NSString stringWithFormat:@"Bid %d %@?", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)]];
     NSArray *push = [self makePushedDiceArray];
     NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu %@?", (unsigned long)[push count], ([push count] == 1 ? @"die" : @"dice")];
@@ -1807,7 +1874,7 @@ NSArray *buildDiceImages() {
 - (IBAction)exactPressed:(id)sender {
     Bid *previousBid = self.state.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
-	
+
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Exact?"
                                                      message:bidStr
                                                     delegate:self
@@ -1815,7 +1882,7 @@ NSArray *buildDiceImages() {
                                            otherButtonTitles:@"Exact", nil]
                           autorelease];
     alert.tag = ACTION_EXACT;
-	
+
     [alert show];
 }
 
@@ -1988,18 +2055,18 @@ NSArray *buildDiceImages() {
 
     // Get the snapshot
     UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-
+	
     // Now apply the blur effect using Apple's UIImageEffect category
 	UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     UIImage *blurredSnapshotImage = [snapshotImage applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
-
+	
     // Or apply any other effects available in "UIImage+ImageEffects.h"
     // UIImage *blurredSnapshotImage = [snapshotImage applyDarkEffect];
     // UIImage *blurredSnapshotImage = [snapshotImage applyExtraLightEffect];
-
+	
     // Be nice and clean your mess up
     UIGraphicsEndImageContext();
-
+	
     return blurredSnapshotImage;
 }
 

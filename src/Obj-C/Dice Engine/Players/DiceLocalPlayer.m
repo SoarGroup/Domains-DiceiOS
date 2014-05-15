@@ -11,6 +11,7 @@
 #import "PlayerState.h"
 #import "PlayGame.h"
 #import "GameKitGameHandler.h"
+#import "PlayGameView.h"
 
 @implementation DiceLocalPlayer
 
@@ -54,6 +55,9 @@
 - (void) itsYourTurn
 {
 	[self.gameView updateUI];
+
+	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+									self.gameView.gameStateLabel);
 }
 
 - (void)notifyHasLost

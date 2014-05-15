@@ -57,7 +57,7 @@
 @property(readwrite, retain) ApplicationDelegate *appDelegate;
 @property(readwrite, retain) DiceGameState *gameState;
 @property(readwrite, retain) NSArray *players;
-@property(readwrite, retain) id <PlayGame> gameView;
+@property(readwrite, retain) PlayGameView* gameView;
 @property(readwrite, assign) BOOL started;
 @property(readwrite, assign) BOOL deferNotification;
 
