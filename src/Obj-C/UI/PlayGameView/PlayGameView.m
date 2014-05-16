@@ -390,7 +390,7 @@ NSArray *buildDiceImages() {
 }
 
 - (BOOL) roundBeginning {
-	hasTouchedBidCounterThisRound = NO;
+	hasTouchedBidCounterThisTurn = NO;
 
     return NO;
 }
@@ -544,7 +544,7 @@ NSArray *buildDiceImages() {
 	centerPush = [[UIView alloc] initWithFrame:CGRectMake(292.5, 221, 442, 308)];
 	UIImageView* centerPushImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Center-Push"]] autorelease];
 	centerPushImage.frame = CGRectMake(0, 0, 442, 308);
-	[centerPush addSubview:centerPushImage];
+	//[centerPush addSubview:centerPushImage];
 
 	[self.view addSubview:centerPush];
 }
@@ -886,22 +886,17 @@ NSArray *buildDiceImages() {
     self.exactButton.enabled = canBid && [self.state canExact];
 
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
-	if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
+	if (previousBid == nil)
+	{
+		currentBidCount = 1;
+		currentBidFace = 2;
+	}
+	else if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
 	{
 		currentBidCount = previousBid.numberOfDice + 1;
 		currentBidFace = previousBid.rankOfDie;
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
-	}
-	else if (![self nextLegalBid:previousBid])
-	{
-		currentBidFace = previousBid.rankOfDie;
-		self.bidFacePlusButton.enabled = NO;
-		self.bidFaceMinusButton.enabled = NO;
-
-		currentBidCount = previousBid.numberOfDice;
-		self.bidCountMinusButton.enabled = NO;
-		self.bidCountPlusButton.enabled = NO;
 	}
 	else
 	{
@@ -922,9 +917,26 @@ NSArray *buildDiceImages() {
 			}
 		}
 
-		Bid* nextLegalBid = [self nextLegalBid:previousBidToUse];
-		currentBidFace = [nextLegalBid rankOfDie];
-		currentBidCount = [nextLegalBid numberOfDice];
+		Bid* nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBidToUse.rankOfDie];
+
+		if (!nextLegalBid)
+			nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBid.rankOfDie];
+
+		if (!nextLegalBid)
+		{
+			currentBidFace = previousBid.rankOfDie;
+			self.bidFacePlusButton.enabled = NO;
+			self.bidFaceMinusButton.enabled = NO;
+
+			currentBidCount = previousBid.numberOfDice;
+			self.bidCountMinusButton.enabled = NO;
+			self.bidCountPlusButton.enabled = NO;
+		}
+		else
+		{
+			currentBidFace = [nextLegalBid rankOfDie];
+			currentBidCount = [nextLegalBid numberOfDice];
+		}
 	}
 
 	if (self.exactButton.enabled)
@@ -953,26 +965,23 @@ NSArray *buildDiceImages() {
 		[self updateFullScreenUI:NO];
 }
 
-- (Bid*)nextLegalBid:(Bid*)previousBid
+- (Bid*)minimumLegalBid:(Bid*)previousBid withCurrentFace:(int)currentFace
 {
-	int maxBidCount = 0;
-
-	for (PlayerState* pstate in game.gameState.playerStates)
-	{
-		if ([pstate isKindOfClass:[PlayerState class]])
-			maxBidCount += [[pstate arrayOfDice] count];
-	}
-
-	Bid* lastActualBid = self.game.gameState.previousBid;
-
-	if (previousBid == nil)
-		previousBid = lastActualBid;
-
 	if (previousBid)
 	{
-		do
+		int maxBidCount = 0;
+
+		for (PlayerState* pstate in game.gameState.playerStates)
 		{
-			if (previousBid.numberOfDice > maxBidCount)
+			if ([pstate isKindOfClass:[PlayerState class]])
+				maxBidCount += [[pstate arrayOfDice] count];
+		}
+
+		Bid* newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:currentFace] autorelease];
+
+		while (![newBid isLegalRaise:previousBid specialRules:self.game.gameState.usingSpecialRules playerSpecialRules:NO])
+		{
+			if (newBid.numberOfDice > maxBidCount)
 			{
 				if (previousBid.rankOfDie == 1)
 					return nil;
@@ -982,17 +991,16 @@ NSArray *buildDiceImages() {
 				if (nextRank > 6)
 					nextRank = 1;
 
-				previousBid = [[[Bid alloc] initWithPlayerID:previousBid.playerID name:previousBid.playerName dice:lastActualBid.numberOfDice rank:nextRank] autorelease];
+				newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:nextRank] autorelease];
 			}
 			else
-				previousBid = [[[Bid alloc] initWithPlayerID:previousBid.playerID name:previousBid.playerName dice:(previousBid.numberOfDice + 1) rank:previousBid.rankOfDie] autorelease];
+				newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:(newBid.numberOfDice + 1) rank:newBid.rankOfDie] autorelease];
 		}
-		while (![previousBid isLegalRaise:lastActualBid specialRules:self.game.gameState.usingSpecialRules playerSpecialRules:NO]);
+
+		return newBid;
 	}
 	else
-		previousBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
-
-	return previousBid;
+		return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
@@ -1662,97 +1670,49 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)bidCountPlusPressed:(id)sender {
-	hasTouchedBidCounterThisRound = YES;
+	hasTouchedBidCounterThisTurn = YES;
 
     ++currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
 - (IBAction)bidCountMinusPressed:(id)sender {
-	hasTouchedBidCounterThisRound = YES;
+	hasTouchedBidCounterThisTurn = YES;
 
     --currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
 - (IBAction)bidFacePlusPressed:(id)sender {
-	double bidCount = currentBidCount;
+	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
+		currentBidCount = ceil(currentBidCount * 2.0);
 
-	if (!hasTouchedBidCounterThisRound)
-	{
-		if (currentBidFace == 6)
-			bidCount = self.game.gameState.previousBid.numberOfDice;
-		else
-		{
-			currentBidCount = [self nextLegalBid:self.game.gameState.previousBid].numberOfDice;
+	++currentBidFace;
 
-			if (self.game.gameState.previousBid.rankOfDie == 1)
-				currentBidCount = (currentBidCount - 1) * 2;
-		}
-	}
+	if (currentBidFace == 7)
+		currentBidFace = 1;
 
-	if (currentBidFace == 6 && !game.gameState.usingSpecialRules)
-	{
-		bidCount /= 2.0;
-
-		if (ceil(bidCount) != bidCount)
-			bidCount = ceil(bidCount);
-
-		currentBidCount = (int)bidCount;
-	}
-	else if (hasTouchedBidCounterThisRound && currentBidFace == 1 && !game.gameState.usingSpecialRules)
-	{
-		currentBidCount *= 2;
-
-		if (game.gameState.previousBid.rankOfDie == 1)
-			currentBidCount++;
-	}
-
-    ++currentBidFace;
-
-	if (currentBidCount == 0)
-		currentBidCount = 1;
+	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
+		currentBidCount = ceil(currentBidCount / 2.0);
+	else
+		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
 
     [self constrainAndUpdateBidFace];
 }
 
 - (IBAction)bidFaceMinusPressed:(id)sender {
-	double bidCount = currentBidCount;
-
-	if (!hasTouchedBidCounterThisRound)
-	{
-		if (currentBidFace == 2)
-			bidCount = self.game.gameState.previousBid.numberOfDice;
-		else
-		{
-			currentBidCount = [self nextLegalBid:self.game.gameState.previousBid].numberOfDice;
-
-			if (self.game.gameState.previousBid.rankOfDie == 1)
-				currentBidCount = (currentBidCount - 1) * 2;
-		}
-	}
-
-	if (currentBidFace == 2 && !game.gameState.usingSpecialRules)
-	{
-		bidCount /= 2.0;
-
-		if (ceil(bidCount) != bidCount)
-			bidCount = ceil(bidCount);
-
-		currentBidCount = (int)bidCount;
-	}
-	else if (hasTouchedBidCounterThisRound && currentBidFace == 1 && !game.gameState.usingSpecialRules)
-	{
-		currentBidCount *= 2;
-
-		if (game.gameState.previousBid.rankOfDie == 1)
-			currentBidCount++;
-	}
+	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
+		currentBidCount = ceil(currentBidCount * 2.0);
 
 	--currentBidFace;
 
-	if (currentBidCount == 0)
-		currentBidCount = 1;
+	if (currentBidFace == 0)
+		currentBidFace = 6;
+
+	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
+		currentBidCount = ceil(currentBidCount / 2.0);
+	else
+		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
 
     [self constrainAndUpdateBidFace];
 }
@@ -1781,35 +1741,50 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)challengePressed:(id)sender {
-    Bid *previousBid = self.state.gameState.previousBid;
-    NSString *bidStr = [previousBid asString];
+	UIButton* challengeButton = (UIButton*)sender;
+	int playerID = (int)challengeButton.tag;
 
-	UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
-                                                     message:bidStr
+	HistoryItem* previousItem = nil;
+
+	NSArray* lastPlayerMoves = [self.game.gameState lastMoveForPlayer:playerID];
+	if ([lastPlayerMoves count] > 0)
+	{
+		for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
+		{
+			HistoryItem* item = [lastPlayerMoves objectAtIndex:i];
+
+			if ([item actionType] == ACTION_BID || [item actionType] == ACTION_PASS)
+			{
+				previousItem = item;
+				break;
+			}
+		}
+	}
+
+	assert(previousItem != nil);
+
+	NSString* messageString = nil;
+	NSString* buttonTitle = [[previousItem player] playerName];
+
+	if (previousItem.actionType == ACTION_BID)
+	{
+		messageString = [[previousItem bid] asString];
+		buttonTitle = [NSString stringWithFormat:@"%@'s bid", buttonTitle];
+	}
+	else
+	{
+		messageString = @"";
+		buttonTitle = [NSString stringWithFormat:@"%@'s pass", buttonTitle];
+	}
+
+	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
+                                                     message:messageString
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:nil]
+                                           otherButtonTitles:buttonTitle, nil]
 						  autorelease];
 
-    Bid *challengeableBid = [state getChallengeableBid];
-    if (challengeableBid != nil)
-    {
-        NSString *playerName = [[state.gameState getPlayerWithID:challengeableBid.playerID] getName];
-        [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s bid", playerName]];
-    }
-    int passID = [state getChallengeableLastPass];
-    if (passID != -1)
-    {
-        NSString *playerName = [[state.gameState getPlayerWithID:passID] getName];
-        [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s pass", playerName]];
-    }
-    passID = [state getChallengeableSecondLastPass];
-    if (passID != -1)
-    {
-        NSString *playerName = [[state.gameState getPlayerWithID:passID] getName];
-        [alert addButtonWithTitle:[NSString stringWithFormat:@"%@'s pass", playerName]];
-    }
-    alert.tag = ACTION_CHALLENGE_BID; // TODO ask which player to challenge, bid / pass / etc
+	alert.tag = (previousItem.actionType == ACTION_BID ? ACTION_CHALLENGE_BID : ACTION_CHALLENGE_PASS);
     [alert show];
 }
 

@@ -60,7 +60,7 @@
 	self.navigationController.navigationBarHidden = NO;
 
 	self.navigationController.title = @"Multiplayer Matches";
-	self.navigationItem.title = @"Back";
+	self.navigationItem.title = @"Multiplayer Matches";
 
 	if (iPad)
 	{

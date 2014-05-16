@@ -86,6 +86,16 @@
     return NO;
 }
 
+- (NSString *)debugDescription
+{
+	return [self description];
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"Player %@ (%li) bid %i %is", self.playerName, (long)self.playerID, self.numberOfDice, self.rankOfDie];
+}
+
     //Dealloc method
 - (void)dealloc
 {

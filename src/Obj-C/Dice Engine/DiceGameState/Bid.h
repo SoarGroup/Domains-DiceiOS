@@ -34,4 +34,7 @@
 - (NSString *)asString;
 - (NSString *)asStringOldStyle;
 
+- (NSString *)description;
+- (NSString *)debugDescription;
+
 @end

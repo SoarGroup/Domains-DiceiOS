@@ -36,7 +36,7 @@ const int pushMargin();
 	UIAlertView* alertView2;
 	NSInteger buttonIndex2;
 
-	BOOL hasTouchedBidCounterThisRound;
+	BOOL hasTouchedBidCounterThisTurn;
 }
 
 // Utility Functions

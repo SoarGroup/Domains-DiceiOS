@@ -726,13 +726,11 @@
     {
         [rounds addObject:history];
         [history release];
-        history = nil;
         history = [[NSMutableArray alloc] init];
     }
     else
-    {
         history = [[NSMutableArray alloc] init];
-    }
+
     [history addObject:[[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] autorelease]];
     for (id <NewRoundListener> listener in theNewRoundListeners) {
         if ([listener roundBeginning]) {
