@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0161E019254154000827C6 /* default in Resources */ = {isa = PBXBuildFile; fileRef = 4D0161DF19254154000827C6 /* default */; };
+		4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
@@ -111,6 +113,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D0161DF19254154000827C6 /* default */ = {isa = PBXFileReference; lastKnownFileType = folder; path = default; sourceTree = "<group>"; };
+		4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMatchViewPopover.xib; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
@@ -628,6 +632,7 @@
 				4DF394461923C51C00A523FB /* SettingsViewiPad.xib */,
 				4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */,
 				4DF394481923C51C00A523FB /* StatsViewiPad.xib */,
+				4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */,
 			);
 			path = "iPad-XIBs";
 			sourceTree = "<group>";
@@ -753,6 +758,7 @@
 		4DF3947F1923C51C00A523FB /* Soar Agent */ = {
 			isa = PBXGroup;
 			children = (
+				4D0161DF19254154000827C6 /* default */,
 				4DF397C31923C9A600A523FB /* dice-agent-new.soar */,
 				4DF397C41923C9A600A523FB /* dice-agent-p */,
 				4DF397C51923C9A600A523FB /* dice-easy.soar */,
@@ -917,6 +923,7 @@
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
 				4DF3962F1923C51D00A523FB /* RoundOverViewiPad.xib in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
+				4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */,
 				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
 				4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */,
 				4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */,
@@ -941,6 +948,7 @@
 				4DF393B41923C4F400A523FB /* Icon.png in Resources */,
 				4DF393B71923C4F400A523FB /* iTunesArtwork@2x.png in Resources */,
 				4DF396311923C51D00A523FB /* SettingsViewiPad.xib in Resources */,
+				4D0161E019254154000827C6 /* default in Resources */,
 				4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */,
 				4DF393B11923C4F400A523FB /* Icon-Settings@2x.png in Resources */,
 				4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */,
@@ -1106,7 +1114,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
@@ -1265,7 +1273,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
@@ -1321,7 +1329,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
+				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";

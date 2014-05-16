@@ -63,7 +63,7 @@
 - (void)notifyHasLost
 {
 	if (handler)
-		[handler playerQuitMatch:self];
+		[handler playerQuitMatch:self withRemoval:NO];
 }
 
 - (void)notifyHasWon

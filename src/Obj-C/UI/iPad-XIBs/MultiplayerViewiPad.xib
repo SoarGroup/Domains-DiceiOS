@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="gamesScrollView" destination="jyp-pd-FyW" id="CKc-5B-D7o"/>
                 <outlet property="joinMatchButton" destination="EHC-C9-v0x" id="9bN-qX-Dsb"/>
+                <outlet property="joinSpinner" destination="gTJ-SX-Eyr" id="h4Y-w2-ekM"/>
                 <outlet property="scrollToTheFarRightButton" destination="0gS-jI-Ra8" id="Vh9-aM-rkN"/>
                 <outlet property="view" destination="iN0-l3-epB" id="WTo-wA-VQX"/>
             </connections>
@@ -45,6 +46,10 @@
                         <action selector="scrollToTheFarRightButtonPressed:" destination="-1" eventType="touchUpInside" id="T16-lz-2ud"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gTJ-SX-Eyr">
+                    <rect key="frame" x="104" y="659" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

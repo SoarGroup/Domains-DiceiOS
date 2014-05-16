@@ -69,7 +69,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 	
-    int seed = arc4random() % RAND_MAX;
+    int seed = arc4random_uniform(RAND_MAX);
     srand(seed);
     NSLog(@"Seed:%i", seed);
 
@@ -95,6 +95,12 @@
 
 - (IBAction)multiplayerGameButtonPressed:(id)sender
 {
+//	UIAlertView *noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Multiplayer is not implemented yet and is therefore disabled." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease];
+//
+//	[noMultiplayer show];
+//
+//	return;
+
 	if (!self.multiplayerEnabled)
 	{
 		UIAlertView *noMultiplayer;

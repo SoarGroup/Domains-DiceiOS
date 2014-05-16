@@ -160,7 +160,7 @@
         self.currentTurn = 0;
         inSpecialRules = NO;
         //[self goToNextPlayerWhoHasntLost];
-		self.currentTurn = arc4random() % ([players count] - 1);
+		self.currentTurn = arc4random_uniform((int)[players count] - 1);
 		self.canContinueGame = YES;
         [self createNewRound];
     }

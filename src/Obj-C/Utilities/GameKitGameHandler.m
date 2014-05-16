@@ -39,7 +39,7 @@
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
 		if (error)
-			NSLog(@"Error upon saving match data: %@", error.description);
+			NSLog(@"Error upon saving match data: %@\n", error.description);
 	}];
 }
 
@@ -57,7 +57,7 @@
 			 [localGame updateGame:updatedGame];
 		 }
 		 else
-			 NSLog(@"Error upon loading match data: %@", error.description);
+			 NSLog(@"Error upon loading match data: %@\n", error.description);
 	 }];
 }
 
@@ -75,7 +75,7 @@
 			 *data = [[MultiplayerMatchData alloc] initWithData:matchData];
 		 }
 		 else
-			 NSLog(@"Error upon loading match data: %@", error.description);
+			 NSLog(@"Error upon loading match data: %@\n", error.description);
 	 }];
 }
 
@@ -97,25 +97,58 @@
 	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error advancing to next player: %@", error.description);
+			 NSLog(@"Error advancing to next player: %@\n", error.description);
 	 }];
 }
 
+- (GKTurnBasedParticipant*)myParticipant
+{
+	for (GKTurnBasedParticipant* participant in [match participants])
+	{
+		if ([participant playerID] == [[GKLocalPlayer localPlayer] playerID])
+			return participant;
+	}
 
-- (void) playerQuitMatch:(id<Player>)player
+	return nil;
+}
+
+- (void) playerQuitMatch:(id<Player>)player withRemoval:(BOOL)remove
 {
 	if (matchHasEnded)
 		return;
 
 	if ([player isKindOfClass:SoarPlayer.class])
 		[self saveMatchData];
-	else
+	else if ([player isKindOfClass:DiceLocalPlayer.class])
 	{
-		void (^quitHandler)(NSError*) =^ (NSError* error)
+		if ([self myParticipant].matchOutcome != GKTurnBasedMatchOutcomeNone || remove)
 		{
-			if (error)
-				NSLog(@"Error when player quit: %@", error.description);
-		};
+			if ([self myParticipant].matchOutcome == GKTurnBasedMatchOutcomeNone)
+			{
+				GKTurnBasedMatchOutcome outcome;
+
+				PlayerState* state = [[localGame gameState] getPlayerState:[player getID]];
+
+				if ([state hasLost])
+					outcome = GKTurnBasedMatchOutcomeLost;
+				else
+					outcome = GKTurnBasedMatchOutcomeQuit;
+
+				[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
+				 {
+					 if (error)
+						 NSLog(@"Error when player quit: %@\n", error.description);
+				 }];
+			}
+
+			[match removeWithCompletionHandler:^(NSError* error)
+			 {
+				 if (error)
+					 NSLog(@"Error Removing Match: %@\n", error.description);
+			 }];
+
+			return;
+		}
 
 		GKTurnBasedMatchOutcome outcome;
 
@@ -126,7 +159,11 @@
 		else
 			outcome = GKTurnBasedMatchOutcomeQuit;
 
-		[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:quitHandler];
+		[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
+		 {
+			 if (error)
+				 NSLog(@"Error when player quit: %@\n", error.description);
+		 }];
 	}
 }
 
@@ -161,7 +198,7 @@
 	[match endMatchInTurnWithMatchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error ending match: %@", error.description);
+			 NSLog(@"Error ending match: %@\n", error.description);
 	 }];
 
 	return YES;

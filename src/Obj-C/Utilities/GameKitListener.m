@@ -39,6 +39,17 @@
 	[handlers removeObject:handler];
 }
 
+- (GameKitGameHandler*)handlerForMatch:(GKTurnBasedMatch*)match
+{
+	for (GameKitGameHandler* handler in handlers)
+	{
+		if ([handler getMatch] == match)
+			return handler;
+	}
+
+	return nil;
+}
+
 - (void) player:(GKPlayer *)player didAcceptInvite:(GKInvite *)invite
 {
 	// TODO: Invites

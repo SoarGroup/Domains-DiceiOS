@@ -154,7 +154,7 @@ static int agentCount = 0;
         /*agent->ExecuteCommandLine("timers -d");
          agent->SetOutputLinkChangeTracking(true);*/
         
-        int seed = arc4random();
+        int seed = arc4random_uniform(RAND_MAX);
         
         agent->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
         

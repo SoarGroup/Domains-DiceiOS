@@ -95,6 +95,9 @@ sp {apply*compute-challenge-pass-likelihood*unlikely*pass*not-all-under*more-two
          ^target <target>)
    (<target> ^cup.count >= 2
              ^pushed.count > 0)
+ -{(<target> ^pushed <push1>)  # Add 5/15/2014 so it doesn't override certain challenge.
+   (<push1> ^die.face <n>
+            ^die.face <> <n>)}
 -->
    (write (crlf) |  Challenge success likelihood is safe.|)
    (<e> ^probability .90)}

@@ -34,7 +34,7 @@
 - (void) getMultiplayerMatchData:(MultiplayerMatchData**)data;
 - (void) advanceToRemotePlayer:(DiceRemotePlayer*)player;
 
-- (void) playerQuitMatch:(id<Player>)player;
+- (void) playerQuitMatch:(id<Player>)player withRemoval:(BOOL)remove;
 - (BOOL) endMatchForAllParticipants;
 
 - (DiceGame*)getDiceGame;

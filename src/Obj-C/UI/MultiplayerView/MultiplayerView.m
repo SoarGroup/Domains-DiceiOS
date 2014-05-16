@@ -26,7 +26,9 @@
 
 @implementation MultiplayerView
 
-@synthesize joinMatchButton, gamesScrollView, scrollToTheFarRightButton, mainMenu, appDelegate;
+@synthesize joinMatchButton, gamesScrollView, scrollToTheFarRightButton, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner;
+
+@synthesize miniGamesViewArray, playGameViews, handlerArray;
 
 - (id)initWithMainMenu:(MainMenu *)menu withAppDelegate:(ApplicationDelegate *)delegate
 {
@@ -43,6 +45,9 @@
         iPad = [device isEqualToString:@"iPad"];
 		self.mainMenu = menu;
 		self.appDelegate = delegate;
+
+		if (iPad)
+			joinMatchPopoverViewController = [[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:YES withMultiplayerView:self];
     }
 
     return self;
@@ -58,9 +63,131 @@
 	self.navigationItem.title = @"Back";
 
 	if (iPad)
+	{
 		[self iPadPopulateScrollView];
+
+		joinMatchPopoverViewController.spinner = self.joinSpinner;
+	}
 	else
 		[self iPhonePopulateScrollView];
+}
+
+- (void)joinedNewMatch:(GKMatchRequest*)request
+{
+	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
+	 {
+		 for (GKTurnBasedMatch* match in matches)
+		 {
+			 if (![self.appDelegate.listener handlerForMatch:match])
+			 {
+				 // the new match
+
+				 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
+				  {
+					  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata] autorelease];
+
+					  if (!mmd && error2)
+					  {
+						  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
+						  return;
+					  }
+
+					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
+					  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil] autorelease];
+
+					  if (mmd)
+					  {
+						  [newGame updateGame:[mmd theGame]];
+
+						  for (id<Player> player in [newGame players])
+						  {
+							  [player setHandler:handler];
+
+							  if (![player isKindOfClass:SoarPlayer.class])
+							  {
+								  for (GKTurnBasedParticipant* participant in match.participants)
+								  {
+									  if ([[player getName] isEqualToString:[participant playerID]])
+									  {
+										  [player setParticipant:participant];
+										  break;
+									  }
+								  }
+							  }
+						  }
+					  }
+					  else
+					  {
+						  // New Match
+						  int AICount = (int)request.playerGroup;
+						  int humanCount = (int)[match.participants count];
+						  int currentHumanCount = 0;
+
+						  NSLock* lock = [[[NSLock alloc] init] autorelease];
+
+						  int totalPlayerCount = AICount + humanCount;
+
+						  for (int i = 0;i < totalPlayerCount;i++)
+						  {
+							  BOOL isAI = (BOOL)arc4random_uniform(2);
+
+							  if (isAI && AICount > 0)
+							  {
+								  [newGame addPlayer:[[SoarPlayer alloc] initWithGame:newGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler]];
+
+								  AICount--;
+							  }
+							  else
+							  {
+								  GKTurnBasedParticipant* participant = [match.participants objectAtIndex:currentHumanCount];
+								  currentHumanCount++;
+
+								  if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant playerID]])
+									  [newGame addPlayer:[[DiceLocalPlayer alloc] initWithName:[participant playerID] withHandler:handler withParticipant:participant]];
+								  else
+									  [newGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
+							  }
+						  }
+					  }
+
+					  DiceLocalPlayer* localPlayer = nil;
+					  NSMutableArray* remotePlayers = [[[NSMutableArray alloc] init] autorelease];
+
+					  for (id<Player> player in newGame.players)
+					  {
+						  if ([player isKindOfClass:DiceLocalPlayer.class])
+							  localPlayer = player;
+						  else
+							  [remotePlayers addObject:player];
+					  }
+
+					  [handler setLocalPlayer:localPlayer];
+					  [handler setRemotePlayers:remotePlayers];
+
+					  [self.appDelegate.listener addGameKitGameHandler:handler];
+
+					  void (^quitHandlerFullScreen)(void) =^
+					  {
+						  [self.navigationController popToViewController:self animated:YES];
+					  };
+
+					  UIViewController *gameView = [[[PlayGameView alloc] initWithGame:newGame withQuitHandler:[[quitHandlerFullScreen copy] autorelease]] autorelease];
+
+					  CGRect newFrame = gameView.view.frame;
+					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
+					  gameView.view.frame = newFrame;
+
+					  [self.miniGamesViewArray addObject:newGame];
+					  [self.playGameViews addObject:gameView];
+					  [self.handlerArray addObject:handler];
+
+					  [self.gamesScrollView addSubview:gameView.view];
+
+					  return;
+				  }];
+			 }
+		 }
+	 }];
 }
 
 - (void)iPadPopulateScrollView
@@ -334,7 +461,7 @@
 		 [lock release];
 		 [*matchNumber release];
 		 free(matchNumber);
-	}];
+	 }];
 }
 
 - (void)playMatchButtonPressed:(id)sender
@@ -358,11 +485,61 @@
 {
 	GKTurnBasedMatch* match = [(UIButton*)sender valueForKey:@"Removal"];
 
-	[match removeWithCompletionHandler:^(NSError* error)
+	GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+
+	if (handler)
 	{
-		if (error)
-			NSLog(@"Error removing match: %@\n", error.description);
-	}];
+		DiceGame* game = [handler getDiceGame];
+
+		id<Player> player = nil;
+
+		for (id<Player> p in [game players])
+		{
+			if ([p isKindOfClass:DiceLocalPlayer.class])
+			{
+				player = p;
+				break;
+			}
+		}
+
+		if (player)
+		{
+			[handler playerQuitMatch:player withRemoval:YES];
+
+			int handlerIndex = 0;
+			for (;handlerIndex < [handlerArray count];handlerIndex++)
+			{
+				if ([handlerArray objectAtIndex:handlerIndex] == handler)
+					break;
+			}
+
+			[[(PlayGameView*)[playGameViews objectAtIndex:handlerIndex] view] removeFromSuperview];
+
+			[self.appDelegate.listener removeGameKitGameHandler:handler];
+			[handlerArray removeObjectAtIndex:handlerIndex];
+			[playGameViews removeObjectAtIndex:handlerIndex];
+			[miniGamesViewArray removeObjectAtIndex:handlerIndex];
+
+			if ([handlerArray count] == 0)
+				gamesScrollView.contentSize = CGSizeMake(0, gamesScrollView.frame.size.height);
+			else
+				gamesScrollView.contentSize = CGSizeMake(gamesScrollView.contentSize.width - ((UIView*)[playGameViews objectAtIndex:0]).frame.size.width, gamesScrollView.frame.size.height);
+
+			if (handlerIndex == [handlerArray count])
+				return; // Nothing more to do
+
+			[UIView animateWithDuration:0.25 animations:^(void)
+			 {
+				 for (int i = handlerIndex;i < [handlerArray count];i++)
+				 {
+					 CGRect currentFrame = ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame;
+					 currentFrame.origin.x -= currentFrame.size.width;
+
+					 ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame = currentFrame;
+				 }
+			 }];
+		}
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -380,32 +557,18 @@
 
 - (void)iPadJoinMatchButtonPressed
 {
+	self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:self.joinMatchPopoverViewController] autorelease];
+	self.popoverController.popoverContentSize = CGSizeMake(320,320);
 
+	[self.popoverController presentPopoverFromRect:joinMatchButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }
 
 - (void)iPhoneJoinMatchButtonPressed
 {
-	[updateTimer invalidate];
-
-	[self.navigationController pushViewController:[[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:NO withMultiplayerView:self] autorelease] animated:YES];
 }
 
 - (IBAction)scrollToTheFarRightButtonPressed:(id)sender
-{
-	
-}
-
-- (void)player:(GKPlayer*)player didRequestMatchWithPlayers:(NSArray *)playerIDsToInvite
-{
-	// This is called from GAME CENTER not US.
-}
-
-- (void)player:(GKPlayer*)player matchEnded:(GKTurnBasedMatch *)match
-{
-
-}
-
-- (void)player:(GKPlayer*)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive
 {
 	
 }
