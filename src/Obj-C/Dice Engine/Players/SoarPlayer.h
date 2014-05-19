@@ -42,6 +42,8 @@
     PlayerState *playerState;
     int playerID;
     NSLock *turnLock;
+
+	int outputCallBackID;
 }
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler;

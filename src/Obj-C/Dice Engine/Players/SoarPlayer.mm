@@ -17,7 +17,6 @@
 
 #include <map>
 
-//#include "sml_Events.h"
 
 void testWme(sml::WMElement *wme)
 {
@@ -35,7 +34,7 @@ void sdb(char * command, sml::Agent *agent)
 void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m) {
 	[[NSThread currentThread] setName:@"Soar Agent Thread"];
 
-    NSLog(@"> %s", m);
+    NSLog(@"%s> %s", a->GetAgentName(), m);
 }
 
 class DiceSMLData {
@@ -156,14 +155,9 @@ static int agentCount = 0;
             return nil;
         }
 
-#if TARGET_IPHONE_SIMULATOR
+#ifdef DEBUG
         agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 #endif
-        
-        //agent->RegisterForRunEvent(sml::smlEVENT_BEFORE_ELABORATION_CYCLE, DiceSMLData::RunEventHandler, NULL);
-        
-        /*agent->ExecuteCommandLine("timers -d");
-         agent->SetOutputLinkChangeTracking(true);*/
         
         int seed = arc4random_uniform(RAND_MAX);
         
@@ -276,6 +270,7 @@ static int agentCount = 0;
     
     BOOL agentSlept = NO;
     BOOL agentHalted = NO;
+	BOOL agentInterrupted = NO;
     BOOL needsRefresh = YES;
     
     DiceSMLData *newData = NULL;
@@ -307,17 +302,20 @@ static int agentCount = 0;
 		double startTime = [[NSDate date] timeIntervalSince1970];
         
         do {   
-            //if (!remoteConnected)
-            agent->RunSelfTilOutput();
-            //else
-            //    agent->RunSelf(0);
+            if (!agentInterrupted)
+				agent->RunSelfTilOutput();
             
             sml::smlRunState agentState = agent->GetRunState();
-            agentHalted = (agentState == sml::sml_RUNSTATE_HALTED || agentState == sml::sml_RUNSTATE_INTERRUPTED);
+            agentHalted = agentState == sml::sml_RUNSTATE_HALTED;
 
-			if ((startTime + 5) < [[NSDate date] timeIntervalSince1970])
+			if (!agentInterrupted)
+				agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
+
+			if (!agentInterrupted && (startTime + 5) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
+
+				NSLog(@"Restarting Soar due to timeout: %i", [turnCount intValue]);
 
 				if ([turnCount intValue] > 5)
 					return [self showErrorAlert];
@@ -332,10 +330,11 @@ static int agentCount = 0;
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
         }
     } while (!agentSlept && !agentHalted);
-    
-    //NSLog(@"State: %s", agent->ExecuteCommandLine("print -d 10 s1"));
-    
-    // if (agentSlept)
+
+#ifdef DEBUG
+    NSLog(@"State: %s", agent->ExecuteCommandLine("print -d 10 s1"));
+#endif
+
     if (agent != nil)
     {
         NSLog(@"Halting agent");
@@ -382,12 +381,6 @@ static int agentCount = 0;
     
     NSLog(@"Agent done");
     
-    /*
-     information->errorString = [[[NSString alloc] init] autorelease];
-     turnInformationSentFromTheClient info = *information;
-     free(information);
-     */
-    
     if (newData != NULL)
     {
         newData->idState->DestroyWME();
@@ -404,9 +397,7 @@ static int agentCount = 0;
 }
 
 - (void)drop
-{
-    
-}
+{}
 
 - (DiceSMLData *)GameStateToWM:(sml::Identifier *)inputLink
 {
@@ -990,13 +981,6 @@ static int agentCount = 0;
                     }
                     
                     diceToPush = [[[NSArray alloc] initWithArray:mut] autorelease];
-                    
-                    /*
-                     information.action = A_PUSH;
-                     information.diceToPush = diceToPush;
-                     */
-                    
-                    // action = [DiceAction pushAction:self.playerID push:diceToPush];
                 }
 				
 				delete[] faces;
@@ -1031,12 +1015,7 @@ static int agentCount = 0;
             }
             else
             {
-                /*
-                 information.action = (ActionsAbleToSend) -1;
-                 information.errorString = [@"Wanted to " stringByAppendingString:attrName];
-                 */
-                
-                NSLog(@"Error: agent attempted to use command \"%@\"", attrName);
+				NSLog(@"Error: agent attempted to use command \"%@\"", attrName);
                 
                 ident->AddStatusError();
             }
@@ -1052,9 +1031,7 @@ static int agentCount = 0;
             }
         }
         else
-        {
-            //No QNA
-        }
+        {}
     }
     
     if (action != nil)
@@ -1080,19 +1057,13 @@ static int agentCount = 0;
 }
 
 - (void)newRound:(NSArray *)arrayOfDice
-{
-    
-}
+{}
 
 - (void)showPublicInformation:(DiceGameState *)gameState
-{
-    
-}
+{}
 
 - (void)reroll:(NSArray *)arrayOfDice
-{
-    
-}
+{}
 
 // Methods from Player protocol
 
