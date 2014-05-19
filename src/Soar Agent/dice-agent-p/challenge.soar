@@ -1,7 +1,8 @@
-sp {dice*propose*challenge*pass
+sp {dice*propose*challenge*bid
    (state <s> ^name dice
               ^my-turn true
               ^last-bid <last-bid>
+              ^top-state.io.input-link.history.action bid 
               ^io.input-link.affordances.action <a>)
    (<a> ^name challenge
         ^available true
@@ -10,7 +11,64 @@ sp {dice*propose*challenge*pass
 -->
    (<s> ^operator <op> +)
    (<op> ^name challenge
-         ^target <t>)
+         ^target <t>
+         ^last-bid-type bid)
+}
+
+sp {dice*propose*challenge*pass-bid
+   (state <s> ^name dice
+              ^my-turn true
+              ^last-bid <last-bid>
+              ^top-state.io.input-link.history <h>
+              ^io.input-link.affordances.action <a>)
+   (<h> ^action pass
+        ^next.action bid)
+   (<a> ^name challenge
+        ^available true
+        ^target <t>) 
+   (<t> ^id <id>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name challenge
+         ^target <t>
+         ^last-bid-type bid)
+}
+
+
+sp {dice*propose*challenge*pass
+   (state <s> ^name dice
+              ^my-turn true
+              ^last-bid <last-bid>
+              ^top-state.io.input-link.history.action pass 
+              ^io.input-link.affordances.action <a>)
+   (<a> ^name challenge
+        ^available true
+        ^target <t>) 
+   (<t> ^id <id>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name challenge
+         ^target <t>
+         ^last-bid-type pass)
+}
+
+sp {dice*propose*challenge*pass-pass
+   (state <s> ^name dice
+              ^my-turn true
+              ^last-bid <last-bid>
+              ^top-state.io.input-link.history <h>
+              ^io.input-link.affordances.action <a>)
+   (<h> ^action pass
+        ^next.action pass)
+   (<a> ^name challenge
+        ^available true
+        ^target <t>) 
+   (<t> ^id <id>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name challenge
+         ^target <t>
+         ^last-bid-type pass-pass)
 }
 
 sp {apply*challenge

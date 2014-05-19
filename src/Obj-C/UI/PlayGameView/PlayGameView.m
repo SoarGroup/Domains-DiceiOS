@@ -688,7 +688,8 @@ NSArray *buildDiceImages() {
 	self.bidFaceLabel.accessibilityLabel = [NSString stringWithFormat:@"Bid Die Face, Face Value of %i", currentBidFace];
 }
 
-- (void) dieButtonPressed:(id)sender {
+- (void) dieButtonPressed:(id)sender
+{
     UIButton *button = (UIButton*)sender;
     NSInteger dieIndex = button.tag;
 
@@ -700,11 +701,27 @@ NSArray *buildDiceImages() {
 
 	if (dieObject.markedToPush)
 	{
+		self.passButton.enabled = YES;
+
 		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, pushed", dieObject.dieValue];
 		button.accessibilityHint = @"Tap to unpush this die";
 	}
 	else
 	{
+		BOOL noneMarkedToPush = YES;
+
+		for (Die* object in self.state.arrayOfDice)
+		{
+			if ([object markedToPush])
+			{
+				noneMarkedToPush = NO;
+				break;
+			}
+		}
+
+		if (noneMarkedToPush)
+			self.passButton.enabled = [self.state canBid] && [self.state canPass];
+
 		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, unpushed", dieObject.dieValue];
 		button.accessibilityHint = @"Tap to push this die";
 	}
@@ -1789,9 +1806,6 @@ NSArray *buildDiceImages() {
 }
 
 - (IBAction)passPressed:(id)sender {
-	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[state markedToPushDice]];
-	[markedToPushDiceWithPushedDice addObjectsFromArray:[state pushedDice]];
-
 	NSString* message = nil;
 
 	if ([[state markedToPushDice] count] > 0)

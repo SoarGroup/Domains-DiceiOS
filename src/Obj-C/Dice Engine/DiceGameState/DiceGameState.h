@@ -42,7 +42,7 @@
 
 - (BOOL)handleBid:(NSInteger)playerID withBid:(Bid *)bid;
 - (BOOL)handlePush:(NSInteger)playerID withPush:(NSArray *)push;
-- (BOOL)handlePass:(NSInteger)playerID;
+- (BOOL)handlePass:(NSInteger)playerID andPushingDice:(BOOL)pushingDice;
 - (BOOL)handleChallenge:(NSInteger)playerID againstTarget:(NSInteger)targetID withFirstPlayerWonOrNot:(BOOL *)didTheChallengerWin;
 - (BOOL)handleExact:(NSInteger)playerID andWasTheExactRight:(BOOL *)wasTheExactRight;
 - (BOOL)handleAccept:(NSInteger)playerID;

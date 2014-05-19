@@ -234,14 +234,14 @@
     return YES;
 }
 
-- (BOOL)handlePass:(NSInteger)playerID
+- (BOOL)handlePass:(NSInteger)playerID andPushingDice:(BOOL)pushingDice
 {
     // Make sure its a valid pass.
     if ([self checkPlayer:playerID]) {
         
         // Get the player state.
         PlayerState *player = [self getPlayerState:playerID];
-        if ([player playerHasPassed])
+        if ([player playerHasPassed] && !pushingDice)
             return NO;
         
         player.playerHasPassed = YES;

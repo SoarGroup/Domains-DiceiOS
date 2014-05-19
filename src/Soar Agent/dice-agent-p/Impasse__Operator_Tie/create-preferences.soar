@@ -76,7 +76,7 @@ sp {selection*apply*create-preferences*compare*better-pass-challenge
         ^numeric-value >= <sv>
         ^desired <d>)
   (<e2> ^superoperator { <> <x> <y> }
-        ^numeric-value <sv>
+        ^numeric-value { <> 1.0 <sv> }
        ^desired <d>)
   (<x> ^name pass)
   (<y> ^name challenge)

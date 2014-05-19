@@ -190,7 +190,7 @@
         }
         case ACTION_PASS:
         {
-            [gameState handlePass:action.playerID];
+            [gameState handlePass:action.playerID andPushingDice:([action.push count] > 0)];
             [gameState handlePush:action.playerID withPush:action.push];
             break;
         }
