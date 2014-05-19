@@ -6,10 +6,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsView">
             <connections>
+                <outlet property="debugLabel" destination="iOp-em-pow" id="ImC-1r-Hgs"/>
                 <outlet property="difficultyLabel" destination="n0f-YB-MzL" id="HCa-ag-NgF"/>
                 <outlet property="difficultySelector" destination="rkV-vO-4zX" id="2fk-5X-3Dj"/>
                 <outlet property="nameLabel" destination="BCe-5S-Q0C" id="MXT-CA-KxR"/>
                 <outlet property="nameTextField" destination="kph-0R-feg" id="8yt-AJ-RYn"/>
+                <outlet property="remoteIPLabel" destination="2iU-C3-pWI" id="wna-RV-tPW"/>
+                <outlet property="remoteIPTextField" destination="GcO-oD-7kQ" id="x0e-f9-ksV"/>
                 <outlet property="view" destination="1" id="3B6-wB-cFT"/>
             </connections>
         </placeholder>
@@ -57,6 +60,29 @@
                         <action selector="difficultySelectorValueChanged:" destination="-1" eventType="valueChanged" id="cxc-3y-HR8"/>
                     </connections>
                 </segmentedControl>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Debug Settings:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iOp-em-pow">
+                    <rect key="frame" x="20" y="313" width="124" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remote Debugger IP:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iU-C3-pWI">
+                    <rect key="frame" x="20" y="342" width="166" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GcO-oD-7kQ">
+                    <rect key="frame" x="20" y="371" width="280" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                    <connections>
+                        <action selector="remoteIPTextFieldTextFinalize:" destination="-1" eventType="editingDidEndOnExit" id="RjD-UA-NhD"/>
+                    </connections>
+                </textField>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>

@@ -118,7 +118,18 @@ static int agentCount = 0;
         self.game = aGame;
 		handler = gkgHandler;
 
-		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
+		DiceDatabase* database = [[[DiceDatabase alloc] init] autorelease];
+		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
+
+		if (remoteIP && [remoteIP length] != 0)
+		{
+			const char* ipAddress = [remoteIP UTF8String];
+
+			kernel = sml::Kernel::CreateRemoteConnection(true, ipAddress);
+			remoteConnected = YES;
+		}
+		else
+			kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
 
         [turnLock lock];
 
@@ -163,9 +174,7 @@ static int agentCount = 0;
         // This is where we specify the root .soar file that will source the Soar agent.
         // We want this to be dice-agent-new, but right now that breaks the agent
         // so we're loading dice-p0-m0-c0 instead.
-		
-		DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
-		
+
 		int difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
 		
         NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
@@ -206,7 +215,7 @@ static int agentCount = 0;
         }
         else
         {
-            path = @"source \"\"/Users/bluechill/Desktop/2011 Soar Summer Work/Liar's Dice/Liar's Dice/Soar/Soar Rules/dice-p0-m0-c0.soar\"";
+            path = [NSString stringWithFormat:@"source \"/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/src/Soar Agent/%@.soar\"", ruleFile];
         }
         
         NSLog(@"Path: %@", path);

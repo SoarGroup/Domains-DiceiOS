@@ -23,6 +23,8 @@
 @synthesize nameTextField;
 @synthesize difficultySelector;
 
+@synthesize debugLabel, remoteIPLabel, remoteIPTextField;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	NSString* device = [UIDevice currentDevice].model;
@@ -55,6 +57,14 @@
 		self.nameTextField.enabled = NO;
 		self.nameTextField.textColor = [UIColor grayColor];
 	}
+
+	self.remoteIPTextField.text = [database valueForKey:@"Debug:RemoteIP"];
+
+#ifndef DEBUG
+	self.debugLabel.hidden = YES;
+	self.remoteIPLabel.hidden = YES;
+	self.remoteIPTextField.hidden = YES;
+#endif
 }
 
 - (void)nameTextFieldTextFinalize:(id)sender
@@ -78,6 +88,17 @@
 	[database setPlayerName:playerName];
 }
 
+- (IBAction)remoteIPTextFieldTextFinalize:(id)sender
+{
+	if (sender != remoteIPTextField)
+		return;
+
+	NSString* remoteIP = remoteIPTextField.text;
+
+	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+	[database setValue:remoteIP forKey:@"Debug:RemoteIP"];
+}
+
 - (void)difficultySelectorValueChanged:(id)sender
 {
 	if (sender != difficultySelector)
@@ -89,7 +110,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-	if ([GKLocalPlayer localPlayer].authenticated)
+	if (textField == nameTextField && [GKLocalPlayer localPlayer].authenticated)
 		return NO;
 
 	return YES;

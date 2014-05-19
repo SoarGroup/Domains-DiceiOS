@@ -135,4 +135,15 @@
 		reloadHandler();
 }
 
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+	[defaults setObject:value forKey:key];
+	[defaults synchronize];
+}
+
+- (id)valueForKey:(NSString *)key
+{
+	return [defaults objectForKey:key];
+}
+
 @end

@@ -14,22 +14,8 @@
 
 @interface PlayerState : NSObject {
 @private
-    int playerID;
-    int numberOfDice;
     BOOL hasLost;
-    NSMutableArray *arrayOfDice;
-    
-    NSString *playerName;
-    DiceGameState *gameState;
-    int maxNumberOfDice;
-
-    BOOL playerHasPassed;
-    BOOL playerHasExacted;
-    BOOL playerHasPushedAllDice;
-    
     BOOL specialRules;
-    
-    NSLock *lock;
 }
 
 @property (readwrite, assign) BOOL hasDoneSpecialRules;
@@ -47,7 +33,7 @@
 
 @property (nonatomic, readwrite) int maxNumberOfDice;
 @property (readwrite, retain) DiceGameState *gameState;
-@property (readwrite, retain) NSArray *arrayOfDice;
+@property (readwrite, retain) NSMutableArray *arrayOfDice;
 
 - (id)initWithName:(NSString*)playerName withID:(int)playerID withNumberOfDice:(int)dice withDiceGameState:(DiceGameState *)gameState;
 - (void)dealloc;
