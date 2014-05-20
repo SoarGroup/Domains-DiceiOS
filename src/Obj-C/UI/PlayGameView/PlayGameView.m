@@ -170,6 +170,7 @@ NSArray *buildDiceImages() {
         self.game.gameView = self;
         self.state = nil;
         currentBidCount = 1;
+		internalCurrentBidCount = 1;
         currentBidFace = 2;
         quitHandler = QuitHandler;
 		[quitHandler retain];
@@ -902,15 +903,19 @@ NSArray *buildDiceImages() {
     self.bidFaceMinusButton.enabled = canBid;
     self.exactButton.enabled = canBid && [self.state canExact];
 
+	hasTouchedBidCounterThisTurn = NO;
+
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
 	if (previousBid == nil)
 	{
 		currentBidCount = 1;
+		internalCurrentBidCount = 1;
 		currentBidFace = 2;
 	}
 	else if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
 	{
 		currentBidCount = previousBid.numberOfDice + 1;
+		internalCurrentBidCount = currentBidCount;
 		currentBidFace = previousBid.rankOfDie;
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
@@ -946,6 +951,7 @@ NSArray *buildDiceImages() {
 			self.bidFaceMinusButton.enabled = NO;
 
 			currentBidCount = previousBid.numberOfDice;
+			internalCurrentBidCount = currentBidCount;
 			self.bidCountMinusButton.enabled = NO;
 			self.bidCountPlusButton.enabled = NO;
 		}
@@ -953,6 +959,7 @@ NSArray *buildDiceImages() {
 		{
 			currentBidFace = [nextLegalBid rankOfDie];
 			currentBidCount = [nextLegalBid numberOfDice];
+			internalCurrentBidCount = currentBidCount;
 		}
 	}
 
@@ -1690,6 +1697,7 @@ NSArray *buildDiceImages() {
 	hasTouchedBidCounterThisTurn = YES;
 
     ++currentBidCount;
+	internalCurrentBidCount = currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
@@ -1697,12 +1705,16 @@ NSArray *buildDiceImages() {
 	hasTouchedBidCounterThisTurn = YES;
 
     --currentBidCount;
+	internalCurrentBidCount = currentBidCount;
     [self constrainAndUpdateBidCount];
 }
 
 - (IBAction)bidFacePlusPressed:(id)sender {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
-		currentBidCount = ceil(currentBidCount * 2.0);
+	{
+		internalCurrentBidCount *= 2.0;
+		currentBidCount = internalCurrentBidCount;
+	}
 
 	++currentBidFace;
 
@@ -1710,16 +1722,25 @@ NSArray *buildDiceImages() {
 		currentBidFace = 1;
 
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
-		currentBidCount = ceil(currentBidCount / 2.0);
-	else
+	{
+		internalCurrentBidCount /= 2.0;
+		currentBidCount = ceil(internalCurrentBidCount);
+	}
+	else if (!hasTouchedBidCounterThisTurn)
+	{
 		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
+		internalCurrentBidCount = currentBidCount;
+	}
 
     [self constrainAndUpdateBidFace];
 }
 
 - (IBAction)bidFaceMinusPressed:(id)sender {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
-		currentBidCount = ceil(currentBidCount * 2.0);
+	{
+		internalCurrentBidCount *= 2.0;
+		currentBidCount = internalCurrentBidCount;
+	}
 
 	--currentBidFace;
 
@@ -1727,9 +1748,15 @@ NSArray *buildDiceImages() {
 		currentBidFace = 6;
 
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
-		currentBidCount = ceil(currentBidCount / 2.0);
-	else
+	{
+		internalCurrentBidCount /= 2.0;
+		currentBidCount = ceil(internalCurrentBidCount);
+	}
+	else if (!hasTouchedBidCounterThisTurn)
+	{
 		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
+		internalCurrentBidCount = currentBidCount;
+	}
 
     [self constrainAndUpdateBidFace];
 }
@@ -1744,9 +1771,15 @@ NSArray *buildDiceImages() {
 	}
 
 	if (maxBidCount != 0)
+	{
 		currentBidCount = (currentBidCount - 1 + maxBidCount) % maxBidCount + 1;
+		internalCurrentBidCount = currentBidCount;
+	}
 	else
+	{
 		currentBidCount = 1;
+		internalCurrentBidCount = currentBidCount;
+	}
 
     [self updateCurrentBidLabels];
 }

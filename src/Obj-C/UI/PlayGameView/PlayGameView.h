@@ -23,6 +23,7 @@ const int pushMargin();
 	BOOL fullScreenView;
 
 	int currentBidCount;
+	double internalCurrentBidCount;
     int currentBidFace;
 
 	NSMutableArray *challengeButtons;
