@@ -4,9 +4,10 @@ sp {evaluate-operator*propose*compute-challenge-probability
               ^top-state.io.input-link.history.action << bid push >>
               ^operator <op> +)
    (<op> ^type compute-probability
-        ^superoperator <so>)
+         ^superoperator <so>)
    (<so> ^name challenge
-         ^target <t>)
+         ^target <t>
+		 ^last-bid-type bid)
 -->   
    (<op> ^name compute-challenge-probability
          ^target <t>)
@@ -26,7 +27,8 @@ sp {evaluate-operator*propose*compute-challenge-probability*intervening-pass
    (<lb> ^action << bid push >>
          ^player.name <name>)
    (<so> ^name challenge        # player being challenged is one that made bid
-         ^target <t>)
+         ^last-bid-type bid
+		 ^target <t>)
    (<t> ^name <name>)
 -->
    (<op> ^name compute-challenge-probability
@@ -47,7 +49,8 @@ sp {evaluate-operator*propose*compute-challenge-probability*intervening-push-pas
    (<lb> ^action << bid push >>
          ^player.name <name>)
    (<so> ^name challenge        # player being challenged is one that made bid
-         ^target <t>)
+         ^last-bid-type bid
+		 ^target <t>)
    (<t> ^name <name>)
 -->
    (<op> ^name compute-challenge-probability
