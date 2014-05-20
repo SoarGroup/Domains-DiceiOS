@@ -118,6 +118,7 @@ static int agentCount = 0;
 		handler = gkgHandler;
 
 		DiceDatabase* database = [[[DiceDatabase alloc] init] autorelease];
+#ifdef DEBUG
 		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
 
 		if (remoteIP && [remoteIP length] != 0)
@@ -128,6 +129,7 @@ static int agentCount = 0;
 			remoteConnected = YES;
 		}
 		else
+#endif
 			kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
 
         [turnLock lock];
@@ -158,7 +160,7 @@ static int agentCount = 0;
 #ifdef DEBUG
         agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 #endif
-        
+
         int seed = arc4random_uniform(RAND_MAX);
         
         agent->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
@@ -274,9 +276,7 @@ static int agentCount = 0;
     BOOL needsRefresh = YES;
     
     DiceSMLData *newData = NULL;
-    
-    //turnInformationSentFromTheClient *information = (turnInformationSentFromTheClient *)calloc(1, sizeof(turnInformationSentFromTheClient));
-    
+
     do {
         if (needsRefresh)
         {
@@ -330,10 +330,6 @@ static int agentCount = 0;
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
         }
     } while (!agentSlept && !agentHalted);
-
-#ifdef DEBUG
-    NSLog(@"State: %s", agent->ExecuteCommandLine("print -d 10 s1"));
-#endif
 
     if (agent != nil)
     {
