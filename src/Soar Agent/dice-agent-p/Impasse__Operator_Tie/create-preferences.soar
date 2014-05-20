@@ -41,6 +41,28 @@ sp {selection*apply*create-preferences*convert*probability*numeric-preference-0
 ### Heuristics. Only used if ^heruistics true.
 ## Always prefer a bid to a challenge or pass if it has a higher probability (don't take chances with a challenge - don't waste a pass).
 
+sp {selection*apply*create-preferences*compare*perfect-challenge-always
+   #:interrupt
+   (state <s> ^name selection
+              ^top-state.heuristics-chunked true
+              ^operator.name create-preferences
+              ^superstate <ss>
+              ^evaluation <e1> { <> <e1> <e2> })
+   (<ss> ^desired <d>
+        ^heuristics true)
+  (<e1> ^superoperator <x>
+        ^numeric-value 1.0
+        ^desired <d>)
+  (<e2> ^superoperator { <> <x> <y> }
+        ^numeric-value <sv>
+       ^desired <d>)
+  (<x> ^name challenge)
+  (<y> ^name { << bid exact pass >> <bid> })
+-->
+      (write (crlf) |H0: Prefer Perfect Challenge | <x> | to | <bid> | | <y>)
+      (<ss> ^operator <x> >)
+}
+
 sp {selection*apply*create-preferences*compare*bid-better-challenge-pass
    (state <s> ^name selection
               ^top-state.heuristics-chunked true
@@ -234,7 +256,30 @@ sp {selection*apply*create-preferences*compare*bid-better-challenge-pass*no-chun
   (<y> ^name { << challenge pass >> <bid> })
 -->
       (write (crlf) |H1: Prefer Better Bid | <x> | to | <bid> | | <y>)
-      (<ss> ^operator <y> <)}
+      (<ss> ^operator <y> <)
+}
+	  
+sp {selection*apply*create-preferences*compare*perfect-challenge-always*no-chunk
+	#:interrupt
+   (state <s> ^name selection
+              ^top-state.heuristics-chunked false
+              ^operator.name create-preferences
+              ^superstate <ss>
+              ^evaluation <e1> { <> <e1> <e2> })
+   (<ss> ^desired <d>
+        ^heuristics true)
+  (<e1> ^superoperator <x>
+        ^numeric-value 1.0
+        ^desired <d>)
+  (<e2> ^superoperator { <> <x> <y> }
+        ^numeric-value <sv>
+       ^desired <d>)
+  (<x> ^name challenge)
+  (<y> ^name { << bid exact pass >> <bid> })
+-->
+      (write (crlf) |H0: Prefer Perfect Challenge | <x> | to | <bid> | | <y>)
+      (<ss> ^operator <x> >)
+}
 
 # Prefer Certain Pass to good challenge
 
@@ -248,7 +293,7 @@ sp {selection*apply*create-preferences*compare*better-pass-challenge*no-chunk
   (<ss> ^desired <d>
         ^heuristics true)
   (<e1> ^superoperator <x>
-        ^numeric-value >= <sv>
+        ^numeric-value > <sv>
         ^desired <d>)
   (<e2> ^superoperator { <> <x> <y> }
         ^numeric-value <sv>

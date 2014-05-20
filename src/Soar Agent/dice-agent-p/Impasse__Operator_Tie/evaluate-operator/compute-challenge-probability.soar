@@ -20,8 +20,29 @@ sp {evaluate-operator*propose*compute-challenge-probability*intervening-pass
    (<op> ^type compute-probability
          ^superoperator <so>)
    (<input> ^history.action pass
-           -^history.next.action pass
+		   -^history.next.action pass
            -^history.player.name <name>  # not just a two player game
+            ^state.last-bid <lb>)
+   (<lb> ^action << bid push >>
+         ^player.name <name>)
+   (<so> ^name challenge        # player being challenged is one that made bid
+         ^target <t>)
+   (<t> ^name <name>)
+-->
+   (<op> ^name compute-challenge-probability
+         ^target <t>)
+}
+
+sp {evaluate-operator*propose*compute-challenge-probability*intervening-push-pass
+   (state <s> ^name evaluate-operator
+              ^top-state.io.input-link <input>
+              ^operator <op> +)
+   (<op> ^type compute-probability
+         ^superoperator <so>)
+   (<input> ^history.action push
+		    ^history.next.action pass
+		   -^history.next.next.action pass
+           -^history.next.player.name <name>  # not just a two player game
             ^state.last-bid <lb>)
    (<lb> ^action << bid push >>
          ^player.name <name>)

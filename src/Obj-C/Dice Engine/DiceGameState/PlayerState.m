@@ -329,10 +329,17 @@
 - (int)getChallengeableLastPass {
     if (hasLost) return -1;
     HistoryItem *historyItem = [self.gameState lastHistoryItem];
-    if (historyItem != nil && [self.gameState getCurrentPlayerState] == self && historyItem.actionType == ACTION_PASS)
+    if (historyItem != nil && [self.gameState getCurrentPlayerState] == self)
     {
-		if (historyItem.player.playerID != self.playerID)
+		if (historyItem.actionType == ACTION_PASS && historyItem.player.playerID != self.playerID)
 			return historyItem.player.playerID;
+		else if (historyItem.actionType == ACTION_PUSH)
+		{
+			HistoryItem *secondToLastHistoryItem = [[self.gameState history] objectAtIndex:[[self.gameState history] count] - 2];
+
+			if (secondToLastHistoryItem.actionType == ACTION_PASS && secondToLastHistoryItem.player.playerID != self.playerID && secondToLastHistoryItem.player.playerID == historyItem.player.playerID)
+				return historyItem.player.playerID;
+		}
     }
 	
     return -1;
@@ -357,18 +364,54 @@
     if (!history || [history count] < 2)
 		return -1;
     
-    HistoryItem *item;
+    HistoryItem *item = nil;
+
+	if ([history count] >= 2)
+	{
+		if (((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PASS &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS)
+		{
+			item = [history objectAtIndex:[history count] - 2];
+
+			if (item.player.playerID == self.playerID)
+				item = nil;
+		}
+	}
+
+	if (item == nil && [history count] >= 3)
+	{
+		if ((((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PASS) ||
+
+			(((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PASS &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PUSH &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PASS))
+		{
+			item = [history objectAtIndex:[history count] - 3];
+
+			if (item.player.playerID == self.playerID)
+				item = nil;
+		}
+	}
+
+	if (item == nil && [history count] >= 4)
+	{
+		if (((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 4]).actionType == ACTION_PASS)
+		{
+			item = [history objectAtIndex:[history count] - 4];
+
+			if (item.player.playerID == self.playerID)
+				item = nil;
+		}
+	}
 	
-    if ([[history objectAtIndex:[history count] - 2] isKindOfClass:[HistoryItem class]])
-        item = [history objectAtIndex:[history count] - 2];
-	else
-		item = nil;
-	
-    if (item != nil && [self.gameState getCurrentPlayerState] == self && item.actionType == ACTION_PASS)
-    {
-		if (item.player.playerID != self.playerID)
-			return item.player.playerID;
-    }
+    if (item != nil)
+		return item.player.playerID;
+
     return -1;
 }
 

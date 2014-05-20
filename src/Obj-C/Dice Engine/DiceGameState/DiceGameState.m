@@ -925,10 +925,24 @@
 // Get the playerID of the person who last passed however if they didn't pass last turn it will return -1.  Basically a check to see whether the last player passed and if so what was their playerID
 - (NSInteger)lastPassPlayerID
 {
-    HistoryItem *item = [self lastHistoryItem];
-    if (item == nil || [item actionType] != ACTION_PASS)
-        return -1;
-    return [[item player] playerID];
+	HistoryItem* item = [self lastHistoryItem];
+
+	if (item.actionType != ACTION_PASS)
+		item = nil;
+
+    if (item == nil && [history count] >= 2)
+	{
+		if (((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS)
+		{
+			item = [history objectAtIndex:[history count] - 2];
+		}
+	}
+
+	if (item != nil)
+		return [[item player] playerID];
+	else
+		return -1;
 }
 
 // Get the playerID of the player who passed two turns ago.
@@ -940,11 +954,46 @@
     if (history == nil || [history count] < 2)
         return -1;
     
-    HistoryItem *item = [history objectAtIndex:[history count] - 2];
-    if (item == nil || [item actionType] != ACTION_PASS)
-        return -1;
-    
-    return [[item player] playerID];
+    HistoryItem* item = nil;
+
+    if (item == nil && [history count] >= 2)
+	{
+		if (((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PASS &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS)
+		{
+			item = [history objectAtIndex:[history count] - 2];
+		}
+	}
+
+	if (item == nil && [history count] >= 3)
+	{
+		if ((((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PUSH &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PASS) ||
+
+			(((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PASS &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PUSH &&
+			 ((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PASS))
+		{
+			item = [history objectAtIndex:[history count] - 3];
+		}
+	}
+
+	if (item == nil && [history count] >= 4)
+	{
+		if (((HistoryItem*)[history objectAtIndex:[history count] - 1]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PUSH &&
+			((HistoryItem*)[history objectAtIndex:[history count] - 4]).actionType == ACTION_PASS)
+		{
+			item = [history objectAtIndex:[history count] - 4];
+		}
+	}
+
+	if (item != nil)
+		return [[item player] playerID];
+	else
+		return -1;
 }
 
 - (NSArray *)playersWhoHaveLost
