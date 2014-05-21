@@ -12,21 +12,31 @@
 
 @implementation GameKitGameHandler
 
-@synthesize localPlayer, remotePlayers;
+@synthesize localPlayer, remotePlayers, match, participants, localGame;
 
-- (id)initWithDiceGame:(DiceGame*)lGame withLocalPlayer:(DiceLocalPlayer*)lPlayer withRemotePlayers:(NSArray*)rPlayers
+- (id)initWithDiceGame:(DiceGame*)lGame withLocalPlayer:(DiceLocalPlayer*)lPlayer withRemotePlayers:(NSArray*)rPlayers withMatch:(GKTurnBasedMatch *)gkMatch
 {
 	self = [super init];
 
 	if (self)
 	{
-		localGame = lGame;
+		self.localGame = lGame;
 		self.localPlayer = lPlayer;
 		self.remotePlayers = rPlayers;
 		matchHasEnded = NO;
+		match = gkMatch;
+		[match retain];
+		
+		participants = [match participants];
 	}
 
 	return self;
+}
+
+- (void)dealloc
+{
+	NSLog(@"Game Kit Game Handler deallocated\n");
+	[super dealloc];
 }
 
 - (void) saveMatchData
@@ -34,6 +44,12 @@
 	if (matchHasEnded)
 		return;
 
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(saveMatchData) withObject:nil waitUntilDone:YES];
+		return;
+	}
+	
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
@@ -47,6 +63,12 @@
 {
 	if (matchHasEnded)
 		return;
+
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(updateMatchData) withObject:nil waitUntilDone:YES];
+		return;
+	}
 
 	[match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* error)
 	 {
@@ -66,28 +88,21 @@
 	matchHasEnded = YES;
 }
 
-- (void) getMultiplayerMatchData:(MultiplayerMatchData**)data
-{
-	[match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* error)
-	 {
-		 if (!error)
-		 {
-			 *data = [[MultiplayerMatchData alloc] initWithData:matchData];
-		 }
-		 else
-			 NSLog(@"Error upon loading match data: %@\n", error.description);
-	 }];
-}
-
 - (void) advanceToRemotePlayer:(DiceRemotePlayer*)player
 {
 	if (matchHasEnded)
 		return;
 
-	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
-	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:[match participants]];
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(advanceToRemotePlayer:) withObject:player waitUntilDone:YES];
+		return;
+	}
 
-	while (![[((GKTurnBasedParticipant*)[nextPlayers objectAtIndex:0]) playerID] isEqualToString:[player getName]])
+	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
+	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:participants];
+
+	for (int i = localGame.gameState.currentTurn;i > 0;i--)
 	{
 		GKTurnBasedParticipant* gktbp = [nextPlayers objectAtIndex:0];
 		[nextPlayers removeObjectAtIndex:0];
@@ -116,6 +131,14 @@
 {
 	if (matchHasEnded)
 		return;
+
+	if (![NSThread isMainThread])
+	{
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self playerQuitMatch:player withRemoval:remove];
+		});
+		return;
+	}
 
 	if ([player isKindOfClass:SoarPlayer.class])
 		[self saveMatchData];
@@ -172,7 +195,11 @@
 	if (matchHasEnded)
 		return YES;
 
-	NSArray* participants = [match participants];
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(endMatchForAllParticipants) withObject:nil waitUntilDone:YES];
+		return YES;
+	}
 
 	for (GKTurnBasedParticipant* gktbp in participants)
 	{
@@ -202,12 +229,6 @@
 	 }];
 
 	return YES;
-}
-
-
-- (DiceGame*)getDiceGame
-{
-	return localGame;
 }
 
 - (GKTurnBasedMatch*)getMatch

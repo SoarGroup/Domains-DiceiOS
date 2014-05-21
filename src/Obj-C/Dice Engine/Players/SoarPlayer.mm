@@ -238,6 +238,8 @@ static int agentCount = 0;
 
 - (void)dealloc
 {
+	NSLog(@"Soar Player Release\n");
+
     [turnLock release];
     [super dealloc];
 }
@@ -301,7 +303,10 @@ static int agentCount = 0;
 
 		double startTime = [[NSDate date] timeIntervalSince1970];
         
-        do {   
+        do {
+			if (agent == NULL)
+				continue;
+
             if (!agentInterrupted)
 				agent->RunSelfTilOutput();
             
@@ -323,15 +328,15 @@ static int agentCount = 0;
 					return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
 			}
 
-        } while (!agentHalted && (agent->GetNumberCommands() == 0));
+        } while (!agentHalted && agent != NULL && (agent->GetNumberCommands() == 0));
         
-        if (agent->GetNumberCommands() != 0)
+        if (agent != NULL && agent->GetNumberCommands() != 0)
         {
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
         }
     } while (!agentSlept && !agentHalted);
 
-    if (agent != nil)
+    if (agent != NULL)
     {
         NSLog(@"Halting agent");
         sml::WMElement *halter = NULL;
@@ -1084,5 +1089,10 @@ static int agentCount = 0;
 
 - (void) notifyHasWon
 {}
+
+- (void)removeHandler
+{
+	self.handler = nil;
+}
 
 @end

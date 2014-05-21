@@ -20,8 +20,8 @@
 
 - (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)appDelegate;
 
-@property (nonatomic, retain) ApplicationDelegate* appDelegate;
-@property (nonatomic, retain) MainMenu* mainMenu;
+@property (nonatomic, assign) ApplicationDelegate* appDelegate;
+@property (nonatomic, assign) MainMenu* mainMenu;
 @property (nonatomic, retain) IBOutlet UIButton* joinMatchButton;
 @property (nonatomic, retain) IBOutlet UIScrollView* gamesScrollView;
 @property (nonatomic, retain) IBOutlet UIButton* scrollToTheFarRightButton;
@@ -31,7 +31,7 @@
 @property (atomic, retain) NSMutableArray* handlerArray; // One-To-One Correspondence with miniGamesViewArray
 @property (atomic, retain) NSMutableArray* playGameViews; // One-To-One Correspondence with miniGamesViewArray
 
-@property (nonatomic, retain) JoinMatchView* joinMatchPopoverViewController;
+@property (nonatomic, assign) JoinMatchView* joinMatchPopoverViewController;
 @property (nonatomic, retain) UIPopoverController* popoverController;
 
 - (IBAction)joinMatchButtonPressed:(id)sender;

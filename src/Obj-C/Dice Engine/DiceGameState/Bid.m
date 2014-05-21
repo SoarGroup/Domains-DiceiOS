@@ -7,6 +7,7 @@
     //
 
 #import "Bid.h"
+#import "Die.h"
 
 @implementation Bid
 
@@ -32,6 +33,40 @@
         self.playerName = aPlayerName;
     }
     return self;
+}
+
+-(id)initWithCoder:(NSCoder*)decoder
+{
+	self = [super init];
+
+	if (self)
+	{
+		int diceToPushCount = [decoder decodeIntForKey:@"Bid:diceToPush"];
+
+		NSMutableArray* diceToPushMutable = [[[NSMutableArray alloc] init] autorelease];
+		for (int i = 0;i < diceToPushCount;i++)
+			[diceToPushMutable addObject:[[[Die alloc] initWithCoder:decoder withCount:i withPrefix:@"Bid:"] autorelease]];
+
+		playerID =[decoder decodeIntegerForKey:@"Bid:playerID"];
+		numberOfDice = [decoder decodeIntForKey:@"Bid:numberOfDice"];
+		rankOfDie = [decoder decodeIntForKey:@"Bid:rankOfDie"];
+		playerName = [decoder decodeObjectForKey:@"Bid:playerName"];
+	}
+
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder
+{
+	[encoder encodeInt:(int)[diceToPush count] forKey:@"Bid:diceToPush"];
+
+	for (int i = 0;i < [diceToPush count];i++)
+		[((Die*)[diceToPush objectAtIndex:i]) encodeWithCoder:encoder withCount:i withPrefix:@"Bid:"];
+
+	[encoder encodeInteger:playerID forKey:@"Bid:playerID"];
+	[encoder encodeInt:numberOfDice forKey:@"Bid:numberOfDice"];
+	[encoder encodeInt:rankOfDie forKey:@"Bid:rankOfDie"];
+	[encoder encodeObject:playerName forKey:@"Bid:playerName"];
 }
 
     //Initialize ourself by calling our default method but also set some other properties

@@ -80,11 +80,60 @@
     return self;
 }
 
-    //Dealloc our alloc'd variables that were never autoreleased
-- (void)dealloc
+-(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withGameState:(DiceGameState*)state
 {
-    [arrayOfDice release];
-    [super dealloc];
+	self = [super init];
+
+	if (self)
+	{
+		self.gameState = state;
+		
+		hasLost = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
+		specialRules = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:specialRules", count]];
+		hasDoneSpecialRules = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasDoneSpecialRules", count]];
+
+		playerID = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:playerID", count]];
+		playerName = [decoder decodeObjectForKey:[NSString stringWithFormat:@"PlayerState%i:playerName", count]];
+
+		playerHasPassed = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPassed", count]];
+		playerHasExacted = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasExacted", count]];
+		numberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:numberOfDice", count]];
+
+		hasLost = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
+		playerHasPushedAllDice = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPushedAllDice", count]];
+
+		maxNumberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:maxNumberOfDice", count]];
+
+		int arrayOfDiceCount = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:arrayOfDice", count]];
+
+		for (int i = 0;i < arrayOfDiceCount;i++)
+			[arrayOfDice addObject:[[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]] autorelease]];
+	}
+
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count
+{
+	[encoder encodeBool:specialRules forKey:[NSString stringWithFormat:@"PlayerState%i:specialRules", count]];
+	[encoder encodeBool:hasDoneSpecialRules forKey:[NSString stringWithFormat:@"PlayerState%i:hasDoneSpecialRules", count]];
+
+	[encoder encodeInt:playerID forKey:[NSString stringWithFormat:@"PlayerState%i:playerID", count]];
+	[encoder encodeObject:playerName forKey:[NSString stringWithFormat:@"PlayerState%i:playerName", count]];
+
+	[encoder encodeBool:playerHasPassed forKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPassed", count]];
+	[encoder encodeBool:playerHasExacted forKey:[NSString stringWithFormat:@"PlayerState%i:playerHasExacted", count]];
+	[encoder encodeInt:numberOfDice forKey:[NSString stringWithFormat:@"PlayerState%i:numberOfDice", count]];
+
+	[encoder encodeBool:hasLost forKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
+	[encoder encodeBool:playerHasPushedAllDice forKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPushedAllDice", count]];
+
+	[encoder encodeInt:maxNumberOfDice forKey:[NSString stringWithFormat:@"PlayerState%i:maxNumberOfDice", count]];
+
+	[encoder encodeInt:(int)[arrayOfDice count] forKey:[NSString stringWithFormat:@"PlayerState%i:arrayOfDice", count]];
+
+	for (int i = 0;i < [arrayOfDice count];i++)
+		[((Die*)[arrayOfDice objectAtIndex:i]) encodeWithCoder:encoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]];
 }
 
     //Its a new round, set everything up

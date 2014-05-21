@@ -18,9 +18,9 @@
 
 - (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)delegate isPopOver:(BOOL)popOver withMultiplayerView:(MultiplayerView*)multiplayerView;
 
-@property (nonatomic, retain) ApplicationDelegate* delegate;
-@property (nonatomic, retain) MainMenu* mainMenu;
-@property (nonatomic, retain) MultiplayerView* multiplayerView;
+@property (nonatomic, assign) ApplicationDelegate* delegate;
+@property (nonatomic, assign) MainMenu* mainMenu;
+@property (nonatomic, assign) MultiplayerView* multiplayerView;
 
 @property (nonatomic, retain) IBOutlet UILabel* numberOfAIPlayers;
 @property (nonatomic, retain) IBOutlet UIStepper* changeNumberOfAIPlayers;

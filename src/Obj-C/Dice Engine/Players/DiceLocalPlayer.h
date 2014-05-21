@@ -22,10 +22,10 @@
 }
 
 @property (nonatomic, retain) GKTurnBasedParticipant* participant;
-@property (nonatomic, retain) GameKitGameHandler* handler;
+@property (nonatomic, assign) GameKitGameHandler* handler;
 @property (readwrite, retain) NSString *name;
 @property (readwrite, retain) PlayerState *playerState;
-@property (readwrite, retain) PlayGameView *gameView;
+@property (readwrite, assign) PlayGameView *gameView;
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 

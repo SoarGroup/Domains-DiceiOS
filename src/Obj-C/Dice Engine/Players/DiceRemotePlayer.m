@@ -25,20 +25,32 @@
 		self.playerID = -2;
 		self.displayName = participant.playerID;
 
-		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer] withCompletionHandler:^(NSArray* array, NSError* error)
-		 {
-			 if (error)
-				 NSLog(@"Error loading player identifiers: %@", error.description);
-			 else
-				 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
-		 }];
+		if (self.displayName)
+		{
+			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+			 {
+				 if (error)
+					 NSLog(@"Error loading player identifiers: %@", error.description);
+				 else
+					 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+			 }];
+		}
 	}
 
 	return self;
 }
 
+- (void)dealloc
+{
+	NSLog(@"Dice Remote Player deallocated\n");
+	[super dealloc];
+}
+
 - (NSString*) getName
 {
+	if (!self.displayName)
+		return @"Player";
+
 	return self.displayName;
 }
 
@@ -72,5 +84,10 @@
 
 - (void) end
 {}
+
+- (void)removeHandler
+{
+	self.handler = nil;
+}
 
 @end

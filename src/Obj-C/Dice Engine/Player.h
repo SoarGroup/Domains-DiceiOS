@@ -26,5 +26,6 @@
 - (void)notifyHasWon;
 
 - (void)setHandler:(GameKitGameHandler*)handler;
+- (void)removeHandler;
 - (void)setParticipant:(GKTurnBasedParticipant*)participant;
 @end

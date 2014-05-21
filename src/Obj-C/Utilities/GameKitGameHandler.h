@@ -16,28 +16,26 @@
 
 @interface GameKitGameHandler : NSObject
 {
-	GKTurnBasedMatch* match;
-	DiceGame* localGame;
-
 	BOOL matchHasEnded;
 }
 
-@property (nonatomic, retain) DiceLocalPlayer* localPlayer;
+@property (nonatomic, assign) DiceLocalPlayer* localPlayer;
 @property (nonatomic, retain) NSArray* remotePlayers;
+@property (nonatomic, readonly, retain) GKTurnBasedMatch* match;
+@property (nonatomic, retain) DiceGame* localGame;
+@property (nonatomic, readonly, retain) NSArray* participants;
 
-- (id)initWithDiceGame:(DiceGame*)game withLocalPlayer:(DiceLocalPlayer*)localPlayer withRemotePlayers:(NSArray*)remotePlayers;
+- (id)initWithDiceGame:(DiceGame*)game withLocalPlayer:(DiceLocalPlayer*)localPlayer withRemotePlayers:(NSArray*)remotePlayers withMatch:(GKTurnBasedMatch*)match;
 
 - (void) saveMatchData;
 - (void) updateMatchData;
 - (void) matchHasEnded;
 
-- (void) getMultiplayerMatchData:(MultiplayerMatchData**)data;
 - (void) advanceToRemotePlayer:(DiceRemotePlayer*)player;
 
 - (void) playerQuitMatch:(id<Player>)player withRemoval:(BOOL)remove;
 - (BOOL) endMatchForAllParticipants;
 
-- (DiceGame*)getDiceGame;
 - (GKTurnBasedMatch*)getMatch;
 
 @end

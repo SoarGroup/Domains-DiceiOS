@@ -57,6 +57,13 @@
     return self;
 }
 
+- (void) dealloc
+{
+	NSLog(@"%@ deallocated", self.class);
+
+	[super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -88,6 +95,8 @@
 		[SingleplayerView startGameWithOpponents:changeNumberOfAIPlayers.value withNavigationController:self.navigationController withAppDelegate:self.delegate withMainMenu:self.mainMenu];
 	else
 	{
+		[self.multiplayerView.popoverController dismissPopoverAnimated:YES];
+		
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
 		request.minPlayers = changeMinimumNumberOfHumanPlayers.value + 1;
 		request.maxPlayers = changeMaximumNumberOfHumanPlayers.value + 1;
@@ -103,74 +112,44 @@
 				 if (iPad)
 				 {
 					 self.spinner.hidden = YES;
+					 self.changeNumberOfAIPlayers.enabled = YES;
+					 self.changeMaximumNumberOfHumanPlayers.enabled = YES;
+					 self.changeMinimumNumberOfHumanPlayers.enabled = YES;
 					 [self.multiplayerView joinedNewMatch:request];
 				 }
 				 else
 				 {
 					 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 					  {
-						  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata] autorelease];
+						  DiceGame* newGame = [[[DiceGame alloc] initWithAppDelegate:self.delegate] autorelease];
+						  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
 
-						  if (!mmd && error2)
+						  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata
+																					  withRequest:request
+																						withMatch:match
+																					  withHandler:handler] autorelease];
+
+						  if (!mmd)
 						  {
 							  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
 							  return;
 						  }
 
-						  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:self.delegate];
-						  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil] autorelease];
+						  [newGame updateGame:[mmd theGame]];
 
-						  if (mmd)
+						  for (id<Player> player in [newGame players])
 						  {
-							  [newGame updateGame:[mmd theGame]];
+							  [player setHandler:handler];
 
-							  for (id<Player> player in [newGame players])
+							  if (![player isKindOfClass:SoarPlayer.class])
 							  {
-								  [player setHandler:handler];
-
-								  if (![player isKindOfClass:SoarPlayer.class])
+								  for (GKTurnBasedParticipant* participant in match.participants)
 								  {
-									  for (GKTurnBasedParticipant* participant in match.participants)
+									  if ([[player getName] isEqualToString:[participant playerID]])
 									  {
-										  if ([[player getName] isEqualToString:[participant playerID]])
-										  {
-											  [player setParticipant:participant];
-											  break;
-										  }
+										  [player setParticipant:participant];
+										  break;
 									  }
-								  }
-							  }
-						  }
-						  else
-						  {
-							  // New Match
-							  int AICount = (int)request.playerGroup;
-							  int humanCount = (int)[match.participants count];
-							  int currentHumanCount = 0;
-
-							  NSLock* lock = [[[NSLock alloc] init] autorelease];
-
-							  int totalPlayerCount = AICount + humanCount;
-
-							  for (int i = 0;i < totalPlayerCount;i++)
-							  {
-								  BOOL isAI = (BOOL)arc4random_uniform(2);
-
-								  if (isAI && AICount > 0)
-								  {
-									  [newGame addPlayer:[[SoarPlayer alloc] initWithGame:newGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler]];
-
-									  AICount--;
-								  }
-								  else
-								  {
-									  GKTurnBasedParticipant* participant = [match.participants objectAtIndex:currentHumanCount];
-									  currentHumanCount++;
-
-									  if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant playerID]])
-										  [newGame addPlayer:[[DiceLocalPlayer alloc] initWithName:[participant playerID] withHandler:handler withParticipant:participant]];
-									  else
-										  [newGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
 								  }
 							  }
 						  }

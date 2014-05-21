@@ -16,6 +16,7 @@
 #import "GameRecord.h"
 #import "HistoryItem.h"
 #import "PlayGameView.h"
+#import "SoarPlayer.h"
 
 @implementation DiceGame
 
@@ -23,18 +24,33 @@
 
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
 {
-    if (!(self = [super init])) return self;
-    
-    self.appDelegate = anAppDelegate;
-    self.gameState = nil;
-    started = NO;
+    self = [super init];
 
-    time = [DiceDatabase getCurrentGameTime];
-	nextID = 0;
-    
-    self.players = [[[NSArray alloc] init] autorelease];
+	if (self)
+	{
+		self.appDelegate = anAppDelegate;
+		self.gameState = nil;
+		started = NO;
+
+		time = [DiceDatabase getCurrentGameTime];
+		nextID = 0;
+
+		self.players = [[[NSArray alloc] init] autorelease];
+	}
 
     return self;
+}
+
+- (void) dealloc
+{
+	NSLog(@"%@ deallocated", self.class);
+
+	[super dealloc];
+}
+
+-(DiceGame*)init
+{
+	return [self initWithAppDelegate:nil];
 }
 
 -(NSString*)gameNameString
@@ -43,7 +59,7 @@
 
 	for (int i = 0;i < [players count];++i)
 	{
-		name = [name stringByAppendingString:[[players objectAtIndex:i] name]];
+		name = [name stringByAppendingString:[[players objectAtIndex:i] getName]];
 
 		if (i != ([players count] - 1))
 			name = [name stringByAppendingString:@" vs "];
@@ -64,15 +80,23 @@
 
 	if (self)
 	{
-		started = [decoder decodeBoolForKey:@"DiceGame:started"];
-		deferNotification = [decoder decodeBoolForKey:@"DiceGame:deferNotification"];
-		[[decoder decodeObjectForKey:@"DiceGame:time"] getValue:&time];
+		self.started = [decoder decodeBoolForKey:@"DiceGame:started"];
+		self.deferNotification = [decoder decodeBoolForKey:@"DiceGame:deferNotification"];
+
+		time.day = [decoder decodeIntForKey:@"DiceGame:time:day"];
+		time.hour = [decoder decodeIntForKey:@"DiceGame:time:hour"];
+		time.minute = [decoder decodeIntForKey:@"DiceGame:time:minute"];
+		time.month = [decoder decodeIntForKey:@"DiceGame:time:month"];
+		time.second = [decoder decodeIntForKey:@"DiceGame:time:second"];
+		time.year = [decoder decodeIntForKey:@"DiceGame:time:year"];
+
 		nextID = [decoder decodeIntForKey:@"DiceGame:nextID"];
 
-		gameState = [decoder decodeObjectForKey:@"DiceGame:gameState"];
-		gameState.game = self;
+		self.gameState = [decoder decodeObjectForKey:@"DiceGame:gameState"];
+		self.gameState.game = self;
 
-		[gameState decodePlayers];
+		[self.gameState decodePlayers];
+		self.players = gameState.players;
 	}
 
 	return self;
@@ -82,7 +106,13 @@
 {
 	[encoder encodeBool:started forKey:@"DiceGame:started"];
 	[encoder encodeBool:deferNotification forKey:@"DiceGame:deferNotification"];
-	[encoder encodeObject:[NSValue valueWithBytes:&time objCType:@encode(struct GameTime)] forKey:@"DiceGame:time"];
+	[encoder encodeInt:time.day forKey:@"DiceGame:time:day"];
+	[encoder encodeInt:time.hour forKey:@"DiceGame:time:hour"];
+	[encoder encodeInt:time.minute forKey:@"DiceGame:time:minute"];
+	[encoder encodeInt:time.month forKey:@"DiceGame:time:month"];
+	[encoder encodeInt:time.second forKey:@"DiceGame:time:second"];
+	[encoder encodeInt:time.year forKey:@"DiceGame:time:year"];
+
 	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
 
 	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
@@ -90,12 +120,22 @@
 
 - (void)updateGame:(DiceGame *)remote
 {
+	if (remote.players)
+		self.players = remote.players;
+
+	if (remote.appDelegate)
+		self.appDelegate = remote.appDelegate;
+
+	if (remote.gameView)
+		self.gameView = remote.gameView;
+
 	started = remote.started;
 	deferNotification = remote.deferNotification;
 	time = remote->time;
 	nextID = remote->nextID;
 
-	gameState = remote.gameState;
+	if (remote.gameState)
+		self.gameState = remote.gameState;
 }
 
 - (void) setGameView:(PlayGameView*)aGameView

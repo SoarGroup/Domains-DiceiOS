@@ -13,6 +13,27 @@
 
 @synthesize dieValue, hasBeenPushed, markedToPush;
 
+-(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withPrefix:(NSString *)prefix
+{
+	self = [super init];
+
+	if (self)
+	{
+		dieValue = [decoder decodeIntForKey:[NSString stringWithFormat:@"%@Die%i:dieValue", prefix, count]];
+		hasBeenPushed = [decoder decodeBoolForKey:[NSString stringWithFormat:@"%@Die%i:hasBeenPushed", prefix, count]];
+		markedToPush = [decoder decodeBoolForKey:[NSString stringWithFormat:@"%@Die%i:markedToPush", prefix, count]];
+	}
+
+	return self;
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count withPrefix:(NSString *)prefix
+{
+	[encoder encodeInt:dieValue forKey:[NSString stringWithFormat:@"%@Die%i:dieValue", prefix, count]];
+	[encoder encodeBool:hasBeenPushed forKey:[NSString stringWithFormat:@"%@Die%i:hasBeenPushed", prefix, count]];
+	[encoder encodeBool:markedToPush forKey:[NSString stringWithFormat:@"%@Die%i:markedToPush", prefix, count]];
+}
+
 - (id)init
 {
     self = [super init];

@@ -28,17 +28,33 @@
 
 	if (self)
 	{
-		history = [[decoder decodeObjectForKey:@"DiceGameState:history"] retain];
+		int historyCount = [decoder decodeIntForKey:@"DiceGameState:history"];
+
+		history = [[NSMutableArray alloc] init];
+		for (int i = 0;i < historyCount;i++)
+			[history addObject:[[[HistoryItem alloc] initWithCoder:decoder withCount:i withGameState:self] autorelease]];
+
 		rounds = [[decoder decodeObjectForKey:@"DiceGameState:rounds"] retain];
 		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
 		currentTurn = [decoder decodeIntForKey:@"DiceGameState:currentTurn"];
 		playersLeft = [decoder decodeIntegerForKey:@"DiceGameState:playersLeft"];
 		previousBid = [[decoder decodeObjectForKey:@"DiceGameState:previousBid"] retain];
 
-		playerStates = [[decoder decodeObjectForKey:@"DiceGameState:playerStates"] retain];
+		int playerStatesCount = [decoder decodeIntForKey:@"DiceGameState:playerStates"];
+
+		NSMutableArray* playerStatesMutable = [[[NSMutableArray alloc] init] autorelease];
+		for (int i = 0;i < playerStatesCount;i++)
+			[playerStatesMutable addObject:[[[PlayerState alloc] initWithCoder:decoder withCount:i withGameState:self] autorelease]];
+
+		self.playerStates = playerStatesMutable;
 
 		playersArrayToDecode = [[decoder decodeObjectForKey:@"DiceGameState:players"] retain];
 		self.canContinueGame = [decoder decodeBoolForKey:@"DiceGameState:CanContinueGame"];
+
+		int losersCount = [decoder decodeIntForKey:@"DiceGameState:losers"];
+
+		for (int i = 0;i < losersCount;i++)
+			[losers addObject:[NSNumber numberWithInt:[decoder decodeIntForKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]]]];
 	}
 
 	return self;
@@ -72,44 +88,39 @@
 
 -(void)encodeWithCoder:(NSCoder*)encoder
 {
-	/*
-	 id <Player> gameWinner;
+	[encoder encodeInt:(int)[history count] forKey:@"DiceGameState:history"];
 
-	 NSMutableArray *history;
-	 NSMutableArray *rounds;
+	for (int i = 0;i < [history count];i++)
+		[((HistoryItem*)[history objectAtIndex:i]) encodeWithCoder:encoder withCount:i];
 
-	 BOOL inSpecialRules;
-	 
-	 @property (readwrite, retain) NSArray *players;
-	 @property (readwrite, retain) NSArray *playerStates;
-	 @property (readwrite, retain) NSMutableArray *losers;
-	 @property (readwrite, assign) int currentTurn;
-	 @property (readwrite, assign) NSInteger playersLeft;
-	 @property (readwrite, retain) Bid *previousBid;
-	 @property (readwrite, retain) NSMutableArray *theNewRoundListeners;
-	 @property (readwrite, retain) DiceGame *game;
-	 */
-
-	[encoder encodeObject:history forKey:@"DiceGameState:history"];
 	[encoder encodeObject:rounds forKey:@"DiceGameState:rounds"];
 	[encoder encodeBool:inSpecialRules forKey:@"DiceGameState:inSpecialRules"];
 	[encoder encodeInt:currentTurn forKey:@"DiceGameState:currentTurn"];
 	[encoder encodeInteger:playersLeft forKey:@"DiceGameState:playersLeft"];
 	[encoder encodeObject:previousBid forKey:@"DiceGameState:previousBid"];
 
-	[encoder encodeObject:playerStates forKey:@"DiceGameState:playerStates"];
+	[encoder encodeInt:(int)[playerStates count] forKey:@"DiceGameState:playerStates"];
+
+	for (int i = 0;i < [playerStates count];i++)
+		[((PlayerState*)[playerStates objectAtIndex:i]) encodeWithCoder:encoder withCount:i];
 
 	NSMutableArray* playersArray = [[[NSMutableArray alloc] init] autorelease];
 
 	for (id<Player> player in players)
 	{
-		if ([player isKindOfClass:DiceLocalPlayer.class] | [player isKindOfClass:DiceRemotePlayer.class])
+		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceRemotePlayer.class])
 			[playersArray addObject:[player getName]];
 		else if ([player isKindOfClass:SoarPlayer.class])
 			[playersArray addObject:@"Soar"];
 	}
+
 	[encoder encodeObject:playersArray forKey:@"DiceGameState:players"];
 	[encoder encodeBool:canContinueGame forKey:@"DiceGameState:CanContinueGame"];
+
+	[encoder encodeInt:(int)[losers count] forKey:@"DiceGameState:losers"];
+
+	for (int i = 0;i < [losers count];i++)
+		[encoder encodeInt:[(NSNumber*)[losers objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]];
 }
 
 /*** DiceGameState
@@ -160,7 +171,7 @@
         self.currentTurn = 0;
         inSpecialRules = NO;
         //[self goToNextPlayerWhoHasntLost];
-		self.currentTurn = arc4random_uniform((int)[players count] - 1);
+		self.currentTurn = 0;
 		self.canContinueGame = YES;
         [self createNewRound];
     }
@@ -170,6 +181,8 @@
 // Dealloc method, release all of our variables
 - (void)dealloc
 {
+	NSLog(@"%@ deallocated", self.class);
+
     [rounds release];
     [history release];
 

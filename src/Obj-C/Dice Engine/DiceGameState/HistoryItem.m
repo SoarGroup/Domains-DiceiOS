@@ -31,6 +31,40 @@
     return self;
 }
 
+-(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withGameState:(DiceGameState*)gameState
+{
+	self = [super init];
+
+    if (self)
+	{
+        self.diceGameState = gameState;
+
+		int playerID = [decoder decodeIntForKey:[NSString stringWithFormat:@"HistoryItem%i:player", count]];
+		self.player = [gameState playerStateForPlayerID:playerID];
+
+		self.actionType = (ActionType)[decoder decodeIntForKey:[NSString stringWithFormat:@"HistoryItem%i:actionType", count]];
+		self.value = [decoder decodeIntForKey:[NSString stringWithFormat:@"HistoryItem%i:value", count]];
+		self.result = [decoder decodeIntForKey:[NSString stringWithFormat:@"HistoryItem%i:result", count]];
+		self.state = [decoder decodeObjectForKey:[NSString stringWithFormat:@"HistoryItem%i:state", count]];
+		playerLosingADie = [decoder decodeInt64ForKey:[NSString stringWithFormat:@"HistoryItem%i:playerLosingADie", count]];
+		playerWinningADie = [decoder decodeInt64ForKey:[NSString stringWithFormat:@"HistoryItem%i:playerWinningADie", count]];
+    }
+
+    return self;
+
+}
+
+-(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count
+{
+	[encoder encodeInt:self.player.playerID forKey:[NSString stringWithFormat:@"HistoryItem%i:player", count]];
+	[encoder encodeInt:self.actionType forKey:[NSString stringWithFormat:@"HistoryItem%i:actionType", count]];
+	[encoder encodeInt:self.value forKey:[NSString stringWithFormat:@"HistoryItem%i:value", count]];
+	[encoder encodeInt:self.result forKey:[NSString stringWithFormat:@"HistoryItem%i:result", count]];
+	[encoder encodeObject:self.state forKey:[NSString stringWithFormat:@"HistoryItem%i:state", count]];
+	[encoder encodeInt64:playerLosingADie forKey:[NSString stringWithFormat:@"HistoryItem%i:playerLosingADie", count]];
+	[encoder encodeInt64:playerWinningADie forKey:[NSString stringWithFormat:@"HistoryItem%i:playerWinningADie", count]];
+}
+
 - (id) initWithMetaInformation:(NSString *)meta
 {
     if (!((self = [super init])))

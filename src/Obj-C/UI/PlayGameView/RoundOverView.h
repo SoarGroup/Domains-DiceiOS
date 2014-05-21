@@ -12,11 +12,6 @@
 #import "PlayGameView.h"
 
 @interface RoundOverView : UIViewController <UIScrollViewDelegate> {
-    DiceGame *game;
-    PlayerState *player;
-    PlayGameView *playGameView;
-    UILabel *titleLabel;
-    UIScrollView *diceView;
 	NSString* finalString;
 	
 	NSMutableArray *previousBidImageViews;
@@ -28,11 +23,11 @@
 
 - (UIImage*)barImage;
 
-@property (readwrite, retain) DiceGame *game;
-@property (readwrite, retain) PlayerState *player;
-@property (readwrite, retain) PlayGameView *playGameView;
+@property (readwrite, assign) DiceGame *game;
+@property (readwrite, assign) PlayerState *player;
+@property (readwrite, assign) PlayGameView *playGameView;
 @property (nonatomic, retain) IBOutlet UILabel *titleLabel;
-@property (nonatomic, retain) IBOutlet UIView *diceView;
+@property (nonatomic, retain) IBOutlet UIScrollView *diceView;
 @property (retain, nonatomic) IBOutlet UIButton *doneButton;
 @property (retain, nonatomic) IBOutlet UIImageView* transparencyLevel;
 

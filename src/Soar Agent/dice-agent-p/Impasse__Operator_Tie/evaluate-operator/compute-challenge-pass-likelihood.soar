@@ -118,7 +118,6 @@ sp {evaluate-operator*propose*compute-challenge-push-pass-push-pass-likelihood
 }
 
 sp {apply*compute-challenge-pass-likelihood*impossible*pass*prob-only
-	#:interrupt
    (state <s> ^operator <op>
               ^superstate.operator.evaluation <e>)
    (<op> ^name compute-challenge-pass-likelihood

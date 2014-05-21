@@ -13,6 +13,7 @@
 #import "SoarPlayer.h"
 #import "ApplicationDelegate.h"
 #import <GameKit/GameKit.h>
+#import <objc/runtime.h>
 
 @interface MultiplayerView ()
 
@@ -45,12 +46,22 @@
         iPad = [device isEqualToString:@"iPad"];
 		self.mainMenu = menu;
 		self.appDelegate = delegate;
+		self.handlerArray = [[[NSMutableArray alloc] init] autorelease];
+		self.miniGamesViewArray = [[[NSMutableArray alloc] init] autorelease];
+		self.playGameViews = [[[NSMutableArray alloc] init] autorelease];
 
 		if (iPad)
-			joinMatchPopoverViewController = [[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:YES withMultiplayerView:self];
+			self.joinMatchPopoverViewController = [[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:YES withMultiplayerView:self] autorelease];
     }
 
     return self;
+}
+
+- (void) dealloc
+{
+	NSLog(@"%@ deallocated", self.class);
+
+	[super dealloc];
 }
 
 - (void)viewDidLoad
@@ -61,6 +72,11 @@
 
 	self.navigationController.title = @"Multiplayer Matches";
 	self.navigationItem.title = @"Multiplayer Matches";
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	self.navigationController.navigationBarHidden = NO;
 
 	if (iPad)
 	{
@@ -84,68 +100,44 @@
 
 				 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 				  {
-					  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata] autorelease];
+					  DiceGame* newGame = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
 
-					  if (!mmd && error2)
+					  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+
+					  if (!handler)
+					  {
+						  handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
+						  [self.appDelegate.listener addGameKitGameHandler:handler];
+					  }
+					  else
+						  handler.localGame = newGame;
+
+					  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata
+																				  withRequest:request
+																					withMatch:match
+																				  withHandler:handler] autorelease];
+
+					  if (!mmd)
 					  {
 						  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
 						  return;
 					  }
 
-					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
-					  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil] autorelease];
+					  [newGame updateGame:[mmd theGame]];
 
-					  if (mmd)
+					  for (id<Player> player in [newGame players])
 					  {
-						  [newGame updateGame:[mmd theGame]];
+						  [player setHandler:handler];
 
-						  for (id<Player> player in [newGame players])
+						  if (![player isKindOfClass:SoarPlayer.class])
 						  {
-							  [player setHandler:handler];
-
-							  if (![player isKindOfClass:SoarPlayer.class])
+							  for (GKTurnBasedParticipant* participant in match.participants)
 							  {
-								  for (GKTurnBasedParticipant* participant in match.participants)
+								  if ([[player getName] isEqualToString:[participant playerID]])
 								  {
-									  if ([[player getName] isEqualToString:[participant playerID]])
-									  {
-										  [player setParticipant:participant];
-										  break;
-									  }
+									  [player setParticipant:participant];
+									  break;
 								  }
-							  }
-						  }
-					  }
-					  else
-					  {
-						  // New Match
-						  int AICount = (int)request.playerGroup;
-						  int humanCount = (int)[match.participants count];
-						  int currentHumanCount = 0;
-
-						  NSLock* lock = [[[NSLock alloc] init] autorelease];
-
-						  int totalPlayerCount = AICount + humanCount;
-
-						  for (int i = 0;i < totalPlayerCount;i++)
-						  {
-							  BOOL isAI = (BOOL)arc4random_uniform(2);
-
-							  if (isAI && AICount > 0)
-							  {
-								  [newGame addPlayer:[[SoarPlayer alloc] initWithGame:newGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler]];
-
-								  AICount--;
-							  }
-							  else
-							  {
-								  GKTurnBasedParticipant* participant = [match.participants objectAtIndex:currentHumanCount];
-								  currentHumanCount++;
-
-								  if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant playerID]])
-									  [newGame addPlayer:[[DiceLocalPlayer alloc] initWithName:[participant playerID] withHandler:handler withParticipant:participant]];
-								  else
-									  [newGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
 							  }
 						  }
 					  }
@@ -164,14 +156,12 @@
 					  [handler setLocalPlayer:localPlayer];
 					  [handler setRemotePlayers:remotePlayers];
 
-					  [self.appDelegate.listener addGameKitGameHandler:handler];
-
 					  void (^quitHandlerFullScreen)(void) =^
 					  {
 						  [self.navigationController popToViewController:self animated:YES];
 					  };
 
-					  UIViewController *gameView = [[[PlayGameView alloc] initWithGame:newGame withQuitHandler:[[quitHandlerFullScreen copy] autorelease]] autorelease];
+					  UIViewController *gameView = [[[PlayGameView alloc] initWithGame:newGame withQuitHandler:[[quitHandlerFullScreen copy] autorelease] withCustomMainView:YES] autorelease];
 
 					  CGRect newFrame = gameView.view.frame;
 					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
@@ -194,21 +184,36 @@
 {
 	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
 	 {
-		 NSNumber** matchNumber = (NSNumber**)malloc(sizeof(NSNumber*));
-		 *matchNumber = [[NSNumber alloc] initWithInt:-1];
-		 NSLock* lock = [[NSLock alloc] init];
-
-		 for (GKTurnBasedMatch* match in matches)
+		 for (int matchNumber = 0;matchNumber < [matches count];matchNumber++)
 		 {
+			 GKTurnBasedMatch* match = [matches objectAtIndex:matchNumber];
+
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  MultiplayerMatchData* data = [[[MultiplayerMatchData alloc] initWithData:matchData] autorelease];
+				  DiceGame* game = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
 
-				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
-				  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil] autorelease];
-				  [self.appDelegate.listener addGameKitGameHandler:handler];
+				  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
 
-				  [game updateGame:[data theGame]];
+				  if (!handler)
+				  {
+					  handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
+					  [self.appDelegate.listener addGameKitGameHandler:handler];
+				  }
+				  else
+					  handler.localGame = game;
+
+				  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchData
+																			  withRequest:nil
+																				withMatch:match
+																			  withHandler:handler] autorelease];
+
+				  if (!mmd || ![mmd theGame])
+				  {
+					  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [matchDataError description]);
+					  return;
+				  }
+
+				  [game updateGame:[mmd theGame]];
 
 				  for (id<Player> player in [game players])
 				  {
@@ -230,46 +235,25 @@
 				  [miniGamesViewArray addObject:game];
 				  [handlerArray addObject:handler];
 
-				  int matchNumberCopy = -1;
-				  [lock lock];
-				  *matchNumber = [NSNumber numberWithInt:([*matchNumber intValue] + 1)];
-				  matchNumberCopy = [*matchNumber intValue];
-				  [lock unlock];
-
-				  assert(matchNumberCopy != -1);
-
 				  void (^quitHandler)(void) =^
 				  {
 					  UIAlertView* view = [[[UIAlertView alloc] initWithTitle:@"Delete Game" message:@"Are you sure you want to permanently delete this game? If you delete it, you will never be able to access it again." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] autorelease];
-					  [view setValue:match forKey:@"Match"];
+					  [view.LDContext setObject:match forKey:@"Match"];
 					  [view show];
 				  };
 
-				  PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:quitHandler withCustomMainView:YES];
+				  PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[[quitHandler copy] autorelease] withCustomMainView:YES];
+				  
 				  [playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-				  playGameView.view.frame = CGRectMake(matchNumberCopy * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+				  playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
 				  [self.gamesScrollView addSubview:playGameView.view];
 				  [playGameViews addObject:playGameView];
 			  }];
 		 }
 
-		 BOOL done = NO;
-		 while (!done)
-		 {
-			 [lock lock];
-			 if ([*matchNumber intValue] == ([matches count]-1))
-				 done = YES;
-			 [lock unlock];
-		 }
-
-		 if ([matches count] > 0)
-			 [self.gamesScrollView setContentSize:CGSizeMake([matches count] * (((PlayGameView*)[playGameViews objectAtIndex:0]).view.frame.size.width + 10), self.gamesScrollView.frame.size.height)];
-
-		 [lock release];
-		 [*matchNumber release];
-		 free(matchNumber);
+		 [self.gamesScrollView setContentSize:CGSizeMake([matches count] * 330, 568)];
 	 }];
 }
 
@@ -291,21 +275,36 @@
 {
 	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
 	 {
-		 NSNumber** matchNumber = (NSNumber**)malloc(sizeof(NSNumber*));
-		 *matchNumber = [[NSNumber alloc] initWithInt:-1];
-		 NSLock* lock = [[NSLock alloc] init];
-
-		 for (GKTurnBasedMatch* match in matches)
+		 for (int matchNumber = 0;matchNumber < [matches count];matchNumber++)
 		 {
+			 GKTurnBasedMatch* match = [matches objectAtIndex:matchNumber];
+
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  MultiplayerMatchData* data = [[[MultiplayerMatchData alloc] initWithData:matchData] autorelease];
+				  DiceGame* game = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
 
-				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:self.appDelegate];
-				  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil] autorelease];
-				  [self.appDelegate.listener addGameKitGameHandler:handler];
+				  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
 
-				  [game updateGame:[data theGame]];
+				  if (!handler)
+				  {
+					  handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
+					  [self.appDelegate.listener addGameKitGameHandler:handler];
+				  }
+				  else
+					  handler.localGame = game;
+
+				  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchData
+																			  withRequest:nil
+																				withMatch:match
+																			  withHandler:handler] autorelease];
+
+				  if (!mmd)
+				  {
+					  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [matchDataError description]);
+					  return;
+				  }
+
+				  [game updateGame:[mmd theGame]];
 
 				  for (id<Player> player in [game players])
 				  {
@@ -327,14 +326,6 @@
 				  [miniGamesViewArray addObject:game];
 				  [handlerArray addObject:handler];
 
-				  int matchNumberCopy = -1;
-				  [lock lock];
-				  *matchNumber = [NSNumber numberWithInt:([*matchNumber intValue] + 1)];
-				  matchNumberCopy = [*matchNumber intValue];
-				  [lock unlock];
-
-				  assert(matchNumberCopy != -1);
-
 				  UILabel* matchName = [[[UILabel alloc] init] autorelease];
 				  UILabel* gameInfo = [[[UILabel alloc] init] autorelease];
 				  UILabel* turnInfo = [[[UILabel alloc] init] autorelease];
@@ -344,21 +335,27 @@
 
 				  UIImageView* whiteBar = [[[UIImageView alloc] init] autorelease];
 
-				  CGRect frame = CGRectMake(0, matchNumberCopy * 30 * 6, self.gamesScrollView.frame.size.width, 30);
+				  CGRect frame = CGRectMake(15, 0, self.gamesScrollView.frame.size.width - 15, 30);
 				  matchName.frame = frame;
 				  matchName.text = [game gameNameString];
+				  matchName.textColor = [UIColor whiteColor];
 
 				  frame.origin.y += 30;
 				  gameInfo.frame = frame;
 				  gameInfo.text = [game lastTurnInfo];
+				  gameInfo.textColor = [UIColor whiteColor];
 
 				  frame.origin.y += 30;
 				  turnInfo.frame = frame;
 				  turnInfo.text = @"It's ";
+				  turnInfo.textColor = [UIColor whiteColor];
 
-				  NSString* currentPlayerName = [[[[game gameState] playerStates] objectAtIndex:[[game gameState] currentTurn]] name];
+				  NSString* currentPlayerName = [[[[game gameState] playerStates] objectAtIndex:[[game gameState] currentTurn]] playerName];
 
-				  if ([currentPlayerName isEqualToString:[[GKLocalPlayer localPlayer] displayName]])
+				  if (!currentPlayerName)
+					  currentPlayerName = @"another player";
+
+				  if ([currentPlayerName isEqualToString:[[GKLocalPlayer localPlayer] alias]])
 				  {
 					  turnInfo.text = [turnInfo.text stringByAppendingString:@"your"];
 					  [turnInfo setTextColor:[UIColor redColor]];
@@ -366,101 +363,93 @@
 				  else
 					  turnInfo.text = [turnInfo.text stringByAppendingString:currentPlayerName];
 
-				  turnInfo.text = [turnInfo.text stringByAppendingString:@" turn!"];
+				  turnInfo.text = [turnInfo.text stringByAppendingString:@"'s turn!"];
 
 				  frame.origin.y += 30;
 				  timeoutInfo.frame = frame;
 				  timeoutInfo.text = @"Timeout until Forfeit: ";
+				  timeoutInfo.textColor = [UIColor whiteColor];
 
-				  if (![currentPlayerName isEqualToString:[[GKLocalPlayer localPlayer] displayName]])
-					  timeoutInfo.text = @"2 days";
-				  else
+				  NSDate* timeout = [[match currentParticipant] timeoutDate];
+
+				  NSTimeInterval timeInterval = [timeout timeIntervalSinceNow];
+
+				  double value = -1.0;
+				  NSString *type = @"second";
+
+				  if (timeInterval > 60*60*24)
 				  {
-					  NSDate* timeout = [[match currentParticipant] timeoutDate];
+					  value = timeInterval / (60.0*60.0*24.0);
 
-					  NSTimeInterval timeInterval = [timeout timeIntervalSinceNow];
-
-					  double value = -1.0;
-					  NSString *type = @"second";
-
-					  if (timeInterval > 60*60*24)
-					  {
-						  value = timeInterval / (60.0*60.0*24.0);
-
-						  type = @"day";
-					  }
-					  else if (timeInterval > 60*60)
-					  {
-						  value = ceil(timeInterval / (60.0*60.0));
-
-						  type = @"hour";
-					  }
-					  else if (timeInterval > 60)
-					  {
-						  value = ceil(timeInterval / (60.0));
-
-						  type = @"minute";
-					  }
-					  else
-						  value = ceil(timeInterval);
-
-					  if (value > 60*60)
-						  timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%f %@%@", value, type, value > 1 ? @"s" : @""]];
-					  else
-						  timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%i %@%@", (int)value, type, value > 1 ? @"s" : @""]];
+					  type = @"day";
 				  }
+				  else if (timeInterval > 60*60)
+				  {
+					  value = ceil(timeInterval / (60.0*60.0));
+
+					  type = @"hour";
+				  }
+				  else if (timeInterval > 60)
+				  {
+					  value = ceil(timeInterval / (60.0));
+
+					  type = @"minute";
+				  }
+				  else
+					  value = ceil(timeInterval);
+
+				  if (value > 60*60)
+					  timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%f %@%@", value, type, value > 1 ? @"s" : @""]];
+				  else
+					  timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%i %@%@", (int)value, type, value > 1 ? @"s" : @""]];
 
 				  frame.origin.y += 30;
 				  frame.size.width /= 2.0;
 				  playMatch.frame = frame;
-				  playMatch.titleLabel.text = @"Play Match!";
+
+				  [playMatch setTitle:@"Play Match!" forState:UIControlStateNormal];
 
 				  if (match.status == GKTurnBasedMatchStatusEnded)
 					  playMatch.titleLabel.text = @"View Match";
 
 				  [playMatch.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0]];
-				  [playMatch setTag:matchNumberCopy];
+				  [playMatch setTag:matchNumber];
 				  [playMatch addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 				  frame.origin.x += frame.size.width;
 				  deleteMatch.frame = frame;
-				  deleteMatch.titleLabel.text = @"Remove Match";
+				  [deleteMatch setTitle:@"Remove Match" forState:UIControlStateNormal];
 				  [deleteMatch.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0]];
-				  [deleteMatch setValue:match forKey:@"Removal"];
+				  [deleteMatch.LDContext setObject:match forKey:@"Match"];
 				  [deleteMatch addTarget:self action:@selector(deleteMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 				  frame.origin.y += 30;
 				  frame.origin.x -= frame.size.width;
 				  frame.size.width *= 2.0;
+				  frame.size.width -= 15;
+				  frame.size.height = 3;
 
 				  [whiteBar setImage:[PlayGameView barImage]];
 				  whiteBar.frame = frame;
 
-				  [self.gamesScrollView addSubview:matchName];
-				  [self.gamesScrollView addSubview:gameInfo];
-				  [self.gamesScrollView addSubview:turnInfo];
-				  [self.gamesScrollView addSubview:timeoutInfo];
-				  [self.gamesScrollView addSubview:playMatch];
-				  [self.gamesScrollView addSubview:deleteMatch];
-				  [self.gamesScrollView addSubview:whiteBar];
+				  CGRect viewFrame = CGRectMake(15, matchNumber * 30 * 6, self.gamesScrollView.frame.size.width - 15, 180);
+
+				  UIView* container = [[[UIView alloc] initWithFrame:viewFrame] autorelease];
+
+				  [container addSubview:matchName];
+				  [container addSubview:gameInfo];
+				  [container addSubview:turnInfo];
+				  [container addSubview:timeoutInfo];
+				  [container addSubview:playMatch];
+				  [container addSubview:deleteMatch];
+				  [container addSubview:whiteBar];
+
+				  [self.gamesScrollView addSubview:container];
+				  [self.playGameViews addObject:container];
 			  }];
 		 }
 
-		 BOOL done = NO;
-		 while (!done)
-		 {
-			 [lock lock];
-			 if ([*matchNumber intValue] == ([matches count]-1))
-				 done = YES;
-			 [lock unlock];
-		 }
-
-		 if ([matches count] > 0)
-			 [self.gamesScrollView setContentSize:CGSizeMake(self.gamesScrollView.frame.size.width, [matches count] * 30 * 6)];
-
-		 [lock release];
-		 [*matchNumber release];
-		 free(matchNumber);
+		 [self.gamesScrollView setContentSize:CGSizeMake(self.gamesScrollView.frame.size.width, [matches count] * 30 * 6)];
 	 }];
 }
 
@@ -474,7 +463,7 @@
 		[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
 	};
 
-	PlayGameView* playGameView = [[[PlayGameView alloc] initWithGame:[miniGamesViewArray objectAtIndex:gameIndex] withQuitHandler:quitHandler] autorelease];
+	PlayGameView* playGameView = [[[PlayGameView alloc] initWithGame:[miniGamesViewArray objectAtIndex:gameIndex] withQuitHandler:[[quitHandler copy] autorelease]] autorelease];
 
 	[self.navigationController pushViewController:playGameView animated:YES];
 
@@ -483,13 +472,13 @@
 
 - (void)deleteMatchButtonPressed:(id)sender
 {
-	GKTurnBasedMatch* match = [(UIButton*)sender valueForKey:@"Removal"];
+	GKTurnBasedMatch* match = [((NSObject*)sender).LDContext objectForKey:@"Match"];
 
 	GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
 
 	if (handler)
 	{
-		DiceGame* game = [handler getDiceGame];
+		DiceGame* game = [handler localGame];
 
 		id<Player> player = nil;
 
@@ -503,42 +492,73 @@
 		}
 
 		if (player)
+			[handler playerQuitMatch:player withRemoval:NO];
+
+		for (GKTurnBasedParticipant* participant in match.participants)
+			participant.matchOutcome = GKTurnBasedMatchOutcomeQuit;
+
+		[match removeWithCompletionHandler:^(NSError* error)
+		 {
+			 if (error)
+				 NSLog(@"Error Removing Invalid Match: %@", error.description);
+		 }];
+
+		int handlerIndex = 0;
+		for (;handlerIndex < [handlerArray count];handlerIndex++)
 		{
-			[handler playerQuitMatch:player withRemoval:YES];
+			if ([handlerArray objectAtIndex:handlerIndex] == handler)
+				break;
+		}
 
-			int handlerIndex = 0;
-			for (;handlerIndex < [handlerArray count];handlerIndex++)
-			{
-				if ([handlerArray objectAtIndex:handlerIndex] == handler)
-					break;
-			}
-
+		if (iPad)
 			[[(PlayGameView*)[playGameViews objectAtIndex:handlerIndex] view] removeFromSuperview];
+		else
+			[(UIView*)[playGameViews objectAtIndex:handlerIndex]removeFromSuperview];
 
-			[self.appDelegate.listener removeGameKitGameHandler:handler];
-			[handlerArray removeObjectAtIndex:handlerIndex];
+		[self.appDelegate.listener removeGameKitGameHandler:handler];
+		[handlerArray removeObjectAtIndex:handlerIndex];
+		if ([playGameViews count] > 0)
 			[playGameViews removeObjectAtIndex:handlerIndex];
-			[miniGamesViewArray removeObjectAtIndex:handlerIndex];
+		
+		[miniGamesViewArray removeObjectAtIndex:handlerIndex];
 
+		if (iPad)
+		{
 			if ([handlerArray count] == 0)
 				gamesScrollView.contentSize = CGSizeMake(0, gamesScrollView.frame.size.height);
 			else
-				gamesScrollView.contentSize = CGSizeMake(gamesScrollView.contentSize.width - ((UIView*)[playGameViews objectAtIndex:0]).frame.size.width, gamesScrollView.frame.size.height);
+				gamesScrollView.contentSize = CGSizeMake(gamesScrollView.contentSize.width - 330, gamesScrollView.frame.size.height);
+		}
+		else
+			gamesScrollView.contentSize = CGSizeMake(gamesScrollView.frame.size.width, [miniGamesViewArray count] * 30 * 6);
 
-			if (handlerIndex == [handlerArray count])
-				return; // Nothing more to do
+		if (handlerIndex == [handlerArray count])
+			return; // Nothing more to do
 
-			[UIView animateWithDuration:0.25 animations:^(void)
+		[UIView animateWithDuration:0.25 animations:^(void)
+		 {
+			 for (int i = handlerIndex;i < [handlerArray count];i++)
 			 {
-				 for (int i = handlerIndex;i < [handlerArray count];i++)
+				 CGRect currentFrame;
+
+				 if (iPad)
 				 {
-					 CGRect currentFrame = ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame;
+					 currentFrame = ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame;
+
 					 currentFrame.origin.x -= currentFrame.size.width;
 
 					 ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame = currentFrame;
 				 }
-			 }];
-		}
+				 else
+				 {
+					 currentFrame = ((UIView*)[playGameViews objectAtIndex:i]).frame;
+
+					 currentFrame.origin.y -= 180;
+
+					 ((UIView*)[playGameViews objectAtIndex:i]).frame = currentFrame;
+				 }
+			 }
+		 }];
 	}
 }
 

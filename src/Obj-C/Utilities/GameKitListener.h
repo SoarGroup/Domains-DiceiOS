@@ -16,10 +16,13 @@
 	NSMutableArray* handlers;
 }
 
+- (NSArray*)handlers;
+
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler;
 - (void) removeGameKitGameHandler:(GameKitGameHandler*)handler;
 
 - (GameKitGameHandler*)handlerForMatch:(GKTurnBasedMatch*)match;
+- (GameKitGameHandler*)handlerForGame:(DiceGame*)game;
 
 - (void) player:(GKPlayer *)player didAcceptInvite:(GKInvite *)invite;
 - (void) player:(GKPlayer *)player didCompleteChallenge:(GKChallenge *)challenge issuedByFriend:(GKPlayer *)friendPlayer;

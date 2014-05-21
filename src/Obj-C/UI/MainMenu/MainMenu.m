@@ -82,6 +82,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	self.navigationController.navigationBarHidden = YES;
+
+	NSArray* handlers = [NSArray arrayWithArray:self.appDelegate.listener.handlers];
+	for (GameKitGameHandler* handler in handlers)
+		[self.appDelegate.listener removeGameKitGameHandler:handler];
 }
 
 - (void)dealloc {    

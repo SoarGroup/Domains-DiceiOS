@@ -16,7 +16,7 @@
 @interface DiceRemotePlayer : NSObject <Player>
 
 @property (nonatomic, retain) GKTurnBasedParticipant* participant;
-@property (nonatomic, retain) GameKitGameHandler* handler;
+@property (nonatomic, assign) GameKitGameHandler* handler;
 @property (readwrite, assign) int playerID;
 @property (nonatomic, retain) NSString* displayName;
 

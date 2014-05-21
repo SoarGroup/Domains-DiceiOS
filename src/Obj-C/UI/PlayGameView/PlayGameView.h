@@ -64,10 +64,10 @@ const int pushMargin();
 
 // Properties based on variables
 @property (readwrite, retain) NSMutableArray *challengeButtons;
-@property (readwrite, retain) DiceGame *game;
+@property (readwrite, assign) DiceGame *game;
 @property (readwrite, assign) BOOL hasPromptedEnd;
 @property (readwrite, retain) NSArray *images;
-@property (readwrite, retain) PlayerState *state;
+@property (readwrite, assign) PlayerState *state;
 @property (readwrite, retain) NSMutableArray *tempViews;
 @property (readwrite, assign) BOOL isCustom;
 @property (readwrite, atomic, assign) BOOL animationFinished;

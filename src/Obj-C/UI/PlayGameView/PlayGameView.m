@@ -14,6 +14,7 @@
 #import "Die.h"
 #import "DiceGraphics.h"
 #import "UIIMage+ImageEffects.h"
+#import "ApplicationDelegate.h"
 
 @implementation UIViewController (BackButtonHandler)
 
@@ -583,6 +584,12 @@ NSArray *buildDiceImages() {
 	}
 
     [self.game startGame];
+
+	GameKitGameHandler* handler = [self.game.appDelegate.listener handlerForGame:self.game];
+
+	if (handler)
+		[handler saveMatchData];
+
     [self.game.gameState addNewRoundListener:self];
 
 	if (fullScreenView)

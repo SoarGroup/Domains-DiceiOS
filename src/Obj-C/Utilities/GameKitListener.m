@@ -10,6 +10,11 @@
 
 @implementation GameKitListener
 
+- (NSArray*)handlers
+{
+	return handlers;
+}
+
 - (id)init
 {
 	self = [super init];
@@ -24,6 +29,8 @@
 
 - (void) dealloc
 {
+	NSLog(@"%@ deallocated", self.class);
+
 	[handlers release];
 
 	[super dealloc];
@@ -36,6 +43,16 @@
 
 - (void) removeGameKitGameHandler:(GameKitGameHandler*)handler
 {
+	for (id<Player> player in handler.localGame.players)
+	{
+		[player removeHandler];
+		NSLog(@"%@ Retain Count: %i", player.class, [player retainCount]);
+	}
+
+	NSLog(@"%@ Retain Count: %i", handler.localGame.gameState.class, [handler.localGame.gameState retainCount]);
+	NSLog(@"%@ Retain Count: %i", handler.localGame.class, [handler.localGame retainCount]);
+	[handler release];
+
 	[handlers removeObject:handler];
 }
 
@@ -44,6 +61,17 @@
 	for (GameKitGameHandler* handler in handlers)
 	{
 		if ([handler getMatch] == match)
+			return handler;
+	}
+
+	return nil;
+}
+
+- (GameKitGameHandler*)handlerForGame:(DiceGame*)game
+{
+	for (GameKitGameHandler* handler in handlers)
+	{
+		if ([handler localGame] == game)
 			return handler;
 	}
 

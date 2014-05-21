@@ -31,6 +31,13 @@
     return self;
 }
 
+
+- (void)dealloc
+{
+	NSLog(@"Dice Local Player deallocated\n");
+	[super dealloc];
+}
+
 - (NSString*) getName
 {
     return self.name;
@@ -73,5 +80,10 @@
 }
 
 - (void) end { }
+
+- (void)removeHandler
+{
+	self.handler = nil;
+}
 
 @end

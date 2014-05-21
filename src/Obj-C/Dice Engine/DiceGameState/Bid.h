@@ -9,14 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Bid : NSObject {
-@private
-    NSInteger playerID;
-    int numberOfDice;
-    int rankOfDie;
-    NSArray *diceToPush;
-    NSString *playerName;
-}
+@interface Bid : NSObject
 
 @property (nonatomic, retain) NSArray *diceToPush;
 @property (nonatomic, readonly) NSInteger playerID;
@@ -26,6 +19,9 @@
 
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)playerName dice:(int)dice rank:(int)rank;
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)playerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing;
+
+-(id)initWithCoder:(NSCoder*)decoder;
+-(void)encodeWithCoder:(NSCoder*)encoder;
 
 - (void)dealloc;
 

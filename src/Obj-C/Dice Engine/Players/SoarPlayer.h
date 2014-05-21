@@ -35,13 +35,6 @@
     
     BOOL remoteConnected;
     BOOL cleanup;
-    NSString *name;
-    DiceGame *game;
-    
-    // stuff for interface Player
-    PlayerState *playerState;
-    int playerID;
-    NSLock *turnLock;
 
 	int outputCallBackID;
 }
@@ -57,11 +50,11 @@
 + (NSString*) makePlayerName;
 
 @property (nonatomic, retain) GKTurnBasedParticipant* participant;
-@property (nonatomic, retain) GameKitGameHandler* handler;
+@property (nonatomic, assign) GameKitGameHandler* handler;
 @property (readwrite, retain) NSString* name;
 @property (readwrite, retain) PlayerState *playerState;
 @property (readwrite, assign) int playerID;
-@property (readwrite, retain) DiceGame *game;
+@property (readwrite, assign) DiceGame *game;
 @property (readwrite, retain) NSLock *turnLock;
 
 @end

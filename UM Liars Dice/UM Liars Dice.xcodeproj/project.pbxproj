@@ -871,7 +871,7 @@
 				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					CD86D64213BB9E450005A182 = {
-						DevelopmentTeam = RYTB7X84GA;
+						DevelopmentTeam = PG6DD9A3H4;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1038,7 +1038,7 @@
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1115,7 +1115,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
 				VALIDATE_PRODUCT = YES;
@@ -1142,7 +1142,7 @@
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1193,7 +1193,7 @@
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Alex Turner (KHXH2344DJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
@@ -1272,7 +1272,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
 				WARNING_CFLAGS = "-Wall";
@@ -1325,7 +1325,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "BDA326D1-6ED5-4168-A02E-C0704B6381E5";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = all;
 				VALIDATE_PRODUCT = YES;

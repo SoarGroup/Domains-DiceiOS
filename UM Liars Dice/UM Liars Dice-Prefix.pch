@@ -11,3 +11,22 @@
 #error "This project uses features only available in iOS SDK 7.0 and later."
 
 #endif
+
+#import <Foundation/Foundation.h>
+#import "objc/runtime.h"
+
+@interface NSObject (LDContext)
+- (NSMutableDictionary *)LDContext;
+@end
+@implementation NSObject (LDContext)
+- (NSMutableDictionary *)LDContext
+{
+    static char key;
+    NSMutableDictionary *contextInfo = objc_getAssociatedObject(self, &key);
+    if (!contextInfo) {
+        contextInfo = [NSMutableDictionary dictionary];
+        objc_setAssociatedObject(self, &key, contextInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return contextInfo;
+}
+@end
