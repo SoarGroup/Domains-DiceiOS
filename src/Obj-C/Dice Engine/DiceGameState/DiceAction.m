@@ -23,7 +23,7 @@
 }
 
 + (DiceAction *) bidAction:(NSInteger)playerID count:(int)count face:(int)face push:(NSArray *)push {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_BID;
     ret.playerID = playerID;
     ret.count = count;
@@ -33,7 +33,7 @@
 }
 
 + (DiceAction *) challengeAction:(NSInteger)playerID target:(NSInteger)targetId {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_CHALLENGE_BID; // TODO test for bid / pass challenge?
     ret.playerID = playerID;
     ret.targetID = targetId;
@@ -41,14 +41,14 @@
 }
 
 + (DiceAction *) exactAction:(NSInteger)playerID {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_EXACT;
     ret.playerID = playerID;
     return ret;
 }
 
 + (DiceAction *) passAction:(NSInteger)playerID push:(NSArray*)push {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_PASS;
     ret.playerID = playerID;
     ret.push = push;
@@ -56,14 +56,14 @@
 }
 
 + (DiceAction *) acceptAction:(NSInteger)playerID {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_ACCEPT;
     ret.playerID = playerID;
     return ret;
 }
 
 + (DiceAction *) pushAction:(NSInteger)playerID push:(NSArray *)push {
-    DiceAction *ret = [[[DiceAction alloc] init] autorelease];
+    DiceAction *ret = [[DiceAction alloc] init];
     ret.actionType = ACTION_PUSH;
     ret.playerID = playerID;
     ret.push = push;

@@ -39,15 +39,21 @@ typedef struct {
 	{
 		lineCount = 0;
 
-		self.database = [[[DiceDatabase alloc] init] autorelease];
+		self.database = [[DiceDatabase alloc] init];
+		__block StatsView* stats = self;
 		self.database.reloadHandler =^
 		{
-			lineCount = 0;
-			[self doLayout];
+			[stats resetLineCount];
+			[stats doLayout];
 		};
 	}
 
 	return self;
+}
+
+- (void)resetLineCount
+{
+	lineCount = 0;
 }
 
 - (PlayerInformationStruct)calculatePlayerInformation:(int)playerID forNumberOfPlayers:(int)playerCount
@@ -101,7 +107,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	UILabel* label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 	[label setAttributedText:line];
 	[label setTextColor:[UIColor whiteColor]];
@@ -119,7 +125,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	UILabel* label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 
 	if (bolded)
@@ -143,7 +149,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	UILabel* label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 
 	if (bolded)
@@ -172,7 +178,7 @@ typedef struct {
 							  boldFont, NSFontAttributeName, nil];
     const NSRange range = NSMakeRange(0,[firstItem length]);
 
-    NSMutableAttributedString *attributedText = [[[NSMutableAttributedString alloc] initWithString:firstItem attributes:attrs] autorelease];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:firstItem attributes:attrs];
 
 	if (boldFirst)
 		[attributedText setAttributes:subAttrs range:range];
@@ -185,7 +191,7 @@ typedef struct {
 	frame.size.width = 300;
 	frame.size.height = lineHeight;
 
-	UILabel* label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	UILabel* label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 	[label setAttributedText:attributedText];
 	[label setTextColor:[UIColor whiteColor]];
@@ -194,7 +200,7 @@ typedef struct {
 
 	frame.origin.x += (sectionWidth < minimumWidth ? minimumWidth : sectionWidth);
 
-	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:secondItem];
 	[label setTextColor:[UIColor whiteColor]];
@@ -203,7 +209,7 @@ typedef struct {
 
 	frame.origin.x += sectionWidth;
 
-	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:thirdItem];
 	[label setTextColor:[UIColor whiteColor]];
@@ -212,7 +218,7 @@ typedef struct {
 
 	frame.origin.x += sectionWidth;
 
-	label = [[[UILabel alloc] initWithFrame:frame] autorelease];
+	label = [[UILabel alloc] initWithFrame:frame];
 	label.backgroundColor = [UIColor clearColor];
 	[label setText:fourthItem];
 	[label setTextColor:[UIColor whiteColor]];
@@ -267,12 +273,11 @@ typedef struct {
 }
 
 - (void) resetPressed {
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Reset Game Records?"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Game Records?"
                                                      message:@"This action cannot be undone."
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Reset", nil]
-                          autorelease];
+                                           otherButtonTitles:@"Reset", nil];
     [alert show];
 }
 
@@ -285,14 +290,10 @@ typedef struct {
     self.navigationItem.title = @"Stats";
     self.navigationItem.leftBarButtonItem.title = @"Main Menu";
     
-    UIBarButtonItem *anotherButton = [[[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetPressed)] autorelease];
+    UIBarButtonItem *anotherButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetPressed)];
     self.navigationItem.rightBarButtonItem = anotherButton;
     
     [self doLayout];
 }
 
-- (void)dealloc {
-    [scrollView release];
-    [super dealloc];
-}
 @end

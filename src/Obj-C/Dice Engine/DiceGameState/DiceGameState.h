@@ -48,14 +48,14 @@
 - (BOOL)handleAccept:(NSInteger)playerID;
 - (void)addNewRoundListener:(id <NewRoundListener>)listener;
 
-@property (readwrite, retain) NSArray *players;
-@property (readwrite, retain) NSArray *playerStates;
-@property (readwrite, retain) NSMutableArray *losers;
+@property (readwrite, strong) NSArray *players;
+@property (readwrite, strong) NSArray *playerStates;
+@property (readwrite, strong) NSMutableArray *losers;
 @property (readwrite, assign) int currentTurn;
 @property (readwrite, assign) NSInteger playersLeft;
-@property (readwrite, retain) Bid *previousBid;
-@property (readwrite, retain) NSMutableArray *theNewRoundListeners;
-@property (readwrite, assign) DiceGame *game;
+@property (readwrite, strong) Bid *previousBid;
+@property (readwrite, strong) NSMutableArray *theNewRoundListeners;
+@property (readwrite, weak) DiceGame *game;
 @property (readwrite, atomic, assign) BOOL canContinueGame;
 
 - (id <Player>)getCurrentPlayer;

@@ -59,11 +59,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-	UIImage* snapshot = [self.playGameView blurredSnapshot];
+	PlayGameView* playGameViewLocal = self.playGameView;
+
+	UIImage* snapshot = [playGameViewLocal blurredSnapshot];
 	[self.transparencyLevel setImage:snapshot];
 
     titleLabel.text = finalString;
-	titleLabel.accessibilityLabel = [self.playGameView accessibleTextForString:titleLabel.text];
+	titleLabel.accessibilityLabel = [playGameViewLocal accessibleTextForString:titleLabel.text];
 
 	NSArray* lines = [finalString componentsSeparatedByString:@"\n"];
 
@@ -98,8 +100,8 @@
 
 			int number = [line characterAtIndex:result.range.location] - '0';
 
-			UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y2, 20, 20)] autorelease];
-			[imageView setImage:[self.playGameView imageForDie:number]];
+			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y2, 20, 20)];
+			[imageView setImage:[playGameViewLocal imageForDie:number]];
 
 			[titleLabel addSubview:imageView];
 		}
@@ -110,7 +112,10 @@
 	titleFrame.size.height = y2;
 	titleLabel.frame = titleFrame;
 
-    NSArray *playerStates = self.game.gameState.playerStates;
+	DiceGame* gameLocal = self.game;
+	PlayerState* playerLocal = self.player;
+
+    NSArray *playerStates = gameLocal.gameState.playerStates;
     int i = -1;
     int labelHeight = 64 / 2;
     int diceHeight = 96 / 2;
@@ -131,7 +136,7 @@
                 
         int labelIndex = (displayedPlayer ? i : i + 1);
 
-		if (playerState.playerID == self.player.playerID)
+		if (playerState.playerID == playerLocal.playerID)
 		{
 			displayedPlayer = YES;
 			labelIndex = 0;
@@ -143,14 +148,14 @@
 		
         CGRect dividerRect = CGRectMake(x, y, width, dividerHeight);
         UIImage *dividerImage = [self barImage];
-        UIImageView *barView = [[[UIImageView alloc] initWithImage:dividerImage] autorelease];
+        UIImageView *barView = [[UIImageView alloc] initWithImage:dividerImage];
         barView.frame = dividerRect;
         [diceView addSubview:barView];
         y += dividerHeight;
         
         
         CGRect nameLabelRect = CGRectMake(x + starSize, y, width - starSize, labelHeight);
-        UILabel *nameLabel = [[[UILabel alloc] initWithFrame:nameLabelRect] autorelease];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:nameLabelRect];
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.text = playerState.playerName;
 		[nameLabel setTextColor:[UIColor whiteColor]];
@@ -158,7 +163,7 @@
         x = 0; // = x + width - starSize;
         y += labelHeight;
         CGRect diceFrame = CGRectMake(x, y, width, diceHeight + pushAmount);
-        UIView *diceStrip = [[[UIView alloc] initWithFrame:diceFrame] autorelease];
+        UIView *diceStrip = [[UIView alloc] initWithFrame:diceFrame];
         int dieSize = (diceStrip.frame.size.width) / 5;
         if (dieSize > diceHeight)
         {
@@ -173,9 +178,9 @@
                 dieY = pushAmount;
             }
             CGRect dieFrame = CGRectMake(x, dieY, dieSize, dieSize);
-            UIImage *dieImage = [self.playGameView imageForDie:die.dieValue];
+            UIImage *dieImage = [playGameViewLocal imageForDie:die.dieValue];
 
-            UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+            UIImageView *dieView = [[UIImageView alloc] initWithFrame:dieFrame];
             [dieView setImage:dieImage];
 
 			NSString* name = nil;
@@ -183,7 +188,7 @@
 			if (i == 0)
 				name = @"Your";
 			else
-				name = [NSString stringWithFormat:@"%@'s", player.playerName];
+				name = [NSString stringWithFormat:@"%@'s", playerLocal.playerName];
 
 			dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i", name, die.dieValue];
 			dieView.isAccessibilityElement = YES;
@@ -209,74 +214,59 @@
 
 - (IBAction)donePressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-	self.game.gameState.canContinueGame = YES;
+	DiceGame* gameLocal = self.game;
+	PlayerState* playerLocal = self.player;
+	PlayGameView* playGameViewLocal = self.playGameView;
 
-    if ([self.game.gameState usingSpecialRules]) {
+	gameLocal.gameState.canContinueGame = YES;
+
+    if ([gameLocal.gameState usingSpecialRules]) {
         NSString *title = [NSString stringWithFormat:@"Special Rules!"];
         NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:nil
                                                cancelButtonTitle:@"Okay"
-                                               otherButtonTitles:nil]
-                              autorelease];
+                                               otherButtonTitles:nil];
         // alert.tag = ACTION_QUIT;
         [alert show];
     }
-    else if ([self.player hasWon]) {
+    else if ([playerLocal hasWon]) {
         NSString *title = [NSString stringWithFormat:@"You Win!"];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
-                                                        delegate:playGameView
+                                                        delegate:playGameViewLocal
                                                cancelButtonTitle:nil
-                                               otherButtonTitles:@"Okay", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Okay", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
     }
-    else if ([self.player.gameState hasAPlayerWonTheGame]) {
-        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [self.player.gameState.gameWinner getName]];
+    else if ([gameLocal.gameState hasAPlayerWonTheGame]) {
+        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [gameLocal.gameState.gameWinner getName]];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
-                                                        delegate:playGameView
+                                                        delegate:playGameViewLocal
                                                cancelButtonTitle:nil
-                                               otherButtonTitles:@"Okay", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Okay", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
 	}
-    else if ([self.player hasLost] && !playGameView.hasPromptedEnd) {
-        playGameView.hasPromptedEnd = YES;
+    else if ([playerLocal hasLost] && !playGameViewLocal.hasPromptedEnd) {
+        playGameViewLocal.hasPromptedEnd = YES;
         NSString *title = [NSString stringWithFormat:@"You Lost the Game"];
         NSString *message = @"Quit or keep watching?"; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:message
-                                                        delegate:playGameView
+                                                        delegate:playGameViewLocal
                                                cancelButtonTitle:@"Watch"
-                                               otherButtonTitles:@"Quit", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Quit", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
     }
 	
-    [self.game notifyCurrentPlayer];
-}
-
-- (void)dealloc {
-    [titleLabel release];
-    [diceView release];
-    [doneButton release];
-	
-	for (UIImageView* view in previousBidImageViews)
-	{
-		[view removeFromSuperview];
-		[view release];
-	}
-	
-	[previousBidImageViews release];
-    [super dealloc];
+    [gameLocal notifyCurrentPlayer];
 }
 
 - (UIImage*)barImage

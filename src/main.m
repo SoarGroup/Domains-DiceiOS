@@ -10,11 +10,8 @@
 
 int main(int argc, char *argv[])
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
 	[[NSThread currentThread] setName:@"Main Liar's Dice Thread"];
 
     int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
     return retVal;
 }

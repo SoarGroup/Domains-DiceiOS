@@ -29,13 +29,11 @@
 - (void)dealloc
 {
 	[(ApplicationDelegate*)[[UIApplication sharedApplication] delegate] removeInstance:self];
-
-	[super dealloc];
 }
 
 + (GameTime) getCurrentGameTime {
     NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     
     [dateFormatter setDateFormat:@"yyyy"];
     int year = [[dateFormatter stringFromDate:date] intValue];
@@ -80,10 +78,10 @@
 - (NSArray *) getGameRecords {
 	NSArray* gameRecordEncodedArray = [defaults objectForKey:@"Games"];
 
-	NSMutableArray* gameRecords = [[[NSMutableArray alloc] initWithCapacity:gameRecordEncodedArray.count] autorelease];
+	NSMutableArray* gameRecords = [[NSMutableArray alloc] initWithCapacity:gameRecordEncodedArray.count];
 
 	for (NSDictionary* gameRecordEncodedObject in gameRecordEncodedArray)
-		[gameRecords addObject:[[[GameRecord alloc] initWithDictionary:gameRecordEncodedObject] autorelease]];
+		[gameRecords addObject:[[GameRecord alloc] initWithDictionary:gameRecordEncodedObject]];
 
     return gameRecords;
 }

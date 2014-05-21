@@ -43,7 +43,8 @@
 
 - (BOOL) hasWon
 {
-    return self.gameState.gameWinner == self;
+	DiceGameState* gameStateLocal = self.gameState;
+    return gameStateLocal.gameWinner == self;
 }
 
     //Initilization method
@@ -54,7 +55,7 @@
 
     if (self) {
             //Set our local variables
-        self.lock = [[[NSLock alloc] init] autorelease];
+        self.lock = [[NSLock alloc] init];
         [self.lock lock];
         self.playerName = name;
         playerID = ID;
@@ -66,11 +67,11 @@
         
         self.gameState = aGameState;
         
-        self.arrayOfDice = [[[NSMutableArray alloc] init] autorelease];
+        self.arrayOfDice = [[NSMutableArray alloc] init];
         
             //Set our dice
         for (int i = 0;i < dice;i++)
-            [arrayOfDice addObject:[[[Die alloc] init] autorelease]];
+            [arrayOfDice addObject:[[Die alloc] init]];
         
         specialRules = NO;
         hasDoneSpecialRules = NO;
@@ -107,7 +108,7 @@
 		int arrayOfDiceCount = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:arrayOfDice", count]];
 
 		for (int i = 0;i < arrayOfDiceCount;i++)
-			[arrayOfDice addObject:[[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]] autorelease]];
+			[arrayOfDice addObject:[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]]];
 	}
 
 	return self;
@@ -154,12 +155,13 @@
     playerHasPassed = NO;
     //Create our new dice
     for (int i = 0;i < numberOfDice;i++) {
-        Die *newDie = [[[Die alloc] init] autorelease];
+        Die *newDie = [[Die alloc] init];
 
         [arrayOfDice addObject:newDie];
     }
-	
-	if ([[gameState getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
+
+	DiceGameState* gameStateLocal = self.gameState;
+	if ([[gameStateLocal getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
 	{
 		for (int i = 1;i < [arrayOfDice count];i++)
 		{
@@ -219,9 +221,6 @@
 						   return (NSComparisonResult)NSOrderedSame;
 					   }
 				   }]];
-
-	[arrayOfDice retain];
-    
         //Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
     playerHasPushedAllDice = NO;
     [self.lock unlock];
@@ -241,8 +240,6 @@
     }
     
     NSArray *array = [[NSArray alloc] initWithArray:unPushedDice];
-    [unPushedDice release];
-    [array autorelease];
     [self.lock unlock];
     return array;
 }
@@ -251,7 +248,7 @@
 - (NSArray *)pushedDice
 {
     [self.lock lock];
-    NSMutableArray *pushedDice = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *pushedDice = [[NSMutableArray alloc] init];
     for (Die *die in arrayOfDice) {
         if ([die isKindOfClass:[Die class]]) {
             if ([die hasBeenPushed]) {
@@ -278,8 +275,6 @@
     }
     
     NSArray *array = [[NSArray alloc] initWithArray:markedDice];
-    [markedDice release];
-    [array autorelease];
     [self.lock unlock];
     return array;
 }
@@ -289,8 +284,9 @@
 {
         //If we have lost, we can't
     if (hasLost) return NO;
-        //if the current player is us then yes we can otherwise return NO
-    PlayerState *currentState = [self.gameState getCurrentPlayerState];
+
+	DiceGameState* gameStateLocal = self.gameState;
+    PlayerState *currentState = [gameStateLocal getCurrentPlayerState];
     bool ret = currentState == self;
     return ret;
 }
@@ -312,15 +308,17 @@
         // Have we lost? If so of course we can't
     if (hasLost) return NO;
         // Get the previous bid for the next check
-    Bid *previousBid = self.gameState.previousBid;
+	DiceGameState* gameStateLocal = self.gameState;
+
+    Bid *previousBid = gameStateLocal.previousBid;
         // Make sure the current player is us, the previous bid exists, and the previous bid's playerID is not us
     
-    HistoryItem *item = [self.gameState lastHistoryItem];
+    HistoryItem *item = [gameStateLocal lastHistoryItem];
     if (item != nil)
     {   
         if (item.actionType == ACTION_BID)
         {
-            if ([self.gameState getCurrentPlayerState] == self)
+            if ([gameStateLocal getCurrentPlayerState] == self)
             {
                 if (previousBid != nil)
                 {
@@ -333,31 +331,31 @@
         }
     }
     
-    if ([[self.gameState history] count] >= 2)
+    if ([[gameStateLocal history] count] >= 2)
     {
-        HistoryItem *secondToLastHistoryItem = [[self.gameState history] objectAtIndex:[[self.gameState history] count] - 2];
+        HistoryItem *secondToLastHistoryItem = [[gameStateLocal history] objectAtIndex:[[gameStateLocal history] count] - 2];
         
         if (secondToLastHistoryItem.actionType == ACTION_BID && 
-            [self.gameState lastHistoryItem].actionType == ACTION_PUSH &&
-            [self.gameState getCurrentPlayerState] == self &&
+            [gameStateLocal lastHistoryItem].actionType == ACTION_PUSH &&
+            [gameStateLocal getCurrentPlayerState] == self &&
             previousBid != nil &&
             [previousBid playerID] != playerID)
         {
             return previousBid;
         }
         else if (secondToLastHistoryItem.actionType == ACTION_BID && 
-                 [self.gameState lastHistoryItem].actionType == ACTION_PASS &&
-                 [self.gameState getCurrentPlayerState] == self &&
+                 [gameStateLocal lastHistoryItem].actionType == ACTION_PASS &&
+                 [gameStateLocal getCurrentPlayerState] == self &&
                  previousBid != nil &&
                  [previousBid playerID] != playerID) {
             return previousBid;
         }
-        else if ([[self.gameState history] count] >= 3) {
-            HistoryItem *thirdToLastHistoryItem = [[self.gameState history] objectAtIndex:[[self.gameState history] count] - 3];
+        else if ([[gameStateLocal history] count] >= 3) {
+            HistoryItem *thirdToLastHistoryItem = [[gameStateLocal history] objectAtIndex:[[gameStateLocal history] count] - 3];
                 if (thirdToLastHistoryItem.actionType == ACTION_BID && 
                     secondToLastHistoryItem.actionType == ACTION_PUSH && 
-                    [self.gameState lastHistoryItem].actionType == ACTION_PASS &&
-                    [self.gameState getCurrentPlayerState] == self &&
+                    [gameStateLocal lastHistoryItem].actionType == ACTION_PASS &&
+                    [gameStateLocal getCurrentPlayerState] == self &&
                     previousBid != nil &&
                     [previousBid playerID] != playerID) {
                     return previousBid;
@@ -377,17 +375,21 @@
 // Returns the playerID of the player who passed, or -1 if no such player exists.
 - (int)getChallengeableLastPass {
     if (hasLost) return -1;
-    HistoryItem *historyItem = [self.gameState lastHistoryItem];
-    if (historyItem != nil && [self.gameState getCurrentPlayerState] == self)
+	DiceGameState* gameStateLocal = self.gameState;
+    HistoryItem *historyItem = [gameStateLocal lastHistoryItem];
+    if (historyItem != nil && [gameStateLocal getCurrentPlayerState] == self)
     {
-		if (historyItem.actionType == ACTION_PASS && historyItem.player.playerID != self.playerID)
-			return historyItem.player.playerID;
+		PlayerState* playerLocal = historyItem.player;
+
+		if (historyItem.actionType == ACTION_PASS && playerLocal.playerID != self.playerID)
+			return playerLocal.playerID;
 		else if (historyItem.actionType == ACTION_PUSH)
 		{
-			HistoryItem *secondToLastHistoryItem = [[self.gameState history] objectAtIndex:[[self.gameState history] count] - 2];
+			HistoryItem *secondToLastHistoryItem = [[gameStateLocal history] objectAtIndex:[[gameStateLocal history] count] - 2];
+			PlayerState* secondPlayerLocal = secondToLastHistoryItem.player;
 
-			if (secondToLastHistoryItem.actionType == ACTION_PASS && secondToLastHistoryItem.player.playerID != self.playerID && secondToLastHistoryItem.player.playerID == historyItem.player.playerID)
-				return historyItem.player.playerID;
+			if (secondToLastHistoryItem.actionType == ACTION_PASS && secondPlayerLocal.playerID != self.playerID && secondPlayerLocal.playerID == playerLocal.playerID)
+				return playerLocal.playerID;
 		}
     }
 	
@@ -407,8 +409,9 @@
 	
     if (![self canChallengeLastPass])
 		return -1;
-    
-    NSArray *history = [self.gameState history];
+
+	DiceGameState* gameStateLocal = self.gameState;
+    NSArray *history = [gameStateLocal history];
 	
     if (!history || [history count] < 2)
 		return -1;
@@ -421,8 +424,9 @@
 			((HistoryItem*)[history objectAtIndex:[history count] - 2]).actionType == ACTION_PASS)
 		{
 			item = [history objectAtIndex:[history count] - 2];
+			PlayerState* playerLocal = item.player;
 
-			if (item.player.playerID == self.playerID)
+			if (playerLocal.playerID == self.playerID)
 				item = nil;
 		}
 	}
@@ -438,8 +442,9 @@
 			 ((HistoryItem*)[history objectAtIndex:[history count] - 3]).actionType == ACTION_PASS))
 		{
 			item = [history objectAtIndex:[history count] - 3];
+			PlayerState* playerLocal = item.player;
 
-			if (item.player.playerID == self.playerID)
+			if (playerLocal.playerID == self.playerID)
 				item = nil;
 		}
 	}
@@ -452,28 +457,35 @@
 			((HistoryItem*)[history objectAtIndex:[history count] - 4]).actionType == ACTION_PASS)
 		{
 			item = [history objectAtIndex:[history count] - 4];
+			PlayerState* playerLocal = item.player;
 
-			if (item.player.playerID == self.playerID)
+			if (playerLocal.playerID == self.playerID)
 				item = nil;
 		}
 	}
-	
+
+	PlayerState* playerLocal = item.player;
+
     if (item != nil)
-		return item.player.playerID;
+		return playerLocal.playerID;
 
     return -1;
 }
 
 - (BOOL) isMyTurn
 {
-    return (![self.gameState hasAPlayerWonTheGame]) && [[self.gameState getCurrentPlayer] getID] == self.playerID;
+	DiceGameState* gameStateLocal = self.gameState;
+
+    return (![gameStateLocal hasAPlayerWonTheGame]) && [[gameStateLocal getCurrentPlayer] getID] == self.playerID;
 }
 
     //Can we exact?
 - (BOOL)canExact
 {
     if (hasLost) return -1;
-    Bid *previousBid = [self.gameState previousBid];
+
+	DiceGameState* gameStateLocal = self.gameState;
+    Bid *previousBid = [gameStateLocal previousBid];
     return ([self isMyTurn] && !playerHasExacted && previousBid && [previousBid playerID] != playerID);
 }
 
@@ -488,7 +500,9 @@
 - (BOOL)canPush
 {
     if (hasLost) return NO;
-    HistoryItem *item = [self.gameState lastHistoryItem];
+	DiceGameState* gameStateLocal = self.gameState;
+
+    HistoryItem *item = [gameStateLocal lastHistoryItem];
     return (item && item.player == self && item.actionType == ACTION_BID && [[self unPushedDice] count] > 1);
 }
 
@@ -564,19 +578,25 @@
 
 - (NSString*) perceptionString:(BOOL)showPrivate
 {
+	DiceGameState* gameStateLocal = self.gameState;
+
     if (showPrivate)
     {
-        return [self.gameState stateString:self.playerID];
+        return [gameStateLocal stateString:self.playerID];
     }
-    return [self.gameState stateString:-2]; // -2 for no private information
+    return [gameStateLocal stateString:-2]; // -2 for no private information
 }
 
 - (NSString *)headerString:(BOOL)singleLine {
-    return [gameState headerString:self.playerID singleLine:singleLine];
+	DiceGameState* gameStateLocal = self.gameState;
+
+    return [gameStateLocal headerString:self.playerID singleLine:singleLine];
 }
 
 - (NSInteger) getNumberOfPlayers {
-    return [self.gameState getNumberOfPlayers:NO];
+	DiceGameState* gameStateLocal = self.gameState;
+
+    return [gameStateLocal getNumberOfPlayers:NO];
 }
 
 - (Die *) getDie:(int)index {

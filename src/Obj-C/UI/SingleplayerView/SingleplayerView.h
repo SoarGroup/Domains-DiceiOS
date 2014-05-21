@@ -16,11 +16,11 @@
 
 -(id)initWithAppDelegate:(ApplicationDelegate*)appDelegate andWithMainMenu:(MainMenu*)mainMenu;
 
-@property (readwrite, retain) ApplicationDelegate *appDelegate;
-@property (readwrite, retain) MainMenu* mainMenu;
+@property (readwrite, weak) ApplicationDelegate *appDelegate;
+@property (readwrite, weak) MainMenu* mainMenu;
 
-@property (nonatomic, retain) IBOutlet UIButton* playButton;
-@property (nonatomic, retain) IBOutlet UISegmentedControl* aiPlayers;
+@property (nonatomic, strong) IBOutlet UIButton* playButton;
+@property (nonatomic, strong) IBOutlet UISegmentedControl* aiPlayers;
 
 - (IBAction)playButtonPressed:(id)sender;
 

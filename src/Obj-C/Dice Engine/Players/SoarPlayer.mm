@@ -101,7 +101,7 @@ static int agentCount = 0;
 			return @"Erin";
         default:
 		{
-			DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+			DiceDatabase *database = [[DiceDatabase alloc] init];
 
             return [database getPlayerName];
 		}
@@ -117,7 +117,7 @@ static int agentCount = 0;
         self.game = aGame;
 		handler = gkgHandler;
 
-		DiceDatabase* database = [[[DiceDatabase alloc] init] autorelease];
+		DiceDatabase* database = [[DiceDatabase alloc] init];
 #ifdef DEBUG
 		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
 
@@ -227,8 +227,8 @@ static int agentCount = 0;
 
 - (void) end
 {
-    [turnLock lock];
-        agent = nil;
+	[turnLock lock];
+		agent = nil;
 
 		kernel->Shutdown();
 		delete kernel;
@@ -240,8 +240,16 @@ static int agentCount = 0;
 {
 	NSLog(@"Soar Player Release\n");
 
-    [turnLock release];
-    [super dealloc];
+	if (agent)
+	{
+		[turnLock lock];
+			agent = nil;
+
+			kernel->Shutdown();
+			delete kernel;
+			kernel = nil;
+		[turnLock unlock];
+	}
 }
 
 - (void)itsYourTurn
@@ -257,7 +265,7 @@ static int agentCount = 0;
 		return;
 	}
 
-	[[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has someone managed to get into a situation where it can no longer continue.  After trying to restart it five times, it still continues to do this and so we consider Soar to be 'crashed.'  Unfortunately, this means your game will no longer function, therefore we recommend you quit the game." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
+	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has someone managed to get into a situation where it can no longer continue.  After trying to restart it five times, it still continues to do this and so we consider Soar to be 'crashed.'  Unfortunately, this means your game will no longer function, therefore we recommend you quit the game." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
 }
 
 - (void) doTurn:(NSNumber*)turnCount
@@ -269,7 +277,6 @@ static int agentCount = 0;
         [turnLock unlock];
         return;   
     }
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     NSLog(@"Agent do turn");
     
     BOOL agentSlept = NO;
@@ -393,7 +400,6 @@ static int agentCount = 0;
         newData = NULL;
     }
     
-    [pool release];
     [turnLock unlock];
 }
 
@@ -418,8 +424,10 @@ static int agentCount = 0;
     testWme(idPlayers);
     idAffordances = inputLink->CreateIdWME("affordances");
     testWme(idAffordances);
-    
-    DiceGameState *gameState = self.playerState.gameState;
+
+	DiceGame* localGame = self.game;
+	PlayerState* localState = self.playerState;
+    DiceGameState *gameState = localGame.gameState;
     
     idState->CreateStringWME("special", ([gameState usingSpecialRules] ? "true" : "false"));
     idState->CreateStringWME("inprogress", ([gameState isGameInProgress] ? "true" : "false"));
@@ -435,7 +443,7 @@ static int agentCount = 0;
     
     NSString *status = nil;
     
-    switch ([gameState playerStatus:self.playerState.playerID]) {
+    switch ([gameState playerStatus:localState.playerID]) {
         case Lost:
             status = @"lost";
             break;
@@ -460,7 +468,7 @@ static int agentCount = 0;
         Identifier *cup = playerId->CreateIdWME("cup");
         testWme(cup);
         
-        if (self.playerState == player)
+        if (localState == player)
         {
             if ([[player unPushedDice] count] > 0)
             {
@@ -596,7 +604,7 @@ static int agentCount = 0;
         pushedTotals->CreateIntWME("5", fives);
         pushedTotals->CreateIntWME("6", sixes);
         
-        if (self.playerState == player)
+        if (localState == player)
         {
             idPlayers->CreateSharedIdWME("me", playerId);
         }
@@ -618,14 +626,14 @@ static int agentCount = 0;
     Identifier *bid = idAffordances->CreateIdWME("action");
     testWme(bid);
     bid->CreateStringWME("name", "bid");
-    bid->CreateStringWME("available", ([self.playerState canBid] ? "true" : "false"));
+    bid->CreateStringWME("available", ([localState canBid] ? "true" : "false"));
     
     Identifier *challenge = idAffordances->CreateIdWME("action");
     testWme(challenge);
     challenge->CreateStringWME("name", "challenge");
     
-    BOOL canChallengeBid = [self.playerState canChallengeBid];
-    BOOL canChallengePass = [self.playerState canChallengeLastPass];
+    BOOL canChallengeBid = [localState canChallengeBid];
+    BOOL canChallengePass = [localState canChallengeLastPass];
     
     challenge->CreateStringWME("available", ((!canChallengeBid && !canChallengePass) ? "false" : "true"));
     
@@ -648,22 +656,22 @@ static int agentCount = 0;
     Identifier *exact = idAffordances->CreateIdWME("action");
     testWme(exact);
     exact->CreateStringWME("name", "exact");
-    exact->CreateStringWME("available", ([self.playerState canExact] ? "true" : "false"));
+    exact->CreateStringWME("available", ([localState canExact] ? "true" : "false"));
     
     Identifier *pass = idAffordances->CreateIdWME("action");
     testWme(pass);
     pass->CreateStringWME("name", "pass");
-    pass->CreateStringWME("available", ([self.playerState canPass] ? "true" : "false"));
+    pass->CreateStringWME("available", ([localState canPass] ? "true" : "false"));
     
     Identifier *push = idAffordances->CreateIdWME("action");
     testWme(push);
     push->CreateStringWME("name", "push");
-    push->CreateStringWME("available", ([self.playerState canPush] ? "true" : "false"));
+    push->CreateStringWME("available", ([localState canPush] ? "true" : "false"));
     
     Identifier *accept = idAffordances->CreateIdWME("action");
     testWme(accept);
     accept->CreateStringWME("name", "accept");
-    accept->CreateStringWME("available", ([self.playerState canAccept] ? "true" : "false"));
+    accept->CreateStringWME("available", ([localState canAccept] ? "true" : "false"));
     
     NSArray* history = [gameState history];
     NSInteger roundLength = [history count];
@@ -700,8 +708,9 @@ static int agentCount = 0;
             {
                 continue;
             }
-            
-            int historyPlayerId = [[item player] playerID];
+
+			PlayerState* itemState = [item player];
+            int historyPlayerId = [itemState playerID];
             if (static_cast<Identifier *>(playerMap[historyPlayerId]) != NULL)
             {
                 prev->CreateSharedIdWME("player", static_cast<Identifier *>(playerMap[historyPlayerId]));
@@ -805,8 +814,9 @@ static int agentCount = 0;
             prev->CreateIntWME("id", i);
             NSArray* round = [rounds objectAtIndex:i];
             HistoryItem *roundEnd = [round objectAtIndex:[round count] - 1];
-            
-            int playerId = roundEnd.player.playerID;
+
+			PlayerState* roundEndState = roundEnd.player;
+            int playerId = roundEndState.playerID;
             if (static_cast<Identifier *>(playerMap[playerId]) != NULL)
             {
                 prev->CreateSharedIdWME("player", static_cast<Identifier *>(playerMap[playerId]));
@@ -973,15 +983,15 @@ static int agentCount = 0;
                 if (goodCommand)
                 {
                     
-                    NSMutableArray *mut = [[[NSMutableArray alloc] init] autorelease];
+                    NSMutableArray *mut = [[NSMutableArray alloc] init];
                     for (int i = 0;i < ident->GetNumberChildren();i++) {
                         NSNumber *number = [NSNumber numberWithInt:faces[i]];
 
                         if ([number isKindOfClass:[NSNumber class]])
-                            [mut addObject:[[[Die alloc] initWithNumber:[number intValue]] autorelease]];
+                            [mut addObject:[[Die alloc] initWithNumber:[number intValue]] ];
                     }
                     
-                    diceToPush = [[[NSArray alloc] initWithArray:mut] autorelease];
+                    diceToPush = [[NSArray alloc] initWithArray:mut];
                 }
 				
 				delete[] faces;
@@ -1034,6 +1044,9 @@ static int agentCount = 0;
         else
         {}
     }
+
+	DiceGame* localGame = self.game;
+	GameKitGameHandler* localHandler = self.handler;
     
     if (action != nil)
     {
@@ -1043,18 +1056,18 @@ static int agentCount = 0;
             NSLog(@"Pushing dice, count: %lu", (unsigned long)[diceToPush count]);
             action.push = diceToPush;           
         }
-        [game handleAction:action];
+        [localGame handleAction:action];
         *needsRefresh = YES;
     }
     else if (diceToPush != nil)
     {
         NSLog(@"Agent just pushing, count: %lu", (unsigned long)[diceToPush count]);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
-        [game handleAction:new_action];
+        [localGame handleAction:new_action];
     }
 
-	if (handler)
-		[handler saveMatchData];
+	if (localHandler)
+		[localHandler saveMatchData];
 }
 
 - (void)newRound:(NSArray *)arrayOfDice

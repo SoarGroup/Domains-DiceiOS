@@ -59,12 +59,13 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+	MainMenu* mainMenu = self.menu;
     void (^quitHandler)(void) =^ {
-		[menu.navigationController popToViewController:menu animated:YES];
+		[mainMenu.navigationController popToViewController:mainMenu animated:YES];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wselector"
-		[NSThread detachNewThreadSelector:@selector(end) toTarget:game withObject:nil];
+		[NSThread detachNewThreadSelector:@selector(end) toTarget:self->game withObject:nil];
 #pragma clang diagnostic pop
 	};
 
@@ -72,7 +73,7 @@
                                     self.startingGameLabel.text);
 
 
-    UIViewController *gameView = [[[PlayGameView alloc] initWithGame:self.game withQuitHandler:[[quitHandler copy] autorelease]] autorelease];
+    UIViewController *gameView = [[PlayGameView alloc] initWithGame:self.game withQuitHandler:[quitHandler copy]];
 
     [self.navigationController pushViewController:gameView animated:YES];
 }

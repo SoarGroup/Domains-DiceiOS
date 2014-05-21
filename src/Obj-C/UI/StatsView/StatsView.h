@@ -15,7 +15,7 @@
 	int lineCount;
 }
 
-@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (retain, atomic) DiceDatabase* database;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, atomic) DiceDatabase* database;
 
 @end

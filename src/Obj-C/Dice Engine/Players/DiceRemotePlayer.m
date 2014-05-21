@@ -43,7 +43,6 @@
 - (void)dealloc
 {
 	NSLog(@"Dice Remote Player deallocated\n");
-	[super dealloc];
 }
 
 - (NSString*) getName
@@ -69,7 +68,8 @@
 
 - (void) itsYourTurn
 {
-	[handler advanceToRemotePlayer:self];
+	GameKitGameHandler* handlerLocal = self.handler;
+	[handlerLocal advanceToRemotePlayer:self];
 }
 
 - (void)notifyHasLost

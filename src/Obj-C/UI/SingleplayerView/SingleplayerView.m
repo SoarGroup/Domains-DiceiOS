@@ -66,23 +66,23 @@
 
 + (void) startGameWithOpponents:(int)opponents withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu
 {
-	DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+	DiceDatabase *database = [[DiceDatabase alloc] init];
 
 	NSString* username = [database getPlayerName];
 
 	if ([username length] == 0)
 		username = @"Player";
 
-    DiceGame *game = [[[DiceGame alloc] initWithAppDelegate:delegate] autorelease];
+    DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
 
-	[game addPlayer:[[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] autorelease]];
+	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] ];
 
-	NSLock* lock = [[[NSLock alloc] init] autorelease];
+	NSLock* lock = [[NSLock alloc] init];
 
 	for (int i = 0;i < opponents;i++)
-		[game addPlayer:[[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] autorelease]];
+		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil]];
 
-    UIViewController *gameView = [[[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu] autorelease];
+    UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
     [controller pushViewController:gameView animated:YES];
 }
 

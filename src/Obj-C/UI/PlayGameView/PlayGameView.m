@@ -168,18 +168,17 @@ NSArray *buildDiceImages() {
 	{
         // Custom initialization
         self.game = aGame;
-        self.game.gameView = self;
+        aGame.gameView = self;
         self.state = nil;
         currentBidCount = 1;
 		internalCurrentBidCount = 1;
         currentBidFace = 2;
         quitHandler = QuitHandler;
-		[quitHandler retain];
         self.challengeButtons = [NSMutableArray array];
         self.tempViews = [NSMutableArray array];
         self.images = buildDiceImages();
 
-		self.previousBidImageViews = [[[NSMutableArray alloc] init] autorelease];
+		self.previousBidImageViews = [[NSMutableArray alloc] init];
 
 		hasPromptedEnd = NO;
     }
@@ -187,7 +186,9 @@ NSArray *buildDiceImages() {
 }
 
 - (BOOL) roundEnding {
-	self.game.gameState.canContinueGame = NO;
+	DiceGame* localGame = self.game;
+
+	localGame.gameState.canContinueGame = NO;
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
@@ -196,18 +197,20 @@ NSArray *buildDiceImages() {
 
 - (void)realRoundEnding
 {
-	NSString *headerString = [self.game.gameState headerString:-1 singleLine:YES];
-	NSString *lastMoveString = [self.game.gameState historyText:[self.game.gameState lastHistoryItem].player.playerID];
+	DiceGame* localGame = self.game;
+
+	NSString *headerString = [localGame.gameState headerString:-1 singleLine:YES];
+	PlayerState* playerStateLocal = [localGame.gameState lastHistoryItem].player;
+	NSString *lastMoveString = [localGame.gameState historyText:playerStateLocal.playerID];
 
 	NSString* finalString = [NSString stringWithFormat:@"%@\n%@", headerString, lastMoveString];
 
 	if (!fullScreenView)
 	{
-		RoundOverView *overView = [[[RoundOverView alloc]
-									initWithGame:self.game
+		RoundOverView *overView = [[RoundOverView alloc]
+									initWithGame:localGame
 									player:state playGameView:self
-									withFinalString:finalString]
-								   autorelease];
+									withFinalString:finalString];
 		[self.navigationController presentViewController:overView animated:YES completion:nil];
 	}
 	else
@@ -224,7 +227,7 @@ NSArray *buildDiceImages() {
 		}
 
 		CGRect frame = centerPush.bounds;
-		UILabel* titleLabel = [[[UILabel alloc] initWithFrame:frame] autorelease];
+		UILabel* titleLabel = [[UILabel alloc] initWithFrame:frame];
 		[titleLabel setTextColor:[UIColor whiteColor]];
 		titleLabel.numberOfLines = 0;
 
@@ -264,7 +267,7 @@ NSArray *buildDiceImages() {
 
 				int number = [line characterAtIndex:result.range.location] - '0';
 
-				UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)] autorelease];
+				UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)];
 				[imageView setImage:[self imageForDie:number]];
 
 				[titleLabel addSubview:imageView];
@@ -275,7 +278,7 @@ NSArray *buildDiceImages() {
 
 		self.gameStateLabel.hidden = YES;
 
-		UIButton* continueButton = [[[UIButton alloc] initWithFrame:CGRectMake(275, 250, 150, 60)] autorelease];
+		UIButton* continueButton = [[UIButton alloc] initWithFrame:CGRectMake(275, 250, 150, 60)];
 		[continueButton setTitle:@"Continue Round" forState:UIControlStateNormal];
 		[continueButton addTarget:self action:@selector(continueRoundPressed:) forControlEvents:UIControlEventTouchUpInside];
 		[continueButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -296,7 +299,7 @@ NSArray *buildDiceImages() {
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
 
-		[[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease] show];
+		[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 	}
 }
 
@@ -319,20 +322,24 @@ NSArray *buildDiceImages() {
 	self.bidFaceMinusButton.enabled = YES;
 
 	self.gameStateLabel.hidden = NO;
-	self.game.gameState.canContinueGame = YES;
+
+	DiceGame* localGame = self.game;
+	PlayerState* localState = self.state;
+
+	localGame.gameState.canContinueGame = YES;
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
 
 	BOOL specialRules = NO;
-	unsigned long playersLeft = [self.game.gameState.playerStates count];
+	unsigned long playersLeft = [localGame.gameState.playerStates count];
 
-	for (PlayerState* player in self.game.gameState.playerStates)
+	for (PlayerState* player in localGame.gameState.playerStates)
 	{
 		if ([player numberOfDice] == 0)
 			playersLeft--;
 	}
 
-	for (PlayerState *player in self.game.gameState.playerStates)
+	for (PlayerState *player in localGame.gameState.playerStates)
 	{
         if ([player numberOfDice] == 1 && !player.hasDoneSpecialRules && playersLeft > 2)
             specialRules = YES;
@@ -341,54 +348,50 @@ NSArray *buildDiceImages() {
 	if (specialRules) {
         NSString *title = [NSString stringWithFormat:@"Special Rules!"];
         NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:nil
                                                cancelButtonTitle:@"Okay"
-                                               otherButtonTitles:nil]
-                              autorelease];
+                                               otherButtonTitles:nil];
         // alert.tag = ACTION_QUIT;
         [alert show];
     }
-    else if ([self.state hasWon]) {
+    else if ([localState hasWon]) {
         NSString *title = [NSString stringWithFormat:@"You Win!"];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
                                                         delegate:self
                                                cancelButtonTitle:nil
-                                               otherButtonTitles:@"Okay", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Okay", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
     }
-    else if ([self.state.gameState hasAPlayerWonTheGame]) {
-        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [self.game.gameState.gameWinner getName]];
+    else if ([localGame.gameState hasAPlayerWonTheGame]) {
+        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getName]];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
                                                         delegate:self
                                                cancelButtonTitle:nil
-                                               otherButtonTitles:@"Okay", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Okay", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
 	}
-    else if ([self.state hasLost] && !self.hasPromptedEnd) {
+    else if ([localState hasLost] && !self.hasPromptedEnd) {
         self.hasPromptedEnd = YES;
         NSString *title = [NSString stringWithFormat:@"You Lost the Game"];
         NSString *message = @"Quit or keep watching?"; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:self
                                                cancelButtonTitle:@"Watch"
-                                               otherButtonTitles:@"Quit", nil]
-                              autorelease];
+                                               otherButtonTitles:@"Quit", nil];
         alert.tag = ACTION_QUIT;
         [alert show];
     }
 
-	[self.game notifyCurrentPlayer];
+	[localGame notifyCurrentPlayer];
 }
 
 - (BOOL) roundBeginning {
@@ -421,7 +424,7 @@ NSArray *buildDiceImages() {
 {
 	// Game State Label Creation
 
-	self.gameStateLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 220, 80)] autorelease];
+	self.gameStateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 220, 80)];
 	[gameStateLabel setTextColor:[UIColor whiteColor]];
 	gameStateLabel.numberOfLines = 0;
 	gameStateLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -429,10 +432,10 @@ NSArray *buildDiceImages() {
 
 	// Control State (Player Location/Controls!) Creation
 
-	self.controlStateView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 180)] autorelease];
+	self.controlStateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 180)];
 	controlStateView.userInteractionEnabled = YES;
 
-	self.exactButton = [[[UIButton alloc] init] autorelease];
+	self.exactButton = [[UIButton alloc] init];
 	exactButton.frame = CGRectMake(2, 50, 60, 60);
 	//[exactButton setBackgroundColor:[UIColor redColor]];
 	[exactButton setTitle:@"Exact" forState:UIControlStateNormal];
@@ -442,7 +445,7 @@ NSArray *buildDiceImages() {
 	[exactButton addTarget:self action:@selector(exactPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:exactButton];
 
-	self.passButton = [[[UIButton alloc] init] autorelease];
+	self.passButton = [[UIButton alloc] init];
 	passButton.frame = CGRectMake(70, 50, 60, 60);
 	//[passButton setBackgroundColor:[UIColor redColor]];
 	[passButton setTitle:@"Pass" forState:UIControlStateNormal];
@@ -452,7 +455,7 @@ NSArray *buildDiceImages() {
 	[passButton addTarget:self action:@selector(passPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:passButton];
 
-	self.bidButton = [[[UIButton alloc] init] autorelease];
+	self.bidButton = [[UIButton alloc] init];
 	bidButton.frame = CGRectMake(138, 50, 60, 60);
 	//[bidButton setBackgroundColor:[UIColor redColor]];
 	[bidButton setTitle:@"Bid" forState:UIControlStateNormal];
@@ -462,7 +465,7 @@ NSArray *buildDiceImages() {
 	[bidButton addTarget:self action:@selector(bidPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidButton];
 
-	self.bidCountPlusButton = [[[UIButton alloc] init] autorelease];
+	self.bidCountPlusButton = [[UIButton alloc] init];
 	bidCountPlusButton.frame = CGRectMake(200, -15, 40, 50);
 	//[bidCountPlusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountPlusButton setTitle:@"+" forState:UIControlStateNormal];
@@ -472,7 +475,7 @@ NSArray *buildDiceImages() {
 	[bidCountPlusButton addTarget:self action:@selector(bidCountPlusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidCountPlusButton];
 
-	self.bidCountMinusButton = [[[UIButton alloc] init] autorelease];
+	self.bidCountMinusButton = [[UIButton alloc] init];
 	bidCountMinusButton.frame = CGRectMake(200, 58, 40, 50);
 	//[bidCountMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidCountMinusButton setTitle:@"-" forState:UIControlStateNormal];
@@ -482,7 +485,7 @@ NSArray *buildDiceImages() {
 	[bidCountMinusButton addTarget:self action:@selector(bidCountMinusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidCountMinusButton];
 
-	self.bidFacePlusButton = [[[UIButton alloc] init] autorelease];
+	self.bidFacePlusButton = [[UIButton alloc] init];
 	bidFacePlusButton.frame = CGRectMake(245, -15, 40, 50);
 	//[bidFacePlusButton setBackgroundColor:[UIColor redColor]];
 	[bidFacePlusButton setTitle:@"+" forState:UIControlStateNormal];
@@ -492,7 +495,7 @@ NSArray *buildDiceImages() {
 	[bidFacePlusButton addTarget:self action:@selector(bidFacePlusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidFacePlusButton];
 
-	self.bidFaceMinusButton = [[[UIButton alloc] init] autorelease];
+	self.bidFaceMinusButton = [[UIButton alloc] init];
 	bidFaceMinusButton.frame = CGRectMake(245, 58, 40, 50);
 	//[bidFaceMinusButton setBackgroundColor:[UIColor redColor]];
 	[bidFaceMinusButton setTitle:@"-" forState:UIControlStateNormal];
@@ -502,11 +505,11 @@ NSArray *buildDiceImages() {
 	[bidFaceMinusButton addTarget:self action:@selector(bidFaceMinusPressed:) forControlEvents:UIControlEventTouchUpInside];
 	[self.controlStateView addSubview:bidFaceMinusButton];
 
-	self.bidFaceLabel = [[[UIImageView alloc] initWithImage:[self imageForDie:2]] autorelease];
+	self.bidFaceLabel = [[UIImageView alloc] initWithImage:[self imageForDie:2]];
 	bidFaceLabel.frame = CGRectMake(253, 34, 25, 21);
 	[self.controlStateView addSubview:bidFaceLabel];
 
-	self.bidCountLabel = [[[UILabel alloc] init] autorelease];
+	self.bidCountLabel = [[UILabel alloc] init];
 	bidCountLabel.frame = CGRectMake(215, 34, 30, 21);
 	[bidCountLabel setText:@"1"];
 	[bidCountLabel setTextColor:[UIColor whiteColor]];
@@ -520,7 +523,9 @@ NSArray *buildDiceImages() {
 {
 	// Correction based on how many players there are
 
-	NSArray *playerStates = self.state.gameState.playerStates;
+	DiceGame* localGame = self.game;
+
+	NSArray *playerStates = localGame.gameState.playerStates;
 
 	unsigned long playerCount = [playerStates count];
 
@@ -544,7 +549,7 @@ NSArray *buildDiceImages() {
 	self.navigationItem.title = [NSString stringWithFormat:@"Single Player Match: %lu Players", playerCount];
 
 	centerPush = [[UIView alloc] initWithFrame:CGRectMake(292.5, 221, 442, 308)];
-	UIImageView* centerPushImage = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Center-Push"]] autorelease];
+	UIImageView* centerPushImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Center-Push"]];
 	centerPushImage.frame = CGRectMake(0, 0, 442, 308);
 	//[centerPush addSubview:centerPushImage];
 
@@ -574,7 +579,9 @@ NSArray *buildDiceImages() {
 	self.bidFaceLabel.isAccessibilityElement = YES;
 	self.bidCountLabel.accessibilityLabel = @"Die Count of 1";
 
-	for (id<Player> player in self.game.players)
+	DiceGame* localGame = self.game;
+
+	for (id<Player> player in localGame.players)
 	{
 		if ([player isKindOfClass:DiceLocalPlayer.class])
 		{
@@ -583,14 +590,15 @@ NSArray *buildDiceImages() {
 		}
 	}
 
-    [self.game startGame];
+    [localGame startGame];
 
-	GameKitGameHandler* handler = [self.game.appDelegate.listener handlerForGame:self.game];
+	ApplicationDelegate* delegate = localGame.appDelegate;
+	GameKitGameHandler* handler = [delegate.listener handlerForGame:localGame];
 
 	if (handler)
 		[handler saveMatchData];
 
-    [self.game.gameState addNewRoundListener:self];
+    [localGame.gameState addNewRoundListener:self];
 
 	if (fullScreenView)
 		[self fullScreenViewGameInitialization];
@@ -634,47 +642,29 @@ NSArray *buildDiceImages() {
 - (IBAction)backPressed:(id)sender {
     NSString *title = [NSString stringWithFormat:@"Quit the game?"];
     NSString *message = nil;
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                      message:message
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Quit", nil]
-                          autorelease];
+                                           otherButtonTitles:@"Quit", nil];
     alert.tag = ACTION_QUIT;
     [alert show];
 }
 
-- (void)dealloc {
-    [gameStateLabel release];
-    [passButton release];
-    [bidButton release];
-    [exactButton release];
-    [gameStateView release];
-    [bidCountLabel release];
-    [bidFaceLabel release];
-    [quitButton release];
-    [bidCountPlusButton release];
-    [bidCountMinusButton release];
-    [bidFacePlusButton release];
-    [bidFaceMinusButton release];
-	[centerPush release];
-	[quitHandler release];
-
-    [super dealloc];
-}
-
 - (bool) canChallengePlayer:(int)otherPlayerID {
-    Bid *challengeableBid = [state getChallengeableBid];
+	PlayerState* localState = self.state;
+
+    Bid *challengeableBid = [localState getChallengeableBid];
     if (challengeableBid != nil && challengeableBid.playerID == otherPlayerID)
     {
         return YES;
     }
-    int passID = [state getChallengeableLastPass];
+    int passID = [localState getChallengeableLastPass];
     if (passID != -1 && passID == otherPlayerID)
     {
         return YES;
     }
-    passID = [state getChallengeableSecondLastPass];
+    passID = [localState getChallengeableSecondLastPass];
     if (passID != -1 && passID == otherPlayerID)
     {
         return YES;
@@ -701,7 +691,9 @@ NSArray *buildDiceImages() {
     UIButton *button = (UIButton*)sender;
     NSInteger dieIndex = button.tag;
 
-    Die *dieObject = [self.state.arrayOfDice objectAtIndex:dieIndex];
+	PlayerState* localState = self.state;
+
+    Die *dieObject = [localState.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
         return;
 
@@ -718,7 +710,7 @@ NSArray *buildDiceImages() {
 	{
 		BOOL noneMarkedToPush = YES;
 
-		for (Die* object in self.state.arrayOfDice)
+		for (Die* object in localState.arrayOfDice)
 		{
 			if ([object markedToPush])
 			{
@@ -728,7 +720,7 @@ NSArray *buildDiceImages() {
 		}
 
 		if (noneMarkedToPush)
-			self.passButton.enabled = [self.state canBid] && [self.state canPass];
+			self.passButton.enabled = [localState canBid] && [localState canPass];
 
 		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, unpushed", dieObject.dieValue];
 		button.accessibilityHint = @"Tap to push this die";
@@ -823,14 +815,17 @@ NSArray *buildDiceImages() {
 	}
 
 	// State initialization
-    if (self.state == nil)
+	PlayerState* localState = self.state;
+	DiceGame* localGame = self.game;
+
+    if (localState == nil)
     {
 		[self initializeUI];
         return;
     }
 
-	Bid *previousBid = self.state.gameState.previousBid;
-    NSString *headerString = [state headerString:NO]; // This sets it
+	Bid *previousBid = localGame.gameState.previousBid;
+    NSString *headerString = [localState headerString:NO]; // This sets it
 
 	// Dealloc all old die images
 	for (UIImageView* view in self.previousBidImageViews)
@@ -876,7 +871,7 @@ NSArray *buildDiceImages() {
 
 			int number = [line characterAtIndex:result.range.location] - '0';
 
-			UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)] autorelease];
+			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)];
 			[imageView setImage:[self imageForDie:number]];
 
 			[self.gameStateLabel addSubview:imageView];
@@ -899,16 +894,16 @@ NSArray *buildDiceImages() {
 		self.gameStateLabel.frame = playerFrame;
 
 	// Player UI
-    BOOL canBid = [self.state canBid];
+    BOOL canBid = [localState canBid];
 
 	// Enable the buttons if we actually can do those actions at this update cycle
-    self.passButton.enabled = canBid && [self.state canPass];
+    self.passButton.enabled = canBid && [localState canPass];
     self.bidButton.enabled = canBid;
     self.bidCountPlusButton.enabled = canBid;
     self.bidCountMinusButton.enabled = canBid;
     self.bidFacePlusButton.enabled = canBid;
     self.bidFaceMinusButton.enabled = canBid;
-    self.exactButton.enabled = canBid && [self.state canExact];
+    self.exactButton.enabled = canBid && [localState canExact];
 
 	hasTouchedBidCounterThisTurn = NO;
 
@@ -919,7 +914,7 @@ NSArray *buildDiceImages() {
 		internalCurrentBidCount = 1;
 		currentBidFace = 2;
 	}
-	else if ([[self.state arrayOfDice] count] > 1 && [self.game.gameState usingSpecialRules])
+	else if ([[localState arrayOfDice] count] > 1 && [localGame.gameState usingSpecialRules])
 	{
 		currentBidCount = previousBid.numberOfDice + 1;
 		internalCurrentBidCount = currentBidCount;
@@ -931,7 +926,7 @@ NSArray *buildDiceImages() {
 	{
 		Bid* previousBidToUse = previousBid;
 
-		NSArray* lastPlayerMoves = [self.game.gameState lastMoveForPlayer:self.state.playerID];
+		NSArray* lastPlayerMoves = [localGame.gameState lastMoveForPlayer:localState.playerID];
 		if ([lastPlayerMoves count] > 0)
 		{
 			for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
@@ -998,19 +993,21 @@ NSArray *buildDiceImages() {
 
 - (Bid*)minimumLegalBid:(Bid*)previousBid withCurrentFace:(int)currentFace
 {
+	DiceGame* localGame = self.game;
+
 	if (previousBid)
 	{
 		int maxBidCount = 0;
 
-		for (PlayerState* pstate in game.gameState.playerStates)
+		for (PlayerState* pstate in localGame.gameState.playerStates)
 		{
 			if ([pstate isKindOfClass:[PlayerState class]])
 				maxBidCount += [[pstate arrayOfDice] count];
 		}
 
-		Bid* newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:currentFace] autorelease];
+		Bid* newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:currentFace];
 
-		while (![newBid isLegalRaise:previousBid specialRules:self.game.gameState.usingSpecialRules playerSpecialRules:NO])
+		while (![newBid isLegalRaise:previousBid specialRules:localGame.gameState.usingSpecialRules playerSpecialRules:NO])
 		{
 			if (newBid.numberOfDice > maxBidCount)
 			{
@@ -1022,16 +1019,16 @@ NSArray *buildDiceImages() {
 				if (nextRank > 6)
 					nextRank = 1;
 
-				newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:nextRank] autorelease];
+				newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:nextRank];
 			}
 			else
-				newBid = [[[Bid alloc] initWithPlayerID:-1 name:nil dice:(newBid.numberOfDice + 1) rank:newBid.rankOfDie] autorelease];
+				newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:(newBid.numberOfDice + 1) rank:newBid.rankOfDie];
 		}
 
 		return newBid;
 	}
 	else
-		return [[[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2] autorelease];
+		return [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
@@ -1048,8 +1045,11 @@ NSArray *buildDiceImages() {
     [tempViews removeAllObjects];
     [challengeButtons removeAllObjects];
 
-    NSArray *playerStates = self.state.gameState.playerStates;
-	BOOL canBid = [self.state canBid];
+	PlayerState* localState = self.state;
+	DiceGame* localGame = self.game;
+
+    NSArray *playerStates = localGame.gameState.playerStates;
+	BOOL canBid = [localState canBid];
     int i = -1;
     int labelHeight = 64 / 2;
     int diceHeight = 96 / 2;
@@ -1062,7 +1062,7 @@ NSArray *buildDiceImages() {
     for (PlayerState *playerState in playerStates)
     {
         // Whether this player is the play that we're controlling
-        bool control = self.state.playerID == playerState.playerID;
+        bool control = localState.playerID == playerState.playerID;
 
 		if (control)
 			hasHitControl = true;
@@ -1081,18 +1081,18 @@ NSArray *buildDiceImages() {
 		int width = parent.frame.size.width;
         int height = labelHeight;
 
-        UIImageView *dividerView = [[[UIImageView alloc] initWithImage:[PlayGameView barImage]] autorelease];
+        UIImageView *dividerView = [[UIImageView alloc] initWithImage:[PlayGameView barImage]];
         dividerView.frame = CGRectMake(0, y, width, dividerHeight);
         [parent addSubview:dividerView];
         y += dividerHeight;
         CGRect nameLabelRect = CGRectMake(x, y, width - starSize, height);
-        UILabel *nameLabel = [[[UILabel alloc] initWithFrame:nameLabelRect] autorelease];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:nameLabelRect];
         nameLabel.backgroundColor = [UIColor clearColor];
 		[nameLabel setTextColor:[UIColor whiteColor]];
 
         [tempViews addObject:nameLabel];
 
-		nameLabel.attributedText = [self.game.gameState historyText:playerState.playerID colorName:control];
+		nameLabel.attributedText = [localGame.gameState historyText:playerState.playerID colorName:control];
 		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
 
 		CGRect nameFrame = nameLabel.frame;
@@ -1126,7 +1126,7 @@ NSArray *buildDiceImages() {
 
 					int number = [line characterAtIndex:result.range.location] - '0';
 
-					UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x2, y2, 25, 25)] autorelease];
+					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x2, y2, 25, 25)];
 					[imageView setImage:[self imageForDie:number]];
 
 					[nameLabel addSubview:imageView];
@@ -1147,7 +1147,7 @@ NSArray *buildDiceImages() {
 			{
                 int extraX = (buttonWidth - diceHeight) / 2;
                 int extray = (buttonWidth + labelIndex - diceHeight) / 2;
-                UIActivityIndicatorView* spinnerView = [[[UIActivityIndicatorView alloc] init] autorelease];
+                UIActivityIndicatorView* spinnerView = [[UIActivityIndicatorView alloc] init];
                 spinnerView.frame = CGRectMake(width - buttonWidth + extraX, y + extray, diceHeight, diceHeight);
                 [parent addSubview:spinnerView];
                 [tempViews addObject:spinnerView];
@@ -1159,7 +1159,7 @@ NSArray *buildDiceImages() {
         x = 0; // = x + width - starSize;
         y += labelHeight;
         CGRect diceFrame = CGRectMake(x, y, width - buttonWidth, control ? diceHeight + pushMargin() : diceHeight);
-        UIView *diceView = [[[UIView alloc] initWithFrame:diceFrame] autorelease];
+        UIView *diceView = [[UIView alloc] initWithFrame:diceFrame];
         int dieSize = (diceView.frame.size.width) / 5;
         if (dieSize > diceView.frame.size.height)
         {
@@ -1197,7 +1197,7 @@ NSArray *buildDiceImages() {
 
                 [diceView addSubview:dieButton];
             } else {
-                UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+                UIImageView *dieView = [[UIImageView alloc] initWithFrame:dieFrame];
 
 				NSString* name = [NSString stringWithFormat:@"%@'s", playerState.playerName];
 
@@ -1245,8 +1245,11 @@ NSArray *buildDiceImages() {
     [tempViews removeAllObjects];
     [challengeButtons removeAllObjects];
 
-    NSArray *playerStates = self.state.gameState.playerStates;
-	BOOL canBid = [self.state canBid];
+	PlayerState* localState = self.state;
+	DiceGame* localGame = self.game;
+
+    NSArray *playerStates = localGame.gameState.playerStates;
+	BOOL canBid = [localState canBid];
 
 	unsigned long playerCount = [playerStates count];
 	int diceHeight = 96 / 2;
@@ -1408,8 +1411,8 @@ NSArray *buildDiceImages() {
 		player8DiceFrame};
 
 	self.animationFinished = YES;
-	NSMutableArray* dieViewAnimated = [[[NSMutableArray alloc] init] autorelease];
-	NSMutableArray* dieFramesAnimated = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray* dieViewAnimated = [[NSMutableArray alloc] init];
+	NSMutableArray* dieFramesAnimated = [[NSMutableArray alloc] init];
 
 	// Add all the players with their locations
 	for (int i = 0;i < playerCount;++i)
@@ -1417,24 +1420,24 @@ NSArray *buildDiceImages() {
 		UIView* playerLocation = nil;
 
 		if (i != 0)
-			playerLocation = [[[UIView alloc] initWithFrame:CGRectMake(locations[i].x, locations[i].y, 280, 140)] autorelease];
+			playerLocation = [[UIView alloc] initWithFrame:CGRectMake(locations[i].x, locations[i].y, 280, 140)];
 		else
 			playerLocation = self.controlStateView;
 
-        UILabel *nameLabel = [[[UILabel alloc] initWithFrame:textFrames[i]] autorelease];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:textFrames[i]];
         nameLabel.backgroundColor = [UIColor clearColor];
 		[nameLabel setTextColor:[UIColor whiteColor]];
 		nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 
         [tempViews addObject:nameLabel];
 
-		NSMutableAttributedString* nameLabelText = [self.game.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
+		NSMutableAttributedString* nameLabelText = [localGame.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
 
 		if ([playerStates[i] playerHasExacted])
-			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] playerName]]] autorelease]];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] playerName]]] ];
 
 		if ([playerStates[i] playerHasPassed])
-			[nameLabelText appendAttributedString:[[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] playerName]]] autorelease]];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] playerName]]] ];
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;
@@ -1471,7 +1474,7 @@ NSArray *buildDiceImages() {
 
 					int number = [line characterAtIndex:result.range.location] - '0';
 
-					UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(x, y, 25, 25)] autorelease];
+					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 25, 25)];
 					[imageView setImage:[self imageForDie:number]];
 
 					[nameLabel addSubview:imageView];
@@ -1488,7 +1491,7 @@ NSArray *buildDiceImages() {
 
 		if ([playerStates[i] isMyTurn] && i != 0)
 		{
-			UIActivityIndicatorView* spinnerView = [[[UIActivityIndicatorView alloc] init] autorelease];
+			UIActivityIndicatorView* spinnerView = [[UIActivityIndicatorView alloc] init];
 			int x,y;
 
 			if ((i >= 1 && i <= 4) || i == 7)
@@ -1510,7 +1513,7 @@ NSArray *buildDiceImages() {
 
 		[playerLocation addSubview:nameLabel];
 
-		UIView *diceView = [[[UIView alloc] initWithFrame:diceFrames[i]] autorelease];
+		UIView *diceView = [[UIView alloc] initWithFrame:diceFrames[i]];
 
 		int dieSize = 50;
 
@@ -1548,7 +1551,7 @@ NSArray *buildDiceImages() {
 
 				CGRect imageFrame = CGRectMake(0, 15, dieSize, dieSize);
 
-				UIImageView* dieView = [[[UIImageView alloc] initWithFrame:imageFrame] autorelease];
+				UIImageView* dieView = [[UIImageView alloc] initWithFrame:imageFrame];
 				[dieView setImage:dieImage];
 				[dieView setUserInteractionEnabled:NO];
 
@@ -1564,7 +1567,7 @@ NSArray *buildDiceImages() {
 			}
 			else
 			{
-				UIImageView *dieView = [[[UIImageView alloc] initWithFrame:dieFrame] autorelease];
+				UIImageView *dieView = [[UIImageView alloc] initWithFrame:dieFrame];
 				[dieView setImage:[self imageForDie:dieFace]];
 				[diceView addSubview:dieView];
 
@@ -1665,7 +1668,7 @@ NSArray *buildDiceImages() {
 			else if (i == 6 || i == 5 || (playerCount == 5 && i == 4) || (playerCount == 4 && i == 3))
 				frame.origin.x = 0;
 
-			UIButton *challengeButton = [[[UIButton alloc] initWithFrame:frame] autorelease];
+			UIButton *challengeButton = [[UIButton alloc] initWithFrame:frame];
 			[challengeButton setTitle:@"Challenge" forState:UIControlStateNormal];
 			challengeButton.tag = ((PlayerState*)playerStates[i]).playerID;
 			[challengeButton addTarget:self action:@selector(challengePressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -1735,7 +1738,9 @@ NSArray *buildDiceImages() {
 	}
 	else if (!hasTouchedBidCounterThisTurn)
 	{
-		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
+		DiceGame* localGame = self.game;
+
+		currentBidCount = [self minimumLegalBid:localGame.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
 		internalCurrentBidCount = currentBidCount;
 	}
 
@@ -1761,7 +1766,9 @@ NSArray *buildDiceImages() {
 	}
 	else if (!hasTouchedBidCounterThisTurn)
 	{
-		currentBidCount = [self minimumLegalBid:self.game.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
+		DiceGame* localGame = self.game;
+
+		currentBidCount = [self minimumLegalBid:localGame.gameState.previousBid withCurrentFace:currentBidFace].numberOfDice;
 		internalCurrentBidCount = currentBidCount;
 	}
 
@@ -1771,7 +1778,9 @@ NSArray *buildDiceImages() {
 -(void)constrainAndUpdateBidCount {
     int maxBidCount = 0;
 
-	for (PlayerState* pstate in game.gameState.playerStates)
+	DiceGame* localGame = self.game;
+
+	for (PlayerState* pstate in localGame.gameState.playerStates)
 	{
 		if ([pstate isKindOfClass:[PlayerState class]])
 			maxBidCount += [[pstate arrayOfDice] count];
@@ -1803,7 +1812,9 @@ NSArray *buildDiceImages() {
 
 	HistoryItem* previousItem = nil;
 
-	NSArray* lastPlayerMoves = [self.game.gameState lastMoveForPlayer:playerID];
+	DiceGame* localGame = self.game;
+
+	NSArray* lastPlayerMoves = [localGame.gameState lastMoveForPlayer:playerID];
 	if ([lastPlayerMoves count] > 0)
 	{
 		for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
@@ -1821,7 +1832,8 @@ NSArray *buildDiceImages() {
 	assert(previousItem != nil);
 
 	NSString* messageString = nil;
-	NSString* buttonTitle = [[previousItem player] playerName];
+	PlayerState* stateLocal = [previousItem player];
+	NSString* buttonTitle = [stateLocal playerName];
 
 	if (previousItem.actionType == ACTION_BID)
 	{
@@ -1834,12 +1846,11 @@ NSArray *buildDiceImages() {
 		buttonTitle = [NSString stringWithFormat:@"%@'s pass", buttonTitle];
 	}
 
-	UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Challenge?"
+	UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Challenge?"
                                                      message:messageString
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:buttonTitle, nil]
-						  autorelease];
+                                           otherButtonTitles:buttonTitle, nil];
 
 	alert.tag = (previousItem.actionType == ACTION_BID ? ACTION_CHALLENGE_BID : ACTION_CHALLENGE_PASS);
     [alert show];
@@ -1848,39 +1859,42 @@ NSArray *buildDiceImages() {
 - (IBAction)passPressed:(id)sender {
 	NSString* message = nil;
 
-	if ([[state markedToPushDice] count] > 0)
-		message = [NSString stringWithFormat:@"Pass and push %lu %@?", (unsigned long)[[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
+	PlayerState* stateLocal = self.state;
 
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Pass?"
+	if ([[stateLocal markedToPushDice] count] > 0)
+		message = [NSString stringWithFormat:@"Pass and push %lu %@?", (unsigned long)[[stateLocal markedToPushDice] count], ([[stateLocal markedToPushDice] count] == 1 ? @"die" : @"dice")];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Pass?"
                                                      message:message
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Pass", nil]
-                          autorelease];
+                                           otherButtonTitles:@"Pass", nil];
     alert.tag = ACTION_PASS;
     [alert show];
 }
 
 - (IBAction)bidPressed:(id)sender {
     // Check that the bid is legal
-	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[state markedToPushDice]];
-	[markedToPushDiceWithPushedDice addObjectsFromArray:[state pushedDice]];
+	PlayerState* stateLocal = self.state;
+	DiceGame* localGame = self.game;
 
-    Bid *bid = [[[Bid alloc] initWithPlayerID:state.playerID name:state.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice] autorelease];
-    if (!([game.gameState getCurrentPlayerState].playerID == state.playerID && [game.gameState checkBid:bid playerSpecialRules:([game.gameState usingSpecialRules] && [state numberOfDice] > 1)])) {
+	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[stateLocal markedToPushDice]];
+	[markedToPushDiceWithPushedDice addObjectsFromArray:[stateLocal pushedDice]];
+
+    Bid *bid = [[Bid alloc] initWithPlayerID:stateLocal.playerID name:stateLocal.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice];
+    if (!([localGame.gameState getCurrentPlayerState].playerID == stateLocal.playerID && [localGame.gameState checkBid:bid playerSpecialRules:([localGame.gameState usingSpecialRules] && [stateLocal numberOfDice] > 1)])) {
         NSString *title = @"Illegal raise";
 		NSString *pushedDice = @"";
 
 		if ([markedToPushDiceWithPushedDice count] > 0)
-			pushedDice = [NSString stringWithFormat:@",\nAnd push %lu %@", (unsigned long)[[state markedToPushDice] count], ([[state markedToPushDice] count] == 1 ? @"die" : @"dice")];
+			pushedDice = [NSString stringWithFormat:@",\nAnd push %lu %@", (unsigned long)[[stateLocal markedToPushDice] count], ([[stateLocal markedToPushDice] count] == 1 ? @"die" : @"dice")];
 
         NSString *message = [NSString stringWithFormat:@"Can't bid %d %@ %@", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)], pushedDice];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:message
                                                         delegate:nil
                                                cancelButtonTitle:@"Okay"
-                                               otherButtonTitles:nil]
-                              autorelease];
+                                               otherButtonTitles:nil];
 
         [alert show];
         return;
@@ -1889,27 +1903,27 @@ NSArray *buildDiceImages() {
     NSString *title = [NSString stringWithFormat:@"Bid %d %@?", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)]];
     NSArray *push = [self makePushedDiceArray];
     NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu %@?", (unsigned long)[push count], ([push count] == 1 ? @"die" : @"dice")];
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:title
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                      message:message
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Bid", nil]
-                          autorelease];
+                                           otherButtonTitles:@"Bid", nil];
     alert.tag = ACTION_BID;
 
     [alert show];
 }
 
 - (IBAction)exactPressed:(id)sender {
-    Bid *previousBid = self.state.gameState.previousBid;
+	DiceGame* localGame = self.game;
+
+    Bid *previousBid = localGame.gameState.previousBid;
     NSString *bidStr = [previousBid asString];
 
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Exact?"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exact?"
                                                      message:bidStr
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
-                                           otherButtonTitles:@"Exact", nil]
-                          autorelease];
+                                           otherButtonTitles:@"Exact", nil];
     alert.tag = ACTION_EXACT;
 
     [alert show];
@@ -1917,33 +1931,21 @@ NSArray *buildDiceImages() {
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+	PlayerState* localState = self.state;
+	DiceGame* localGame = self.game;
+
 	if (buttonIndex == alertView.cancelButtonIndex)
     {
 		// Enable the buttons if we actually can do those actions at this update cycle
-		BOOL canBid = [self.state canBid];
+		BOOL canBid = [localState canBid];
 
-		self.passButton.enabled = canBid && [self.state canPass];
+		self.passButton.enabled = canBid && [localState canPass];
 		self.bidButton.enabled = canBid;
 		self.bidCountPlusButton.enabled = canBid;
 		self.bidCountMinusButton.enabled = canBid;
 		self.bidFacePlusButton.enabled = canBid;
 		self.bidFaceMinusButton.enabled = canBid;
-		self.exactButton.enabled = canBid && [self.state canExact];
-
-		if (self.exactButton.enabled)
-			[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
-		else
-			[self.exactButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
-
-		if (self.passButton.enabled)
-			[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
-		else
-			[self.passButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
-
-		if (self.bidButton.enabled)
-			[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0]];
-		else
-			[self.bidButton.titleLabel setTextColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0]];
+		self.exactButton.enabled = canBid && [localState canExact];
 
         return;
     }
@@ -1955,36 +1957,36 @@ NSArray *buildDiceImages() {
     {
         case ACTION_BID:
         {
-            DiceAction *action = [DiceAction bidAction:state.playerID
+            DiceAction *action = [DiceAction bidAction:localState.playerID
                                                  count:currentBidCount
                                                   face:currentBidFace
                                                   push:[self makePushedDiceArray]];
 
-            [game performSelectorInBackground:@selector(handleAction:) withObject:action];
+            [localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
             break;
         }
         case ACTION_CHALLENGE_BID:
         case ACTION_CHALLENGE_PASS:
         {
-            DiceAction *action = [DiceAction challengeAction:state.playerID
+            DiceAction *action = [DiceAction challengeAction:localState.playerID
                                                       target:[self getChallengeTarget:alertView buttonIndex:buttonIndex]];
 
-			[game performSelectorInBackground:@selector(handleAction:) withObject:action];
+			[localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
 			break;
         }
         case ACTION_EXACT:
         {
-            DiceAction *action = [DiceAction exactAction:state.playerID];
+            DiceAction *action = [DiceAction exactAction:localState.playerID];
 
-			[game performSelectorInBackground:@selector(handleAction:) withObject:action];
+			[localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
             break;
         }
         case ACTION_PASS:
         {
-            DiceAction *action = [DiceAction passAction:state.playerID
+            DiceAction *action = [DiceAction passAction:localState.playerID
                                                    push:[self makePushedDiceArray]];
 
-			[game performSelectorInBackground:@selector(handleAction:) withObject:action];
+			[localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
             break;
         }
         case ACTION_QUIT:
@@ -2000,7 +2002,9 @@ NSArray *buildDiceImages() {
 
 -(NSArray*)makePushedDiceArray {
     NSMutableArray *ar = [NSMutableArray array];
-    for (Die *die in self.state.arrayOfDice)
+	PlayerState* localState = self.state;
+
+    for (Die *die in localState.arrayOfDice)
     {
         if (die.markedToPush && !die.hasBeenPushed)
         {
@@ -2017,8 +2021,10 @@ NSArray *buildDiceImages() {
     {
         return -1;
     }
+	PlayerState* localState = self.state;
+
     NSInteger buttonOffset = buttonIndex - 1;
-    Bid *challengeableBid = [state getChallengeableBid];
+    Bid *challengeableBid = [localState getChallengeableBid];
     if (challengeableBid != nil)
     {
         if (buttonOffset == 0)
@@ -2030,7 +2036,7 @@ NSArray *buildDiceImages() {
             --buttonOffset;
         }
     }
-    int passID = [state getChallengeableLastPass];
+    int passID = [localState getChallengeableLastPass];
     if (passID != -1)
     {
         if (buttonOffset == 0)
@@ -2042,7 +2048,7 @@ NSArray *buildDiceImages() {
             --buttonOffset;
         }
     }
-    passID = [state getChallengeableSecondLastPass];
+    passID = [localState getChallengeableSecondLastPass];
     if (passID != -1)
     {
         if (buttonOffset == 0)

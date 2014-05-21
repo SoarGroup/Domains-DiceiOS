@@ -17,28 +17,18 @@ typedef enum HistoryItemType {
 
 @interface HistoryItem : NSObject {
 @private
-    DiceGameState *diceGameState;
-    PlayerState *player;
-    ActionType actionType;
-    HistoryItemType historyType;
-    int value;
-    int result;
-    NSString *state;
-    
     NSInteger playerLosingADie;
     NSInteger playerWinningADie;
-    
-    Bid *bid;
 }
 
-@property (readwrite, assign) PlayerState *player;
+@property (readwrite, weak) PlayerState *player;
 @property (readwrite, assign) ActionType actionType;
 @property (readwrite, assign) HistoryItemType historyType;
 @property (readwrite, assign) int value;
 @property (readwrite, assign) int result;
-@property (readwrite, assign) DiceGameState *diceGameState;
-@property (readwrite, retain) Bid *bid;
-@property (readwrite, retain) NSString *state;
+@property (readwrite, weak) DiceGameState *diceGameState;
+@property (readwrite, strong) Bid *bid;
+@property (readwrite, strong) NSString *state;
 
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)value andResult:(int)result;
 - (id) initWithMetaInformation:(NSString *)meta;
@@ -49,8 +39,6 @@ typedef enum HistoryItemType {
 
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withGameState:(DiceGameState*)state;
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count;
-
-- (void)dealloc;
 
 - (void)setLosingPlayer:(NSInteger)playerID;
 - (void)setWinningPlayer:(NSInteger)playerID;

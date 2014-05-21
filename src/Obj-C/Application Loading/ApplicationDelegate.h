@@ -17,13 +17,13 @@
 	NSMutableArray* databaseInstances;
 }
 
-@property (nonatomic, retain) IBOutlet UIViewController *rootViewController;
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (readwrite, retain) MainMenu *mainMenu;
-@property (readwrite, retain) UINavigationController *navigationController;
-@property (nonatomic, retain) NSLock* databaseArrayLock;
-@property (nonatomic, retain) GameKitListener* listener;
-@property (nonatomic, retain) UIViewController* gameCenterLoginViewController;
+@property (nonatomic, strong) IBOutlet UIViewController *rootViewController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (readwrite, strong) MainMenu *mainMenu;
+@property (readwrite, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) NSLock* databaseArrayLock;
+@property (nonatomic, strong) GameKitListener* listener;
+@property (nonatomic, strong) UIViewController* gameCenterLoginViewController;
 
 - (void)addInstance:(DiceDatabase*)database;
 - (void)removeInstance:(DiceDatabase*)database;

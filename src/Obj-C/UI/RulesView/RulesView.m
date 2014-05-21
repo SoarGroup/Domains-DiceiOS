@@ -45,9 +45,4 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"rules" ofType:@"html"];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
 }
-
-- (void)dealloc {
-    [webView release];
-    [super dealloc];
-}
 @end

@@ -53,7 +53,7 @@ public:
 	}
 
 	int GetSize()			{ return (int)m_DeltaList.size() ; }
-	TagWme* GetDelta(int i)	{ return m_DeltaList[i] ; }
+	TagWme* GetDelta(int i)	{ return m_DeltaList[i]; }
 };
 
 }//closes namespace

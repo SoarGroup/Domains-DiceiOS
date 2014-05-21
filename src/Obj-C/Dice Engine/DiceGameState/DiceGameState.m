@@ -32,23 +32,23 @@
 
 		history = [[NSMutableArray alloc] init];
 		for (int i = 0;i < historyCount;i++)
-			[history addObject:[[[HistoryItem alloc] initWithCoder:decoder withCount:i withGameState:self] autorelease]];
+			[history addObject:[[HistoryItem alloc] initWithCoder:decoder withCount:i withGameState:self] ];
 
-		rounds = [[decoder decodeObjectForKey:@"DiceGameState:rounds"] retain];
+		rounds = [decoder decodeObjectForKey:@"DiceGameState:rounds"];
 		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
 		currentTurn = [decoder decodeIntForKey:@"DiceGameState:currentTurn"];
 		playersLeft = [decoder decodeIntegerForKey:@"DiceGameState:playersLeft"];
-		previousBid = [[decoder decodeObjectForKey:@"DiceGameState:previousBid"] retain];
+		previousBid = [decoder decodeObjectForKey:@"DiceGameState:previousBid"];
 
 		int playerStatesCount = [decoder decodeIntForKey:@"DiceGameState:playerStates"];
 
-		NSMutableArray* playerStatesMutable = [[[NSMutableArray alloc] init] autorelease];
+		NSMutableArray* playerStatesMutable = [[NSMutableArray alloc] init];
 		for (int i = 0;i < playerStatesCount;i++)
-			[playerStatesMutable addObject:[[[PlayerState alloc] initWithCoder:decoder withCount:i withGameState:self] autorelease]];
+			[playerStatesMutable addObject:[[PlayerState alloc] initWithCoder:decoder withCount:i withGameState:self] ];
 
 		self.playerStates = playerStatesMutable;
 
-		playersArrayToDecode = [[decoder decodeObjectForKey:@"DiceGameState:players"] retain];
+		playersArrayToDecode = [decoder decodeObjectForKey:@"DiceGameState:players"];
 		self.canContinueGame = [decoder decodeBoolForKey:@"DiceGameState:CanContinueGame"];
 
 		int losersCount = [decoder decodeIntForKey:@"DiceGameState:losers"];
@@ -62,8 +62,8 @@
 
 - (void) decodePlayers
 {
-	NSMutableArray* finalPlayersArray = [[[NSMutableArray alloc] init] autorelease];
-	NSLock* lock = [[[NSLock alloc] init] autorelease];
+	NSMutableArray* finalPlayersArray = [[NSMutableArray alloc] init];
+	NSLock* lock = [[NSLock alloc] init];
 
 	for (NSString* player in playersArrayToDecode)
 	{
@@ -72,14 +72,14 @@
 			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:player])
 			{
 				// Local Player
-				[finalPlayersArray addObject:[[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil] autorelease]];
+				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil] ];
 			}
 			else
-				[finalPlayersArray addObject:[[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil] autorelease]];
+				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil] ];
 		}
 		else
 		{
-			[finalPlayersArray addObject:[[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] autorelease]];
+			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] ];
 		}
 	}
 
@@ -104,7 +104,7 @@
 	for (int i = 0;i < [playerStates count];i++)
 		[((PlayerState*)[playerStates objectAtIndex:i]) encodeWithCoder:encoder withCount:i];
 
-	NSMutableArray* playersArray = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray* playersArray = [[NSMutableArray alloc] init];
 
 	for (id<Player> player in players)
 	{
@@ -132,12 +132,12 @@
     if (self) {
         self.game = aGame;
         self.players = thePlayers;
-        self.losers = [[[NSMutableArray alloc] init] autorelease];
-        NSMutableArray *mutPlayerStates = [[[NSMutableArray alloc] init] autorelease];
+        self.losers = [[NSMutableArray alloc] init];
+        NSMutableArray *mutPlayerStates = [[NSMutableArray alloc] init];
         
         // Fill the player array with player states for each player in the game
         NSInteger numPlayers = [thePlayers count];
-        NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         for (int i = 0; i < numPlayers; ++i)
         {
             id <Player> player = [self.players objectAtIndex:i];
@@ -154,11 +154,10 @@
                 [dict setValue:[NSNumber numberWithInt:[value intValue] + 1] forKey:playerName];
                 suffix = [NSString stringWithFormat:@"-%d", [value intValue]];
             }
-            PlayerState *newPlayerState = [[[PlayerState alloc] initWithName:[playerName stringByAppendingString:suffix] 
+            PlayerState *newPlayerState = [[PlayerState alloc] initWithName:[playerName stringByAppendingString:suffix]
                                                                       withID:[player getID]
                                                             withNumberOfDice:numberOfDice 
-                                                           withDiceGameState:self]
-                                           autorelease];
+                                                           withDiceGameState:self];
 			
             [mutPlayerStates addObject:newPlayerState];
         }
@@ -182,12 +181,6 @@
 - (void)dealloc
 {
 	NSLog(@"%@ deallocated", self.class);
-
-    [rounds release];
-    [history release];
-
-    // Make sure our super class deallocs too
-    [super dealloc];
 }
 
 - (void)addNewRoundListener:(id <NewRoundListener>)listener {
@@ -205,7 +198,6 @@
         HistoryItem *newHistoryItem = [[HistoryItem alloc] initWithState:self 
                                                            andWithPlayer:[self getPlayerState:playerID] 
                                                                  withBid:bid];
-        [newHistoryItem autorelease]; //autorelease it when history is dealloc'd
         [history addObject:newHistoryItem];
         // Go to the next turn
         [self moveToNextTurn];
@@ -223,7 +215,9 @@
     }
     // Get the last history item to make sure they can push.
     HistoryItem *item = [self lastHistoryItem];
-    if (!item || item.player.playerID != playerID || (item.actionType != ACTION_BID && item.actionType != ACTION_PASS))
+	PlayerState* playerLocal = item.player;
+
+    if (!item || playerLocal.playerID != playerID || (item.actionType != ACTION_BID && item.actionType != ACTION_PASS))
         return NO;
     
     // Get the player state of the player pushing.
@@ -238,7 +232,6 @@
     item = [[HistoryItem alloc] initWithState:self 
                                 andWithPlayer:[self getPlayerState:playerID] 
                                   whereTypeIs:ACTION_PUSH];
-    [item autorelease];
     [history addObject:item];
     
     // Tell the player to push the dice.
@@ -262,7 +255,6 @@
                                                  andWithPlayer:player 
                                                    whereTypeIs:ACTION_PASS 
                                                      withValue:([player playerHasAllSameDice] ? 1 : 0)];
-        [item autorelease];
         [history addObject:item];
         // Go to the next turn.
         [self moveToNextTurn];
@@ -283,6 +275,9 @@
     
     if ([[self history] count] >= 2)
         secondLast = [[self history] objectAtIndex:[[self history] count] - 2];
+
+	PlayerState* playerLocal = item.player;
+	PlayerState* secondPlayerLocal = secondLast.player;
     
     //Make sure its a valid challenge
     if (self.previousBid && [self.previousBid playerID] == targetID) {
@@ -295,7 +290,6 @@
                                                             andResult:0];
             [newItem setBid:self.previousBid];
             [newItem setLosingPlayer:playerID];
-            [newItem autorelease];
             [history addObject:newItem];
             *didTheChallengerWin = NO;
         } else {
@@ -307,14 +301,13 @@
                                                             andResult:1];
             [newItem setBid:self.previousBid];
             [newItem setLosingPlayer:targetID];
-            [newItem autorelease];
             [history addObject:newItem];
             *didTheChallengerWin = YES;
         }
-    } else if (((item && (item.actionType == ACTION_PASS && item.player.playerID == targetID)) ||
-               (secondLast && secondLast.actionType == ACTION_PASS && secondLast.player.playerID == targetID)))
+    } else if (((item && (item.actionType == ACTION_PASS && playerLocal.playerID == targetID)) ||
+               (secondLast && secondLast.actionType == ACTION_PASS && secondPlayerLocal.playerID == targetID)))
 	{
-        if (item.player.playerID == targetID)
+        if (playerLocal.playerID == targetID)
         {
             if (item.result == 1) // Pass was legal
             {
@@ -325,7 +318,6 @@
                                                                 withValue:(int)targetID
                                                                 andResult:0];
                 [newItem setLosingPlayer:playerID];
-                [newItem autorelease];
                 [history addObject:newItem];
                 *didTheChallengerWin = NO;
             } else {
@@ -336,7 +328,6 @@
                                                                 withValue:(int)targetID
                                                                 andResult:1];
                 [newItem setLosingPlayer:targetID];
-                [newItem autorelease];
                 [history addObject:newItem];
                 *didTheChallengerWin = YES;
             }
@@ -352,7 +343,6 @@
                                                                 withValue:(int)targetID
                                                                 andResult:0];
                 [newItem setLosingPlayer:playerID];
-                [newItem autorelease];
                 [history addObject:newItem];
                 *didTheChallengerWin = NO;
             } else {
@@ -363,7 +353,6 @@
                                                                 withValue:(int)targetID
                                                                 andResult:1];
                 [newItem setLosingPlayer:targetID];
-                [newItem autorelease];
                 [history addObject:newItem];
                 *didTheChallengerWin = YES;
             } 
@@ -416,7 +405,6 @@
             player.numberOfDice++;
 		
 		[newItem setWinningPlayer:playerID];
-        [newItem autorelease];
         [history addObject:newItem];
         
         *wasTheExactRight = YES;
@@ -429,7 +417,6 @@
                                                         withValue:0];
         [newItem setBid:bid];
         [newItem setLosingPlayer:playerID];
-        [newItem autorelease];
         [history addObject:newItem];
         
         *wasTheExactRight = NO;
@@ -515,7 +502,8 @@
     bool inPlayer = NO;
     for (NSInteger i = [history count] - 1; i >= 0; --i) {
         HistoryItem *item = [history objectAtIndex:i];
-        int itemPlayerID = item.player.playerID;
+		PlayerState* playerLocal = item.player;
+        int itemPlayerID = playerLocal.playerID;
         if (itemPlayerID == playerID) {
             inPlayer = YES;
             if (item.historyType != metaHistoryItem) {
@@ -535,7 +523,7 @@
 // the last one the oldest
 - (NSArray *)flatHistory
 {
-    NSMutableArray *ret = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *ret = [[NSMutableArray alloc] init];
     for (NSMutableArray *array in rounds) {
         if ([array isKindOfClass:[NSMutableArray class]]) {
             for (HistoryItem *item in array) {
@@ -667,7 +655,7 @@
             HistoryItem *item = [lastMove objectAtIndex:i];
 
 			NSDictionary * attributes;
-			NSMutableAttributedString* move = [[[NSMutableAttributedString alloc] init] autorelease];
+			NSMutableAttributedString* move = [[NSMutableAttributedString alloc] init];
 
 			NSArray *array = [[item asString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 			array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
@@ -681,15 +669,15 @@
 				else
 					attributes = [NSDictionary dictionary];
 
-				[move appendAttributedString:[[[NSAttributedString alloc] initWithString:[array objectAtIndex:j] attributes:attributes] autorelease]];
-				[move appendAttributedString:[[[NSAttributedString alloc] initWithString:@" "] autorelease]];
+				[move appendAttributedString:[[NSAttributedString alloc] initWithString:[array objectAtIndex:j] attributes:attributes] ];
+				[move appendAttributedString:[[NSAttributedString alloc] initWithString:@" "] ];
 			}
 
             [labelText appendAttributedString:move];
         }
     }
 
-    return [labelText autorelease];
+    return labelText;
 }
 
 - (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine {
@@ -738,29 +726,30 @@
     if (history)
     {
         [rounds addObject:history];
-        [history release];
         history = [[NSMutableArray alloc] init];
     }
     else
         history = [[NSMutableArray alloc] init];
 
-    [history addObject:[[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] autorelease]];
+    [history addObject:[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] ];
     for (id <NewRoundListener> listener in theNewRoundListeners) {
         if ([listener roundBeginning]) {
             deferNotification = YES;
         }
     }
-    if (deferNotification) {
-        game.deferNotification = YES;
+    if (deferNotification)
+	{
+		DiceGame* localGame = self.game;
+        localGame.deferNotification = YES;
     }
 }
 
 //Make a player lose the round (set the flags that they've lost)
 - (void)playerLosesRound:(NSInteger)playerID
 {
-    [history addObject:[[[HistoryItem alloc]
+    [history addObject:[[HistoryItem alloc]
                          initWithMetaInformation:[self stateString:-1]]
-                        autorelease]];
+                        ];
     NSLog(@"%@ lost the round.", [[self getPlayerState:playerID] asString]);
     NSLog(@"%@", [self stateString:-1]);
     PlayerState *player = [self getPlayerState:playerID];
@@ -780,7 +769,9 @@
     NSLog(@"%@ lost the game.", [[self getPlayerState:playerID] asString]);
     PlayerState *player = [self getPlayerState:playerID];
     player.hasLost = YES;
-	[[self.game getPlayerAtIndex:(int)playerID] notifyHasLost];
+	DiceGame* localGame = self.game;
+
+	[[localGame getPlayerAtIndex:(int)playerID] notifyHasLost];
     --playersLeft;
 
     if (playersLeft <= 1)
@@ -953,7 +944,10 @@
 	}
 
 	if (item != nil)
-		return [[item player] playerID];
+	{
+		PlayerState* localPlayer = item.player;
+		return [localPlayer playerID];
+	}
 	else
 		return -1;
 }
@@ -1004,14 +998,18 @@
 	}
 
 	if (item != nil)
-		return [[item player] playerID];
+	{
+		PlayerState* localPlayer = item.player;
+
+		return [localPlayer playerID];
+	}
 	else
 		return -1;
 }
 
 - (NSArray *)playersWhoHaveLost
 {
-    NSMutableArray *playersWhoHaveLost = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *playersWhoHaveLost = [[NSMutableArray alloc] init];
     
     for (PlayerState *player in self.playerStates)
     {
@@ -1025,7 +1023,7 @@
         }
     }
     
-    NSArray *array = [[[NSArray alloc] initWithArray:playersWhoHaveLost] autorelease];
+    NSArray *array = [[NSArray alloc] initWithArray:playersWhoHaveLost];
     return array;
 }
 

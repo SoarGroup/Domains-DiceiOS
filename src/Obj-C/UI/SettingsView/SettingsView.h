@@ -10,15 +10,15 @@
 
 @interface SettingsView : UIViewController <UITextFieldDelegate>
 
-@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
-@property (retain, nonatomic) IBOutlet UILabel *difficultyLabel;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *difficultyLabel;
 
-@property (retain, nonatomic) IBOutlet UITextField *nameTextField;
-@property (retain, nonatomic) IBOutlet UISegmentedControl *difficultySelector;
+@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *difficultySelector;
 
-@property (retain, nonatomic) IBOutlet UILabel* debugLabel;
-@property (retain, nonatomic) IBOutlet UILabel* remoteIPLabel;
-@property (retain, nonatomic) IBOutlet UITextField* remoteIPTextField;
+@property (strong, nonatomic) IBOutlet UILabel* debugLabel;
+@property (strong, nonatomic) IBOutlet UILabel* remoteIPLabel;
+@property (strong, nonatomic) IBOutlet UITextField* remoteIPTextField;
 
 
 - (IBAction)nameTextFieldTextFinalize:(id)sender;

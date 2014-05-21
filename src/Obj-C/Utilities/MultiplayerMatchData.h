@@ -11,8 +11,8 @@
 
 @interface MultiplayerMatchData : NSObject
 
-@property (readonly, assign, nonatomic) DiceGame* theGame;
-@property (readonly, assign, nonatomic) NSData* theData;
+@property (strong, nonatomic) DiceGame* theGame;
+@property (strong, nonatomic) NSData* theData;
 
 -(id)initWithGame:(DiceGame*)theGame;
 -(id)initWithData:(NSData*)theData withRequest:(GKMatchRequest*)matchRequest withMatch:(GKTurnBasedMatch*)match withHandler:(GameKitGameHandler*)handler;

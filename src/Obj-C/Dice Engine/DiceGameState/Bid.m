@@ -43,9 +43,9 @@
 	{
 		int diceToPushCount = [decoder decodeIntForKey:@"Bid:diceToPush"];
 
-		NSMutableArray* diceToPushMutable = [[[NSMutableArray alloc] init] autorelease];
+		NSMutableArray* diceToPushMutable = [[NSMutableArray alloc] init];
 		for (int i = 0;i < diceToPushCount;i++)
-			[diceToPushMutable addObject:[[[Die alloc] initWithCoder:decoder withCount:i withPrefix:@"Bid:"] autorelease]];
+			[diceToPushMutable addObject:[[Die alloc] initWithCoder:decoder withCount:i withPrefix:@"Bid:"]];
 
 		playerID =[decoder decodeIntegerForKey:@"Bid:playerID"];
 		numberOfDice = [decoder decodeIntForKey:@"Bid:numberOfDice"];
@@ -74,10 +74,8 @@
 {
     self = [self initWithPlayerID:playerID name:aPlayerName dice:dice rank:rank];
     if (self)
-	{
         diceToPush = dicePushing;
-        [diceToPush retain];
-    }
+
     return self;
 }
 
@@ -129,13 +127,6 @@
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"Player %@ (%li) bid %i %is", self.playerName, (long)self.playerID, self.numberOfDice, self.rankOfDie];
-}
-
-    //Dealloc method
-- (void)dealloc
-{
-        //Release our array of dice we are pushing, only alloc'd variable that is never autoreleased
-    [super dealloc];
 }
 
 -(NSString *)stringForDieFace:(NSInteger)die andIsPlural:(BOOL)plural {

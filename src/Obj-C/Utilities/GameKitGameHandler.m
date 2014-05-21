@@ -25,8 +25,7 @@
 		self.remotePlayers = rPlayers;
 		matchHasEnded = NO;
 		match = gkMatch;
-		[match retain];
-		
+
 		participants = [match participants];
 	}
 
@@ -36,7 +35,6 @@
 - (void)dealloc
 {
 	NSLog(@"Game Kit Game Handler deallocated\n");
-	[super dealloc];
 }
 
 - (void) saveMatchData
@@ -76,7 +74,7 @@
 		 {
 			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
 
-			 [localGame updateGame:updatedGame];
+			 [self->localGame updateGame:updatedGame];
 		 }
 		 else
 			 NSLog(@"Error upon loading match data: %@\n", error.description);

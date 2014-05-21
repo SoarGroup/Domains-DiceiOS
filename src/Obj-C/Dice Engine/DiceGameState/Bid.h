@@ -11,19 +11,17 @@
 
 @interface Bid : NSObject
 
-@property (nonatomic, retain) NSArray *diceToPush;
+@property (nonatomic, strong) NSArray *diceToPush;
 @property (nonatomic, readonly) NSInteger playerID;
 @property (nonatomic, readonly) int numberOfDice;
 @property (nonatomic, readonly) int rankOfDie;
-@property (readwrite, retain) NSString *playerName;
+@property (readwrite, strong) NSString *playerName;
 
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)playerName dice:(int)dice rank:(int)rank;
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)playerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing;
 
 -(id)initWithCoder:(NSCoder*)decoder;
 -(void)encodeWithCoder:(NSCoder*)encoder;
-
-- (void)dealloc;
 
 - (BOOL)isLegalRaise:(Bid *)previousBid specialRules:(BOOL)specialRules playerSpecialRules:(BOOL)playerSpecialRules;
 

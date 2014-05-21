@@ -13,7 +13,7 @@
 @interface MainMenu : UIViewController <UIAlertViewDelegate>
 
 @property (nonatomic, assign) BOOL multiplayerEnabled;
-@property (readwrite, retain) ApplicationDelegate *appDelegate;
+@property (readwrite, weak) ApplicationDelegate *appDelegate;
 
 -(id)initWithAppDelegate:(ApplicationDelegate*)appDelegate;
 
@@ -24,11 +24,11 @@
 - (IBAction)settingsButtonPressed:(id)sender;
 - (IBAction)aboutButtonPressed:(id)sender;
 
-@property (nonatomic, retain) IBOutlet UIButton *aiOnlyGameButton;
-@property (nonatomic, retain) IBOutlet UIButton *multiplayerGameButton;
-@property (nonatomic, retain) IBOutlet UIButton *rulesButton;
-@property (nonatomic, retain) IBOutlet UIButton *statsButton;
-@property (retain, nonatomic) IBOutlet UIButton *settingsButton;
-@property (retain, nonatomic) IBOutlet UIButton *aboutButton;
+@property (nonatomic, strong) IBOutlet UIButton *aiOnlyGameButton;
+@property (nonatomic, strong) IBOutlet UIButton *multiplayerGameButton;
+@property (nonatomic, strong) IBOutlet UIButton *rulesButton;
+@property (nonatomic, strong) IBOutlet UIButton *statsButton;
+@property (strong, nonatomic) IBOutlet UIButton *settingsButton;
+@property (strong, nonatomic) IBOutlet UIButton *aboutButton;
 
 @end

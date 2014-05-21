@@ -20,19 +20,19 @@
 
 - (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)appDelegate;
 
-@property (nonatomic, assign) ApplicationDelegate* appDelegate;
-@property (nonatomic, assign) MainMenu* mainMenu;
-@property (nonatomic, retain) IBOutlet UIButton* joinMatchButton;
-@property (nonatomic, retain) IBOutlet UIScrollView* gamesScrollView;
-@property (nonatomic, retain) IBOutlet UIButton* scrollToTheFarRightButton;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView* joinSpinner;
+@property (nonatomic, weak) ApplicationDelegate* appDelegate;
+@property (nonatomic, weak) MainMenu* mainMenu;
+@property (nonatomic, strong) IBOutlet UIButton* joinMatchButton;
+@property (nonatomic, strong) IBOutlet UIScrollView* gamesScrollView;
+@property (nonatomic, strong) IBOutlet UIButton* scrollToTheFarRightButton;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* joinSpinner;
 
-@property (atomic, retain) NSMutableArray* miniGamesViewArray;
-@property (atomic, retain) NSMutableArray* handlerArray; // One-To-One Correspondence with miniGamesViewArray
-@property (atomic, retain) NSMutableArray* playGameViews; // One-To-One Correspondence with miniGamesViewArray
+@property (atomic, strong) NSMutableArray* miniGamesViewArray;
+@property (atomic, strong) NSMutableArray* handlerArray; // One-To-One Correspondence with miniGamesViewArray
+@property (atomic, strong) NSMutableArray* playGameViews; // One-To-One Correspondence with miniGamesViewArray
 
-@property (nonatomic, assign) JoinMatchView* joinMatchPopoverViewController;
-@property (nonatomic, retain) UIPopoverController* popoverController;
+@property (nonatomic, strong) JoinMatchView* joinMatchPopoverViewController;
+@property (nonatomic, strong) UIPopoverController* popoverController;
 
 - (IBAction)joinMatchButtonPressed:(id)sender;
 - (IBAction)scrollToTheFarRightButtonPressed:(id)sender;

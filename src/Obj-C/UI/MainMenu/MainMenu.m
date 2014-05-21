@@ -83,48 +83,49 @@
 {
 	self.navigationController.navigationBarHidden = YES;
 
-	NSArray* handlers = [NSArray arrayWithArray:self.appDelegate.listener.handlers];
+	ApplicationDelegate* delegate = self.appDelegate;
+	NSArray* handlers = [NSArray arrayWithArray:delegate.listener.handlers];
+
 	for (GameKitGameHandler* handler in handlers)
-		[self.appDelegate.listener removeGameKitGameHandler:handler];
+		[delegate.listener removeGameKitGameHandler:handler];
 }
-
-- (void)dealloc {    
-    [super dealloc];
-}
-
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[[SingleplayerView alloc] initWithAppDelegate:self.appDelegate andWithMainMenu:self] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[SingleplayerView alloc] initWithAppDelegate:self.appDelegate andWithMainMenu:self] animated:YES];
 }
 
 - (IBAction)multiplayerGameButtonPressed:(id)sender
 {
-//	UIAlertView *noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Multiplayer is not implemented yet and is therefore disabled." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] autorelease];
+//	UIAlertView *noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Multiplayer is not implemented yet and is therefore disabled." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil;
 //
 //	[noMultiplayer show];
 //
 //	return;
 
+	ApplicationDelegate* delegate = self.appDelegate;
+
 	if (!self.multiplayerEnabled)
 	{
 		UIAlertView *noMultiplayer;
 
-		if (self.appDelegate.gameCenterLoginViewController)
-			noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  You are not logged into Game Center.  Would you like to log into Game Center to access Multiplayer?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] autorelease];
+		if (delegate.gameCenterLoginViewController)
+			noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  You are not logged into Game Center.  Would you like to log into Game Center to access Multiplayer?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 		else
-			noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  Authentication with Game Center failed.  If you would like to play multiplayer, please make sure that you are connected to the internet and logged into Game Center." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease];
+			noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Liar's Dice Multiplayer requires Game Center to function.  Authentication with Game Center failed.  If you would like to play multiplayer, please make sure that you are connected to the internet and logged into Game Center." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 
 		[noMultiplayer show];
 	}
 	else
-		[self.navigationController pushViewController:[[[MultiplayerView alloc] initWithMainMenu:self withAppDelegate:self.appDelegate] autorelease] animated:YES];
+		[self.navigationController pushViewController:[[MultiplayerView alloc] initWithMainMenu:self withAppDelegate:delegate]  animated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex == 1 && self.appDelegate.gameCenterLoginViewController)
+	ApplicationDelegate* delegate = self.appDelegate;
+
+	if (buttonIndex == 1 && delegate.gameCenterLoginViewController)
 	{
-		[self.navigationController presentViewController:self.appDelegate.gameCenterLoginViewController animated:YES completion:^(void)
+		[self.navigationController presentViewController:delegate.gameCenterLoginViewController animated:YES completion:^(void)
 		 {
 			 if (self.multiplayerEnabled)
 				 [self multiplayerGameButtonPressed:nil];
@@ -134,22 +135,22 @@
 
 - (IBAction)rulesButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[[RulesView alloc] init] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[RulesView alloc] init]  animated:YES];
 }
 
 - (IBAction)statsButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[[StatsView alloc] init] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[StatsView alloc] init]  animated:YES];
 }
 
 - (IBAction)settingsButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[[SettingsView alloc] init] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[SettingsView alloc] init]  animated:YES];
 }
 
 - (IBAction)aboutButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[[AboutView alloc] init] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[AboutView alloc] init]  animated:YES];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

@@ -35,7 +35,7 @@
 		time = [DiceDatabase getCurrentGameTime];
 		nextID = 0;
 
-		self.players = [[[NSArray alloc] init] autorelease];
+		self.players = [[NSArray alloc] init];
 	}
 
     return self;
@@ -44,8 +44,6 @@
 - (void) dealloc
 {
 	NSLog(@"%@ deallocated", self.class);
-
-	[super dealloc];
 }
 
 -(DiceGame*)init
@@ -96,7 +94,8 @@
 		self.gameState.game = self;
 
 		[self.gameState decodePlayers];
-		self.players = gameState.players;
+		self.players = [NSArray arrayWithArray:gameState.players];
+		self.gameState.players = self.players;
 	}
 
 	return self;
@@ -121,13 +120,15 @@
 - (void)updateGame:(DiceGame *)remote
 {
 	if (remote.players)
-		self.players = remote.players;
+		self.players = [NSArray arrayWithArray:remote.players];
 
-	if (remote.appDelegate)
-		self.appDelegate = remote.appDelegate;
+	id remoteAppDelegate = remote.appDelegate;
+	if (remoteAppDelegate)
+		appDelegate = remoteAppDelegate;
 
-	if (remote.gameView)
-		self.gameView = remote.gameView;
+	id remoteGameView = remote.gameView;
+	if (remoteGameView)
+		gameView = remoteGameView;
 
 	started = remote.started;
 	deferNotification = remote.deferNotification;
@@ -164,9 +165,9 @@
         ((DiceLocalPlayer*)player).gameView = self.gameView;
     }
     
-    NSMutableArray *mut = [[[NSMutableArray alloc] initWithArray:self.players] autorelease];
+    NSMutableArray *mut = [[NSMutableArray alloc] initWithArray:self.players];
     [mut addObject:player];
-    self.players = [[[NSArray alloc] initWithArray:mut] autorelease];
+    self.players = [[NSArray alloc] initWithArray:mut];
     [player setID:[self getNextID]];
 }
 
@@ -180,7 +181,7 @@
 		return;
 
     self.started = YES;
-    self.gameState = [[[DiceGameState alloc] initWithPlayers:self.players numberOfDice:5 game:self] autorelease];
+    self.gameState = [[DiceGameState alloc] initWithPlayers:self.players numberOfDice:5 game:self];
 		
     [self publishState];
     [self notifyCurrentPlayer];
@@ -223,7 +224,7 @@
         case ACTION_BID:
         {
             NSString *playerName = [self.gameState getPlayerState:action.playerID].playerName;
-            Bid *bid = [[[Bid alloc] initWithPlayerID:action.playerID name:playerName dice:action.count rank:action.face] autorelease];
+            Bid *bid = [[Bid alloc] initWithPlayerID:action.playerID name:playerName dice:action.count rank:action.face];
             [gameState handleBid:action.playerID withBid:bid];
             [gameState handlePush:action.playerID withPush:action.push];
             break;
@@ -281,15 +282,15 @@
         places[0] = [winner getID];
     }
 	
-    GameRecord *record = [[[GameRecord alloc]
+    GameRecord *record = [[GameRecord alloc]
                           initWithGameTime:time
                           NumPlayers:numPlayers
                           firstPlace:places[0]
                           secondPlace:places[1]
                           thirdPlace:places[2]
-                          fourthPlace:places[3]] autorelease];
+                          fourthPlace:places[3]];
     
-    DiceDatabase *database = [[[DiceDatabase alloc] init] autorelease];
+    DiceDatabase *database = [[DiceDatabase alloc] init];
     [database addGameRecord:record];
     
     for (id <Player> player in self.players) {

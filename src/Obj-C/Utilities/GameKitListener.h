@@ -13,10 +13,10 @@
 
 @interface GameKitListener : NSObject <GKLocalPlayerListener>
 {
-	NSMutableArray* handlers;
+
 }
 
-- (NSArray*)handlers;
+@property (nonatomic, strong) NSMutableArray* handlers;;
 
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler;
 - (void) removeGameKitGameHandler:(GameKitGameHandler*)handler;

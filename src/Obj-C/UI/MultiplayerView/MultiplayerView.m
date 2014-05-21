@@ -46,12 +46,12 @@
         iPad = [device isEqualToString:@"iPad"];
 		self.mainMenu = menu;
 		self.appDelegate = delegate;
-		self.handlerArray = [[[NSMutableArray alloc] init] autorelease];
-		self.miniGamesViewArray = [[[NSMutableArray alloc] init] autorelease];
-		self.playGameViews = [[[NSMutableArray alloc] init] autorelease];
+		self.handlerArray = [[NSMutableArray alloc] init];
+		self.miniGamesViewArray = [[NSMutableArray alloc] init];
+		self.playGameViews = [[NSMutableArray alloc] init];
 
 		if (iPad)
-			self.joinMatchPopoverViewController = [[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:YES withMultiplayerView:self] autorelease];
+			self.joinMatchPopoverViewController = [[JoinMatchView alloc] initWithMainMenu:menu withAppDelegate:delegate isPopOver:YES withMultiplayerView:self];
     }
 
     return self;
@@ -60,8 +60,6 @@
 - (void) dealloc
 {
 	NSLog(@"%@ deallocated", self.class);
-
-	[super dealloc];
 }
 
 - (void)viewDidLoad
@@ -90,32 +88,34 @@
 
 - (void)joinedNewMatch:(GKMatchRequest*)request
 {
+	ApplicationDelegate* delegate = self.appDelegate;
+
 	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
 	 {
 		 for (GKTurnBasedMatch* match in matches)
 		 {
-			 if (![self.appDelegate.listener handlerForMatch:match])
+			 if (![delegate.listener handlerForMatch:match])
 			 {
 				 // the new match
 
 				 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 				  {
-					  DiceGame* newGame = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
+					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegate];
 
-					  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+					  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 
 					  if (!handler)
 					  {
-						  handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
-						  [self.appDelegate.listener addGameKitGameHandler:handler];
+						  handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
+						  [delegate.listener addGameKitGameHandler:handler];
 					  }
 					  else
 						  handler.localGame = newGame;
 
-					  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata
+					  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchdata
 																				  withRequest:request
 																					withMatch:match
-																				  withHandler:handler] autorelease];
+																				  withHandler:handler];
 
 					  if (!mmd)
 					  {
@@ -143,7 +143,7 @@
 					  }
 
 					  DiceLocalPlayer* localPlayer = nil;
-					  NSMutableArray* remotePlayers = [[[NSMutableArray alloc] init] autorelease];
+					  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
 
 					  for (id<Player> player in newGame.players)
 					  {
@@ -161,7 +161,7 @@
 						  [self.navigationController popToViewController:self animated:YES];
 					  };
 
-					  UIViewController *gameView = [[[PlayGameView alloc] initWithGame:newGame withQuitHandler:[[quitHandlerFullScreen copy] autorelease] withCustomMainView:YES] autorelease];
+					  UIViewController *gameView = [[PlayGameView alloc] initWithGame:newGame withQuitHandler:[quitHandlerFullScreen copy]  withCustomMainView:YES];
 
 					  CGRect newFrame = gameView.view.frame;
 					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
@@ -190,22 +190,24 @@
 
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  DiceGame* game = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
+				  ApplicationDelegate* delegate = self.appDelegate;
 
-				  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:delegate];
+
+				  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 
 				  if (!handler)
 				  {
-					  handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
-					  [self.appDelegate.listener addGameKitGameHandler:handler];
+					  handler = [[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
+					  [delegate.listener addGameKitGameHandler:handler];
 				  }
 				  else
 					  handler.localGame = game;
 
-				  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchData
+				  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchData
 																			  withRequest:nil
 																				withMatch:match
-																			  withHandler:handler] autorelease];
+																			  withHandler:handler];
 
 				  if (!mmd || ![mmd theGame])
 				  {
@@ -232,24 +234,24 @@
 					  }
 				  }
 
-				  [miniGamesViewArray addObject:game];
-				  [handlerArray addObject:handler];
+				  [self->miniGamesViewArray addObject:game];
+				  [self->handlerArray addObject:handler];
 
 				  void (^quitHandler)(void) =^
 				  {
-					  UIAlertView* view = [[[UIAlertView alloc] initWithTitle:@"Delete Game" message:@"Are you sure you want to permanently delete this game? If you delete it, you will never be able to access it again." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] autorelease];
+					  UIAlertView* view = [[UIAlertView alloc] initWithTitle:@"Delete Game" message:@"Are you sure you want to permanently delete this game? If you delete it, you will never be able to access it again." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 					  [view.LDContext setObject:match forKey:@"Match"];
 					  [view show];
 				  };
 
-				  PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[[quitHandler copy] autorelease] withCustomMainView:YES];
+				  PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
 				  
 				  [playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 				  playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
 				  [self.gamesScrollView addSubview:playGameView.view];
-				  [playGameViews addObject:playGameView];
+				  [self->playGameViews addObject:playGameView];
 			  }];
 		 }
 
@@ -281,22 +283,24 @@
 
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  DiceGame* game = [[[DiceGame alloc] initWithAppDelegate:self.appDelegate] autorelease];
+				  ApplicationDelegate* delegate = self.appDelegate;
 
-				  GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:delegate];
+
+				  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 
 				  if (!handler)
 				  {
-					  handler = [[[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
-					  [self.appDelegate.listener addGameKitGameHandler:handler];
+					  handler = [[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
+					  [delegate.listener addGameKitGameHandler:handler];
 				  }
 				  else
 					  handler.localGame = game;
 
-				  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchData
+				  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchData
 																			  withRequest:nil
 																				withMatch:match
-																			  withHandler:handler] autorelease];
+																			  withHandler:handler];
 
 				  if (!mmd)
 				  {
@@ -323,17 +327,17 @@
 					  }
 				  }
 
-				  [miniGamesViewArray addObject:game];
-				  [handlerArray addObject:handler];
+				  [self->miniGamesViewArray addObject:game];
+				  [self->handlerArray addObject:handler];
 
-				  UILabel* matchName = [[[UILabel alloc] init] autorelease];
-				  UILabel* gameInfo = [[[UILabel alloc] init] autorelease];
-				  UILabel* turnInfo = [[[UILabel alloc] init] autorelease];
-				  UILabel* timeoutInfo = [[[UILabel alloc] init] autorelease];
-				  UIButton* playMatch = [[[UIButton alloc] init] autorelease];
-				  UIButton* deleteMatch = [[[UIButton alloc] init] autorelease];
+				  UILabel* matchName = [[UILabel alloc] init];
+				  UILabel* gameInfo = [[UILabel alloc] init];
+				  UILabel* turnInfo = [[UILabel alloc] init];
+				  UILabel* timeoutInfo = [[UILabel alloc] init];
+				  UIButton* playMatch = [[UIButton alloc] init];
+				  UIButton* deleteMatch = [[UIButton alloc] init];
 
-				  UIImageView* whiteBar = [[[UIImageView alloc] init] autorelease];
+				  UIImageView* whiteBar = [[UIImageView alloc] init];
 
 				  CGRect frame = CGRectMake(15, 0, self.gamesScrollView.frame.size.width - 15, 30);
 				  matchName.frame = frame;
@@ -434,7 +438,7 @@
 
 				  CGRect viewFrame = CGRectMake(15, matchNumber * 30 * 6, self.gamesScrollView.frame.size.width - 15, 180);
 
-				  UIView* container = [[[UIView alloc] initWithFrame:viewFrame] autorelease];
+				  UIView* container = [[UIView alloc] initWithFrame:viewFrame];
 
 				  [container addSubview:matchName];
 				  [container addSubview:gameInfo];
@@ -456,14 +460,14 @@
 - (void)playMatchButtonPressed:(id)sender
 {
 	int gameIndex = (int)[(UIButton*)sender tag];
-	MultiplayerView* multiplayerView = self;
 
+	__block MultiplayerView* multiplayerView = self;
 	void (^quitHandler)(void) =^
 	{
 		[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
 	};
 
-	PlayGameView* playGameView = [[[PlayGameView alloc] initWithGame:[miniGamesViewArray objectAtIndex:gameIndex] withQuitHandler:[[quitHandler copy] autorelease]] autorelease];
+	PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:[miniGamesViewArray objectAtIndex:gameIndex] withQuitHandler:[quitHandler copy]];
 
 	[self.navigationController pushViewController:playGameView animated:YES];
 
@@ -474,7 +478,9 @@
 {
 	GKTurnBasedMatch* match = [((NSObject*)sender).LDContext objectForKey:@"Match"];
 
-	GameKitGameHandler* handler = [self.appDelegate.listener handlerForMatch:match];
+	ApplicationDelegate* delegate = self.appDelegate;
+
+	GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 
 	if (handler)
 	{
@@ -515,7 +521,7 @@
 		else
 			[(UIView*)[playGameViews objectAtIndex:handlerIndex]removeFromSuperview];
 
-		[self.appDelegate.listener removeGameKitGameHandler:handler];
+		[delegate.listener removeGameKitGameHandler:handler];
 		[handlerArray removeObjectAtIndex:handlerIndex];
 		if ([playGameViews count] > 0)
 			[playGameViews removeObjectAtIndex:handlerIndex];
@@ -537,25 +543,25 @@
 
 		[UIView animateWithDuration:0.25 animations:^(void)
 		 {
-			 for (int i = handlerIndex;i < [handlerArray count];i++)
+			 for (int i = handlerIndex;i < [self->handlerArray count];i++)
 			 {
 				 CGRect currentFrame;
 
-				 if (iPad)
+				 if (self->iPad)
 				 {
-					 currentFrame = ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame;
+					 currentFrame = ((PlayGameView*)[self->playGameViews objectAtIndex:i]).view.frame;
 
 					 currentFrame.origin.x -= currentFrame.size.width;
 
-					 ((PlayGameView*)[playGameViews objectAtIndex:i]).view.frame = currentFrame;
+					 ((PlayGameView*)[self->playGameViews objectAtIndex:i]).view.frame = currentFrame;
 				 }
 				 else
 				 {
-					 currentFrame = ((UIView*)[playGameViews objectAtIndex:i]).frame;
+					 currentFrame = ((UIView*)[self->playGameViews objectAtIndex:i]).frame;
 
 					 currentFrame.origin.y -= 180;
 
-					 ((UIView*)[playGameViews objectAtIndex:i]).frame = currentFrame;
+					 ((UIView*)[self->playGameViews objectAtIndex:i]).frame = currentFrame;
 				 }
 			 }
 		 }];
@@ -577,7 +583,7 @@
 
 - (void)iPadJoinMatchButtonPressed
 {
-	self.popoverController = [[[UIPopoverController alloc] initWithContentViewController:self.joinMatchPopoverViewController] autorelease];
+	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.joinMatchPopoverViewController];
 	self.popoverController.popoverContentSize = CGSizeMake(320,320);
 
 	[self.popoverController presentPopoverFromRect:joinMatchButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
@@ -585,7 +591,7 @@
 
 - (void)iPhoneJoinMatchButtonPressed
 {
-	[self.navigationController pushViewController:[[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:NO withMultiplayerView:self] autorelease] animated:YES];
+	[self.navigationController pushViewController:[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:NO withMultiplayerView:self]  animated:YES];
 }
 
 - (IBAction)scrollToTheFarRightButtonPressed:(id)sender

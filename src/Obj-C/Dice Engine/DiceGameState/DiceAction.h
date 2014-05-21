@@ -24,7 +24,7 @@
 @property (readwrite, assign) NSInteger playerID;
 @property (readwrite, assign) int count;
 @property (readwrite, assign) int face;
-@property (readwrite, retain) NSArray *push;
+@property (readwrite, strong) NSArray *push;
 @property (readwrite, assign) NSInteger targetID;
 
 + (DiceAction *) bidAction:(NSInteger)playerID count:(int)count face:(int)face push:(NSArray *)push;

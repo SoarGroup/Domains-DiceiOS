@@ -20,8 +20,8 @@
 @property (readwrite, assign) BOOL hasDoneSpecialRules;
 
 @property (readwrite, assign) int playerID;
-@property (readwrite, retain) NSString *playerName;
-@property (readwrite, retain) NSLock *lock;
+@property (readwrite, strong) NSString *playerName;
+@property (readwrite, strong) NSLock *lock;
 
 @property (nonatomic) BOOL playerHasPassed;
 @property (nonatomic) BOOL playerHasExacted;
@@ -31,8 +31,8 @@
 @property (nonatomic, readonly) BOOL playerHasPushedAllDice;
 
 @property (nonatomic, readwrite) int maxNumberOfDice;
-@property (readwrite, assign) DiceGameState *gameState;
-@property (readwrite, retain) NSMutableArray *arrayOfDice;
+@property (readwrite, atomic, weak) DiceGameState *gameState;
+@property (readwrite, strong) NSMutableArray *arrayOfDice;
 
 - (id)initWithName:(NSString*)playerName withID:(int)playerID withNumberOfDice:(int)dice withDiceGameState:(DiceGameState *)gameState;
 

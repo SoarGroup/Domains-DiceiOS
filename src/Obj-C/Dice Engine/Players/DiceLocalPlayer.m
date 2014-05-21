@@ -35,7 +35,6 @@
 - (void)dealloc
 {
 	NSLog(@"Dice Local Player deallocated\n");
-	[super dealloc];
 }
 
 - (NSString*) getName
@@ -46,7 +45,9 @@
 - (void) updateState:(PlayerState*)state
 {
     self.playerState = state;
-    [self.gameView updateState:self.playerState];
+	PlayGameView* gameViewLocal = self.gameView;
+	PlayerState* playerStateLocal = self.playerState;
+    [gameViewLocal updateState:playerStateLocal];
 }
 
 - (int) getID
@@ -61,22 +62,26 @@
 
 - (void) itsYourTurn
 {
-	[self.gameView updateUI];
+	PlayGameView* gameViewLocal = self.gameView;
+	[gameViewLocal updateUI];
 
 	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-									self.gameView.gameStateLabel);
+									gameViewLocal.gameStateLabel);
 }
 
 - (void)notifyHasLost
 {
-	if (handler)
-		[handler playerQuitMatch:self withRemoval:NO];
+	GameKitGameHandler* handlerLocal = self.handler;
+	if (handlerLocal)
+		[handlerLocal playerQuitMatch:self withRemoval:NO];
 }
 
 - (void)notifyHasWon
 {
-	if (handler)
-		[handler endMatchForAllParticipants];
+	GameKitGameHandler* handlerLocal = self.handler;
+
+	if (handlerLocal)
+		[handlerLocal endMatchForAllParticipants];
 }
 
 - (void) end { }

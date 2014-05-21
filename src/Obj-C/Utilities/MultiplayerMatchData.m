@@ -19,10 +19,12 @@
 
 	if (self)
 	{
-		theData = [NSKeyedArchiver archivedDataWithRootObject:game];
+		NSData* data = [NSKeyedArchiver archivedDataWithRootObject:game];
 
-		if (!theData)
+		if (!data)
 			return nil;
+
+		self.theData = data;
 	}
 
 	return self;
@@ -36,9 +38,9 @@
 	{
 		if (data && !request)
 		{
-			theGame = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+			DiceGame* game = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-			if (!theGame)
+			if (!game)
 			{
 				// Invalid match so delete it
 				for (GKTurnBasedParticipant* participant in match.participants)
@@ -52,17 +54,19 @@
 
 				return nil;
 			}
+
+			theGame = game;
 		}
 		else if (request)
 		{
-			theGame = [[[DiceGame alloc] init] autorelease];
+			self.theGame = [[DiceGame alloc] init];
 
 			// New Match
 			int AICount = (int)request.playerGroup;
 			int humanCount = (int)[match.participants count];
 			int currentHumanCount = 0;
 
-			NSLock* lock = [[[NSLock alloc] init] autorelease];
+			NSLock* lock = [[NSLock alloc] init];
 
 			int totalPlayerCount = AICount + humanCount;
 
@@ -72,7 +76,7 @@
 
 				if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
 				{
-					[theGame addPlayer:[[[SoarPlayer alloc] initWithGame:theGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler] autorelease]];
+					[theGame addPlayer:[[SoarPlayer alloc] initWithGame:theGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler]];
 
 					AICount--;
 				}
@@ -82,9 +86,9 @@
 					currentHumanCount++;
 
 					if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant playerID]])
-						[theGame addPlayer:[[[DiceLocalPlayer alloc] initWithName:[[GKLocalPlayer localPlayer] alias] withHandler:handler withParticipant:participant] autorelease]];
+						[theGame addPlayer:[[DiceLocalPlayer alloc] initWithName:[[GKLocalPlayer localPlayer] alias] withHandler:handler withParticipant:participant]];
 					else
-						[theGame addPlayer:[[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler] autorelease]];
+						[theGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
 				}
 			}
 
@@ -110,8 +114,6 @@
 - (void) dealloc
 {
 	NSLog(@"%@ deallocated", self.class);
-
-	[super dealloc];
 }
 
 @end

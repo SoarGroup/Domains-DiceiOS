@@ -18,22 +18,22 @@
 
 - (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)delegate isPopOver:(BOOL)popOver withMultiplayerView:(MultiplayerView*)multiplayerView;
 
-@property (nonatomic, assign) ApplicationDelegate* delegate;
-@property (nonatomic, assign) MainMenu* mainMenu;
-@property (nonatomic, assign) MultiplayerView* multiplayerView;
+@property (nonatomic, weak) ApplicationDelegate* delegate;
+@property (nonatomic, weak) MainMenu* mainMenu;
+@property (nonatomic, weak) MultiplayerView* multiplayerView;
 
-@property (nonatomic, retain) IBOutlet UILabel* numberOfAIPlayers;
-@property (nonatomic, retain) IBOutlet UIStepper* changeNumberOfAIPlayers;
+@property (nonatomic, strong) IBOutlet UILabel* numberOfAIPlayers;
+@property (nonatomic, strong) IBOutlet UIStepper* changeNumberOfAIPlayers;
 
-@property (nonatomic, retain) IBOutlet UILabel* minimumNumberOfHumanPlayers;
-@property (nonatomic, retain) IBOutlet UIStepper* changeMinimumNumberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UILabel* minimumNumberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UIStepper* changeMinimumNumberOfHumanPlayers;
 
-@property (nonatomic, retain) IBOutlet UILabel* maximumNumberOfHumanPlayers;
-@property (nonatomic, retain) IBOutlet UIStepper* changeMaximumNumberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UILabel* maximumNumberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UIStepper* changeMaximumNumberOfHumanPlayers;
 
-@property (nonatomic, retain) IBOutlet UIButton* joinMatchButton;
+@property (nonatomic, strong) IBOutlet UIButton* joinMatchButton;
 
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView* spinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
 
 @property (nonatomic, assign) BOOL isPopOver;
 

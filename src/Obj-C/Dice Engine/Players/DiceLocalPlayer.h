@@ -21,11 +21,11 @@
     int playerID;
 }
 
-@property (nonatomic, retain) GKTurnBasedParticipant* participant;
-@property (nonatomic, assign) GameKitGameHandler* handler;
-@property (readwrite, retain) NSString *name;
-@property (readwrite, retain) PlayerState *playerState;
-@property (readwrite, assign) PlayGameView *gameView;
+@property (atomic, strong) GKTurnBasedParticipant* participant;
+@property (atomic, weak) GameKitGameHandler* handler;
+@property (atomic, strong) NSString *name;
+@property (atomic, weak) PlayerState *playerState;
+@property (atomic, weak) PlayGameView *gameView;
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 

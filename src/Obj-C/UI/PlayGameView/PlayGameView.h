@@ -48,35 +48,35 @@ const int pushMargin();
 - (NSString*)accessibleTextForString:(NSString*)string;
 
 // Properties based on buttons
-@property (nonatomic, retain) IBOutlet UIButton *bidButton;
-@property (nonatomic, retain) IBOutlet UIButton *bidCountMinusButton;
-@property (nonatomic, retain) IBOutlet UIButton *bidCountPlusButton;
-@property (nonatomic, retain) IBOutlet UIButton *bidFaceMinusButton;
-@property (nonatomic, retain) IBOutlet UIButton *bidFacePlusButton;
-@property (nonatomic, retain) IBOutlet UIButton *exactButton;
-@property (nonatomic, retain) IBOutlet UIButton *passButton;
-@property (nonatomic, retain) IBOutlet UIButton *quitButton;
-@property (nonatomic, retain) IBOutlet UIButton *fullscreenButton;
+@property (nonatomic, strong) IBOutlet UIButton *bidButton;
+@property (nonatomic, strong) IBOutlet UIButton *bidCountMinusButton;
+@property (nonatomic, strong) IBOutlet UIButton *bidCountPlusButton;
+@property (nonatomic, strong) IBOutlet UIButton *bidFaceMinusButton;
+@property (nonatomic, strong) IBOutlet UIButton *bidFacePlusButton;
+@property (nonatomic, strong) IBOutlet UIButton *exactButton;
+@property (nonatomic, strong) IBOutlet UIButton *passButton;
+@property (nonatomic, strong) IBOutlet UIButton *quitButton;
+@property (nonatomic, strong) IBOutlet UIButton *fullscreenButton;
 
 // Properties based on lables
-@property (nonatomic, retain) IBOutlet UILabel *gameStateLabel;
-@property (nonatomic, retain) IBOutlet UILabel *bidCountLabel;
+@property (nonatomic, strong) IBOutlet UILabel *gameStateLabel;
+@property (nonatomic, strong) IBOutlet UILabel *bidCountLabel;
 
 // Properties based on variables
-@property (readwrite, retain) NSMutableArray *challengeButtons;
-@property (readwrite, assign) DiceGame *game;
+@property (readwrite, strong) NSMutableArray *challengeButtons;
+@property (readwrite, weak) DiceGame *game;
 @property (readwrite, assign) BOOL hasPromptedEnd;
-@property (readwrite, retain) NSArray *images;
-@property (readwrite, assign) PlayerState *state;
-@property (readwrite, retain) NSMutableArray *tempViews;
+@property (readwrite, strong) NSArray *images;
+@property (readwrite, weak) PlayerState *state;
+@property (readwrite, strong) NSMutableArray *tempViews;
 @property (readwrite, assign) BOOL isCustom;
 @property (readwrite, atomic, assign) BOOL animationFinished;
-@property (readwrite, retain) NSMutableArray* previousBidImageViews;
+@property (readwrite, strong) NSMutableArray* previousBidImageViews;
 
 // Properties based on views
-@property (nonatomic, retain) IBOutlet UIImageView *bidFaceLabel;
-@property (nonatomic, retain) IBOutlet UIView *controlStateView;
-@property (nonatomic, retain) IBOutlet UIScrollView *gameStateView;
+@property (nonatomic, strong) IBOutlet UIImageView *bidFaceLabel;
+@property (nonatomic, strong) IBOutlet UIView *controlStateView;
+@property (nonatomic, strong) IBOutlet UIScrollView *gameStateView;
 
 // Interface Builder Linked Actions
 - (IBAction)backPressed:(id)sender;

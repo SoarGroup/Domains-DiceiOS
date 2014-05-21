@@ -109,7 +109,7 @@ public:
 
 		for (long i = m_stackTraceDisplayPos ; i != (long)m_stackTrace.size() ; i++)
 		{
-			char const* pMethodName = m_stackTrace[i] ;
+			char const* pMethodName = m_stackTrace[i;
 			PrintDebugMethod(pMethodName, "Entered") ;
 		}
 

@@ -54,10 +54,10 @@
 -(NSString*)gameNameString;
 -(NSString*)lastTurnInfo;
 
-@property(readwrite, assign) ApplicationDelegate *appDelegate;
-@property(readwrite, retain) DiceGameState *gameState;
-@property(readwrite, retain) NSArray *players;
-@property(readwrite, assign) PlayGameView* gameView;
+@property(readwrite, weak) ApplicationDelegate *appDelegate;
+@property(readwrite, strong) DiceGameState *gameState;
+@property(readwrite, strong) NSArray *players;
+@property(readwrite, weak) PlayGameView* gameView;
 @property(readwrite, assign) BOOL started;
 @property(readwrite, assign) BOOL deferNotification;
 

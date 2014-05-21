@@ -19,11 +19,11 @@
 	BOOL matchHasEnded;
 }
 
-@property (nonatomic, assign) DiceLocalPlayer* localPlayer;
-@property (nonatomic, retain) NSArray* remotePlayers;
-@property (nonatomic, readonly, retain) GKTurnBasedMatch* match;
-@property (nonatomic, retain) DiceGame* localGame;
-@property (nonatomic, readonly, retain) NSArray* participants;
+@property (nonatomic, weak) DiceLocalPlayer* localPlayer;
+@property (nonatomic, strong) NSArray* remotePlayers;
+@property (nonatomic, readonly, strong) GKTurnBasedMatch* match;
+@property (nonatomic, strong) DiceGame* localGame;
+@property (nonatomic, readonly, strong) NSArray* participants;
 
 - (id)initWithDiceGame:(DiceGame*)game withLocalPlayer:(DiceLocalPlayer*)localPlayer withRemotePlayers:(NSArray*)remotePlayers withMatch:(GKTurnBasedMatch*)match;
 

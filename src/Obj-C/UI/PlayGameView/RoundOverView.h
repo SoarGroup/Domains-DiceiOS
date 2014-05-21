@@ -23,12 +23,12 @@
 
 - (UIImage*)barImage;
 
-@property (readwrite, assign) DiceGame *game;
-@property (readwrite, assign) PlayerState *player;
-@property (readwrite, assign) PlayGameView *playGameView;
-@property (nonatomic, retain) IBOutlet UILabel *titleLabel;
-@property (nonatomic, retain) IBOutlet UIScrollView *diceView;
-@property (retain, nonatomic) IBOutlet UIButton *doneButton;
-@property (retain, nonatomic) IBOutlet UIImageView* transparencyLevel;
+@property (readwrite, weak) DiceGame *game;
+@property (readwrite, weak) PlayerState *player;
+@property (readwrite, weak) PlayGameView *playGameView;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UIScrollView *diceView;
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UIImageView* transparencyLevel;
 
 @end

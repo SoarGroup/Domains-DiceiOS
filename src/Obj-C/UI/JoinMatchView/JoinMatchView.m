@@ -60,8 +60,6 @@
 - (void) dealloc
 {
 	NSLog(@"%@ deallocated", self.class);
-
-	[super dealloc];
 }
 
 - (void)viewDidLoad
@@ -82,7 +80,7 @@
 		changeMinimumNumberOfHumanPlayers.value == 0 &&
 		changeNumberOfAIPlayers.value == 0)
 	{
-		UIAlertView* alert = [[[UIAlertView alloc] initWithTitle:@"Join Match" message:@"I cannot join a match with no opponents!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease];
+		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Join Match" message:@"I cannot join a match with no opponents!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 
 		[alert show];
 	}
@@ -95,7 +93,8 @@
 		[SingleplayerView startGameWithOpponents:changeNumberOfAIPlayers.value withNavigationController:self.navigationController withAppDelegate:self.delegate withMainMenu:self.mainMenu];
 	else
 	{
-		[self.multiplayerView.popoverController dismissPopoverAnimated:YES];
+		MultiplayerView* multiplayerViewLocal = self.multiplayerView;
+		[multiplayerViewLocal.popoverController dismissPopoverAnimated:YES];
 		
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
 		request.minPlayers = changeMinimumNumberOfHumanPlayers.value + 1;
@@ -109,25 +108,26 @@
 		 {
 			 if (match)
 			 {
-				 if (iPad)
+				 if (self->iPad)
 				 {
 					 self.spinner.hidden = YES;
 					 self.changeNumberOfAIPlayers.enabled = YES;
 					 self.changeMaximumNumberOfHumanPlayers.enabled = YES;
 					 self.changeMinimumNumberOfHumanPlayers.enabled = YES;
-					 [self.multiplayerView joinedNewMatch:request];
+					 [multiplayerViewLocal joinedNewMatch:request];
 				 }
 				 else
 				 {
 					 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 					  {
-						  DiceGame* newGame = [[[DiceGame alloc] initWithAppDelegate:self.delegate] autorelease];
-						  GameKitGameHandler* handler = [[[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match] autorelease];
+						  ApplicationDelegate* delegateLocal = self.delegate;
+						  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegateLocal];
+						  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
 
-						  MultiplayerMatchData* mmd = [[[MultiplayerMatchData alloc] initWithData:matchdata
+						  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchdata
 																					  withRequest:request
 																						withMatch:match
-																					  withHandler:handler] autorelease];
+																					  withHandler:handler];
 
 						  if (!mmd)
 						  {
@@ -155,7 +155,7 @@
 						  }
 
 						  DiceLocalPlayer* localPlayer = nil;
-						  NSMutableArray* remotePlayers = [[[NSMutableArray alloc] init] autorelease];
+						  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
 
 						  for (id<Player> player in newGame.players)
 						  {
@@ -168,14 +168,14 @@
 						  [handler setLocalPlayer:localPlayer];
 						  [handler setRemotePlayers:remotePlayers];
 
-						  [self.delegate.listener addGameKitGameHandler:handler];
+						  [delegateLocal.listener addGameKitGameHandler:handler];
 
 						  void (^quitHandlerFullScreen)(void) =^
 						  {
-							  [self.multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
+							  [multiplayerViewLocal.navigationController popToViewController:self->multiplayerView animated:YES];
 						  };
 
-						  UIViewController *gameView = [[[PlayGameView alloc] initWithGame:newGame withQuitHandler:[[quitHandlerFullScreen copy] autorelease]] autorelease];
+						  UIViewController *gameView = [[PlayGameView alloc] initWithGame:newGame withQuitHandler:[quitHandlerFullScreen copy]];
 
 						  [self.navigationController pushViewController:gameView animated:YES];
 					  }];
@@ -195,7 +195,7 @@
 	{
 		[sender setValue:(sender.value - 1)];
 
-		[[[[UIAlertView alloc] initWithTitle:@"Maximum Players" message:@"Unfortunately, there is a maximum of 7 opponents in multiplayer (AI and Human combined)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] autorelease] show];
+		[[[UIAlertView alloc] initWithTitle:@"Maximum Players" message:@"Unfortunately, there is a maximum of 7 opponents in multiplayer (AI and Human combined)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 	}
 
 	if (sender == changeMaximumNumberOfHumanPlayers &&

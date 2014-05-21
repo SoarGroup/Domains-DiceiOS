@@ -14,17 +14,15 @@
 @class GameKitGameHandler;
 
 @interface LoadingGameView : UIViewController {
-    DiceGame *game;
-    MainMenu *menu;
     UIActivityIndicatorView *spinnerView;
 }
 
 - (id) initWithGame:(DiceGame *)game mainMenu:(MainMenu*)aMenu;
 
-@property (readwrite, retain) DiceGame *game;
-@property (readwrite, retain) MainMenu *menu;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinnerView;
-@property (nonatomic, retain) IBOutlet UILabel* startingGameLabel;
+@property (readwrite, weak) DiceGame *game;
+@property (readwrite, weak) MainMenu *menu;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinnerView;
+@property (nonatomic, strong) IBOutlet UILabel* startingGameLabel;
 
 @end
 

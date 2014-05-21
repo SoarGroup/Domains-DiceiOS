@@ -49,12 +49,12 @@
 
 + (NSString*) makePlayerName;
 
-@property (nonatomic, retain) GKTurnBasedParticipant* participant;
-@property (nonatomic, assign) GameKitGameHandler* handler;
-@property (readwrite, retain) NSString* name;
-@property (readwrite, retain) PlayerState *playerState;
+@property (nonatomic, strong) GKTurnBasedParticipant* participant;
+@property (atomic, weak) GameKitGameHandler* handler;
+@property (readwrite, strong) NSString* name;
+@property (readwrite, atomic, weak) PlayerState *playerState;
 @property (readwrite, assign) int playerID;
-@property (readwrite, assign) DiceGame *game;
-@property (readwrite, retain) NSLock *turnLock;
+@property (readwrite, atomic, weak) DiceGame *game;
+@property (readwrite, strong) NSLock *turnLock;
 
 @end

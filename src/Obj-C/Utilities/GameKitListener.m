@@ -10,10 +10,7 @@
 
 @implementation GameKitListener
 
-- (NSArray*)handlers
-{
-	return handlers;
-}
+@synthesize handlers;
 
 - (id)init
 {
@@ -21,7 +18,7 @@
 
 	if (self)
 	{
-		handlers = [[NSMutableArray alloc] init];
+		self.handlers = [[NSMutableArray alloc] init];
 	}
 
 	return self;
@@ -29,12 +26,7 @@
 
 - (void) dealloc
 {
-	NSLog(@"%@ deallocated", self.class);
-
-	[handlers release];
-
-	[super dealloc];
-}
+	NSLog(@"%@ deallocated", self.class);}
 
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler
 {
@@ -44,14 +36,7 @@
 - (void) removeGameKitGameHandler:(GameKitGameHandler*)handler
 {
 	for (id<Player> player in handler.localGame.players)
-	{
 		[player removeHandler];
-		NSLog(@"%@ Retain Count: %i", player.class, [player retainCount]);
-	}
-
-	NSLog(@"%@ Retain Count: %i", handler.localGame.gameState.class, [handler.localGame.gameState retainCount]);
-	NSLog(@"%@ Retain Count: %i", handler.localGame.class, [handler.localGame retainCount]);
-	[handler release];
 
 	[handlers removeObject:handler];
 }

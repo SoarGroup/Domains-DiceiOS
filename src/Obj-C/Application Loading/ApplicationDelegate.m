@@ -38,9 +38,9 @@
 
 	[[NSUbiquitousKeyValueStore defaultStore] synchronize];
 
-    self.mainMenu = [[[MainMenu alloc] initWithAppDelegate:self] autorelease];
+    self.mainMenu = [[MainMenu alloc] initWithAppDelegate:self];
 
-    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:self.mainMenu] autorelease];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.mainMenu];
 
     self.navigationController.navigationBarHidden = YES;
 
@@ -50,7 +50,7 @@
 
 	self.rootViewController = self.window.rootViewController;
 
-	self.listener = [[[GameKitListener alloc] init] autorelease];
+	self.listener = [[GameKitListener alloc] init];
 	[self authenticateLocalPlayer];
 }
 
@@ -67,9 +67,9 @@
 			NSLog(@"Error authenticating with game center: %@\n", error.description);
 
 		if (viewController != nil)
-			gameCenterLoginViewController = viewController;
+			self->gameCenterLoginViewController = viewController;
 
-		if (localPlayer.isAuthenticated)
+		if ([GKLocalPlayer localPlayer].isAuthenticated)
 			self.mainMenu.multiplayerEnabled = YES;
 		else
 			self.mainMenu.multiplayerEnabled = NO;
@@ -83,11 +83,7 @@
 
 - (void)dealloc
 {
-	[databaseArrayLock release];
-
 	[[GKLocalPlayer localPlayer] unregisterAllListeners];
-
-    [super dealloc];
 }
 
 - (void)storeDidChange:(NSNotification *)notification
