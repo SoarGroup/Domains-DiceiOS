@@ -1553,8 +1553,6 @@ NSArray *buildDiceImages() {
 				dieFrame.size.height += 30;
 				dieButton.frame = dieFrame;
 
-				//[dieButton setBackgroundColor:[UIColor redColor]];
-
 				CGRect imageFrame = CGRectMake(0, 15, dieSize, dieSize);
 
 				UIImageView* dieView = [[UIImageView alloc] initWithFrame:imageFrame];
@@ -1667,12 +1665,18 @@ NSArray *buildDiceImages() {
 
 		// Possibly add challenge button.
 		if (canBid && [self canChallengePlayer:((PlayerState*)playerStates[i]).playerID]) {
-			CGRect frame = CGRectMake(200, 90, 100, 40);
+			CGRect frame = CGRectMake(200, 0, 100, 40);
 
 			if (i == 7)
-				frame.origin.y = 35;
+			{
+				frame.origin.y = -40;
+				frame.origin.x = 0;
+			}
 			else if (i == 6 || i == 5 || (playerCount == 5 && i == 4) || (playerCount == 4 && i == 3))
 				frame.origin.x = 0;
+
+			frame.origin.x += locations[i].x;
+			frame.origin.y += locations[i].y;
 
 			UIButton *challengeButton = [[UIButton alloc] initWithFrame:frame];
 			[challengeButton setTitle:@"Challenge" forState:UIControlStateNormal];
@@ -1681,7 +1685,9 @@ NSArray *buildDiceImages() {
 			[challengeButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0] forState:UIControlStateNormal];
 			challengeButton.titleLabel.font = [UIFont systemFontOfSize:17.0];
 
-			[playerLocation addSubview:challengeButton];
+			[self.view addSubview:challengeButton];
+			[self.view bringSubviewToFront:challengeButton];
+
 			[challengeButtons addObject:challengeButton];
 			[tempViews addObject:challengeButton];
 		}
