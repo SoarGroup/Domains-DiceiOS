@@ -531,7 +531,7 @@ NSArray *buildDiceImages() {
 
 	unsigned long playerCount = [playerStates count];
 
-	CGSize screenSize = [UIApplication sizeInOrientation:self.interfaceOrientation];
+	CGSize screenSize = self.view.frame.size;
 
 	double divisionFactor = 2.0;
 
@@ -891,7 +891,7 @@ NSArray *buildDiceImages() {
 	playerFrame.size.height = y;
 	playerFrame.size.width = maxX;
 
-	CGSize screenSize = [UIApplication sizeInOrientation:self.interfaceOrientation];
+	CGSize screenSize = self.view.frame.size;
 
 	playerFrame.origin.x = screenSize.width / 2.0 - playerFrame.size.width / 2.0;
 	playerFrame.origin.y = screenSize.height / 2.0 - playerFrame.size.height / 2.0;
@@ -1260,7 +1260,7 @@ NSArray *buildDiceImages() {
 	unsigned long playerCount = [playerStates count];
 	int diceHeight = 96 / 2;
 
-	CGSize screenSize = [UIApplication sizeInOrientation:self.interfaceOrientation];
+	CGSize screenSize = self.view.frame.size;
 
 	CGSize viewSize = controlStateView.frame.size;
 
