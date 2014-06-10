@@ -23,11 +23,11 @@
 @property (readwrite, strong) NSString *playerName;
 @property (readwrite, strong) NSLock *lock;
 
-@property (nonatomic) BOOL playerHasPassed;
-@property (nonatomic) BOOL playerHasExacted;
-@property (nonatomic) int numberOfDice;
+@property (nonatomic, assign) BOOL playerHasPassed;
+@property (nonatomic, assign) BOOL playerHasExacted;
+@property (nonatomic, assign) int numberOfDice;
 
-@property (nonatomic) BOOL hasLost;
+@property (nonatomic, assign) BOOL hasLost;
 @property (nonatomic, readonly) BOOL playerHasPushedAllDice;
 
 @property (nonatomic, readwrite) int maxNumberOfDice;

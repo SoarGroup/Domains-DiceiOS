@@ -45,7 +45,7 @@
 {
 	for (GameKitGameHandler* handler in handlers)
 	{
-		if ([handler getMatch] == match)
+		if ([[handler getMatch].matchID isEqualToString:match.matchID])
 			return handler;
 	}
 
@@ -77,6 +77,7 @@
 - (void) player:(GKPlayer *)player didRequestMatchWithPlayers:(NSArray *)playerIDsToInvite
 {
 	// TODO: Implement creating a match from game center
+	NSLog(@"Game Center Match Request");
 }
 
 - (void) player:(GKPlayer *)player issuedChallengeWasCompleted:(GKChallenge *)challenge byFriend:(GKPlayer *)friendPlayer
@@ -86,7 +87,7 @@
 {
 	for (GameKitGameHandler* handler in handlers)
 	{
-		if ([handler getMatch] == match)
+		if ([[handler getMatch].matchID isEqualToString:match.matchID])
 		{
 			[handler updateMatchData];
 			[handler matchHasEnded];
@@ -110,7 +111,7 @@
 
 	for (GameKitGameHandler* handler in handlers)
 	{
-		if ([handler getMatch] == match)
+		if ([[handler getMatch].matchID isEqualToString:match.matchID])
 		{
 			// Found handler for match
 			[handler updateMatchData];

@@ -19,7 +19,7 @@
 
 - (id) initWithGame:(DiceGame *)game mainMenu:(MainMenu*)aMenu;
 
-@property (readwrite, weak) DiceGame *game;
+@property (readwrite, strong) DiceGame *game;
 @property (readwrite, weak) MainMenu *menu;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinnerView;
 @property (nonatomic, strong) IBOutlet UILabel* startingGameLabel;

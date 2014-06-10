@@ -16,6 +16,9 @@
 #import "DiceGame.h"
 #import "SoarPlayer.h"
 
+#import "ApplicationDelegate.h"
+#import "GameKitListener.h"
+
 @implementation DiceGameState
 
 @synthesize playerStates;
@@ -32,7 +35,23 @@
 
 		history = [[NSMutableArray alloc] init];
 		for (int i = 0;i < historyCount;i++)
-			[history addObject:[[HistoryItem alloc] initWithCoder:decoder withCount:i withGameState:self] ];
+			[history addObject:[[HistoryItem alloc] initWithCoder:decoder withCount:i withGameState:self]];
+
+		int roundCount = [decoder decodeIntForKey:@"DiceGameState:rounds"];
+
+		rounds = [[NSMutableArray alloc] init];
+
+		for (int i = 0;i < roundCount;i++)
+		{
+			int historyRoundCount = [decoder decodeIntForKey:[NSString stringWithFormat:@"DiceGameState:history%i", i]];
+
+			NSMutableArray* historyFromRounds = [[NSMutableArray alloc] init];
+
+			for (int j = 0;j < historyRoundCount;j++)
+				[historyFromRounds addObject:[[HistoryItem alloc] initWithCoder:decoder withCount:j withGameState:self withPrefix:[NSString stringWithFormat:@"DiceGameState:history%i", i]]];
+
+			[rounds addObject:historyFromRounds];
+		}
 
 		rounds = [decoder decodeObjectForKey:@"DiceGameState:rounds"];
 		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
@@ -55,35 +74,55 @@
 
 		for (int i = 0;i < losersCount;i++)
 			[losers addObject:[NSNumber numberWithInt:[decoder decodeIntForKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]]]];
+
+		theNewRoundListeners = [[NSMutableArray alloc] init];
 	}
 
 	return self;
 }
 
-- (void) decodePlayers
+- (void) decodePlayers:(GKTurnBasedMatch*)match withHandler:(GameKitGameHandler*)handler
 {
 	NSMutableArray* finalPlayersArray = [[NSMutableArray alloc] init];
+	NSMutableArray* participants = [[NSMutableArray alloc] initWithArray:match.participants];
+
 	NSLock* lock = [[NSLock alloc] init];
 
+	int i = 0;
 	for (NSString* player in playersArrayToDecode)
 	{
-		if (![player isEqualToString:@"Soar"])
+		if ([player isEqualToString:@"Human"])
 		{
-			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:player])
+			GKTurnBasedParticipant* participant = [participants objectAtIndex:0];
+			[participants removeObjectAtIndex:0];
+
+			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:participant.playerID])
 			{
 				// Local Player
-				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:player withHandler:nil withParticipant:nil] ];
+				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:[GKLocalPlayer localPlayer].alias withHandler:handler withParticipant:nil]];
 			}
 			else
-				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:nil withGameKitGameHandler:nil] ];
+			{
+				// Remote Player
+				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
+			}
 		}
 		else
 		{
-			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil] ];
+			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler] ];
 		}
+		[[finalPlayersArray objectAtIndex:i] setID:i];
+		i++;
 	}
 
 	self.players = finalPlayersArray;
+
+	for (HistoryItem* item in history)
+		[item canDecodePlayer];
+
+	for (NSArray* array in rounds)
+		for (HistoryItem* item in array)
+			[item canDecodePlayer];
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
@@ -93,7 +132,18 @@
 	for (int i = 0;i < [history count];i++)
 		[((HistoryItem*)[history objectAtIndex:i]) encodeWithCoder:encoder withCount:i];
 
-	[encoder encodeObject:rounds forKey:@"DiceGameState:rounds"];
+	[encoder encodeInt:(int)[rounds count] forKey:@"DiceGameState:rounds"];
+
+	for (int i = 0;i < [rounds count];i++)
+	{
+		NSArray* historyFromRounds = [rounds objectAtIndex:i];
+
+		[encoder encodeInt:(int)[historyFromRounds count] forKey:[NSString stringWithFormat:@"DiceGameState:history%i", i]];
+
+		for (int j = 0;j < [historyFromRounds count];j++)
+			[((HistoryItem*)[historyFromRounds objectAtIndex:j]) encodeWithCoder:encoder withCount:j withPrefix:[NSString stringWithFormat:@"DiceGameState:history%i", i]];
+	}
+
 	[encoder encodeBool:inSpecialRules forKey:@"DiceGameState:inSpecialRules"];
 	[encoder encodeInt:currentTurn forKey:@"DiceGameState:currentTurn"];
 	[encoder encodeInteger:playersLeft forKey:@"DiceGameState:playersLeft"];
@@ -109,7 +159,7 @@
 	for (id<Player> player in players)
 	{
 		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceRemotePlayer.class])
-			[playersArray addObject:[player getName]];
+			[playersArray addObject:@"Human"];
 		else if ([player isKindOfClass:SoarPlayer.class])
 			[playersArray addObject:@"Soar"];
 	}
@@ -680,7 +730,7 @@
     return labelText;
 }
 
-- (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine {
+- (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine displayDiceCount:(BOOL)diceCount {
     int totalDice = [self countAllDice];
     int unknownDice = [self countUnknownDice:playerIDorMinusOne];
     NSString *conj = singleLine ? @".\nThere were " : @".\n";
@@ -691,10 +741,15 @@
     NSString *previousBidPlayerName = self.previousBid.playerName;
     int bidDice = [self countSeenDice:playerIDorMinusOne rank:previousBid.rankOfDie];
 
-    if (playerIDorMinusOne < 0)
-        return [NSString stringWithFormat:@"%@ bid %d %ds%@%d dice, %d %ds.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, totalDice, bidDice, previousBid.rankOfDie];
+	NSString* diceString = [NSString stringWithFormat:@"%d dice, ", totalDice];
 
-	return [NSString stringWithFormat:@"%@ bid %d %ds%@%d dice, %d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, totalDice, bidDice, previousBid.rankOfDie, unknownDice];
+	if (!diceCount)
+		diceString = @"";
+
+    if (playerIDorMinusOne < 0)
+        return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
+
+	return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods
@@ -708,6 +763,12 @@
             deferNotification = YES;
         }
     }
+
+	DiceGame* localGame = self.game;
+	ApplicationDelegate* appDelegate = localGame.appDelegate;
+	GameKitGameHandler* handler = [appDelegate.listener handlerForGame:localGame];
+	if (handler)
+		[handler saveMatchData];
 
 	while (!canContinueGame)
 		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
@@ -738,10 +799,7 @@
         }
     }
     if (deferNotification)
-	{
-		DiceGame* localGame = self.game;
-        localGame.deferNotification = YES;
-    }
+		localGame.deferNotification = YES;
 }
 
 //Make a player lose the round (set the flags that they've lost)

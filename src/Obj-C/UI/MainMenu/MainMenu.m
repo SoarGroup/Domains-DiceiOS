@@ -96,13 +96,9 @@
 
 - (IBAction)multiplayerGameButtonPressed:(id)sender
 {
-//	UIAlertView *noMultiplayer = [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Multiplayer is not implemented yet and is therefore disabled." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil;
-//
-//	[noMultiplayer show];
-//
-//	return;
-
 	ApplicationDelegate* delegate = self.appDelegate;
+
+	self.multiplayerEnabled = [GKLocalPlayer localPlayer].authenticated;
 
 	if (!self.multiplayerEnabled)
 	{

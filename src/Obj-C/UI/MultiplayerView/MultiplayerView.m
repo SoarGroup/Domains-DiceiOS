@@ -76,6 +76,9 @@
 {
 	self.navigationController.navigationBarHidden = NO;
 
+	for (UIView* view in self.gamesScrollView.subviews)
+		[view removeFromSuperview];
+
 	if (iPad)
 	{
 		[self iPadPopulateScrollView];
@@ -100,6 +103,8 @@
 
 				 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 				  {
+					  NSLog(@"Multiplayer Match View: Updated Match Data Retrieved (iPad) SHA1 Hash: %@", [delegate sha1HashFromData:matchdata]);
+
 					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegate];
 
 					  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
@@ -124,23 +129,6 @@
 					  }
 
 					  [newGame updateGame:[mmd theGame]];
-
-					  for (id<Player> player in [newGame players])
-					  {
-						  [player setHandler:handler];
-
-						  if (![player isKindOfClass:SoarPlayer.class])
-						  {
-							  for (GKTurnBasedParticipant* participant in match.participants)
-							  {
-								  if ([[player getName] isEqualToString:[participant playerID]])
-								  {
-									  [player setParticipant:participant];
-									  break;
-								  }
-							  }
-						  }
-					  }
 
 					  DiceLocalPlayer* localPlayer = nil;
 					  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
@@ -190,7 +178,8 @@
 
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  ApplicationDelegate* delegate = self.appDelegate;
+				  ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+				  NSLog(@"Multiplayer Match View: Updated Match Data (iPad/Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:delegate];
 
@@ -215,24 +204,11 @@
 					  return;
 				  }
 
+				  [mmd.theGame.gameState decodePlayers:match withHandler:handler];
+				  mmd.theGame.players = [NSArray arrayWithArray:mmd.theGame.gameState.players];
+				  mmd.theGame.gameState.players = mmd.theGame.players;
+
 				  [game updateGame:[mmd theGame]];
-
-				  for (id<Player> player in [game players])
-				  {
-					  [player setHandler:handler];
-
-					  if (![player isKindOfClass:SoarPlayer.class])
-					  {
-						  for (GKTurnBasedParticipant* participant in match.participants)
-						  {
-							  if ([[player getName] isEqualToString:[participant playerID]])
-							  {
-								  [player setParticipant:participant];
-								  break;
-							  }
-						  }
-					  }
-				  }
 
 				  [self->miniGamesViewArray addObject:game];
 				  [self->handlerArray addObject:handler];
@@ -283,7 +259,8 @@
 
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
-				  ApplicationDelegate* delegate = self.appDelegate;
+				  ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+				  NSLog(@"Multiplayer Match View: Updated Match Data (iPhone/Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:delegate];
 
@@ -308,30 +285,17 @@
 					  return;
 				  }
 
+				  [mmd.theGame.gameState decodePlayers:match withHandler:handler];
+				  mmd.theGame.players = [NSArray arrayWithArray:mmd.theGame.gameState.players];
+				  mmd.theGame.gameState.players = mmd.theGame.players;
+
 				  [game updateGame:[mmd theGame]];
-
-				  for (id<Player> player in [game players])
-				  {
-					  [player setHandler:handler];
-
-					  if (![player isKindOfClass:SoarPlayer.class])
-					  {
-						  for (GKTurnBasedParticipant* participant in match.participants)
-						  {
-							  if ([[player getName] isEqualToString:[participant playerID]])
-							  {
-								  [player setParticipant:participant];
-								  break;
-							  }
-						  }
-					  }
-				  }
 
 				  [self->miniGamesViewArray addObject:game];
 				  [self->handlerArray addObject:handler];
 
 				  UILabel* matchName = [[UILabel alloc] init];
-				  UILabel* gameInfo = [[UILabel alloc] init];
+				  UILabel* aiMatchInfo = [[UILabel alloc] init];
 				  UILabel* turnInfo = [[UILabel alloc] init];
 				  UILabel* timeoutInfo = [[UILabel alloc] init];
 				  UIButton* playMatch = [[UIButton alloc] init];
@@ -345,9 +309,10 @@
 				  matchName.textColor = [UIColor whiteColor];
 
 				  frame.origin.y += 30;
-				  gameInfo.frame = frame;
-				  gameInfo.text = [game lastTurnInfo];
-				  gameInfo.textColor = [UIColor whiteColor];
+				  aiMatchInfo.frame = frame;
+				  aiMatchInfo.text = [game AINameString];
+				  aiMatchInfo.textColor = [UIColor whiteColor];
+
 
 				  frame.origin.y += 30;
 				  turnInfo.frame = frame;
@@ -409,6 +374,7 @@
 
 				  frame.origin.y += 30;
 				  frame.size.width /= 2.0;
+				  frame.size.width -= 20;
 				  playMatch.frame = frame;
 
 				  [playMatch setTitle:@"Play Match!" forState:UIControlStateNormal];
@@ -416,14 +382,15 @@
 				  if (match.status == GKTurnBasedMatchStatusEnded)
 					  playMatch.titleLabel.text = @"View Match";
 
-				  [playMatch.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0]];
+				  [playMatch setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 				  [playMatch setTag:matchNumber];
 				  [playMatch addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 				  frame.origin.x += frame.size.width;
 				  deleteMatch.frame = frame;
+				  frame.size.width += 20;
 				  [deleteMatch setTitle:@"Remove Match" forState:UIControlStateNormal];
-				  [deleteMatch.titleLabel setTextColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0]];
+				  [deleteMatch setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 				  [deleteMatch.LDContext setObject:match forKey:@"Match"];
 				  [deleteMatch addTarget:self action:@selector(deleteMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -441,7 +408,7 @@
 				  UIView* container = [[UIView alloc] initWithFrame:viewFrame];
 
 				  [container addSubview:matchName];
-				  [container addSubview:gameInfo];
+				  [container addSubview:aiMatchInfo];
 				  [container addSubview:turnInfo];
 				  [container addSubview:timeoutInfo];
 				  [container addSubview:playMatch];

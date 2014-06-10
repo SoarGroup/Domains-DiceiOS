@@ -9,6 +9,8 @@
 #import "GameKitGameHandler.h"
 #import "SoarPlayer.h"
 #import "MultiplayerMatchData.h"
+#import "PlayGameView.h"
+#import "ApplicationDelegate.h"
 
 @implementation GameKitGameHandler
 
@@ -39,7 +41,20 @@
 
 - (void) saveMatchData
 {
-	if (matchHasEnded)
+	BOOL onlyAIs = YES;
+
+	for (int i = localGame.gameState.currentTurn;i >= 0;i--)
+	{
+		if ([[localGame.gameState getPlayerWithID:i] isKindOfClass:DiceLocalPlayer.class])
+			break;
+		else if (![[localGame.gameState getPlayerWithID:i] isKindOfClass:SoarPlayer.class])
+		{
+			onlyAIs = NO;
+			break;
+		}
+	}
+
+	if (matchHasEnded || !onlyAIs)
 		return;
 
 	if (![NSThread isMainThread])
@@ -49,6 +64,9 @@
 	}
 	
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
+
+	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+	NSLog(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
 
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
@@ -72,6 +90,9 @@
 	 {
 		 if (!error)
 		 {
+			 ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+			 NSLog(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
+
 			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
 
 			 [self->localGame updateGame:updatedGame];
@@ -98,6 +119,10 @@
 	}
 
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
+
+	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+	NSLog(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
+
 	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:participants];
 
 	for (int i = localGame.gameState.currentTurn;i > 0;i--)
@@ -142,6 +167,14 @@
 		[self saveMatchData];
 	else if ([player isKindOfClass:DiceLocalPlayer.class])
 	{
+		NSMutableArray* localParticipants = [[NSMutableArray alloc] init];
+
+		for (GKTurnBasedParticipant* participant in [match participants])
+		{
+			if (participant != [self myParticipant])
+				[localParticipants addObject:participant];
+		}
+
 		if ([self myParticipant].matchOutcome != GKTurnBasedMatchOutcomeNone || remove)
 		{
 			if ([self myParticipant].matchOutcome == GKTurnBasedMatchOutcomeNone)
@@ -155,11 +188,22 @@
 				else
 					outcome = GKTurnBasedMatchOutcomeQuit;
 
-				[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
-				 {
-					 if (error)
-						 NSLog(@"Error when player quit: %@\n", error.description);
-				 }];
+				if ([[match currentParticipant].playerID isEqual:[GKLocalPlayer localPlayer].playerID])
+				{
+					[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
+					 {
+						 if (error)
+							 NSLog(@"Error when player quit: %@\n", error.description);
+					 }];
+				}
+				else
+				{
+					[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
+					 {
+						 if (error)
+							 NSLog(@"Error when player quit: %@\n", error.description);
+					 }];
+				}
 			}
 
 			[match removeWithCompletionHandler:^(NSError* error)
@@ -180,11 +224,22 @@
 		else
 			outcome = GKTurnBasedMatchOutcomeQuit;
 
-		[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
-		 {
-			 if (error)
-				 NSLog(@"Error when player quit: %@\n", error.description);
-		 }];
+		if ([[match currentParticipant].playerID isEqual:[GKLocalPlayer localPlayer].playerID])
+		{
+			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
+			 {
+				 if (error)
+					 NSLog(@"Error when player quit: %@\n", error.description);
+			 }];
+		}
+		else
+		{
+			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
+			 {
+				 if (error)
+					 NSLog(@"Error when player quit: %@\n", error.description);
+			 }];
+		}
 	}
 }
 

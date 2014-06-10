@@ -190,6 +190,8 @@ NSArray *buildDiceImages() {
 
 	localGame.gameState.canContinueGame = NO;
 
+	shouldNotifyCurrentPlayer = !localGame->shouldNotifyOfNewRound;
+
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
     return YES;
@@ -199,7 +201,7 @@ NSArray *buildDiceImages() {
 {
 	DiceGame* localGame = self.game;
 
-	NSString *headerString = [localGame.gameState headerString:-1 singleLine:YES];
+	NSString *headerString = [localGame.gameState headerString:-1 singleLine:YES displayDiceCount:NO];
 	PlayerState* playerStateLocal = [localGame.gameState lastHistoryItem].player;
 	NSString *lastMoveString = [localGame.gameState historyText:playerStateLocal.playerID];
 
@@ -598,7 +600,8 @@ NSArray *buildDiceImages() {
 	if (handler)
 		[handler saveMatchData];
 
-    [localGame.gameState addNewRoundListener:self];
+	if ([localGame.gameState.theNewRoundListeners count] == 0)
+		[localGame.gameState addNewRoundListener:self];
 
 	if (fullScreenView)
 		[self fullScreenViewGameInitialization];
@@ -817,6 +820,9 @@ NSArray *buildDiceImages() {
 	// State initialization
 	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
+
+	if ([localGame.gameState.theNewRoundListeners count] == 0)
+		[localGame.gameState addNewRoundListener:self];
 
     if (localState == nil)
     {
@@ -1882,7 +1888,9 @@ NSArray *buildDiceImages() {
 	[markedToPushDiceWithPushedDice addObjectsFromArray:[stateLocal pushedDice]];
 
     Bid *bid = [[Bid alloc] initWithPlayerID:stateLocal.playerID name:stateLocal.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice];
-    if (!([localGame.gameState getCurrentPlayerState].playerID == stateLocal.playerID && [localGame.gameState checkBid:bid playerSpecialRules:([localGame.gameState usingSpecialRules] && [stateLocal numberOfDice] > 1)])) {
+    if (!([localGame.gameState getCurrentPlayerState].playerID == stateLocal.playerID &&
+		  [localGame.gameState checkBid:bid playerSpecialRules:([localGame.gameState usingSpecialRules] &&
+																[stateLocal numberOfDice] > 1)])) {
         NSString *title = @"Illegal raise";
 		NSString *pushedDice = @"";
 

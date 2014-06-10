@@ -121,6 +121,9 @@
 					 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
 					  {
 						  ApplicationDelegate* delegateLocal = self.delegate;
+
+						  NSLog(@"Join Match View: Match Data Retrieved SHA1 Hash: %@", [delegateLocal sha1HashFromData:matchdata]);
+
 						  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegateLocal];
 						  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
 
@@ -136,23 +139,6 @@
 						  }
 
 						  [newGame updateGame:[mmd theGame]];
-
-						  for (id<Player> player in [newGame players])
-						  {
-							  [player setHandler:handler];
-
-							  if (![player isKindOfClass:SoarPlayer.class])
-							  {
-								  for (GKTurnBasedParticipant* participant in match.participants)
-								  {
-									  if ([[player getName] isEqualToString:[participant playerID]])
-									  {
-										  [player setParticipant:participant];
-										  break;
-									  }
-								  }
-							  }
-						  }
 
 						  DiceLocalPlayer* localPlayer = nil;
 						  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
@@ -182,7 +168,19 @@
 				 }
 			 }
 			 else
+			 {
 				 NSLog(@"No match returned from game center! %@\n", error.description);
+
+				 if (error.code == 6)
+				 {
+					 MainMenu* menu = self.mainMenu;
+					 menu.multiplayerEnabled = NO;
+					 
+					 [menu.navigationController popToViewController:menu animated:YES];
+
+					 [[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Unfortunately, game center was just disabled.  This can be caused by numerous things including lack of internet connectivity or a bug in Game Center.  Please reauthenticate with game center to continue playing multiplayer." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+				 }
+			 }
 		 }];
 	}
 }

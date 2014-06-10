@@ -8,6 +8,7 @@
 
 #import "MultiplayerMatchData.h"
 #import "SoarPlayer.h"
+#import "ApplicationDelegate.h"
 
 @implementation MultiplayerMatchData
 
@@ -20,6 +21,9 @@
 	if (self)
 	{
 		NSData* data = [NSKeyedArchiver archivedDataWithRootObject:game];
+
+		ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
+		NSLog(@"Multiplayer Match Data: Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
 
 		if (!data)
 			return nil;
@@ -55,10 +59,29 @@
 				return nil;
 			}
 
-			theGame = game;
+			self.theGame = game;
+		}
+		else if (data && request)
+		{
+			// Just joined but there is a game already in progress!
+
+			DiceGame* game = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+
+			if (game.gameState)
+			{
+				[game.gameState decodePlayers:match withHandler:handler];
+				game.players = [NSArray arrayWithArray:game.gameState.players];
+				game.gameState.players = game.players;
+			}
+			else
+				goto request;
+
+			self.theGame = game;
 		}
 		else if (request)
 		{
+		request:
+
 			self.theGame = [[DiceGame alloc] init];
 
 			// New Match

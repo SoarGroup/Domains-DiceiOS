@@ -19,9 +19,11 @@ typedef enum HistoryItemType {
 @private
     NSInteger playerLosingADie;
     NSInteger playerWinningADie;
+
+	int playerIDDecode;
 }
 
-@property (readwrite, weak) PlayerState *player;
+@property (readwrite, nonatomic, weak) PlayerState *player;
 @property (readwrite, assign) ActionType actionType;
 @property (readwrite, assign) HistoryItemType historyType;
 @property (readwrite, assign) int value;
@@ -38,10 +40,14 @@ typedef enum HistoryItemType {
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid andWithResult:(int)newResult;
 
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withGameState:(DiceGameState*)state;
+-(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withGameState:(DiceGameState*)state withPrefix:(NSString*)prefix;
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count;
+-(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count withPrefix:(NSString*)prefix;
 
 - (void)setLosingPlayer:(NSInteger)playerID;
 - (void)setWinningPlayer:(NSInteger)playerID;
+
+- (void)canDecodePlayer;
 
 - (NSString *)asString;
 - (NSString *)asDetailedString;

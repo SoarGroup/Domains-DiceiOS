@@ -89,26 +89,29 @@
 	{
 		self.gameState = state;
 		
-		hasLost = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
 		specialRules = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:specialRules", count]];
-		hasDoneSpecialRules = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasDoneSpecialRules", count]];
+		self.hasDoneSpecialRules = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasDoneSpecialRules", count]];
 
-		playerID = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:playerID", count]];
-		playerName = [decoder decodeObjectForKey:[NSString stringWithFormat:@"PlayerState%i:playerName", count]];
+		self.playerID = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:playerID", count]];
+		self.playerName = [decoder decodeObjectForKey:[NSString stringWithFormat:@"PlayerState%i:playerName", count]];
 
-		playerHasPassed = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPassed", count]];
-		playerHasExacted = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasExacted", count]];
-		numberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:numberOfDice", count]];
+		self.playerHasPassed = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPassed", count]];
+		self.playerHasExacted = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasExacted", count]];
+		self.numberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:numberOfDice", count]];
 
-		hasLost = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
+		self.hasLost = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:hasLost", count]];
 		playerHasPushedAllDice = [decoder decodeBoolForKey:[NSString stringWithFormat:@"PlayerState%i:playerHasPushedAllDice", count]];
 
-		maxNumberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:maxNumberOfDice", count]];
+		self.maxNumberOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:maxNumberOfDice", count]];
 
 		int arrayOfDiceCount = [decoder decodeIntForKey:[NSString stringWithFormat:@"PlayerState%i:arrayOfDice", count]];
 
+		self.numberOfDice = arrayOfDiceCount;
+
+		self.arrayOfDice = [[NSMutableArray alloc] init];
+
 		for (int i = 0;i < arrayOfDiceCount;i++)
-			[arrayOfDice addObject:[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]]];
+			[self.arrayOfDice addObject:[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"PlayerState%i:", count]]];
 	}
 
 	return self;
@@ -590,7 +593,7 @@
 - (NSString *)headerString:(BOOL)singleLine {
 	DiceGameState* gameStateLocal = self.gameState;
 
-    return [gameStateLocal headerString:self.playerID singleLine:singleLine];
+    return [gameStateLocal headerString:self.playerID singleLine:singleLine displayDiceCount:YES];
 }
 
 - (NSInteger) getNumberOfPlayers {

@@ -23,6 +23,9 @@
 {
     GameTime time;
 	int nextID;
+
+@public
+	BOOL shouldNotifyOfNewRound;
 }
 
 -(DiceGame*)initWithAppDelegate:(ApplicationDelegate*)appDelegate;
@@ -52,6 +55,8 @@
 -(void) notifyCurrentPlayer;
 
 -(NSString*)gameNameString;
+-(NSString*)AINameString;
+
 -(NSString*)lastTurnInfo;
 
 @property(readwrite, weak) ApplicationDelegate *appDelegate;

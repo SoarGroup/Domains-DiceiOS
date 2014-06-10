@@ -72,7 +72,7 @@
     //Initialize ourself by calling our default method but also set some other properties
 - (id)initWithPlayerID:(NSInteger)playerIDToSet name:(NSString *)aPlayerName dice:(int)dice rank:(int)rank push:(NSArray *)dicePushing
 {
-    self = [self initWithPlayerID:playerID name:aPlayerName dice:dice rank:rank];
+    self = [self initWithPlayerID:playerIDToSet name:aPlayerName dice:dice rank:rank];
     if (self)
         diceToPush = dicePushing;
 

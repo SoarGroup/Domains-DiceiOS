@@ -265,8 +265,10 @@
         alert.tag = ACTION_QUIT;
         [alert show];
     }
-	
-    [gameLocal notifyCurrentPlayer];
+
+	PlayGameView* gameView = self.playGameView;
+	if (gameView->shouldNotifyCurrentPlayer)
+		[gameLocal notifyCurrentPlayer];
 }
 
 - (UIImage*)barImage

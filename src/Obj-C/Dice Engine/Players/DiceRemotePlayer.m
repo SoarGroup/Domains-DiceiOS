@@ -12,7 +12,7 @@
 
 @implementation DiceRemotePlayer
 
-@synthesize playerID, handler, participant, displayName;
+@synthesize playerID, handler, displayName, participant;
 
 - (id) initWithGameKitParticipant:(GKTurnBasedParticipant*)remotePlayer withGameKitGameHandler:(GameKitGameHandler *)newHandler
 {
@@ -20,12 +20,13 @@
 
 	if (self)
 	{
-		participant = remotePlayer;
+		self.participant = remotePlayer;
 		self.handler = newHandler;
 		self.playerID = -2;
-		self.displayName = participant.playerID;
+		self.displayName = self.participant.playerID;
 
-		if (self.displayName)
+		if (self.participant.status != GKTurnBasedParticipantStatusMatching &&
+			self.participant.status != GKTurnBasedParticipantStatusUnknown)
 		{
 			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 			 {
@@ -47,14 +48,28 @@
 
 - (NSString*) getName
 {
-	if (!self.displayName)
+	if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
+		self.participant.status == GKTurnBasedParticipantStatusUnknown)
 		return @"Player";
 
 	return self.displayName;
 }
 
 - (void) updateState:(PlayerState*)state
-{}
+{
+	if (self.participant.status != GKTurnBasedParticipantStatusMatching &&
+		self.participant.status != GKTurnBasedParticipantStatusUnknown &&
+		self.displayName == self.participant.playerID)
+	{
+		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+		 {
+			 if (error)
+				 NSLog(@"Error loading player identifiers: %@", error.description);
+			 else
+				 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+		 }];
+	}
+}
 
 - (int) getID
 {
@@ -74,12 +89,12 @@
 
 - (void)notifyHasLost
 {
-	participant.matchOutcome = GKTurnBasedMatchOutcomeLost;
+	self.participant.matchOutcome = GKTurnBasedMatchOutcomeLost;
 }
 
 - (void)notifyHasWon
 {
-	participant.matchOutcome = GKTurnBasedMatchOutcomeWon;
+	self.participant.matchOutcome = GKTurnBasedMatchOutcomeWon;
 }
 
 - (void) end
@@ -88,6 +103,26 @@
 - (void)removeHandler
 {
 	self.handler = nil;
+}
+
+- (void)setParticipant:(GKTurnBasedParticipant *)participant2
+{
+	if (participant == participant2)
+		return;
+
+	participant = participant2;
+
+	if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
+		self.participant.status == GKTurnBasedParticipantStatusUnknown)
+		return;
+
+	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+	 {
+		 if (error)
+			 NSLog(@"Error loading player identifiers: %@", error.description);
+		 else
+			 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+	 }];
 }
 
 @end

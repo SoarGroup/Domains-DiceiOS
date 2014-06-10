@@ -9,7 +9,13 @@
 #import "ApplicationDelegate.h"
 #import "Application.h"
 
+#import "MultiplayerView.h"
+#import "JoinMatchView.h"
+#import "PlayGameView.h"
+
 #import <GameKit/GameKit.h>
+
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation ApplicationDelegate
 @synthesize rootViewController;
@@ -72,7 +78,35 @@
 		if ([GKLocalPlayer localPlayer].isAuthenticated)
 			self.mainMenu.multiplayerEnabled = YES;
 		else
+		{
 			self.mainMenu.multiplayerEnabled = NO;
+
+			BOOL playingMatchWithMultiplayer = NO;
+
+			if ([self.mainMenu.navigationController.visibleViewController isKindOfClass:PlayGameView.class])
+			{
+				PlayGameView* view = (PlayGameView*)self.mainMenu.navigationController.visibleViewController;
+				DiceGame* localGame = view.game;
+
+				for (id<Player> player in localGame.players)
+				{
+					if ([player isKindOfClass:DiceRemotePlayer.class])
+					{
+						playingMatchWithMultiplayer = YES;
+						break;
+					}
+				}
+			}
+
+			if ([self.mainMenu.navigationController.visibleViewController isKindOfClass:MultiplayerView.class] ||
+				[self.mainMenu.navigationController.visibleViewController isKindOfClass:JoinMatchView.class] ||
+				playingMatchWithMultiplayer)
+			{
+				[self.mainMenu.navigationController popToViewController:self.mainMenu animated:YES];
+
+				[[[UIAlertView alloc] initWithTitle:@"Multiplayer Disabled" message:@"Unfortunately, game center was just disabled.  This can be caused by numerous things including lack of internet connectivity or a bug in Game Center.  Please reauthenticate with game center to continue playing multiplayer." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+			}
+		}
 	};
 
 	if (localPlayer.isAuthenticated)
@@ -150,6 +184,26 @@
 	[databaseArrayLock unlock];
 
 	return temp;
+}
+
+- (NSString*)sha1HashFromData:(NSData *)data
+{
+	void *cData = malloc([data length]);
+	unsigned char resultCString[20];
+	[data getBytes:cData length:[data length]];
+
+	CC_SHA1(cData, (unsigned int)[data length], resultCString);
+	free(cData);
+
+	NSString *result = [NSString stringWithFormat:
+						@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+						resultCString[0], resultCString[1], resultCString[2], resultCString[3],
+						resultCString[4], resultCString[5], resultCString[6], resultCString[7],
+						resultCString[8], resultCString[9], resultCString[10], resultCString[11],
+						resultCString[12], resultCString[13], resultCString[14], resultCString[15],
+						resultCString[16], resultCString[17], resultCString[18], resultCString[19]
+						];
+	return result;
 }
 
 @end

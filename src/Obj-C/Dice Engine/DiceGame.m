@@ -36,6 +36,8 @@
 		nextID = 0;
 
 		self.players = [[NSArray alloc] init];
+
+		shouldNotifyOfNewRound = NO;
 	}
 
     return self;
@@ -55,15 +57,32 @@
 {
 	NSString* name = @"";
 
-	for (int i = 0;i < [players count];++i)
+	for (id<Player> player in players)
 	{
-		name = [name stringByAppendingString:[[players objectAtIndex:i] getName]];
-
-		if (i != ([players count] - 1))
-			name = [name stringByAppendingString:@" vs "];
+		if (![player isKindOfClass:SoarPlayer.class])
+			name = [name stringByAppendingFormat:@"%@ vs ", [player getName]];
 	}
 
+	if ([name length] > 4)
+		name = [name substringToIndex:[name length] - 4];
+
 	return name;
+}
+
+-(NSString*)AINameString
+{
+	int AICount = 0;
+
+	for (id<Player> player in players)
+	{
+		if ([player isKindOfClass:SoarPlayer.class])
+			AICount++;
+	}
+
+	if (AICount > 0)
+		return [NSString stringWithFormat:@"%i AIs", AICount];
+
+	return [NSString string];
 }
 
 -(NSString*)lastTurnInfo
@@ -93,9 +112,8 @@
 		self.gameState = [decoder decodeObjectForKey:@"DiceGame:gameState"];
 		self.gameState.game = self;
 
-		[self.gameState decodePlayers];
-		self.players = [NSArray arrayWithArray:gameState.players];
-		self.gameState.players = self.players;
+		if ([decoder containsValueForKey:@"NewRound"])
+			shouldNotifyOfNewRound = YES;
 	}
 
 	return self;
@@ -115,10 +133,22 @@
 	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
 
 	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
+
+	if (gameState.lastHistoryItem.actionType == ACTION_CHALLENGE_BID ||
+		gameState.lastHistoryItem.actionType == ACTION_CHALLENGE_PASS ||
+		gameState.lastHistoryItem.actionType == ACTION_EXACT)
+	{
+		[encoder encodeBool:YES forKey:@"NewRound"];
+	}
 }
 
 - (void)updateGame:(DiceGame *)remote
 {
+	if (!remote)
+		return;
+
+	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
+
 	if (remote.players)
 		self.players = [NSArray arrayWithArray:remote.players];
 
@@ -135,8 +165,32 @@
 	time = remote->time;
 	nextID = remote->nextID;
 
+	BOOL didAdvanceTurns = NO;
+
 	if (remote.gameState)
+	{
+		if (remote.gameState.currentTurn != self.gameState.currentTurn)
+			didAdvanceTurns = YES;
+
+		if ([remote.gameState.history count] == 1 &&
+			((HistoryItem*)[remote.gameState.history objectAtIndex:0]).historyType == metaHistoryItem &&
+			[self.gameState.history count] > 1)
+		{
+			// Round over
+			for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
+				[listener roundEnding];
+		}
+
 		self.gameState = remote.gameState;
+
+		if (players)
+			self.gameState.players = players;
+	}
+
+	[self publishState];
+
+	if (didAdvanceTurns && ![[self.gameState getCurrentPlayer] isKindOfClass:DiceRemotePlayer.class])
+		[self notifyCurrentPlayer];
 }
 
 - (void) setGameView:(PlayGameView*)aGameView
@@ -178,7 +232,10 @@
 -(void)startGame
 {
     if (self.started)
+	{
+		[self publishState];
 		return;
+	}
 
     self.started = YES;
     self.gameState = [[DiceGameState alloc] initWithPlayers:self.players numberOfDice:5 game:self];
@@ -193,6 +250,14 @@
     {
         [player updateState:[gameState getPlayerState:[player getID]]];
     }
+
+	if (shouldNotifyOfNewRound && self.gameView)
+	{
+		for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
+			[listener roundEnding];
+		
+		shouldNotifyOfNewRound = NO;
+	}
 }
 
 -(void) notifyCurrentPlayer
@@ -219,6 +284,9 @@
 {
     NSLog(@"Handling action: %i", action.actionType);
     self.deferNotification = NO;
+
+	self.gameState.game = self;
+
     switch (action.actionType)
     {
         case ACTION_BID:

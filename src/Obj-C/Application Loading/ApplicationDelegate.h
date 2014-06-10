@@ -31,4 +31,6 @@
 
 - (void)storeDidChange:(NSNotification *)notification;
 
+- (NSString*)sha1HashFromData:(NSData*)data;
+
 @end

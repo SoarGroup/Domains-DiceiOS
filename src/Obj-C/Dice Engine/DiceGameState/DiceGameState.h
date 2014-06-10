@@ -35,7 +35,8 @@
 // Encoding
 -(id)initWithCoder:(NSCoder*)decoder;
 -(void)encodeWithCoder:(NSCoder*)encoder;
--(void)decodePlayers;
+
+-(void)decodePlayers:(GKTurnBasedMatch*)match withHandler:(GameKitGameHandler*)handler;
 
 - (id)initWithPlayers:(NSArray *)players numberOfDice:(int)numberOfDice game:(DiceGame*)game;
 - (void)dealloc;
@@ -73,7 +74,7 @@
 - (NSInteger)historySize;
 - (NSInteger) getNumberOfPlayers:(BOOL)includeLostPlayers;
 - (NSString *)stateString:(int)playerID;
-- (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine;
+- (NSString *)headerString:(int)playerIDorMinusOne singleLine:(BOOL)singleLine displayDiceCount:(BOOL)diceCount;
 - (NSArray *) lastMoveForPlayer:(NSInteger)playerID;
 - (BOOL)checkBid:(Bid *)bid playerSpecialRules:(BOOL)playerSpecialRules;
 - (BOOL)checkPlayer:(NSInteger)playerID;

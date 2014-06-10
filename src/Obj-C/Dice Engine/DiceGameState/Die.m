@@ -66,6 +66,16 @@
     hasBeenPushed = YES;
 }
 
+- (NSString*)description
+{
+	return [self asString];
+}
+
+- (NSString *)debugDescription
+{
+	return [self asString];
+}
+
 - (NSString *)asString
 {
     return [[NSString stringWithFormat:@"%i", dieValue] stringByAppendingString:(hasBeenPushed ? @"*" : @"")];

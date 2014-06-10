@@ -38,6 +38,9 @@ const int pushMargin();
 	NSInteger buttonIndex2;
 
 	BOOL hasTouchedBidCounterThisTurn;
+
+@public
+	BOOL shouldNotifyCurrentPlayer;
 }
 
 // Utility Functions
@@ -64,7 +67,7 @@ const int pushMargin();
 
 // Properties based on variables
 @property (readwrite, strong) NSMutableArray *challengeButtons;
-@property (readwrite, weak) DiceGame *game;
+@property (readwrite, strong) DiceGame *game;
 @property (readwrite, assign) BOOL hasPromptedEnd;
 @property (readwrite, strong) NSArray *images;
 @property (readwrite, weak) PlayerState *state;
