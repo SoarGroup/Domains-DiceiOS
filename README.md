@@ -6,7 +6,7 @@ Trunk Version: 2.0-Development
 Status:
 
 - 2.0 Singleplayer: Done/Stable
-- 2.0 Multiplayer: Exists but untested, probably completely broken
+- 2.0 Multiplayer: Challenges do not work
 
 Michigan Liar's Dice is a Dice game for iOS devices including iPad and iPhone. It is a version of Liar's Dice with an Artificial Intelligence using the Soar Cognitive Architecture.  The game also features Game Center-Based Turn-Based Multiplayer.  Liar's Dice has been worked on by several people but mainly by Alex Turner.
 
