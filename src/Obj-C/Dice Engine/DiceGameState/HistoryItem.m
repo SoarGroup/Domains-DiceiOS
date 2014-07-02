@@ -150,7 +150,7 @@
 	DiceGameState* gameStateLocal = self.diceGameState;
 
     NSString *first = nil;
-    NSString *playerName = playerLocal.playerName;
+    NSString *playerName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLocal.playerID]) getDisplayName];
     NSString *second = nil;
     if (self.historyType == actionHistoryItem)
     {
@@ -159,20 +159,22 @@
                 first = [NSString stringWithFormat:@"%@ accepted.", playerName];
                 break;
             case ACTION_BID:
+				[self.bid setPlayerName:playerName];
                 first = [self.bid asStringOldStyle];
+				[self.bid setPlayerName:playerLocal.playerName];
                 break;
             case ACTION_PUSH:
                 first = [NSString stringWithFormat:@", pushed."];
                 break;
             case ACTION_CHALLENGE_BID:
 			{
-				NSString *valueName = [gameStateLocal getPlayerState:value].playerName;
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
                 first = [NSString stringWithFormat:@"%@ challenged %@'s bid.", playerName, valueName];
                 break;
 			}
             case ACTION_CHALLENGE_PASS:
             {
-				NSString *valueName = [gameStateLocal getPlayerState:value].playerName;
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
                 first = [NSString stringWithFormat:@"%@ challenged %@'s pass.", playerName, valueName];
                 break;
             }
@@ -194,10 +196,10 @@
         }
 
         if (playerLosingADie != -1) {
-            NSString *valueName = [gameStateLocal getPlayerState:playerLosingADie].playerName;
+            NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLosingADie]) getDisplayName];
             second = [NSString stringWithFormat:@"%@ lost a die.", valueName];
         } else if (playerWinningADie != -1) {
-            NSString *valueName = [gameStateLocal getPlayerState:playerWinningADie].playerName;
+            NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerWinningADie]) getDisplayName];
             second = [NSString stringWithFormat:@"%@ won a die.", valueName];
         }
         

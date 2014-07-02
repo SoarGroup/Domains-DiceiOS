@@ -37,9 +37,22 @@
 	NSLog(@"Dice Local Player deallocated\n");
 }
 
-- (NSString*) getName
+- (NSString*) getDisplayName
 {
-    return self.name;
+	NSString* displayName = self.name;
+
+	if ([GKLocalPlayer localPlayer].isAuthenticated)
+		displayName = @"You";
+
+    return displayName;
+}
+
+- (NSString*) getGameCenterName
+{
+	if (![GKLocalPlayer localPlayer].isAuthenticated)
+		return self.name;
+	
+	return [[GKLocalPlayer localPlayer] playerID];
 }
 
 - (void) updateState:(PlayerState*)state

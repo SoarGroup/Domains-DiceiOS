@@ -13,7 +13,9 @@
 @class GameKitGameHandler;
 
 @protocol Player <NSObject>
-- (NSString*) getName;
+- (NSString*) getDisplayName;
+- (NSString*) getGameCenterName;
+
 - (void) updateState:(PlayerState*)state;
 - (int) getID;
 - (void) setID:(int)anID;

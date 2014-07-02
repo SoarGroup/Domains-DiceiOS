@@ -14,6 +14,8 @@
 @class DiceGame;
 @class PlayerState;
 @class MainMenu;
+@class MultiplayerView;
+@class RoundOverView;
 
 const int pushMargin();
 
@@ -80,6 +82,9 @@ const int pushMargin();
 @property (nonatomic, strong) IBOutlet UIImageView *bidFaceLabel;
 @property (nonatomic, strong) IBOutlet UIView *controlStateView;
 @property (nonatomic, strong) IBOutlet UIScrollView *gameStateView;
+
+@property (nonatomic, weak) MultiplayerView* multiplayerView;
+@property (nonatomic, strong) RoundOverView* overView;
 
 // Interface Builder Linked Actions
 - (IBAction)backPressed:(id)sender;

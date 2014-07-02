@@ -16,6 +16,8 @@
 #import "UIIMage+ImageEffects.h"
 #import "ApplicationDelegate.h"
 
+#import "MultiplayerView.h"
+
 @implementation UIViewController (BackButtonHandler)
 
 @end
@@ -111,6 +113,7 @@
 @synthesize challengeButtons;
 @synthesize fullscreenButton;
 @synthesize tempViews, images;
+@synthesize multiplayerView, overView;
 
 @synthesize game, state, isCustom, animationFinished, previousBidImageViews;
 
@@ -209,11 +212,20 @@ NSArray *buildDiceImages() {
 
 	if (!fullScreenView)
 	{
-		RoundOverView *overView = [[RoundOverView alloc]
+		self.overView = [[RoundOverView alloc]
 									initWithGame:localGame
 									player:state playGameView:self
 									withFinalString:finalString];
-		[self.navigationController presentViewController:overView animated:YES completion:nil];
+
+		if (self.navigationController)
+			[self.navigationController presentViewController:overView animated:YES completion:nil];
+		else
+		{
+			overView.view.frame = self.view.frame;
+			MultiplayerView* mv = self.multiplayerView;
+			[mv.gamesScrollView addSubview:overView.view];
+			[mv.gamesScrollView bringSubviewToFront:overView.view];
+		}
 	}
 	else
 	{
@@ -370,7 +382,7 @@ NSArray *buildDiceImages() {
         [alert show];
     }
     else if ([localGame.gameState hasAPlayerWonTheGame]) {
-        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getName]];
+        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
@@ -1056,34 +1068,40 @@ NSArray *buildDiceImages() {
 
     NSArray *playerStates = localGame.gameState.playerStates;
 	BOOL canBid = [localState canBid];
-    int i = -1;
     int labelHeight = 64 / 2;
     int diceHeight = 96 / 2;
     int dividerHeight = 8 / 2;
 
     int dy = labelHeight + diceHeight + dividerHeight;
     int buttonWidth = 160 / 2;
-	bool hasHitControl = false;
 
-    for (PlayerState *playerState in playerStates)
+	NSMutableArray* playerStatesReordered = [NSMutableArray arrayWithArray:playerStates];
+
+	for (NSUInteger i = [playerStatesReordered count]; i > 0; i--) {
+		PlayerState* obj = [playerStatesReordered lastObject];
+		[playerStatesReordered insertObject:obj atIndex:0];
+		[playerStatesReordered removeLastObject];
+
+		if (obj.playerID == localState.playerID)
+			break;
+	}
+
+	for (int z = 0;z < [playerStatesReordered count];++z)
     {
+		PlayerState* playerState = [playerStatesReordered objectAtIndex:z];
+
         // Whether this player is the play that we're controlling
         bool control = localState.playerID == playerState.playerID;
-
-		if (control)
-			hasHitControl = true;
-
-        ++i;
 
         // The parent view to put these UI elements into.
         UIView *parent = (control ? controlStateViewToUpdate : gameStateViewToUpdate);
 
-        int labelIndex = control ? 0 : i - 1;
-
         int starSize = 64 / 2;
         int x = starSize;
 
-        int y = (hasHitControl ? labelIndex : labelIndex + 1) * dy;
+		int labelIndex = control ? 0 : z-1;
+
+        int y = labelIndex * dy;
 		int width = parent.frame.size.width;
         int height = labelHeight;
 
@@ -1239,7 +1257,7 @@ NSArray *buildDiceImages() {
         }
     }
 
-	gameStateViewToUpdate.contentSize = CGSizeMake(gameStateViewToUpdate.frame.size.width, i*dy);
+	gameStateViewToUpdate.contentSize = CGSizeMake(gameStateViewToUpdate.frame.size.width, ([playerStates count]-1)*dy);
 }
 
 - (void)updateFullScreenUI:(BOOL)showAllDice
@@ -1254,7 +1272,17 @@ NSArray *buildDiceImages() {
 	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
 
-    NSArray *playerStates = localGame.gameState.playerStates;
+	NSMutableArray* playerStates = [NSMutableArray arrayWithArray:localGame.gameState.playerStates];
+
+	for (NSUInteger i = [playerStates count]; i > 0; i--) {
+		PlayerState* obj = [playerStates lastObject];
+		[playerStates insertObject:obj atIndex:0];
+		[playerStates removeLastObject];
+
+		if (obj.playerID == localState.playerID)
+			break;
+	}
+
 	BOOL canBid = [localState canBid];
 
 	unsigned long playerCount = [playerStates count];

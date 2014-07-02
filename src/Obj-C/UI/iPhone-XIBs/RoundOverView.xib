@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A261i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoundOverView">
@@ -18,13 +18,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dp1-rx-I5Z">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dp1-rx-I5Z">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="nae-Sm-M6q"/>
+                    </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="96B-0p-N33">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="96B-0p-N33">
                     <rect key="frame" x="20" y="20" width="49" height="36"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="49" id="HeH-rw-8W9"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <state key="normal" title="Done">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -34,22 +38,44 @@
                         <action selector="donePressed:" destination="-1" eventType="touchUpInside" id="cDM-Zd-rWG"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="QYG-R3-SKP">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="QYG-R3-SKP">
                     <rect key="frame" x="20" y="64" width="280" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="6HB-UA-dih"/>
+                        <constraint firstAttribute="height" constant="128" id="mMO-Po-oQw"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eI1-hB-yZ4">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eI1-hB-yZ4">
                     <rect key="frame" x="20" y="200" width="280" height="348"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="UQi-SB-KYM"/>
+                    </constraints>
                     <connections>
                         <outlet property="delegate" destination="-1" id="hVH-m9-H7c"/>
                     </connections>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Dp1-rx-I5Z" firstAttribute="top" secondItem="1" secondAttribute="top" id="8fU-Mf-8sw"/>
+                <constraint firstItem="QYG-R3-SKP" firstAttribute="trailing" secondItem="eI1-hB-yZ4" secondAttribute="trailing" id="AbD-oy-ttw"/>
+                <constraint firstItem="QYG-R3-SKP" firstAttribute="top" secondItem="96B-0p-N33" secondAttribute="bottom" constant="8" symbolic="YES" id="Bpn-h0-G1A"/>
+                <constraint firstItem="Dp1-rx-I5Z" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="Cpb-ow-Ly0"/>
+                <constraint firstItem="QYG-R3-SKP" firstAttribute="leading" secondItem="eI1-hB-yZ4" secondAttribute="leading" id="Da0-Pt-OES"/>
+                <constraint firstItem="96B-0p-N33" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="L3w-Xj-SlD"/>
+                <constraint firstItem="96B-0p-N33" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="Lgi-3N-P1N"/>
+                <constraint firstItem="eI1-hB-yZ4" firstAttribute="centerX" secondItem="Dp1-rx-I5Z" secondAttribute="centerX" id="Ve4-3M-FsV"/>
+                <constraint firstItem="eI1-hB-yZ4" firstAttribute="top" secondItem="QYG-R3-SKP" secondAttribute="bottom" constant="8" symbolic="YES" id="bTI-bH-4ba"/>
+                <constraint firstItem="QYG-R3-SKP" firstAttribute="leading" secondItem="Dp1-rx-I5Z" secondAttribute="trailing" constant="-300" id="cqY-qL-lbV"/>
+                <constraint firstItem="eI1-hB-yZ4" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="gjW-Qu-EXJ"/>
+                <constraint firstItem="QYG-R3-SKP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="lDp-en-789"/>
+                <constraint firstAttribute="bottom" secondItem="Dp1-rx-I5Z" secondAttribute="bottom" id="rWk-cj-feL"/>
+                <constraint firstAttribute="bottom" secondItem="eI1-hB-yZ4" secondAttribute="bottom" constant="20" symbolic="YES" id="usG-EB-32h"/>
+                <constraint firstItem="96B-0p-N33" firstAttribute="leading" secondItem="QYG-R3-SKP" secondAttribute="leading" id="wVR-jW-4P9"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

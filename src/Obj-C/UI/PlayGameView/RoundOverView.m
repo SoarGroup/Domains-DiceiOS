@@ -213,7 +213,13 @@
 }
 
 - (IBAction)donePressed:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+	if (self.navigationController)
+		[self dismissViewControllerAnimated:YES completion:nil];
+	else
+	{
+		[self.view removeFromSuperview];
+	}
+
 	DiceGame* gameLocal = self.game;
 	PlayerState* playerLocal = self.player;
 	PlayGameView* playGameViewLocal = self.playGameView;
@@ -243,7 +249,7 @@
         [alert show];
     }
     else if ([gameLocal.gameState hasAPlayerWonTheGame]) {
-        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [gameLocal.gameState.gameWinner getName]];
+        NSString *title = [NSString stringWithFormat:@"%@ Wins!", [gameLocal.gameState.gameWinner getDisplayName]];
         //NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:nil
@@ -269,6 +275,9 @@
 	PlayGameView* gameView = self.playGameView;
 	if (gameView->shouldNotifyCurrentPlayer)
 		[gameLocal notifyCurrentPlayer];
+
+	gameView.view.hidden = NO;
+	gameView.overView = nil;
 }
 
 - (UIImage*)barImage

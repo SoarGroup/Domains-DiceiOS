@@ -29,5 +29,7 @@
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 
+- (NSString*) getDisplayName;
+- (NSString*) getGameCenterName;
 
 @end

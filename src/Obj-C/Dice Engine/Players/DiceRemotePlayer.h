@@ -14,6 +14,9 @@
 @class GameKitGameHandler;
 
 @interface DiceRemotePlayer : NSObject <Player>
+{
+	BOOL loadedNamed;
+}
 
 @property (nonatomic, strong) GKTurnBasedParticipant* participant;
 @property (atomic, weak) GameKitGameHandler* handler;
@@ -22,7 +25,9 @@
 
 - (id) initWithGameKitParticipant:(GKTurnBasedParticipant*)participant withGameKitGameHandler:(GameKitGameHandler*)handler;
 
-- (NSString*) getName;
+- (NSString*) getDisplayName;
+- (NSString*) getGameCenterName;
+
 - (void) updateState:(PlayerState*)state;
 - (int) getID;
 - (void) setID:(int)anID;

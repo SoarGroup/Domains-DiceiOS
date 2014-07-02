@@ -82,6 +82,8 @@
 	for (int i = 0;i < opponents;i++)
 		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil]];
 
+	[game shufflePlayers];
+
     UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
     [controller pushViewController:gameView animated:YES];
 }

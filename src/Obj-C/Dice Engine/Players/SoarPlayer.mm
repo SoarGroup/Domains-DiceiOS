@@ -1081,8 +1081,13 @@ static int agentCount = 0;
 
 // Methods from Player protocol
 
-- (NSString *)getName {
+- (NSString *)getDisplayName {
     return self.name;
+}
+
+- (NSString *)getGameCenterName
+{
+	return @"Soar";
 }
 
 - (void) updateState:(PlayerState*)state {

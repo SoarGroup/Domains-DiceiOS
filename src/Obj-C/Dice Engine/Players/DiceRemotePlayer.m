@@ -23,10 +23,9 @@
 		self.participant = remotePlayer;
 		self.handler = newHandler;
 		self.playerID = -2;
-		self.displayName = self.participant.playerID;
+		self.displayName = nil;
 
-		if (self.participant.status != GKTurnBasedParticipantStatusMatching &&
-			self.participant.status != GKTurnBasedParticipantStatusUnknown)
+		if (self.participant.playerID != nil)
 		{
 			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 			 {
@@ -34,6 +33,8 @@
 					 NSLog(@"Error loading player identifiers: %@", error.description);
 				 else
 					 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+
+				 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUINotification" object:nil];
 			 }];
 		}
 	}
@@ -46,20 +47,26 @@
 	NSLog(@"Dice Remote Player deallocated\n");
 }
 
-- (NSString*) getName
+- (NSString*) getDisplayName
 {
-	if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
-		self.participant.status == GKTurnBasedParticipantStatusUnknown)
+	//if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
+	//	self.participant.status == GKTurnBasedParticipantStatusUnknown)
+
+	if (self.participant.playerID == nil || !self.displayName)
 		return @"Player";
 
 	return self.displayName;
 }
 
+- (NSString*) getGameCenterName
+{
+	return self.participant.playerID;
+}
+
 - (void) updateState:(PlayerState*)state
 {
-	if (self.participant.status != GKTurnBasedParticipantStatusMatching &&
-		self.participant.status != GKTurnBasedParticipantStatusUnknown &&
-		self.displayName == self.participant.playerID)
+	if (self.participant.playerID &&
+		!self.displayName)
 	{
 		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 		 {
@@ -67,8 +74,12 @@
 				 NSLog(@"Error loading player identifiers: %@", error.description);
 			 else
 				 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+
+			 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUINotification" object:nil];
 		 }];
 	}
+	else if (self.displayName)
+		[state setPlayerName:self.displayName];
 }
 
 - (int) getID
@@ -107,21 +118,22 @@
 
 - (void)setParticipant:(GKTurnBasedParticipant *)participant2
 {
-	if (participant == participant2)
+	if (self.participant == participant2)
 		return;
 
 	participant = participant2;
 
-	if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
-		self.participant.status == GKTurnBasedParticipantStatusUnknown)
+	if (!self.participant.playerID)
 		return;
 
-	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:self.participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 	 {
 		 if (error)
 			 NSLog(@"Error loading player identifiers: %@", error.description);
 		 else
 			 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
+
+		 [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUINotification" object:nil];
 	 }];
 }
 

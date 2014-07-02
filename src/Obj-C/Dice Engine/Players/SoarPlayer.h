@@ -41,7 +41,10 @@
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler;
 - (void)dealloc;
-- (NSString*)name;
+
+- (NSString*) getDisplayName;
+- (NSString*) getGameCenterName;
+
 - (void)drop;
 - (void)newRound:(NSArray *)arrayOfDice;
 - (void)showPublicInformation:(DiceGameState *)gameState;

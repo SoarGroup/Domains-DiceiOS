@@ -36,6 +36,8 @@
 
 // Adding and removing players.
 -(void)addPlayer:(id <Player>)player;
+-(void)shufflePlayers;
+
 -(int)getNextID;
 
 // Starting the game

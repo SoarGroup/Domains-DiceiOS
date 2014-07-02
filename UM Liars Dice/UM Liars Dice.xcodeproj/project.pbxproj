@@ -126,6 +126,7 @@
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4DE8FF531964648F003C583B /* NSMutableArrayShuffle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSMutableArrayShuffle.h; sourceTree = "<group>"; };
 		4DF393861923C4F400A523FB /* Center-Push.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push.png"; sourceTree = "<group>"; };
 		4DF393871923C4F400A523FB /* Center-Push@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push@2x.png"; sourceTree = "<group>"; };
 		4DF393881923C4F400A523FB /* die-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-1.png"; sourceTree = "<group>"; };
@@ -437,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				4DF393C31923C51C00A523FB /* Soar */,
+				4DE8FF531964648F003C583B /* NSMutableArrayShuffle.h */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -1105,6 +1107,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1119,6 +1122,7 @@
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -1263,6 +1267,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1277,6 +1282,7 @@
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1317,6 +1323,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";
@@ -1331,6 +1338,7 @@
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = all;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;

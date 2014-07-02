@@ -18,6 +18,8 @@
 #import "PlayGameView.h"
 #import "SoarPlayer.h"
 
+#include "NSMutableArrayShuffle.h"
+
 @implementation DiceGame
 
 @synthesize gameState, players, appDelegate, gameView, started, deferNotification;
@@ -60,7 +62,7 @@
 	for (id<Player> player in players)
 	{
 		if (![player isKindOfClass:SoarPlayer.class])
-			name = [name stringByAppendingFormat:@"%@ vs ", [player getName]];
+			name = [name stringByAppendingFormat:@"%@ vs ", [player getDisplayName]];
 	}
 
 	if ([name length] > 4)
@@ -225,6 +227,15 @@
     [player setID:[self getNextID]];
 }
 
+- (void)shufflePlayers
+{
+	NSMutableArray* playerArray = [NSMutableArray arrayWithArray:self.players];
+
+	[playerArray shuffle];
+
+	self.players = playerArray;
+}
+
 -(int)getNextID {
     return nextID++;
 }
@@ -246,9 +257,14 @@
 
 -(void)publishState
 {
+	self.gameState.game = self;
+
     for (id <Player> player in players)
     {
-        [player updateState:[gameState getPlayerState:[player getID]]];
+		PlayerState* state = [gameState getPlayerState:[player getID]];
+		state.gameState = self.gameState;
+
+        [player updateState:state];
     }
 
 	if (shouldNotifyOfNewRound && self.gameView)
@@ -266,7 +282,7 @@
             NSLog(@"Game over, no need to notify player");
         return;
     }
-    NSLog(@"Notifying current player %@", [[gameState getCurrentPlayer] getName]);
+    NSLog(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
     [[gameState getCurrentPlayer] itsYourTurn];
 }
 

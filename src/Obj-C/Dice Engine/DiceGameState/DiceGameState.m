@@ -88,18 +88,34 @@
 
 	NSLock* lock = [[NSLock alloc] init];
 
-	int i = 0;
+	BOOL foundLocalPlayer = NO;
 	for (NSString* player in playersArrayToDecode)
 	{
-		if ([player isEqualToString:@"Human"])
+		if (![player isEqualToString:@"Soar"] &&
+			![player isEqualToString:@"Human"]) // Complete Player
 		{
-			GKTurnBasedParticipant* participant = [participants objectAtIndex:0];
-			[participants removeObjectAtIndex:0];
+			GKTurnBasedParticipant* participant;
+
+			for (GKTurnBasedParticipant* p in participants)
+			{
+				if (p.playerID != nil &&
+					[p.playerID isEqualToString:player])
+				{
+					// Found the player
+					participant = p;
+					break;
+				}
+			}
+
+			[participants removeObject:participant];
 
 			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:participant.playerID])
 			{
+				assert(!foundLocalPlayer);
+
 				// Local Player
 				[finalPlayersArray addObject:[[DiceLocalPlayer alloc] initWithName:[GKLocalPlayer localPlayer].alias withHandler:handler withParticipant:nil]];
+				foundLocalPlayer = YES;
 			}
 			else
 			{
@@ -107,13 +123,77 @@
 				[finalPlayersArray addObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
 			}
 		}
+		else if ([player isEqualToString:@"Human"])
+		{
+			[finalPlayersArray addObject:@"Human"];
+			continue;
+			// Handle this case once all the others are done
+		}
 		else
 		{
 			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler] ];
 		}
-		[[finalPlayersArray objectAtIndex:i] setID:i];
-		i++;
+		[[finalPlayersArray lastObject] setID:(int)[finalPlayersArray count]-1];
 	}
+
+	if (!foundLocalPlayer)
+	{
+		// We just joined the match.  Find the first open slot
+		for (int i = 0;i < [finalPlayersArray count];++i)
+		{
+			id obj = [finalPlayersArray objectAtIndex:i];
+
+			if ([obj isKindOfClass:[NSString class]] &&
+				[(NSString*)obj isEqualToString:@"Human"])
+			{
+				// Found the open slot
+				DiceLocalPlayer* localPlayer = [[DiceLocalPlayer alloc] initWithName:[GKLocalPlayer localPlayer].alias withHandler:handler withParticipant:nil];
+				foundLocalPlayer = YES;
+
+				[localPlayer setID:i];
+
+				[finalPlayersArray replaceObjectAtIndex:i withObject:localPlayer];
+
+				GKTurnBasedParticipant* localParticipant = nil;
+
+				for (GKTurnBasedParticipant* p in participants)
+					if ([p.playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
+					{
+						localParticipant = p;
+						break;
+					}
+
+				assert(localParticipant);
+
+				[participants removeObject:localParticipant];
+			}
+		}
+	}
+
+	while ([participants count] > 0)
+	{
+		// Remote Player
+
+		NSUInteger replacementIndex = 0;
+		for (;replacementIndex < [finalPlayersArray count];replacementIndex++)
+		{
+			id object = [finalPlayersArray objectAtIndex:replacementIndex];
+
+			if ([object isKindOfClass:[NSString class]] &&
+				[(NSString*)object isEqualToString:@"Human"])
+				break;
+		}
+
+		assert(replacementIndex != [finalPlayersArray count]);
+
+		[finalPlayersArray replaceObjectAtIndex:replacementIndex withObject:[[DiceRemotePlayer alloc] initWithGameKitParticipant:[participants objectAtIndex:0] withGameKitGameHandler:handler]];
+		[[finalPlayersArray objectAtIndex:replacementIndex] setID:(int)replacementIndex];
+
+		[participants removeObjectAtIndex:0];
+	}
+
+	assert([participants count] == 0);
+	assert(foundLocalPlayer);
 
 	self.players = finalPlayersArray;
 
@@ -159,7 +239,14 @@
 	for (id<Player> player in players)
 	{
 		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceRemotePlayer.class])
-			[playersArray addObject:@"Human"];
+		{
+			NSString* name = @"Human";
+
+			if ([player getGameCenterName] != nil)
+				name = [player getGameCenterName];
+
+			[playersArray addObject:name];
+		}
 		else if ([player isKindOfClass:SoarPlayer.class])
 			[playersArray addObject:@"Soar"];
 	}
@@ -187,24 +274,12 @@
         
         // Fill the player array with player states for each player in the game
         NSInteger numPlayers = [thePlayers count];
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         for (int i = 0; i < numPlayers; ++i)
         {
             id <Player> player = [self.players objectAtIndex:i];
-            NSString *playerName = [player getName];
             // Create the new player state
-            NSNumber *value = [dict objectForKey:playerName];
-            NSString *suffix = @"";
-            if (value == nil)
-            {
-                [dict setValue:[NSNumber numberWithInt:2] forKey:playerName];
-            }
-            else
-            {
-                [dict setValue:[NSNumber numberWithInt:[value intValue] + 1] forKey:playerName];
-                suffix = [NSString stringWithFormat:@"-%d", [value intValue]];
-            }
-            PlayerState *newPlayerState = [[PlayerState alloc] initWithName:[playerName stringByAppendingString:suffix]
+
+            PlayerState *newPlayerState = [[PlayerState alloc] initWithName:[player getGameCenterName]
                                                                       withID:[player getID]
                                                             withNumberOfDice:numberOfDice 
                                                            withDiceGameState:self];
@@ -649,7 +724,7 @@
 - (NSString *)stateString:(int)playerID
 {
     NSMutableString *string = [NSMutableString string];
-    [string appendString:[NSString stringWithFormat:@"%@'s turn\n", [[self getCurrentPlayer] getName]]];
+    [string appendString:[NSString stringWithFormat:@"%@'s turn\n", [[self getCurrentPlayer] getDisplayName]]];
     [string appendString:self.previousBid == nil ? @"No previous bid\n" : [NSString stringWithFormat:@"%@\n", [self.previousBid asString]]];
     int i = 0;
     for (PlayerState *player in self.playerStates) {
@@ -685,7 +760,7 @@
     NSMutableAttributedString *labelText;
     // What playerID goes in this slot
     id <Player> player = [self getPlayerWithID:playerID];
-    NSString *playerName = [player getName];
+    NSString *playerName = [player getDisplayName];
     NSArray *lastMove = [self lastMoveForPlayer:playerID];
     if ([lastMove count] == 0) {
         // This player hasn't bid yet.
@@ -693,7 +768,7 @@
 		NSDictionary * attributes;
 
 		if (colorThePlayer)
-			attributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:0.96862745098039 green:0.75294117647059 blue:0.10980392156863 alpha:1.0] forKey:NSForegroundColorAttributeName];
+			attributes = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
 		else
 			attributes = [NSDictionary dictionary];
 
@@ -714,7 +789,7 @@
 			{
 				if (colorThePlayer && j == 0)
 				{
-					attributes = [NSDictionary dictionaryWithObject:[UIColor colorWithRed:0.96862745098039 green:	0.75294117647059 blue:0.10980392156863 alpha:1.0] forKey:NSForegroundColorAttributeName];
+					attributes = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
 				}
 				else
 					attributes = [NSDictionary dictionary];
@@ -738,7 +813,8 @@
     if (self.previousBid == nil)
         return [NSString stringWithFormat:@"No current bid%@%d dice, %d unknown.", conj, totalDice, unknownDice];
 
-    NSString *previousBidPlayerName = self.previousBid.playerName;
+	DiceGame* localGame = self.game;
+    NSString *previousBidPlayerName = [((id<Player>)[localGame.players objectAtIndex:self.previousBid.playerID]) getDisplayName];
     int bidDice = [self countSeenDice:playerIDorMinusOne rank:previousBid.rankOfDie];
 
 	NSString* diceString = [NSString stringWithFormat:@"%d dice, ", totalDice];
@@ -836,7 +912,7 @@
     {
         [self goToNextPlayerWhoHasntLost];
         
-        NSLog(@"%@ won!", [[self getCurrentPlayer] getName]);
+        NSLog(@"%@ won!", [[self getCurrentPlayer] getGameCenterName]);
         gameWinner = [self getCurrentPlayer];
 		[gameWinner notifyHasWon];
     }
