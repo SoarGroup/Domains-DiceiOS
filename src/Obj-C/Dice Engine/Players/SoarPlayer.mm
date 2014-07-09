@@ -169,7 +169,7 @@ static int agentCount = 0;
 		{
 			[kernelLock lock];
 			// No Agent created yet for this lock
-			agents[aLock] = kernel->CreateAgent([name UTF8String]);
+			agents[aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p", aLock] UTF8String]);
 
 			if (agents[aLock] == nil)
 			{
