@@ -190,7 +190,8 @@
 			if (i == 0)
 				name = @"Your";
 			else
-				name = [NSString stringWithFormat:@"%@'s", playerLocal.playerName];
+				name = [NSString stringWithFormat:@"%@'s", [[gameLocal.players objectAtIndex:[playerLocal playerID]] getDisplayName]];
+
 
 			dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i", name, die.dieValue];
 			dieView.isAccessibilityElement = YES;

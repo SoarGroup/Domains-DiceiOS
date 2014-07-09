@@ -1283,7 +1283,7 @@ NSArray *buildDiceImages() {
             } else {
                 UIImageView *dieView = [[UIImageView alloc] initWithFrame:dieFrame];
 
-				NSString* name = [NSString stringWithFormat:@"%@'s", playerState.playerName];
+				NSString* name = [NSString stringWithFormat:@"%@'s", [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName]];
 
 				if (control)
 					name = @"Your";
@@ -1527,11 +1527,13 @@ NSArray *buildDiceImages() {
 
 		NSMutableAttributedString* nameLabelText = [localGame.gameState historyText:((PlayerState*)playerStates[i]).playerID colorName:(i == 0)];
 
+		NSString* playerName = [[localGame.players objectAtIndex:[(PlayerState*)playerStates[i] playerID]] getDisplayName];
+
 		if ([playerStates[i] playerHasExacted])
-			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", [playerStates[i] playerName]]] ];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", playerName]]];
 
 		if ([playerStates[i] playerHasPassed])
-			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", [playerStates[i] playerName]]] ];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", playerName]]];
 
 		nameLabel.numberOfLines = 0;
 		nameLabel.attributedText = nameLabelText;

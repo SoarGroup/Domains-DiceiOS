@@ -290,7 +290,7 @@ static int agentCount = 0;
     [turnLock lock];
     if (agent == nil) {
         [turnLock unlock];
-        return;   
+        return;
     }
     NSLog(@"Agent do turn");
     
@@ -298,6 +298,8 @@ static int agentCount = 0;
     BOOL agentHalted = NO;
 	BOOL agentInterrupted = NO;
     BOOL needsRefresh = YES;
+
+	agent->InitSoar();
     
     DiceSMLData *newData = NULL;
 
