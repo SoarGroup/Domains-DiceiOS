@@ -427,7 +427,9 @@ NSArray *buildDiceImages() {
 
 	PlayerState* playerState = [[localGame.gameState lastHistoryItem] player];
 
-	if (localGame.newRound == YES && [playerState playerID] != [localState playerID])
+	if (localGame.newRound == YES &&
+		[playerState playerID] != [localState playerID] &&
+		[[self.game.players objectAtIndex:[playerState playerID]] isKindOfClass:DiceRemotePlayer.class])
 	{
 		NSString* playerName = [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please Wait"
