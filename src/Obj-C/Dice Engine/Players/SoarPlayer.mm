@@ -312,7 +312,7 @@ static int agentCount = 0;
         }
 
 		double startTime = [[NSDate date] timeIntervalSince1970];
-        
+
         do {
 			if (!agentInterrupted)
 				agents[turnLock]->RunSelfTilOutput();
@@ -320,19 +320,40 @@ static int agentCount = 0;
             sml::smlRunState agentState = agents[turnLock]->GetRunState();
             agentHalted = agentState == sml::sml_RUNSTATE_HALTED;
 
-			if (!agentInterrupted)
-				agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
+			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
 
 			if (!agentInterrupted && (startTime + 5) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
 
-				NSLog(@"Restarting Soar due to timeout: %i", [turnCount intValue]);
+				NSLog(@"Restarting Soar due to timeout (%i)", [turnCount intValue]);
 
 				if ([turnCount intValue] > 5)
 					return [self showErrorAlert];
 				else
 					return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
+			}
+
+			if (agentInterrupted)
+			{
+				const char* printResult = agents[turnLock]->ExecuteCommandLine("p -sS");
+
+				NSString* printString = [NSString stringWithUTF8String:printResult];
+				NSInteger lines = [[printString componentsSeparatedByCharactersInSet:
+									[NSCharacterSet newlineCharacterSet]] count];
+
+
+				if (lines > 95)
+				{
+					[turnLock unlock];
+
+					NSLog(@"Restarting Soar due to goal stack depth exceeded (%i)", [turnCount intValue]);
+
+					if ([turnCount intValue] > 5)
+						return [self showErrorAlert];
+					else
+						return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
+				}
 			}
 
         } while (!agentHalted && (agents[turnLock]->GetNumberCommands() == 0));
