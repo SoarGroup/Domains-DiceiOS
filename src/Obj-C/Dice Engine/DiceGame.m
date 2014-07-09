@@ -307,6 +307,8 @@
 -(void)publishState
 {
 	self.gameState.game = self;
+	PlayGameView* localGameView = self.gameView;
+	PlayerState* localState = [localGameView state];
 
     for (id <Player> player in players)
     {
@@ -316,7 +318,7 @@
         [player updateState:state];
     }
 
-	if ((newRound || shouldNotifyOfNewRound) && self.gameView)
+	if (![localState hasLost] && (newRound || shouldNotifyOfNewRound) && localGameView)
 	{
 		for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
 			[listener roundEnding];
@@ -399,7 +401,10 @@
 
 	[self publishState];
 
-	if (gameState.gameWinner)
+	PlayGameView* localGameView = self.gameView;
+	PlayerState* localState = localGameView.state;
+
+	if (gameState.gameWinner || [localState hasLost])
 		return;
 
 	if (notify)

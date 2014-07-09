@@ -2073,18 +2073,14 @@ NSArray *buildDiceImages() {
 			// Find last bid
 			int target = -1;
 
-			for (int i = localGame.gameState.currentTurn;i >= 0;i--)
+			for (int i = (int)[localGame.gameState.history count] - 1;i >= 0;i--)
 			{
-				int historyCount = (int)[localGame.gameState.history count] - i - 1;
-
-				if (historyCount < 0)
-					continue;
-
-				HistoryItem* item = [localGame.gameState.history objectAtIndex:historyCount];
+				HistoryItem* item = [localGame.gameState.history objectAtIndex:i];
 				if ([item actionType] == type)
 				{
 					PlayerState* itemState = [item player];
 					target = [itemState playerID];
+					break;
 				}
 			}
 

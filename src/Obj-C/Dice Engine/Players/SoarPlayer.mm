@@ -116,6 +116,7 @@ static int agentCount = 0;
         self.turnLock = aLock;
         self.game = aGame;
 		handler = gkgHandler;
+		didNotify = NO;
 
 		DiceDatabase* database = [[DiceDatabase alloc] init];
 #ifdef DEBUG
@@ -347,7 +348,11 @@ static int agentCount = 0;
         }
     } while (!agentSlept && !agentHalted);
 
-	[self endTurn];
+	if (!didNotify)
+	{
+		DiceGame* localGame = self.game;
+		[localGame notifyCurrentPlayer];
+	}
 
     if (agent != NULL)
     {
@@ -645,7 +650,7 @@ static int agentCount = 0;
     BOOL canChallengeBid = [localState canChallengeBid];
     BOOL canChallengePass = [localState canChallengeLastPass];
     
-    challenge->CreateStringWME("available", ((!canChallengeBid && !canChallengePass) ? "false" : "true"));
+    challenge->CreateStringWME("available", (canChallengeBid || canChallengePass) ? "true" : "false");
     
     if (canChallengeBid)
     {
@@ -1038,6 +1043,7 @@ static int agentCount = 0;
             else if ([attrName isEqualToString:@"sleep"])
             {
                 *sleep = YES;
+				return;
             }
             else
             {
@@ -1063,6 +1069,13 @@ static int agentCount = 0;
 	GameKitGameHandler* localHandler = self.handler;
 	DiceGame* localGame = self.game;
 
+	BOOL notify = YES;
+
+	if (action.actionType == ACTION_BID)
+		notify = NO;
+
+	didNotify = notify;
+
     if (action != nil)
     {
         NSLog(@"Agent performing action of type: %d", action.actionType);
@@ -1072,7 +1085,8 @@ static int agentCount = 0;
             action.push = diceToPush;           
         }
 
-		[localGame handleAction:action notify:NO];
+
+		[localGame handleAction:action notify:notify];
 		//[actions addObject:action];
         *needsRefresh = YES;
     }
@@ -1081,7 +1095,7 @@ static int agentCount = 0;
         NSLog(@"Agent just pushing, count: %lu", (unsigned long)[diceToPush count]);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
-		[localGame handleAction:new_action notify:NO];
+		[localGame handleAction:new_action notify:notify];
 		//[actions addObject:new_action];
     }
 
@@ -1130,13 +1144,6 @@ static int agentCount = 0;
 - (void)removeHandler
 {
 	self.handler = nil;
-}
-
-- (void)endTurn
-{
-	DiceGame* localGame = self.game;
-
-	[localGame notifyCurrentPlayer];
 }
 
 @end

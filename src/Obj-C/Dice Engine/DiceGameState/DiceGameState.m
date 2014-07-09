@@ -19,6 +19,8 @@
 #import "ApplicationDelegate.h"
 #import "GameKitListener.h"
 
+#import "PlayGameView.h"
+
 @implementation DiceGameState
 
 @synthesize playerStates;
@@ -875,6 +877,8 @@
 		[self performSelectorInBackground:@selector(createNewRound) withObject:nil];
 		return;
 	}
+
+	NSLog(@"Created New Round");
 
     BOOL deferNotification = NO;
     for (id <NewRoundListener> listener in theNewRoundListeners) {

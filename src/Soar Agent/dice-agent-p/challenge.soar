@@ -17,7 +17,6 @@ sp {dice*propose*challenge*bid
 }
 
 sp {dice*propose*challenge*pass-bid
-	#:interrupt
    (state <s> ^name dice
               ^my-turn true
               ^last-bid <last-bid>

@@ -135,7 +135,9 @@
 
 		GKTurnBasedParticipant* gktbp = [nextPlayers objectAtIndex:0];
 		[nextPlayers removeObjectAtIndex:0];
-		[nextPlayers insertObject:gktbp atIndex:[nextPlayers count]];
+
+		if (gktbp.matchOutcome == GKTurnBasedMatchOutcomeNone)
+			[nextPlayers insertObject:gktbp atIndex:[nextPlayers count]];
 	}
 
 	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)

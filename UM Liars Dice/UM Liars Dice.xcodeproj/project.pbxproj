@@ -773,8 +773,8 @@
 		4DF397AD1923C5B800A523FB /* Players */ = {
 			isa = PBXGroup;
 			children = (
-				4DF397AE1923C5B800A523FB /* DiceLocalPlayer.h */,
 				4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */,
+				4DF397AE1923C5B800A523FB /* DiceLocalPlayer.h */,
 				4DF397B01923C5B800A523FB /* DiceRemotePlayer.h */,
 				4DF397B11923C5B800A523FB /* DiceRemotePlayer.m */,
 				4DF397B21923C5B800A523FB /* SoarPlayer.h */,

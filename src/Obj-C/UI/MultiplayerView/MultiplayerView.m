@@ -151,6 +151,9 @@
 				GameKitGameHandler* handler = [delegate.listener handlerForGame:game];
 				GKTurnBasedMatch* match = handler.match;
 
+				if (!match)
+					continue;
+
 				UILabel* matchName = [[UILabel alloc] init];
 				UILabel* aiMatchInfo = [[UILabel alloc] init];
 				UILabel* turnInfo = [[UILabel alloc] init];

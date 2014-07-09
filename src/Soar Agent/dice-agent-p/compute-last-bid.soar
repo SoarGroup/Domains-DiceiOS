@@ -34,9 +34,7 @@ sp {apply*compute-last-bid*ok-last-bid
    (<op> ^name compute-last-bid)
 -->
    (write (crlf) |Prior bid ok. Face: | <face> |, count: | <multiplier>)
-   (<s> ^last-bid <lb>)
-   (<lb> ^face <face>
-         ^count <multiplier>)
+   (<s> ^last-bid <last-bid>)
 }
 
 sp {apply*compute-last-bid*ok-last-bid*1
@@ -47,9 +45,7 @@ sp {apply*compute-last-bid*ok-last-bid*1
    (<op> ^name compute-last-bid)
 -->
    (write (crlf) |Prior bid was a 1 bid - use it. Face: 1, count: | <multiplier>)
-   (<s> ^last-bid <lb>)
-   (<lb> ^face 1
-         ^count <multiplier>)
+   (<s> ^last-bid <last-bid>)
 }
 
 sp {apply*compute-last-bid*not-ok-last-bid
@@ -59,11 +55,13 @@ sp {apply*compute-last-bid*not-ok-last-bid
    (<vsb> ^count <multiplierv>
           ^face <facev>)
    (<last-bid> ^face { <> 1 <face> }
-               ^multiplier { < <multiplierv> <multiplier> })
+               ^multiplier { < <multiplierv> <multiplier> }
+			   ^action <action>)
    (<op> ^name compute-last-bid)
 -->
    (write (crlf) |Prior bid too low - use safe bid. count: | <multiplierv> |, Face: | <facev>)
    (<s> ^last-bid <lb>)
    (<lb> ^face <facev>
-         ^count <multiplierv>)
+         ^count <multiplierv>
+		 ^action <action>)
 }

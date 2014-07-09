@@ -95,6 +95,7 @@
 - (void) itsYourTurn
 {
 	GameKitGameHandler* handlerLocal = self.handler;
+	NSLog(@"Advanced to next turn! %@", self.participant.playerID);
 	[handlerLocal advanceToRemotePlayer:self];
 }
 

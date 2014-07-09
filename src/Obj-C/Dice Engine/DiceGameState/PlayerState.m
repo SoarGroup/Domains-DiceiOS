@@ -292,6 +292,11 @@
 
     PlayerState *currentState = [gameStateLocal getCurrentPlayerState];
     bool ret = currentState == self;
+
+	Bid* previousBid = gameStateLocal.previousBid;
+	if (previousBid.rankOfDie == 1 && previousBid.numberOfDice == 25)
+		return false;
+
     return ret;
 }
 

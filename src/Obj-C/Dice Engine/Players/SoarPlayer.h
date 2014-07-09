@@ -39,6 +39,8 @@
     BOOL cleanup;
 
 	int outputCallBackID;
+
+	BOOL didNotify;
 }
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff;

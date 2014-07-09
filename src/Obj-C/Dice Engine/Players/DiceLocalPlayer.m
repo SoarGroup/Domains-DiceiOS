@@ -87,7 +87,7 @@
 	GameKitGameHandler* handlerLocal = self.handler;
 
 	if (handlerLocal)
-		[handlerLocal playerQuitMatch:self withRemoval:NO];
+		handlerLocal.match.currentParticipant.matchOutcome = GKTurnBasedMatchOutcomeLost;
 }
 
 - (void)notifyHasWon
