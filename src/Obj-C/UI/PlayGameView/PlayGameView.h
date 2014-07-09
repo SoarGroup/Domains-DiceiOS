@@ -85,7 +85,7 @@ const int pushMargin();
 @property (nonatomic, strong) IBOutlet UIScrollView *gameStateView;
 
 @property (nonatomic, weak) MultiplayerView* multiplayerView;
-@property (nonatomic, strong) RoundOverView* overView;
+@property (nonatomic, strong) NSMutableArray* overViews;
 
 // Interface Builder Linked Actions
 - (IBAction)backPressed:(id)sender;

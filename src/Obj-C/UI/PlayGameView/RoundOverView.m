@@ -218,17 +218,17 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 
 	PlayGameView* gameView = self.playGameView;
-	if (gameView.overView)
+	if ([gameView.overViews containsObject:self])
 	{
 		[UIView animateWithDuration:0.25 animations:^{
-			gameView.overView.view.frame = CGRectMake(gameView.overView.view.frame.origin.x,
-													  gameView.overView.view.frame.size.height,
-													  gameView.overView.view.frame.size.width,
-													  gameView.overView.view.frame.size.height);
+			self.view.frame = CGRectMake(self.view.frame.origin.x,
+										 self.view.frame.size.height,
+										 self.view.frame.size.width,
+										 self.view.frame.size.height);
 		}];
 
-		[gameView.overView.view removeFromSuperview];
-		gameView.overView = nil;
+		[self.view removeFromSuperview];
+		[gameView.overViews removeObject:self];
 	}
 
 	DiceGame* gameLocal = self.game;

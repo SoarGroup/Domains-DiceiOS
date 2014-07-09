@@ -113,7 +113,7 @@
 @synthesize challengeButtons;
 @synthesize fullscreenButton;
 @synthesize tempViews, images;
-@synthesize multiplayerView, overView;
+@synthesize multiplayerView, overViews;
 
 @synthesize game, state, isCustom, animationFinished, previousBidImageViews;
 
@@ -185,6 +185,8 @@ NSArray *buildDiceImages() {
 
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
+
+		overViews = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -226,7 +228,7 @@ NSArray *buildDiceImages() {
 
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		{
-			self.overView = roundOverView;
+			[self.overViews addObject:roundOverView];
 			roundOverView.view.frame = self.view.frame;
 			roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
 												  roundOverView.view.frame.size.height,

@@ -98,7 +98,7 @@
 	{
 		NSLog(@"Recieved player: %@", player);
 
-		if (!([[player substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"Soar"] && [player length] == 6) &&
+		if (![[player substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"Soar"] &&
 			![player isEqualToString:@"Human"]) // Complete Player
 		{
 			GKTurnBasedParticipant* participant;
@@ -140,9 +140,11 @@
 		{
 			NSLog(@"Got AI: %@", player);
 
-			int difficulty = [player characterAtIndex:5] - '0';
+			int difficulty = [player characterAtIndex:[player length]-1] - '0';
 
-			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler difficulty:difficulty] ];
+			NSString* soarName = [player substringWithRange:NSMakeRange(5, [player length]-2-5)];
+
+			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler difficulty:difficulty name:soarName] ];
 		}
 		[[finalPlayersArray lastObject] setID:(int)[finalPlayersArray count]-1];
 	}
@@ -210,12 +212,18 @@
 
 	if ([gameWinner isKindOfClass:NSString.class])
 	{
+		NSString* gameWinnerString = (NSString*)gameWinner;
 		for (id<Player> player in self.players)
-			if ([[player getGameCenterName] isEqualToString:(NSString*)gameWinner])
+		{
+			if ((![player isKindOfClass:SoarPlayer.class] &&
+				[[player getGameCenterName] isEqualToString:gameWinnerString]) ||
+				([player isKindOfClass:SoarPlayer.class] &&
+				 [[player getGameCenterName] isEqualToString:[gameWinnerString substringToIndex:[gameWinnerString length] - 3]]))
 			{
 				gameWinner = player;
 				break;
 			}
+		}
 	}
 
 	for (HistoryItem* item in history)
@@ -269,7 +277,7 @@
 			[playersArray addObject:name];
 		}
 		else if ([player isKindOfClass:SoarPlayer.class])
-			[playersArray addObject:[NSString stringWithFormat:@"Soar-%d", ((SoarPlayer*)player).difficulty]];
+			[playersArray addObject:[NSString stringWithFormat:@"%@-%d", [player getGameCenterName],((SoarPlayer*)player).difficulty]];
 	}
 
 	[encoder encodeObject:playersArray forKey:@"DiceGameState:players"];
@@ -281,16 +289,7 @@
 		[encoder encodeInt:[(NSNumber*)[losers objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]];
 
 	if (gameWinner)
-	{
-		NSString* winnerName = nil;
-
-		if ([gameWinner isKindOfClass:SoarPlayer.class])
-			winnerName = [gameWinner getDisplayName];
-		else
-			winnerName = [gameWinner getGameCenterName];
-
-		[encoder encodeObject:winnerName forKey:@"DiceGameState:GameWinner"];
-	}
+		[encoder encodeObject:[gameWinner getGameCenterName] forKey:@"DiceGameState:GameWinner"];
 }
 
 /*** DiceGameState

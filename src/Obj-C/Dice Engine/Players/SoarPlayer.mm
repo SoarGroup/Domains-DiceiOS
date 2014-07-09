@@ -108,7 +108,12 @@ static int agentCount = 0;
     }
 }
 
-- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler *)gkgHandler difficulty:(int)diff;
+- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff
+{
+	return [self initWithGame:aGame connentToRemoteDebugger:connect lock:aLock withGameKitGameHandler:gkgHandler difficulty:diff name:[SoarPlayer makePlayerName]];
+}
+
+- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff name:(NSString*)aName;
 {
     self = [super init];
     if (self)
@@ -147,10 +152,11 @@ static int agentCount = 0;
 		if (agentCount >= 8)
 			agentCount = 1;
 
-        self.name = [SoarPlayer makePlayerName];
+        self.name = aName;
 
         const char* string = [name UTF8String];
-        agent = kernel->CreateAgent(string);
+		agent = kernel->CreateAgent(string);
+
         if (agent == nil)
         {
 			NSLog(@"Kernel (Agent): %s", kernel->GetLastErrorDescription());
@@ -234,9 +240,14 @@ static int agentCount = 0;
 	[turnLock lock];
 		agent = nil;
 
+
+	if (kernel)
+	{
 		kernel->Shutdown();
 		delete kernel;
 		kernel = nil;
+	}
+
     [turnLock unlock];
 }
 
@@ -1120,7 +1131,7 @@ static int agentCount = 0;
 
 - (NSString *)getGameCenterName
 {
-	return @"Soar";
+	return [NSString stringWithFormat:@"Soar-%@", self.name];
 }
 
 - (void) updateState:(PlayerState*)state {
