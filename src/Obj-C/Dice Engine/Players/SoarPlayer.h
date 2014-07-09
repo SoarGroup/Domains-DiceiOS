@@ -30,18 +30,14 @@
 #endif
 
 @interface SoarPlayer : NSObject <Player> {
-#ifdef __cplusplus
-	sml::Agent *agent;
-	sml::Kernel *kernel;
-#endif
-    
-    BOOL remoteConnected;
     BOOL cleanup;
 
 	int outputCallBackID;
 
 	BOOL didNotify;
 }
+
++ (void)initialize;
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff;
 

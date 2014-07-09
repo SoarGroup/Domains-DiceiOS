@@ -16,7 +16,7 @@
 #import "DiceDatabase.h"
 
 #include <map>
-
+#include <unordered_map>
 
 void testWme(sml::WMElement *wme)
 {
@@ -64,14 +64,14 @@ typedef enum {
     neq
 } Predicate;
 
+static std::map<__weak NSLock*, sml::Agent*> agents;
+static sml::Kernel* kernel;
+static NSLock* kernelLock;
+
 @interface SoarPlayer()
 
 - (DiceSMLData *) GameStateToWM:(sml::Identifier *) inputLink;
 - (void) doTurn:(NSNumber*)arg;
-
-/*
- - (BOOL) handleAgentCommandsWithGameState:(DiceGameState *)gameState andPlayerID:(int)playerID withNeedsRefreshBool:(BOOL *)refreshAr withInformation:(turnInformationSentFromTheClient *)information withErrors:(int)errors;
- */
 
 @end
 
@@ -84,9 +84,9 @@ static int agentCount = 0;
 + (NSString*) makePlayerName
 {
     switch (agentCount) {
+		default:
         case 1:
             return @"Alice";
-            break;
         case 2:
             return @"Bob";
         case 3:
@@ -99,13 +99,41 @@ static int agentCount = 0;
 			return @"Dan";
 		case 7:
 			return @"Erin";
-        default:
-		{
-			DiceDatabase *database = [[DiceDatabase alloc] init];
-
-            return [database getPlayerName];
-		}
     }
+}
+
++ (void)initialize
+{
+	if (self == [SoarPlayer class])
+	{
+		kernelLock = [[NSLock alloc] init];
+
+		[kernelLock lock];
+#ifdef DEBUG
+		DiceDatabase* database = [[DiceDatabase alloc] init];
+
+		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
+
+		if (remoteIP && [remoteIP length] != 0)
+		{
+			const char* ipAddress = [remoteIP UTF8String];
+
+			kernel = sml::Kernel::CreateRemoteConnection(true, ipAddress);
+		}
+		else
+			kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
+#else
+		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
+#endif
+
+		if (kernel->HadError())
+		{
+			NSLog(@"Kernel: %s", kernel->GetLastErrorDescription());
+			kernel = nil;
+		}
+
+		[kernelLock unlock];
+	}
 }
 
 - (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff
@@ -124,29 +152,9 @@ static int agentCount = 0;
 		didNotify = NO;
 
 		DiceDatabase* database = [[DiceDatabase alloc] init];
-#ifdef DEBUG
-		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
-
-		if (remoteIP && [remoteIP length] != 0)
-		{
-			const char* ipAddress = [remoteIP UTF8String];
-
-			kernel = sml::Kernel::CreateRemoteConnection(true, ipAddress);
-			remoteConnected = YES;
-		}
-		else
-#endif
-			kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
 
         [turnLock lock];
-
-		if (kernel->HadError())
-		{
-			NSLog(@"Kernel: %s", kernel->GetLastErrorDescription());
-			[turnLock unlock];
-			return nil;
-		}
-
+		
 		agentCount++;
 
 		if (agentCount >= 8)
@@ -154,117 +162,102 @@ static int agentCount = 0;
 
         self.name = aName;
 
-        const char* string = [name UTF8String];
-		agent = kernel->CreateAgent(string);
+		if (!self.name)
+			name = [SoarPlayer makePlayerName];
 
-        if (agent == nil)
-        {
-			NSLog(@"Kernel (Agent): %s", kernel->GetLastErrorDescription());
-            [turnLock unlock];
-            return nil;
-        }
+		if (agents.find(aLock) == agents.end())
+		{
+			[kernelLock lock];
+			// No Agent created yet for this lock
+			agents[aLock] = kernel->CreateAgent([name UTF8String]);
+
+			if (agents[aLock] == nil)
+			{
+				NSLog(@"Kernel (Agent Creation): %s", kernel->GetLastErrorDescription());
+				[turnLock unlock];
+				return nil;
+			}
 
 #ifdef DEBUG
-        agent->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
+			agents[aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 #endif
 
-        int seed = arc4random_uniform(RAND_MAX);
-        
-        agent->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
-        
-        NSString *path;
-        
-        // This is where we specify the root .soar file that will source the Soar agent.
-        // We want this to be dice-agent-new, but right now that breaks the agent
-        // so we're loading dice-p0-m0-c0 instead.
+			int seed = arc4random_uniform(RAND_MAX);
 
-		if (diff == -1)
-			difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
-		else
-			difficulty = diff;
-		
-        NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
-        
-		switch (difficulty)
-		{
-			default:
-			case 0:
+			agents[aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
+
+			NSString *path;
+
+			// This is where we specify the root .soar file that will source the Soar agent.
+			// We want this to be dice-agent-new, but right now that breaks the agent
+			// so we're loading dice-p0-m0-c0 instead.
+
+			if (diff == -1)
+				difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
+			else
+				difficulty = diff;
+
+			NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
+
+			switch (difficulty)
 			{
-				ruleFile = @"dice-easy";
-				break;
+				default:
+				case 0:
+				{
+					ruleFile = @"dice-easy";
+					break;
+				}
+				case 1:
+				{
+					ruleFile = @"dice-medium";
+					break;
+				}
+				case 2:
+				{
+					ruleFile = @"dice-hard";
+					break;
+				}
+				case 3:
+				{
+					ruleFile = @"dice-harder";
+					break;
+				}
+				case 4:
+				{
+					ruleFile = @"dice-hardest";
+					break;
+				}
 			}
-			case 1:
+
+			if (!kernel->IsRemoteConnection())
 			{
-				ruleFile = @"dice-medium";
-				break;
+				path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
 			}
-			case 2:
+			else
 			{
-				ruleFile = @"dice-hard";
-				break;
+				path = [NSString stringWithFormat:@"source \"/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/src/Soar Agent/%@.soar\"", ruleFile];
 			}
-			case 3:
-			{
-				ruleFile = @"dice-harder";
-				break;
-			}
-			case 4:
-			{
-				ruleFile = @"dice-hardest";
-				break;
-			}
+			[kernelLock unlock];
+
+			NSLog(@"Path: %@", path);
+
+			std::cout << agents[aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+			std::cout << agents[aLock]->ExecuteCommandLine("watch 0") << std::endl;
+
+			agents[aLock]->InitSoar();
 		}
-		
-        if (!remoteConnected)
-        {
-            path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
-        }
-        else
-        {
-            path = [NSString stringWithFormat:@"source \"/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/src/Soar Agent/%@.soar\"", ruleFile];
-        }
-        
-        NSLog(@"Path: %@", path);
-        
-        std::cout << agent->ExecuteCommandLine([path UTF8String]) << std::endl;
-        std::cout << agent->ExecuteCommandLine("watch 0") << std::endl;
-        
-        agent->InitSoar();
-        [turnLock unlock];
+
+		[turnLock unlock];
     }
     return self;
 }
 
 - (void) end
-{
-	[turnLock lock];
-		agent = nil;
-
-
-	if (kernel)
-	{
-		kernel->Shutdown();
-		delete kernel;
-		kernel = nil;
-	}
-
-    [turnLock unlock];
-}
+{}
 
 - (void)dealloc
 {
 	NSLog(@"Soar Player Release\n");
-
-	if (agent)
-	{
-		[turnLock lock];
-			agent = nil;
-
-			kernel->Shutdown();
-			delete kernel;
-			kernel = nil;
-		[turnLock unlock];
-	}
 }
 
 - (void)itsYourTurn
@@ -288,10 +281,8 @@ static int agentCount = 0;
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
     [turnLock lock];
-    if (agent == nil) {
-        [turnLock unlock];
-        return;
-    }
+	agents[turnLock]->InitSoar();
+
     NSLog(@"Agent do turn");
     
     BOOL agentSlept = NO;
@@ -299,8 +290,6 @@ static int agentCount = 0;
 	BOOL agentInterrupted = NO;
     BOOL needsRefresh = YES;
 
-	agent->InitSoar();
-    
     DiceSMLData *newData = NULL;
 
     do {
@@ -317,24 +306,18 @@ static int agentCount = 0;
                 newData = NULL;
             }
             
-            if (agent != NULL)
-            {
-                newData = [self GameStateToWM:agent->GetInputLink()];
-            }
-            
+            newData = [self GameStateToWM:agents[turnLock]->GetInputLink()];
+
             needsRefresh = NO;
         }
 
 		double startTime = [[NSDate date] timeIntervalSince1970];
         
         do {
-			if (agent == NULL)
-				continue;
-
-            if (!agentInterrupted)
-				agent->RunSelfTilOutput();
+			if (!agentInterrupted)
+				agents[turnLock]->RunSelfTilOutput();
             
-            sml::smlRunState agentState = agent->GetRunState();
+            sml::smlRunState agentState = agents[turnLock]->GetRunState();
             agentHalted = agentState == sml::sml_RUNSTATE_HALTED;
 
 			if (!agentInterrupted)
@@ -352,9 +335,9 @@ static int agentCount = 0;
 					return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
 			}
 
-        } while (!agentHalted && agent != NULL && (agent->GetNumberCommands() == 0));
+        } while (!agentHalted && (agents[turnLock]->GetNumberCommands() == 0));
         
-        if (agent != NULL && agent->GetNumberCommands() != 0)
+        if (agents[turnLock]->GetNumberCommands() != 0)
         {
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
 			startTime = [[NSDate date] timeIntervalSince1970];
@@ -367,52 +350,33 @@ static int agentCount = 0;
 		[localGame notifyCurrentPlayer];
 	}
 
-    if (agent != NULL)
-    {
-        NSLog(@"Halting agent");
-        sml::WMElement *halter = NULL;
-        if (!agentHalted)
-        {
-            halter = agent->GetInputLink()->CreateStringWME("halt", "now");
-            agent->RunSelfTilOutput();
-        }
-        
-        // reinitialize agent
-        if (halter != NULL)
-        {
-            halter->DestroyWME();
-        }
-        
-        if (newData != NULL)
-        {
-            newData->idState->DestroyWME();
-            newData->idPlayers->DestroyWME();
-            newData->idAffordances->DestroyWME();
-            newData->idHistory->DestroyWME();
-            newData->idRounds->DestroyWME();
-            delete newData;
-            newData = NULL;
-        }
-        
-        agent->InitSoar();
-    }
-    else
-    {
-        NSLog(@"Agent performed commands");
-        if (needsRefresh && newData != NULL)
-        {
-            newData->idState->DestroyWME();
-            newData->idPlayers->DestroyWME();
-            newData->idAffordances->DestroyWME();
-            newData->idHistory->DestroyWME();
-            newData->idRounds->DestroyWME();
-            delete newData;
-            newData = NULL;
-        }
-    }
-    
+	NSLog(@"Halting agent");
+	sml::WMElement *halter = NULL;
+	if (!agentHalted)
+	{
+		halter = agents[turnLock]->GetInputLink()->CreateStringWME("halt", "now");
+		agents[turnLock]->RunSelfTilOutput();
+	}
+
+	// reinitialize agent
+	if (halter != NULL)
+	{
+		halter->DestroyWME();
+	}
+
+	if (newData != NULL)
+	{
+		newData->idState->DestroyWME();
+		newData->idPlayers->DestroyWME();
+		newData->idAffordances->DestroyWME();
+		newData->idHistory->DestroyWME();
+		newData->idRounds->DestroyWME();
+		delete newData;
+		newData = NULL;
+	}
+
     NSLog(@"Agent done");
-    
+
     if (newData != NULL)
     {
         newData->idState->DestroyWME();
@@ -924,12 +888,12 @@ static int agentCount = 0;
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
-    for (int j = 0; j < agent->GetNumberCommands(); j++)
+    for (int j = 0; j < agents[turnLock]->GetNumberCommands(); j++)
     {
-        sml::Identifier *ident = agent->GetCommand(j);
+        sml::Identifier *ident = agents[turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
-		NSLog(@"%s", agent->ExecuteCommandLine("p -d 10 i1"));
+		NSLog(@"%s", agents[turnLock]->ExecuteCommandLine("p -d 10 i1"));
         
         NSLog(@"Command from output link, j=%d, command=%@", j, attrName);
         
