@@ -12,7 +12,7 @@
 
 @class MainMenu;
 
-@interface SingleplayerView : UIViewController
+@interface SingleplayerView : UIViewController <EngineClass>
 
 -(id)initWithAppDelegate:(ApplicationDelegate*)appDelegate andWithMainMenu:(MainMenu*)mainMenu;
 

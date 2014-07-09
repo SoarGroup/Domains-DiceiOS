@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GameRecord.h"
 
-@interface DiceDatabase : NSObject
+@interface DiceDatabase : NSObject <EngineClass>
 {
 	NSUbiquitousKeyValueStore *defaults;
 }

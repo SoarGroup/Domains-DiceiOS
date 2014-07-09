@@ -20,7 +20,7 @@ typedef enum DiceImageType {
     MAX_IMAGE_TYPE = 7
 } DiceImageType;
 
-@interface DiceGraphics : NSObject
+@interface DiceGraphics : NSObject <EngineClass>
 
 + (UIImage *) imageWithType:(DiceImageType) type;
 

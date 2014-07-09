@@ -19,7 +19,7 @@
 
 @class ApplicationDelegate;
 
-@interface DiceGame : NSObject <NSCoding>
+@interface DiceGame : NSObject <NSCoding, EngineClass>
 {
     GameTime time;
 	int nextID;
@@ -46,6 +46,7 @@
 // Running the game
 -(void)publishState;
 -(void)handleAction:(DiceAction*)action;
+-(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 -(void)updateGame:(DiceGame*)remote;
 
 - (void)end;
@@ -67,5 +68,7 @@
 @property(readwrite, weak) PlayGameView* gameView;
 @property(readwrite, assign) BOOL started;
 @property(readwrite, assign) BOOL deferNotification;
+@property(readwrite, assign) BOOL newRound;
+
 
 @end

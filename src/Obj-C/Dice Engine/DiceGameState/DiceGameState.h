@@ -16,7 +16,7 @@
 @class PlayerState;
 @class DiceGame;
 
-@protocol NewRoundListener <NSObject, NSCoding>
+@protocol NewRoundListener <NSObject, NSCoding, EngineClass>
 - (BOOL) roundEnding;
 - (BOOL) roundBeginning;
 @end
@@ -90,10 +90,11 @@
 - (PlayerState*) playerStateForPlayerID:(NSInteger)playerID;
 - (NSMutableAttributedString *) historyText:(NSInteger)playerID colorName:(BOOL)colorThePlayer;
 
+- (void)createNewRound;
+
 @end
 
 @interface DiceGameState()
-- (void)createNewRound;
 - (void)playerLosesRound:(NSInteger)playerID;
 - (void)playerLosesGame:(NSInteger)playerID;
 - (void)goToNextPlayerWhoHasntLost;

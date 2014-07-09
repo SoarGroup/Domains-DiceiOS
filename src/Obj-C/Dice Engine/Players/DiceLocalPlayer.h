@@ -32,4 +32,6 @@
 - (NSString*) getDisplayName;
 - (NSString*) getGameCenterName;
 
+- (void) end:(BOOL)showAlert;
+
 @end

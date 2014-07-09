@@ -10,7 +10,7 @@
 
 #import "PlayerState.h"
 
-@protocol PlayGame <NSObject>
+@protocol PlayGame <NSObject, EngineClass>
 - (void)updateState:(PlayerState*)newState;
 - (void)updateUI;
 @end

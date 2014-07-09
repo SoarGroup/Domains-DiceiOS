@@ -184,16 +184,23 @@ NSArray *buildDiceImages() {
 		self.previousBidImageViews = [[NSMutableArray alloc] init];
 
 		hasPromptedEnd = NO;
+		hasDisplayedRoundOverview = NO;
     }
     return self;
 }
 
-- (BOOL) roundEnding {
+- (BOOL) roundEnding
+{
+	if (hasDisplayedRoundOverview)
+		return YES;
+
 	DiceGame* localGame = self.game;
 
 	localGame.gameState.canContinueGame = NO;
 
-	shouldNotifyCurrentPlayer = !localGame->shouldNotifyOfNewRound;
+	shouldNotifyCurrentPlayer = localGame->shouldNotifyOfNewRound;
+
+	hasDisplayedRoundOverview = YES;
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
@@ -212,20 +219,31 @@ NSArray *buildDiceImages() {
 
 	if (!fullScreenView)
 	{
-		self.overView = [[RoundOverView alloc]
-									initWithGame:localGame
-									player:state playGameView:self
-									withFinalString:finalString];
+		RoundOverView *roundOverView = [[RoundOverView alloc] initWithGame:localGame
+																player:state
+															  playGameView:self
+														   withFinalString:finalString];
 
-		if (self.navigationController)
-			[self.navigationController presentViewController:overView animated:YES completion:nil];
-		else
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		{
-			overView.view.frame = self.view.frame;
-			MultiplayerView* mv = self.multiplayerView;
-			[mv.gamesScrollView addSubview:overView.view];
-			[mv.gamesScrollView bringSubviewToFront:overView.view];
+			self.overView = roundOverView;
+			roundOverView.view.frame = self.view.frame;
+			roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
+												  roundOverView.view.frame.size.height,
+												  roundOverView.view.frame.size.width,
+												  roundOverView.view.frame.size.height);
+
+			[self.view.superview addSubview:roundOverView.view];
+
+			[UIView animateWithDuration:0.35 animations:^{
+				roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
+													  0,
+													  roundOverView.view.frame.size.width,
+													  roundOverView.view.frame.size.height);
+			}];
 		}
+		else
+			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
 	}
 	else
 	{
@@ -405,11 +423,25 @@ NSArray *buildDiceImages() {
         [alert show];
     }
 
+	PlayerState* playerState = [[localGame.gameState lastHistoryItem] player];
+
+	if (localGame.newRound == YES && [playerState playerID] != [localState playerID])
+	{
+		NSString* playerName = [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please Wait"
+														message:[NSString stringWithFormat:@"Please wait until %@ has finished looking at the round overview.", playerName]
+													   delegate:nil
+											  cancelButtonTitle:@"Okay"
+											  otherButtonTitles:nil];
+		[alert show];
+	}
+
 	[localGame notifyCurrentPlayer];
 }
 
 - (BOOL) roundBeginning {
 	hasTouchedBidCounterThisTurn = NO;
+	hasDisplayedRoundOverview = NO;
 
     return NO;
 }
@@ -432,6 +464,23 @@ NSArray *buildDiceImages() {
 		fullScreenView = NO;
 
     self.navigationController.navigationBarHidden = !fullScreenView;
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUINotification:) name:@"UpdateUINotification" object:nil];
+
+	if (self.game.gameState.gameWinner)
+	{
+		DiceGame* localGame = self.game;
+
+		for (id<Player> player in localGame.players)
+		{
+			if ([player isKindOfClass:DiceLocalPlayer.class])
+			{
+				[(DiceLocalPlayer*)player end:YES];
+				break;
+			}
+		}
+	}
 }
 
 - (void)fullScreenViewInitialization
@@ -820,6 +869,12 @@ NSArray *buildDiceImages() {
 	return finalAccessibleText;
 }
 
+- (void)updateUINotification:(NSNotification*)notification
+{
+	if (notification && [notification.name isEqualToString:@"UpdateUINotification"])
+		[self updateUI];
+}
+
 - (void)updateUI
 {
 	if (![NSThread isMainThread])
@@ -832,6 +887,9 @@ NSArray *buildDiceImages() {
 	// State initialization
 	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
+
+	if (localGame.newRound && !hasDisplayedRoundOverview)
+		[self roundEnding];
 
 	if ([localGame.gameState.theNewRoundListeners count] == 0)
 		[localGame.gameState addNewRoundListener:self];
@@ -1201,12 +1259,12 @@ NSArray *buildDiceImages() {
             }
             CGRect dieFrame = CGRectMake(x, dieY, dieSize, dieSize);
             int dieFace = -1;
-            if (die.hasBeenPushed || control)
+            if (die.hasBeenPushed || control || localGame.gameState.gameWinner)
             {
                 dieFace = die.dieValue;
             }
             UIImage *dieImage = [self imageForDie:dieFace];
-            if (control) {
+            if (control && !localGame.gameState.gameWinner) {
                 UIButton *dieButton = [UIButton buttonWithType:UIButtonTypeCustom];
                 dieButton.frame = dieFrame;
                 [dieButton setImage:dieImage forState:UIControlStateNormal];
@@ -1228,7 +1286,7 @@ NSArray *buildDiceImages() {
 				if (control)
 					name = @"Your";
 
-				if (die.hasBeenPushed)
+				if (die.hasBeenPushed || localGame.gameState.gameWinner)
 					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i, pushed", name, die.dieValue];
 				else
 					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Unknown Face Value", name];
@@ -1570,11 +1628,11 @@ NSArray *buildDiceImages() {
 
 			int dieFace = -1;
 
-			if (die.hasBeenPushed || i == 0 || showAllDice)
+			if (die.hasBeenPushed || i == 0 || showAllDice || localGame.gameState.gameWinner)
 				dieFace = die.dieValue;
 
 			UIImage *dieImage = [self imageForDie:dieFace];
-			if (i == 0 && !die.hasBeenPushed)
+			if (i == 0 && !die.hasBeenPushed && !localGame.gameState.gameWinner)
 			{
 				UIButton *dieButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
@@ -1692,7 +1750,7 @@ NSArray *buildDiceImages() {
 		[tempViews addObject:diceView];
 
 		// Possibly add challenge button.
-		if (canBid && [self canChallengePlayer:((PlayerState*)playerStates[i]).playerID]) {
+		if (canBid && [self canChallengePlayer:((PlayerState*)playerStates[i]).playerID] && !localGame.gameState.gameWinner) {
 			CGRect frame = CGRectMake(200, 0, 100, 40);
 
 			if (i == 7)
@@ -1873,11 +1931,11 @@ NSArray *buildDiceImages() {
 
 	NSString* messageString = nil;
 	PlayerState* stateLocal = [previousItem player];
-	NSString* buttonTitle = [stateLocal playerName];
+	NSString* buttonTitle = [[self.game.players objectAtIndex:stateLocal.playerID] getDisplayName];
 
 	if (previousItem.actionType == ACTION_BID)
 	{
-		messageString = [[previousItem bid] asString];
+		messageString = [previousItem asString];
 		buttonTitle = [NSString stringWithFormat:@"%@'s bid", buttonTitle];
 	}
 	else
@@ -2010,8 +2068,30 @@ NSArray *buildDiceImages() {
         case ACTION_CHALLENGE_BID:
         case ACTION_CHALLENGE_PASS:
         {
-            DiceAction *action = [DiceAction challengeAction:localState.playerID
-                                                      target:[self getChallengeTarget:alertView buttonIndex:buttonIndex]];
+			ActionType type = alertView.tag == ACTION_CHALLENGE_BID ? ACTION_BID : ACTION_PASS;
+
+			// Find last bid
+			int target = -1;
+
+			for (int i = localGame.gameState.currentTurn;i >= 0;i--)
+			{
+				int historyCount = (int)[localGame.gameState.history count] - i - 1;
+
+				if (historyCount < 0)
+					continue;
+
+				HistoryItem* item = [localGame.gameState.history objectAtIndex:historyCount];
+				if ([item actionType] == type)
+				{
+					PlayerState* itemState = [item player];
+					target = [itemState playerID];
+				}
+			}
+
+			assert(target != -1);
+
+			DiceAction *action = [DiceAction challengeAction:localState.playerID
+													  target:target];
 
 			[localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
 			break;
@@ -2128,7 +2208,7 @@ NSArray *buildDiceImages() {
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, self.view.window.screen.scale);
 
     // There he is! The new API method
-    [self.view drawViewHierarchyInRect:self.view.frame afterScreenUpdates:NO];
+    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
 
     // Get the snapshot
     UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();

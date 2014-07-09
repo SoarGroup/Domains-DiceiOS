@@ -41,28 +41,9 @@
 
 - (void) saveMatchData
 {
-	BOOL onlyAIs = YES;
-
-	for (int i = localGame.gameState.currentTurn;i >= 0;i--)
-	{
-		if ([[localGame.gameState getPlayerWithID:i] isKindOfClass:DiceLocalPlayer.class])
-			break;
-		else if (![[localGame.gameState getPlayerWithID:i] isKindOfClass:SoarPlayer.class])
-		{
-			onlyAIs = NO;
-			break;
-		}
-	}
-
-	if (matchHasEnded || !onlyAIs)
+	if (matchHasEnded || ![[[match currentParticipant] playerID] isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
 		return;
 
-	if (![NSThread isMainThread])
-	{
-		[self performSelectorOnMainThread:@selector(saveMatchData) withObject:nil waitUntilDone:YES];
-		return;
-	}
-	
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
@@ -70,6 +51,8 @@
 
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
+		NSLog(@"Sent match data!");
+
 		if (error)
 			NSLog(@"Error upon saving match data: %@\n", error.description);
 	}];
@@ -80,16 +63,38 @@
 	if (matchHasEnded)
 		return;
 
-	if (![NSThread isMainThread])
-	{
-		[self performSelectorOnMainThread:@selector(updateMatchData) withObject:nil waitUntilDone:YES];
-		return;
-	}
-
 	[match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* error)
 	 {
 		 if (!error)
 		 {
+			 for (int i = 0;i < [self->match.participants count];++i)
+			 {
+				 GKTurnBasedParticipant* p = [self->match.participants objectAtIndex:i];
+				 NSString* oldPlayerID = ((GKTurnBasedParticipant*)[self->participants objectAtIndex:i]).playerID;
+				 NSString* newPlayerID = p.playerID;
+
+				 if ((oldPlayerID == nil && newPlayerID != nil) ||
+					 ![oldPlayerID isEqualToString:newPlayerID])
+				 {
+					 NSMutableArray* array = [NSMutableArray arrayWithArray:self->participants];
+
+					 [array replaceObjectAtIndex:i withObject:p];
+
+					 self->participants = array;
+
+					 for (DiceRemotePlayer* remote in self->remotePlayers)
+					 {
+						 NSString* remotePlayerID = [remote getGameCenterName];
+						 if ((remotePlayerID == nil && oldPlayerID == nil) ||
+							 [remotePlayerID isEqualToString:oldPlayerID])
+						 {
+							 [remote setParticipant:p];
+							 break;
+						 }
+					 }
+				 }
+			 }
+
 			 ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 			 NSLog(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
@@ -105,18 +110,14 @@
 - (void) matchHasEnded
 {
 	matchHasEnded = YES;
+
+	[localGame end];
 }
 
 - (void) advanceToRemotePlayer:(DiceRemotePlayer*)player
 {
 	if (matchHasEnded)
 		return;
-
-	if (![NSThread isMainThread])
-	{
-		[self performSelectorOnMainThread:@selector(advanceToRemotePlayer:) withObject:player waitUntilDone:YES];
-		return;
-	}
 
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
@@ -127,6 +128,11 @@
 
 	for (int i = localGame.gameState.currentTurn;i > 0;i--)
 	{
+		if ([[localGame.players objectAtIndex:i] isKindOfClass:SoarPlayer.class])
+			continue;
+
+		assert(![[localGame.players objectAtIndex:i] isKindOfClass:DiceLocalPlayer.class]);
+
 		GKTurnBasedParticipant* gktbp = [nextPlayers objectAtIndex:0];
 		[nextPlayers removeObjectAtIndex:0];
 		[nextPlayers insertObject:gktbp atIndex:[nextPlayers count]];
@@ -154,14 +160,6 @@
 {
 	if (matchHasEnded)
 		return;
-
-	if (![NSThread isMainThread])
-	{
-		dispatch_sync(dispatch_get_main_queue(), ^{
-			[self playerQuitMatch:player withRemoval:remove];
-		});
-		return;
-	}
 
 	if ([player isKindOfClass:SoarPlayer.class])
 		[self saveMatchData];
@@ -248,19 +246,13 @@
 	if (matchHasEnded)
 		return YES;
 
-	if (![NSThread isMainThread])
-	{
-		[self performSelectorOnMainThread:@selector(endMatchForAllParticipants) withObject:nil waitUntilDone:YES];
-		return YES;
-	}
-
-	for (GKTurnBasedParticipant* gktbp in participants)
+	for (GKTurnBasedParticipant* gktbp in match.participants)
 	{
 		PlayerState* state = nil;
 
 		for (PlayerState* other in [[localGame gameState] playerStates])
 		{
-			if ([[other playerName] isEqualToString:[gktbp playerID]])
+			if ([[[localGame.players objectAtIndex:other.playerID] getGameCenterName] isEqualToString:[gktbp playerID]])
 			{
 				state = other;
 				break;

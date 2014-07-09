@@ -44,7 +44,7 @@
 - (BOOL) hasWon
 {
 	DiceGameState* gameStateLocal = self.gameState;
-    return gameStateLocal.gameWinner == self;
+    return gameStateLocal.gameWinner == [gameStateLocal.players objectAtIndex:self.playerID];
 }
 
     //Initilization method
@@ -286,9 +286,10 @@
 - (BOOL)canBid
 {
         //If we have lost, we can't
-    if (hasLost) return NO;
-
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return NO;
+
     PlayerState *currentState = [gameStateLocal getCurrentPlayerState];
     bool ret = currentState == self;
     return ret;
@@ -309,9 +310,10 @@
 - (Bid *) getChallengeableBid
 {
         // Have we lost? If so of course we can't
-    if (hasLost) return NO;
         // Get the previous bid for the next check
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return NO;
 
     Bid *previousBid = gameStateLocal.previousBid;
         // Make sure the current player is us, the previous bid exists, and the previous bid's playerID is not us
@@ -377,8 +379,10 @@
 
 // Returns the playerID of the player who passed, or -1 if no such player exists.
 - (int)getChallengeableLastPass {
-    if (hasLost) return -1;
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return -1;
+
     HistoryItem *historyItem = [gameStateLocal lastHistoryItem];
     if (historyItem != nil && [gameStateLocal getCurrentPlayerState] == self)
     {
@@ -407,13 +411,13 @@
 }
 
 - (int) getChallengeableSecondLastPass {
-    if (hasLost)
-		return -1;
-	
     if (![self canChallengeLastPass])
 		return -1;
 
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return -1;
+
     NSArray *history = [gameStateLocal history];
 	
     if (!history || [history count] < 2)
@@ -485,9 +489,10 @@
     //Can we exact?
 - (BOOL)canExact
 {
-    if (hasLost) return -1;
-
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return NO;
+
     Bid *previousBid = [gameStateLocal previousBid];
     return ([self isMyTurn] && !playerHasExacted && previousBid && [previousBid playerID] != playerID);
 }
@@ -495,15 +500,19 @@
     //Can we pass?
 - (BOOL)canPass
 {
-    if (hasLost) return NO;
-    return ([self isMyTurn] && !playerHasPassed && [arrayOfDice count] > 1);
+	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return NO;
+
+	return ([self isMyTurn] && !playerHasPassed && [arrayOfDice count] > 1);
 }
 
     //Can we push?
 - (BOOL)canPush
 {
-    if (hasLost) return NO;
 	DiceGameState* gameStateLocal = self.gameState;
+
+	if (hasLost || gameStateLocal.gameWinner) return NO;
 
     HistoryItem *item = [gameStateLocal lastHistoryItem];
     return (item && item.player == self && item.actionType == ACTION_BID && [[self unPushedDice] count] > 1);
@@ -512,7 +521,6 @@
     //Can we accept?
 - (BOOL)canAccept
 {
-    if (hasLost) return NO;
     return NO;
 }
 

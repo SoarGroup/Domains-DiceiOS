@@ -33,6 +33,7 @@
 @synthesize statsButton;
 @synthesize settingsButton;
 @synthesize aboutButton;
+@synthesize removeAllMultiplayerGames;
 
 - (id)initWithAppDelegate:(id)anAppDelegate
 {
@@ -88,6 +89,11 @@
 
 	for (GameKitGameHandler* handler in handlers)
 		[delegate.listener removeGameKitGameHandler:handler];
+
+#ifdef DEBUG
+	self.removeAllMultiplayerGames.enabled = YES;
+	self.removeAllMultiplayerGames.hidden = NO;
+#endif
 }
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
 {
@@ -149,6 +155,39 @@
 	[self.navigationController pushViewController:[[AboutView alloc] init]  animated:YES];
 }
 
+- (IBAction)removeAllMultiplayerGamesPressed:(id)sender
+{
+	ApplicationDelegate* delegate = appDelegate;
+	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
+	 {
+		 static NSUInteger matchCount = 0;
+
+		 if ([matches count] > matchCount)
+			 matchCount = [matches count];
+
+		 if ([matches count] == 0)
+		 {
+			 dispatch_async(dispatch_get_main_queue(), ^{
+				 [delegate.listener.handlers removeAllObjects];
+
+				 [[[UIAlertView alloc] initWithTitle:@"Removed All GK Matches" message:[NSString stringWithFormat:@"Removed: %lu matches", (unsigned long)matchCount] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+
+				 matchCount = 0;
+			 });
+
+			 return;
+		 }
+
+		 [[matches objectAtIndex:0] removeWithCompletionHandler:^(NSError* matchError)
+		  {
+			  if (matchError)
+				  NSLog(@"Error Removing Invalid Match: %@", error.description);
+
+			  [self removeAllMultiplayerGamesPressed:nil];
+		  }];
+	 }];
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
 	return UIStatusBarStyleLightContent;
@@ -163,5 +202,21 @@
 {
 	return [GKLocalPlayer localPlayer].authenticated;
 }
+
+//-(BOOL)shouldAutorotate
+//{
+//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//		return !UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
+//	else
+//		return !UIInterfaceOrientationIsPortrait(self.interfaceOrientation);
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//		return UIInterfaceOrientationMaskLandscape;
+//	else
+//		return UIInterfaceOrientationMaskPortrait;
+//}
 
 @end

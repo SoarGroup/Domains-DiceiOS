@@ -15,7 +15,7 @@ typedef enum HistoryItemType {
     metaHistoryItem
 } HistoryItemType;
 
-@interface HistoryItem : NSObject {
+@interface HistoryItem : NSObject <EngineClass> {
 @private
     NSInteger playerLosingADie;
     NSInteger playerWinningADie;

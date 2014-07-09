@@ -11,7 +11,7 @@
 
 @class MultiplayerView;
 
-@interface JoinMatchView : UIViewController
+@interface JoinMatchView : UIViewController <EngineClass>
 {
 	BOOL iPad;
 }

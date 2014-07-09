@@ -80,7 +80,7 @@
 	NSLock* lock = [[NSLock alloc] init];
 
 	for (int i = 0;i < opponents;i++)
-		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil]];
+		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
 
 	[game shufflePlayers];
 

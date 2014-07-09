@@ -22,6 +22,8 @@
 #import "Player.h"
 #import "GameKitGameHandler.h"
 
+#import <vector>
+
 @class DiceGameState;
 @class DiceGame;
 
@@ -39,7 +41,7 @@
 	int outputCallBackID;
 }
 
-- (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler;
+- (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff;
 - (void)dealloc;
 
 - (NSString*) getDisplayName;
@@ -59,5 +61,8 @@
 @property (readwrite, assign) int playerID;
 @property (readwrite, atomic, weak) DiceGame *game;
 @property (readwrite, strong) NSLock *turnLock;
+
+@property (readonly, assign) int difficulty;
+
 
 @end

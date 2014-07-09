@@ -24,11 +24,15 @@
 - (IBAction)settingsButtonPressed:(id)sender;
 - (IBAction)aboutButtonPressed:(id)sender;
 
+- (IBAction)removeAllMultiplayerGamesPressed:(id)sender;
+
 @property (nonatomic, strong) IBOutlet UIButton *aiOnlyGameButton;
 @property (nonatomic, strong) IBOutlet UIButton *multiplayerGameButton;
 @property (nonatomic, strong) IBOutlet UIButton *rulesButton;
 @property (nonatomic, strong) IBOutlet UIButton *statsButton;
 @property (strong, nonatomic) IBOutlet UIButton *settingsButton;
 @property (strong, nonatomic) IBOutlet UIButton *aboutButton;
+
+@property (strong, nonatomic) IBOutlet UIButton *removeAllMultiplayerGames;
 
 @end

@@ -85,6 +85,7 @@
 - (void)notifyHasLost
 {
 	GameKitGameHandler* handlerLocal = self.handler;
+
 	if (handlerLocal)
 		[handlerLocal playerQuitMatch:self withRemoval:NO];
 }
@@ -97,7 +98,25 @@
 		[handlerLocal endMatchForAllParticipants];
 }
 
-- (void) end { }
+- (void) end
+{}
+
+- (void) end:(BOOL)showAlert
+{
+	if (![NSThread isMainThread] || !showAlert)
+		return;
+
+	PlayGameView* localView = self.gameView;
+	NSString *title = [NSString stringWithFormat:@"%@ Wins!", [localView.game.gameState.gameWinner getDisplayName]];
+	//NSString *message = @"For this round: 1s aren't wild. Only players with one die may change the bid face."; // (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %d dice?", [push count]];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+													message:nil
+												   delegate:self
+										  cancelButtonTitle:nil
+										  otherButtonTitles:@"Okay", nil];
+	alert.tag = ACTION_QUIT;
+	[alert show];
+}
 
 - (void)removeHandler
 {

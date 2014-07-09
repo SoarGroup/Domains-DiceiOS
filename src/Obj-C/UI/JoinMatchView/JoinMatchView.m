@@ -99,7 +99,38 @@
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
 		request.minPlayers = changeMinimumNumberOfHumanPlayers.value + 1;
 		request.maxPlayers = changeMaximumNumberOfHumanPlayers.value + 1;
-		request.playerGroup = changeNumberOfAIPlayers.value; // AI Player Numbers hack...
+
+		int group = 0;
+
+		if (changeNumberOfAIPlayers.value > 0)
+			group |= kAI_Human;
+		else
+			group |= kNo_AIs;
+
+		switch ((int)changeNumberOfAIPlayers.value)
+		{
+			case 1: group |= kAI_1;
+				break;
+			case 2: group |= kAI_2;
+				break;
+			case 3: group |= kAI_3;
+				break;
+			case 4: group |= kAI_4;
+				break;
+			case 5: group |= kAI_5;
+				break;
+			case 6: group |= kAI_6;
+				break;
+			case 7: group |= kAI_7;
+				break;
+			case 8: group |= kAI_8;
+				break;
+			default:
+				NSLog(@"Error selecting AI group!");
+				break;
+		}
+
+		request.playerGroup = group; // AI Player Numbers hack...
 
 		self.spinner.hidden = NO;
 		[self.spinner startAnimating];
@@ -138,6 +169,8 @@
 							  return;
 						  }
 
+						  [delegateLocal.listener addGameKitGameHandler:handler];
+
 						  [newGame updateGame:[mmd theGame]];
 
 						  DiceLocalPlayer* localPlayer = nil;
@@ -153,8 +186,6 @@
 
 						  [handler setLocalPlayer:localPlayer];
 						  [handler setRemotePlayers:remotePlayers];
-
-						  [delegateLocal.listener addGameKitGameHandler:handler];
 
 						  void (^quitHandlerFullScreen)(void) =^
 						  {

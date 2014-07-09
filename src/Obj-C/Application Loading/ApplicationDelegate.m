@@ -7,7 +7,6 @@
 //
 
 #import "ApplicationDelegate.h"
-#import "Application.h"
 
 #import "MultiplayerView.h"
 #import "JoinMatchView.h"
@@ -58,6 +57,10 @@
 
 	self.listener = [[GameKitListener alloc] init];
 	[self authenticateLocalPlayer];
+
+	[[GKLocalPlayer localPlayer] registerListener:self.listener];
+
+	[[[UIAlertView alloc] initWithTitle:@"Liar's Dice Alpha" message:@"Liar's Dice is an ALPHA currently.  If you find any issues or want any features please email alexlt@umich.edu with requests or go to github.com/SoarGroup/Domains-DiceiOS and submit an issue." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -68,6 +71,10 @@
 - (void)authenticateLocalPlayer
 {
 	GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+
+	if (localPlayer.isAuthenticated)
+		self.mainMenu.multiplayerEnabled = YES;
+
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
 		if (error)
 			NSLog(@"Error authenticating with game center: %@\n", error.description);
@@ -108,11 +115,6 @@
 			}
 		}
 	};
-
-	if (localPlayer.isAuthenticated)
-		self.mainMenu.multiplayerEnabled = YES;
-
-	[localPlayer registerListener:self.listener];
 }
 
 - (void)dealloc

@@ -12,6 +12,6 @@ int main(int argc, char *argv[])
 {
 	[[NSThread currentThread] setName:@"Main Liar's Dice Thread"];
 
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    return retVal;
+	int retVal = UIApplicationMain(argc, argv, nil, nil);
+	return retVal;
 }

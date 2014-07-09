@@ -22,7 +22,7 @@
 
 @implementation DiceGame
 
-@synthesize gameState, players, appDelegate, gameView, started, deferNotification;
+@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound;
 
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
 {
@@ -40,6 +40,7 @@
 		self.players = [[NSArray alloc] init];
 
 		shouldNotifyOfNewRound = NO;
+		newRound = NO;
 	}
 
     return self;
@@ -115,7 +116,7 @@
 		self.gameState.game = self;
 
 		if ([decoder containsValueForKey:@"NewRound"])
-			shouldNotifyOfNewRound = YES;
+			newRound = YES;
 	}
 
 	return self;
@@ -136,12 +137,8 @@
 
 	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
 
-	if (gameState.lastHistoryItem.actionType == ACTION_CHALLENGE_BID ||
-		gameState.lastHistoryItem.actionType == ACTION_CHALLENGE_PASS ||
-		gameState.lastHistoryItem.actionType == ACTION_EXACT)
-	{
+	if (newRound)
 		[encoder encodeBool:YES forKey:@"NewRound"];
-	}
 }
 
 - (void)updateGame:(DiceGame *)remote
@@ -152,7 +149,15 @@
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
 	if (remote.players)
+	{
 		self.players = [NSArray arrayWithArray:remote.players];
+
+		for (id<Player> p in self.players)
+		{
+			if ([p isKindOfClass:SoarPlayer.class])
+				((SoarPlayer*)p).game = self;
+		}
+	}
 
 	id remoteAppDelegate = remote.appDelegate;
 	if (remoteAppDelegate)
@@ -169,14 +174,19 @@
 
 	BOOL didAdvanceTurns = NO;
 
+	if (remote->newRound != newRound)
+	{
+		if (remote->newRound)
+			for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
+				[listener roundBeginning];
+	}
+
 	if (remote.gameState)
 	{
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
 			didAdvanceTurns = YES;
 
-		if ([remote.gameState.history count] == 1 &&
-			((HistoryItem*)[remote.gameState.history objectAtIndex:0]).historyType == metaHistoryItem &&
-			[self.gameState.history count] > 1)
+		if (remote.newRound)
 		{
 			// Round over
 			for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
@@ -191,8 +201,41 @@
 
 	[self publishState];
 
-	if (didAdvanceTurns && ![[self.gameState getCurrentPlayer] isKindOfClass:DiceRemotePlayer.class])
+	if (self.gameState.hasAPlayerWonTheGame)
+	{
+		for (id<Player> player in players)
+			[player end];
+
+		return;
+	}
+	
+	newRound = remote->newRound;
+
+	int currentTurnGK = self.gameState.currentTurn;
+	if ([GKLocalPlayer localPlayer].isAuthenticated)
+	{
+		ApplicationDelegate* delegate = self.appDelegate;
+		GKTurnBasedParticipant* currentParticipant = [[delegate.listener handlerForGame:self].match currentParticipant];
+
+		for (int i = 0;i < [self.players count];++i)
+		{
+			id<Player> p = [self.players objectAtIndex:i];
+
+			if ([[currentParticipant playerID] isEqualToString:[p getGameCenterName]])
+			{
+				currentTurnGK = i;
+				break;
+			}
+		}
+	}
+
+	if (didAdvanceTurns && ![[self.players objectAtIndex:currentTurnGK] isKindOfClass:DiceRemotePlayer.class])
 		[self notifyCurrentPlayer];
+
+	PlayerState* playerState = [[self.gameState lastHistoryItem] player];
+
+	if (newRound && [[players objectAtIndex:[playerState playerID]] isKindOfClass:DiceLocalPlayer.class])
+		[self.gameState createNewRound];
 }
 
 - (void) setGameView:(PlayGameView*)aGameView
@@ -233,6 +276,12 @@
 
 	[playerArray shuffle];
 
+	for (int i = 0;i < [playerArray count];++i)
+	{
+		id<Player> p = [playerArray objectAtIndex:i];
+		[p setID:i];
+	}
+
 	self.players = playerArray;
 }
 
@@ -267,7 +316,7 @@
         [player updateState:state];
     }
 
-	if (shouldNotifyOfNewRound && self.gameView)
+	if ((newRound || shouldNotifyOfNewRound) && self.gameView)
 	{
 		for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
 			[listener roundEnding];
@@ -297,6 +346,11 @@
 }
 
 -(void)handleAction:(DiceAction*)action
+{
+	[self handleAction:action notify:YES];
+}
+
+-(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
     NSLog(@"Handling action: %i", action.actionType);
     self.deferNotification = NO;
@@ -342,10 +396,14 @@
             return;
         }
     }
-    [self publishState];
-    if (!deferNotification) {
-        [self notifyCurrentPlayer];
-    }
+
+	[self publishState];
+
+	if (gameState.gameWinner)
+		return;
+
+	if (notify)
+		[self notifyCurrentPlayer];
 }
 
 - (void) end

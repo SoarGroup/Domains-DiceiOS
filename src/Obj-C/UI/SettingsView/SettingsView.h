@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsView : UIViewController <UITextFieldDelegate>
+@interface SettingsView : UIViewController <UITextFieldDelegate, EngineClass>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *difficultyLabel;

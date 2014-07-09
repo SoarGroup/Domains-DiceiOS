@@ -109,6 +109,8 @@
 	// TODO: Handle timeout case
 	// TODO: Handle invite case
 
+	NSLog(@"Recieved turn event for match: %@", match);
+
 	for (GameKitGameHandler* handler in handlers)
 	{
 		if ([[handler getMatch].matchID isEqualToString:match.matchID])

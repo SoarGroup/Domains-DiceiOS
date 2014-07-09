@@ -11,12 +11,12 @@
 
 #import "GameKitGameHandler.h"
 
-@interface GameKitListener : NSObject <GKLocalPlayerListener>
+@interface GameKitListener : NSObject <GKLocalPlayerListener, EngineClass>
 {
 
 }
 
-@property (nonatomic, strong) NSMutableArray* handlers;;
+@property (nonatomic, strong) NSMutableArray* handlers;
 
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler;
 - (void) removeGameKitGameHandler:(GameKitGameHandler*)handler;

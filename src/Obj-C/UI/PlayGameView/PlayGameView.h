@@ -20,6 +20,7 @@
 const int pushMargin();
 
 @interface PlayGameView : UIViewController <PlayGame, NewRoundListener> {
+@private
 	void (^quitHandler)(void);
 
 	BOOL fullScreenView;
@@ -40,7 +41,7 @@ const int pushMargin();
 	NSInteger buttonIndex2;
 
 	BOOL hasTouchedBidCounterThisTurn;
-
+	BOOL hasDisplayedRoundOverview;
 @public
 	BOOL shouldNotifyCurrentPlayer;
 }

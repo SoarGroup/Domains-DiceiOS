@@ -79,7 +79,7 @@ static int agentCount = 0;
 
 @implementation SoarPlayer
 
-@synthesize name, playerState, playerID, game, turnLock, handler, participant;
+@synthesize name, playerState, playerID, game, turnLock, handler, participant, difficulty;
 
 + (NSString*) makePlayerName
 {
@@ -108,7 +108,7 @@ static int agentCount = 0;
     }
 }
 
-- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler *)gkgHandler;
+- (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler *)gkgHandler difficulty:(int)diff;
 {
     self = [super init];
     if (self)
@@ -171,7 +171,10 @@ static int agentCount = 0;
         // We want this to be dice-agent-new, but right now that breaks the agent
         // so we're loading dice-p0-m0-c0 instead.
 
-		int difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
+		if (diff == -1)
+			difficulty = (int)[database getDifficulty]; // Safe conversion due to difficulties not requiring long precision (there is only a couple)
+		else
+			difficulty = diff;
 		
         NSString *ruleFile = nil; /*@"dice-pmh"; @"dice-p0-m0-c0"; */
         
@@ -340,8 +343,11 @@ static int agentCount = 0;
         if (agent != NULL && agent->GetNumberCommands() != 0)
         {
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
+			startTime = [[NSDate date] timeIntervalSince1970];
         }
     } while (!agentSlept && !agentHalted);
+
+	[self endTurn];
 
     if (agent != NULL)
     {
@@ -459,11 +465,16 @@ static int agentCount = 0;
     
     for (id <Player> playerThing in [gameState players])
     {
+		NSString* playerIDString = [playerThing getGameCenterName];
+
+		if (playerIDString == nil || [playerIDString isEqualToString:@"Soar"])
+			playerIDString = [playerThing getDisplayName];
+
         PlayerState *player = [gameState getPlayerState:[playerThing getID]];
         Identifier *playerId = idPlayers->CreateIdWME("player");
         testWme(playerId);
         playerId->CreateIntWME("id", [player playerID]);
-        playerId->CreateStringWME("name", [player.playerName UTF8String]);
+        playerId->CreateStringWME("name", [playerIDString UTF8String]);
         playerId->CreateStringWME("exists", ([player hasLost] ? "false" : "true"));
         Identifier *cup = playerId->CreateIdWME("cup");
         testWme(cup);
@@ -620,7 +631,6 @@ static int agentCount = 0;
         }
         
         playerMap[player.playerID] = static_cast<void*>(playerId);
-        
     }
     
     Identifier *bid = idAffordances->CreateIdWME("action");
@@ -688,7 +698,7 @@ static int agentCount = 0;
 			numberHistoryItems++;
 		}
 	}
-    
+
     if (numberHistoryItems == 0)
     {
         idHistory = inputLink->CreateStringWME("history", "nil");
@@ -900,6 +910,8 @@ static int agentCount = 0;
     {
         sml::Identifier *ident = agent->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
+
+		NSLog(@"%s", agent->ExecuteCommandLine("p -d 10 i1"));
         
         NSLog(@"Command from output link, j=%d, command=%@", j, attrName);
         
@@ -933,6 +945,9 @@ static int agentCount = 0;
             }
             else if ([attrName isEqualToString:@"push"])
             {
+				// Hack
+				*sleep = YES;
+
                 BOOL goodCommand = YES;
                 int* faces = new int[ident->GetNumberChildren()];
                 
@@ -1045,9 +1060,9 @@ static int agentCount = 0;
         {}
     }
 
-	DiceGame* localGame = self.game;
 	GameKitGameHandler* localHandler = self.handler;
-    
+	DiceGame* localGame = self.game;
+
     if (action != nil)
     {
         NSLog(@"Agent performing action of type: %d", action.actionType);
@@ -1056,14 +1071,18 @@ static int agentCount = 0;
             NSLog(@"Pushing dice, count: %lu", (unsigned long)[diceToPush count]);
             action.push = diceToPush;           
         }
-        [localGame handleAction:action];
+
+		[localGame handleAction:action notify:NO];
+		//[actions addObject:action];
         *needsRefresh = YES;
     }
     else if (diceToPush != nil)
     {
         NSLog(@"Agent just pushing, count: %lu", (unsigned long)[diceToPush count]);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
-        [localGame handleAction:new_action];
+
+		[localGame handleAction:new_action notify:NO];
+		//[actions addObject:new_action];
     }
 
 	if (localHandler)
@@ -1111,6 +1130,13 @@ static int agentCount = 0;
 - (void)removeHandler
 {
 	self.handler = nil;
+}
+
+- (void)endTurn
+{
+	DiceGame* localGame = self.game;
+
+	[localGame notifyCurrentPlayer];
 }
 
 @end

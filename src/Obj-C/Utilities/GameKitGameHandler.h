@@ -14,7 +14,7 @@
 
 @class MultiplayerMatchData;
 
-@interface GameKitGameHandler : NSObject
+@interface GameKitGameHandler : NSObject <EngineClass>
 {
 	BOOL matchHasEnded;
 }

@@ -11,6 +11,8 @@
 #import "Die.h"
 #import "DiceGraphics.h"
 
+#import "SoarPlayer.h"
+
 @implementation RoundOverView
 
 @synthesize game, player, playGameView;
@@ -157,7 +159,7 @@
         CGRect nameLabelRect = CGRectMake(x + starSize, y, width - starSize, labelHeight);
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:nameLabelRect];
         nameLabel.backgroundColor = [UIColor clearColor];
-        nameLabel.text = playerState.playerName;
+        nameLabel.text = [[gameLocal.players objectAtIndex:playerState.playerID] getDisplayName];
 		[nameLabel setTextColor:[UIColor whiteColor]];
         [diceView addSubview:nameLabel];
         x = 0; // = x + width - starSize;
@@ -213,11 +215,20 @@
 }
 
 - (IBAction)donePressed:(id)sender {
-	if (self.navigationController)
-		[self dismissViewControllerAnimated:YES completion:nil];
-	else
+	[self dismissViewControllerAnimated:YES completion:nil];
+
+	PlayGameView* gameView = self.playGameView;
+	if (gameView.overView)
 	{
-		[self.view removeFromSuperview];
+		[UIView animateWithDuration:0.25 animations:^{
+			gameView.overView.view.frame = CGRectMake(gameView.overView.view.frame.origin.x,
+													  gameView.overView.view.frame.size.height,
+													  gameView.overView.view.frame.size.width,
+													  gameView.overView.view.frame.size.height);
+		}];
+
+		[gameView.overView.view removeFromSuperview];
+		gameView.overView = nil;
 	}
 
 	DiceGame* gameLocal = self.game;
@@ -272,12 +283,23 @@
         [alert show];
     }
 
-	PlayGameView* gameView = self.playGameView;
-	if (gameView->shouldNotifyCurrentPlayer)
-		[gameLocal notifyCurrentPlayer];
+	PlayerState* playerState = [[gameLocal.gameState lastHistoryItem] player];
 
-	gameView.view.hidden = NO;
-	gameView.overView = nil;
+	if (![[gameLocal.players objectAtIndex:[playerState playerID]] isKindOfClass:SoarPlayer.class] &&
+		gameLocal.newRound == YES &&
+		[playerState playerID] != [playerLocal playerID])
+	{
+		NSString* playerName = [[gameLocal.players objectAtIndex:[playerState playerID]] getDisplayName];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please Wait"
+														message:[NSString stringWithFormat:@"Please wait until %@ has finished looking at the round overview.", playerName]
+													   delegate:nil
+											  cancelButtonTitle:@"Okay"
+											  otherButtonTitles:nil];
+		[alert show];
+	}
+
+//	if (gameView->shouldNotifyCurrentPlayer)
+//		[gameLocal notifyCurrentPlayer];
 }
 
 - (UIImage*)barImage

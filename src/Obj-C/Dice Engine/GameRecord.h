@@ -17,7 +17,7 @@ typedef struct GameTime {
     int second;
 } GameTime;
 
-@interface GameRecord : NSObject {
+@interface GameRecord : NSObject <EngineClass> {
     GameTime time;
     int numPlayers;
     int firstPlace;

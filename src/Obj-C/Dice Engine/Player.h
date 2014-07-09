@@ -12,7 +12,7 @@
 @class PlayerState;
 @class GameKitGameHandler;
 
-@protocol Player <NSObject>
+@protocol Player <NSObject, EngineClass>
 - (NSString*) getDisplayName;
 - (NSString*) getGameCenterName;
 

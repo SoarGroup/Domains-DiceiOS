@@ -76,6 +76,9 @@
 			[losers addObject:[NSNumber numberWithInt:[decoder decodeIntForKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]]]];
 
 		theNewRoundListeners = [[NSMutableArray alloc] init];
+
+		if ([decoder containsValueForKey:@"DiceGameState:GameWinner"])
+			gameWinner = (id<Player>)[decoder decodeObjectForKey:@"DiceGameState:GameWinner"];
 	}
 
 	return self;
@@ -91,7 +94,9 @@
 	BOOL foundLocalPlayer = NO;
 	for (NSString* player in playersArrayToDecode)
 	{
-		if (![player isEqualToString:@"Soar"] &&
+		NSLog(@"Recieved player: %@", player);
+
+		if (!([[player substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"Soar"] && [player length] == 6) &&
 			![player isEqualToString:@"Human"]) // Complete Player
 		{
 			GKTurnBasedParticipant* participant;
@@ -131,7 +136,11 @@
 		}
 		else
 		{
-			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler] ];
+			NSLog(@"Got AI: %@", player);
+
+			int difficulty = [player characterAtIndex:5] - '0';
+
+			[finalPlayersArray addObject:[[SoarPlayer alloc] initWithGame:self.game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler difficulty:difficulty] ];
 		}
 		[[finalPlayersArray lastObject] setID:(int)[finalPlayersArray count]-1];
 	}
@@ -197,6 +206,16 @@
 
 	self.players = finalPlayersArray;
 
+	if ([gameWinner isKindOfClass:NSString.class])
+	{
+		for (id<Player> player in self.players)
+			if ([[player getGameCenterName] isEqualToString:(NSString*)gameWinner])
+			{
+				gameWinner = player;
+				break;
+			}
+	}
+
 	for (HistoryItem* item in history)
 		[item canDecodePlayer];
 
@@ -248,7 +267,7 @@
 			[playersArray addObject:name];
 		}
 		else if ([player isKindOfClass:SoarPlayer.class])
-			[playersArray addObject:@"Soar"];
+			[playersArray addObject:[NSString stringWithFormat:@"Soar-%d", ((SoarPlayer*)player).difficulty]];
 	}
 
 	[encoder encodeObject:playersArray forKey:@"DiceGameState:players"];
@@ -258,6 +277,18 @@
 
 	for (int i = 0;i < [losers count];i++)
 		[encoder encodeInt:[(NSNumber*)[losers objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]];
+
+	if (gameWinner)
+	{
+		NSString* winnerName = nil;
+
+		if ([gameWinner isKindOfClass:SoarPlayer.class])
+			winnerName = [gameWinner getDisplayName];
+		else
+			winnerName = [gameWinner getGameCenterName];
+
+		[encoder encodeObject:winnerName forKey:@"DiceGameState:GameWinner"];
+	}
 }
 
 /*** DiceGameState
@@ -297,7 +328,7 @@
         //[self goToNextPlayerWhoHasntLost];
 		self.currentTurn = 0;
 		self.canContinueGame = YES;
-        [self createNewRound];
+		[self createNewRound:NO];
     }
     return self;
 }
@@ -501,6 +532,9 @@
     // [self goToNextPlayerWhoHasntLost];
     
     [self createNewRound];
+
+	if (gameWinner)
+		[gameWinner notifyHasWon];
     
     return YES;
 }
@@ -550,6 +584,10 @@
     // Pointless because we'll just create a new round anyways but left there because the java engine does this
     [self goToNextPlayerWhoHasntLost];
     [self createNewRound];
+
+	if (gameWinner)
+		[gameWinner notifyHasWon];
+
     return YES;
 }
 
@@ -592,11 +630,6 @@
 
 // Returns the state of the player that has won the game,
 // or nil if no-one has won yet.
-- (id <Player>)gameWinner
-{
-    return gameWinner;
-}
-
 - (BOOL)usingSpecialRules
 {
     return inSpecialRules;
@@ -829,10 +862,20 @@
 }
 
 //Private Methods
-
-//Create a new round
 - (void)createNewRound
 {
+	[self createNewRound:YES];
+}
+
+//Create a new round
+- (void)createNewRound:(BOOL)newRound
+{
+	if ([NSThread isMainThread] && !canContinueGame)
+	{
+		[self performSelectorInBackground:@selector(createNewRound) withObject:nil];
+		return;
+	}
+
     BOOL deferNotification = NO;
     for (id <NewRoundListener> listener in theNewRoundListeners) {
         if ([listener roundEnding]) {
@@ -843,12 +886,16 @@
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* appDelegate = localGame.appDelegate;
 	GameKitGameHandler* handler = [appDelegate.listener handlerForGame:localGame];
+	if (newRound)
+		localGame.newRound = YES;
+	
 	if (handler)
 		[handler saveMatchData];
 
 	while (!canContinueGame)
-		[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+		sleep(1); //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
+	localGame.newRound = NO;
 	inSpecialRules = NO;
 
     for (PlayerState *player in self.playerStates) {
@@ -874,8 +921,11 @@
             deferNotification = YES;
         }
     }
+
     if (deferNotification)
 		localGame.deferNotification = YES;
+	else
+		[localGame notifyCurrentPlayer];
 }
 
 //Make a player lose the round (set the flags that they've lost)
@@ -910,11 +960,10 @@
 
     if (playersLeft <= 1)
     {
-        [self goToNextPlayerWhoHasntLost];
-        
-        NSLog(@"%@ won!", [[self getCurrentPlayer] getGameCenterName]);
-        gameWinner = [self getCurrentPlayer];
-		[gameWinner notifyHasWon];
+		[self goToNextPlayerWhoHasntLost];
+
+		gameWinner = [self getCurrentPlayer];
+        NSLog(@"%@ won!", [gameWinner getGameCenterName]);
     }
 }
 
@@ -1171,6 +1220,21 @@
         }
     }
     return -1;
+}
+
+- (id<Player>) gameWinner
+{
+	if ([self->gameWinner isKindOfClass:NSString.class])
+	{
+		for (id<Player> player in self.players)
+			if ([[player getGameCenterName] isEqualToString:(NSString*)self->gameWinner])
+			{
+				self->gameWinner = player;
+				break;
+			}
+	}
+
+	return self->gameWinner;
 }
 
 @end

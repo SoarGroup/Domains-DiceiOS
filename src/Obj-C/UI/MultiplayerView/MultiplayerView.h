@@ -13,7 +13,7 @@
 @class JoinMatchView;
 @class DiceGame;
 
-@interface MultiplayerView : UIViewController <UIAlertViewDelegate>
+@interface MultiplayerView : UIViewController <UIAlertViewDelegate, EngineClass>
 {
 	BOOL iPad;
 }

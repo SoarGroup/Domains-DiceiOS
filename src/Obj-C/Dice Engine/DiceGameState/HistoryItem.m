@@ -169,13 +169,25 @@
             case ACTION_CHALLENGE_BID:
 			{
 				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
-                first = [NSString stringWithFormat:@"%@ challenged %@'s bid.", playerName, valueName];
+
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+
+                first = [NSString stringWithFormat:@"%@ challenged %@ bid.", playerName, valueName];
                 break;
 			}
             case ACTION_CHALLENGE_PASS:
             {
 				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
-                first = [NSString stringWithFormat:@"%@ challenged %@'s pass.", playerName, valueName];
+
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+
+                first = [NSString stringWithFormat:@"%@ challenged %@ pass.", playerName, valueName];
                 break;
             }
             case ACTION_EXACT:

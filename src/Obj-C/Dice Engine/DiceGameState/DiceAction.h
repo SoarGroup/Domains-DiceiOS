@@ -11,7 +11,7 @@
 #import "DiceGameState.h"
 #import "DiceTypes.h"
 
-@interface DiceAction : NSObject {
+@interface DiceAction : NSObject <EngineClass> {
     ActionType actionType;
     NSInteger playerID;
     int count;

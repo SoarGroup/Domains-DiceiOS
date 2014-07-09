@@ -10,6 +10,18 @@
 #import "SoarPlayer.h"
 #import "ApplicationDelegate.h"
 
+const int kNo_AIs = 0x10;
+const int kAI_Only = 0x20;
+const int kAI_Human = 0x30;
+const int kAI_1 = 0x40;
+const int kAI_2 = 0x41;
+const int kAI_3 = 0x42;
+const int kAI_4 = 0x43;
+const int kAI_5 = 0x44;
+const int kAI_6 = 0x45;
+const int kAI_7 = 0x46;
+const int kAI_8 = 0x47;
+
 @implementation MultiplayerMatchData
 
 @synthesize theData, theGame;
@@ -85,7 +97,28 @@
 			self.theGame = [[DiceGame alloc] init];
 
 			// New Match
-			int AICount = (int)request.playerGroup;
+			int AICount = 0;
+
+			switch (request.playerGroup)
+			{
+				case kNo_AIs: AICount = 0;
+					break;
+				case kAI_Human | kAI_1: AICount = 1;
+					break;
+				case kAI_Human | kAI_2: AICount = 2;
+					break;
+				case kAI_Human | kAI_3: AICount = 3;
+					break;
+				case kAI_Human | kAI_4: AICount = 4;
+					break;
+				case kAI_Human | kAI_5: AICount = 5;
+					break;
+				case kAI_Human | kAI_6: AICount = 6;
+					break;
+				case kAI_Human | kAI_7: AICount = 7;
+					break;
+			}
+
 			int humanCount = (int)[match.participants count];
 			int currentHumanCount = 0;
 
@@ -99,7 +132,7 @@
 
 				if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
 				{
-					[theGame addPlayer:[[SoarPlayer alloc] initWithGame:theGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler]];
+					[theGame addPlayer:[[SoarPlayer alloc] initWithGame:theGame connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:handler difficulty:-1]];
 
 					AICount--;
 				}

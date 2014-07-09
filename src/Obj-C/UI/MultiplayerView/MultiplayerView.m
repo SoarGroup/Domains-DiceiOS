@@ -88,7 +88,10 @@
 
 	[self populateScrollView];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdateNotification:) name:@"UpdateUINotification" object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdateNotification:) name:@"UpdateUINotification" object:nil];
 }
 
 - (void)handleUpdateNotification:(NSNotification*)notification
@@ -124,7 +127,15 @@
 				playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
 				playGameView.multiplayerView = self;
-				[self.gamesScrollView addSubview:playGameView.view];
+
+				UIView* container = [[UIView alloc] initWithFrame:playGameView.view.frame];
+
+				playGameView.view.frame = CGRectMake(0, 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+
+				[container addSubview:playGameView.view];
+				container.clipsToBounds = YES;
+				
+				[self.gamesScrollView addSubview:container];
 				[self->playGameViews addObject:playGameView];
 			}
 
@@ -164,12 +175,15 @@
 				turnInfo.text = @"It's ";
 				turnInfo.textColor = [UIColor whiteColor];
 
-				NSString* currentPlayerName = [[game.players objectAtIndex:game.gameState.currentTurn] getDisplayName];
+				NSString* currentPlayerName = nil;
+
+				if ([game.players count] > 0)
+					currentPlayerName = [[game.players objectAtIndex:game.gameState.currentTurn] getDisplayName];
 
 				if (!currentPlayerName || [currentPlayerName isEqualToString:@"Player"])
 					currentPlayerName = @"another player";
 
-				if ([[game.players objectAtIndex:game.gameState.currentTurn] isKindOfClass:DiceLocalPlayer.class])
+				if ([game.players count] > 0 && [[game.players objectAtIndex:game.gameState.currentTurn] isKindOfClass:DiceLocalPlayer.class])
 				{
 					turnInfo.text = [turnInfo.text stringByAppendingString:@"your"];
 					[turnInfo setTextColor:[UIColor redColor]];
@@ -178,6 +192,9 @@
 					turnInfo.text = [turnInfo.text stringByAppendingFormat:@"%@'s", currentPlayerName];
 
 				turnInfo.text = [turnInfo.text stringByAppendingString:@" turn!"];
+
+				if (game.gameState.gameWinner)
+					turnInfo.text = [NSString stringWithFormat:@"%@ won!", [game.gameState.gameWinner getDisplayName]];
 
 				frame.origin.y += 30;
 				timeoutInfo.frame = frame;
@@ -339,7 +356,14 @@
 					  [self.playGameViews addObject:gameView];
 					  [self.handlerArray addObject:handler];
 
-					  [self.gamesScrollView addSubview:gameView.view];
+					  UIView* container = [[UIView alloc] initWithFrame:gameView.view.frame];
+
+					  gameView.view.frame = CGRectMake(0, 0, gameView.view.frame.size.width, gameView.view.frame.size.height);
+
+					  [container addSubview:gameView.view];
+					  container.clipsToBounds = YES;
+
+					  [self.gamesScrollView addSubview:container];
 
 					  return;
 				  }];
@@ -465,6 +489,17 @@
 		{
 			if ([handlerArray objectAtIndex:handlerIndex] == handler)
 				break;
+		}
+
+		if (handlerIndex == [handlerArray count])
+		{
+			for (UIView* view in playGameViews)
+				[view removeFromSuperview];
+
+			[playGameViews removeAllObjects];
+			[miniGamesViewArray removeAllObjects];
+
+			return;
 		}
 
 		if (iPad)

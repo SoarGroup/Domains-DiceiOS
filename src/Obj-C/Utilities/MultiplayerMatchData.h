@@ -9,7 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "DiceGame.h"
 
-@interface MultiplayerMatchData : NSObject
+extern const int kNo_AIs;
+extern const int kAI_Only;
+extern const int kAI_Human;
+extern const int kAI_1;
+extern const int kAI_2;
+extern const int kAI_3;
+extern const int kAI_4;
+extern const int kAI_5;
+extern const int kAI_6;
+extern const int kAI_7;
+extern const int kAI_8;
+
+@interface MultiplayerMatchData : NSObject <EngineClass>
 
 @property (strong, nonatomic) DiceGame* theGame;
 @property (strong, nonatomic) NSData* theData;
