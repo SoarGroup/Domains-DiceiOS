@@ -26,7 +26,7 @@
 
 @implementation MultiplayerView
 
-@synthesize joinMatchButton, gamesScrollView, scrollToTheFarRightButton, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner;
+@synthesize joinMatchButton, gamesScrollView, scrollToTheFarRightButton, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner, containers;
 
 @synthesize miniGamesViewArray, playGameViews, handlerArray;
 
@@ -48,6 +48,7 @@
 		self.handlerArray = [[NSMutableArray alloc] init];
 		self.miniGamesViewArray = [[NSMutableArray alloc] init];
 		self.playGameViews = [[NSMutableArray alloc] init];
+		self.containers = [[NSMutableArray alloc] init];
 
 		if (iPad)
 			self.joinMatchPopoverViewController = [[JoinMatchView alloc] initWithMainMenu:menu withAppDelegate:delegate isPopOver:YES withMultiplayerView:self];
@@ -98,11 +99,6 @@
 {
 	if (!notification || [[notification name] isEqualToString:@"UpdateUINotification"])
 	{
-		for (UIView* view in self.gamesScrollView.subviews)
-			[view removeFromSuperview];
-
-		[self.playGameViews removeAllObjects];
-
 		if (iPad)
 		{
 			for (int matchNumber = 0;matchNumber < [self.miniGamesViewArray count];matchNumber++)
@@ -120,36 +116,56 @@
 					[view show];
 				};
 
-				PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
+				PlayGameView* playGameView = nil;
 
-				[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+				for (UIView* container in playGameViews)
+				{
+					PlayGameView* gameView = [container.LDContext objectForKey:@"PlayGameView"];
 
-				playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+					if (gameView && gameView.game == game)
+					{
+						playGameView = gameView;
+						break;
+					}
+				}
 
-				playGameView.multiplayerView = self;
+				if (!playGameView)
+				{
+					playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
 
-				CGRect containerFrame = playGameView.view.frame;
-				containerFrame.size.height += 50;
-				containerFrame.origin.y -= 50;
-				UIView* container = [[UIView alloc] initWithFrame:containerFrame];
+					[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
-				playGameView.view.frame = CGRectMake(0, 50, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+					playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
-				UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, containerFrame.size.width, 50)];
-				[button setTitle:@"Expand Match" forState:UIControlStateNormal];
-				[button setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+					playGameView.multiplayerView = self;
 
-				button.tag = matchNumber;
-				[button addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+					CGRect containerFrame = playGameView.view.frame;
+					containerFrame.size.height += 50;
+					containerFrame.origin.y -= 50;
+					UIView* container = [[UIView alloc] initWithFrame:containerFrame];
 
-				[container addSubview:playGameView.view];
+					playGameView.view.frame = CGRectMake(0, 50, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
-				[container addSubview:button];
+					UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, containerFrame.size.width, 50)];
+					[button setTitle:@"Expand Match" forState:UIControlStateNormal];
+					[button setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 
-				container.clipsToBounds = YES;
-				
-				[self.gamesScrollView addSubview:container];
-				[self->playGameViews addObject:playGameView];
+					button.tag = matchNumber;
+					[button addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+					[container addSubview:playGameView.view];
+
+					[container addSubview:button];
+
+					container.clipsToBounds = YES;
+
+					[container.LDContext setObject:playGameView forKey:@"PlayGameView"];
+
+					[self.gamesScrollView addSubview:container];
+					[self->playGameViews addObject:container];
+				}
+				else
+					[playGameView updateUI];
 			}
 
 			[self.gamesScrollView setContentSize:CGSizeMake([self.miniGamesViewArray count] * 330, 568)];
@@ -370,10 +386,6 @@
 					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
 					  gameView.view.frame = newFrame;
 
-					  [self.miniGamesViewArray addObject:newGame];
-					  [self.playGameViews addObject:gameView];
-					  [self.handlerArray addObject:handler];
-
 					  UIView* container = [[UIView alloc] initWithFrame:gameView.view.frame];
 
 					  gameView.view.frame = CGRectMake(0, 0, gameView.view.frame.size.width, gameView.view.frame.size.height);
@@ -382,6 +394,10 @@
 					  container.clipsToBounds = YES;
 
 					  [self.gamesScrollView addSubview:container];
+
+					  [self.miniGamesViewArray addObject:newGame];
+					  [self.playGameViews addObject:container];
+					  [self.handlerArray addObject:handler];
 
 					  return;
 				  }];
@@ -405,17 +421,21 @@
 				  ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 				  NSLog(@"Multiplayer Match View: Updated Match Data (Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
-				  DiceGame* game = [[DiceGame alloc] initWithAppDelegate:delegate];
-
 				  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
+
+				  DiceGame* game = nil;
+				  BOOL newGame = NO;
 
 				  if (!handler)
 				  {
+					  game = [[DiceGame alloc] initWithAppDelegate:delegate];
+					  newGame = YES;
+
 					  handler = [[GameKitGameHandler alloc] initWithDiceGame:game withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
 					  [delegate.listener addGameKitGameHandler:handler];
 				  }
 				  else
-					  handler.localGame = game;
+					  game = handler.localGame;
 
 				  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchData
 																			 withRequest:nil
@@ -435,8 +455,11 @@
 
 				  [game updateGame:[mmd theGame]];
 
-				  [self->miniGamesViewArray addObject:game];
-				  [self->handlerArray addObject:handler];
+				  if (newGame)
+				  {
+					  [self->miniGamesViewArray addObject:game];
+					  [self->handlerArray addObject:handler];
+				  }
 
 				  [self handleUpdateNotification:nil];
 			  }];
@@ -490,14 +513,12 @@
 			}
 		}
 
-		if (player && !([[game.gameState playerStateForPlayerID:[player getID]] hasLost] || [[game.gameState playerStateForPlayerID:[player getID]] hasWon]))
-			[handler playerQuitMatch:player withRemoval:NO];
-
-		[match removeWithCompletionHandler:^(NSError* error)
-		 {
-			 if (error)
-				 NSLog(@"Error Removing Invalid Match: %@", error.description);
-		 }];
+		if (player &&
+			!([[game.gameState playerStateForPlayerID:[player getID]] hasLost] ||
+			  [[game.gameState playerStateForPlayerID:[player getID]] hasWon]))
+		{
+			[handler playerQuitMatch:player withRemoval:YES];
+		}
 
 		int handlerIndex = 0;
 		for (;handlerIndex < [handlerArray count];handlerIndex++)
@@ -506,64 +527,38 @@
 				break;
 		}
 
-		if (handlerIndex == [handlerArray count])
-		{
-			for (UIView* view in playGameViews)
-				[view removeFromSuperview];
-
-			[playGameViews removeAllObjects];
-			[miniGamesViewArray removeAllObjects];
-
-			return;
-		}
-
-		if (iPad)
-			[[(PlayGameView*)[playGameViews objectAtIndex:handlerIndex] view] removeFromSuperview];
-		else
-			[(UIView*)[playGameViews objectAtIndex:handlerIndex]removeFromSuperview];
-
-		[delegate.listener removeGameKitGameHandler:handler];
-		[handlerArray removeObjectAtIndex:handlerIndex];
-		if ([playGameViews count] > 0)
-			[playGameViews removeObjectAtIndex:handlerIndex];
-		
-		[miniGamesViewArray removeObjectAtIndex:handlerIndex];
-
-		if (iPad)
-		{
-			if ([handlerArray count] == 0)
-				gamesScrollView.contentSize = CGSizeMake(0, gamesScrollView.frame.size.height);
-			else
-				gamesScrollView.contentSize = CGSizeMake(gamesScrollView.contentSize.width - 330, gamesScrollView.frame.size.height);
-		}
-		else
-			gamesScrollView.contentSize = CGSizeMake(gamesScrollView.frame.size.width, [miniGamesViewArray count] * 30 * 6);
-
-		if (handlerIndex == [handlerArray count])
-			return; // Nothing more to do
-
-		[UIView animateWithDuration:0.25 animations:^(void)
+		[UIView animateWithDuration:0.5 animations:^(void)
 		 {
-			 for (int i = handlerIndex;i < [self->handlerArray count];i++)
+			 CGRect currentFrame = ((UIView*)[self->playGameViews objectAtIndex:handlerIndex]).frame;
+
+			 if (!self->iPad)
+				 currentFrame.origin.x -= currentFrame.size.width;
+			 else
+				 currentFrame.origin.y -= currentFrame.size.height;
+
+			 ((UIView*)[self->playGameViews objectAtIndex:handlerIndex]).frame = currentFrame;
+
+			 for (int i = handlerIndex+1;i < [self->handlerArray count];i++)
 			 {
-				 CGRect currentFrame;
+				 currentFrame = ((UIView*)[self->playGameViews objectAtIndex:i]).frame;
 
 				 if (self->iPad)
-				 {
-					 currentFrame = ((PlayGameView*)[self->playGameViews objectAtIndex:i]).view.frame;
-
-					 currentFrame.origin.x -= currentFrame.size.width;
-
-					 ((PlayGameView*)[self->playGameViews objectAtIndex:i]).view.frame = currentFrame;
-				 }
+					 currentFrame.origin.x -= currentFrame.size.width - 10;
 				 else
-				 {
-					 currentFrame = ((UIView*)[self->playGameViews objectAtIndex:i]).frame;
+					 currentFrame.origin.y -= currentFrame.size.height;
+				 
+				 ((UIView*)[self->playGameViews objectAtIndex:i]).frame = currentFrame;
+			 }
+		 } completion:^(BOOL finished) {
+			 if (finished)
+			 {
+				 [((UIView*)[self->playGameViews objectAtIndex:handlerIndex]) removeFromSuperview];
+				 [self->playGameViews removeObjectAtIndex:handlerIndex];
 
-					 currentFrame.origin.y -= 180;
+				 [self->miniGamesViewArray removeObjectAtIndex:handlerIndex];
 
-					 ((UIView*)[self->playGameViews objectAtIndex:i]).frame = currentFrame;
-				 }
+				 [delegate.listener removeGameKitGameHandler:[self->handlerArray objectAtIndex:handlerIndex]];
+				 [self->handlerArray removeObjectAtIndex:handlerIndex];
 			 }
 		 }];
 	}
