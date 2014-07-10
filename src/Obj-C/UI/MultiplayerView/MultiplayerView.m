@@ -128,11 +128,24 @@
 
 				playGameView.multiplayerView = self;
 
-				UIView* container = [[UIView alloc] initWithFrame:playGameView.view.frame];
+				CGRect containerFrame = playGameView.view.frame;
+				containerFrame.size.height += 50;
+				containerFrame.origin.y -= 50;
+				UIView* container = [[UIView alloc] initWithFrame:containerFrame];
 
-				playGameView.view.frame = CGRectMake(0, 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+				playGameView.view.frame = CGRectMake(0, 50, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
+
+				UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, containerFrame.size.width, 50)];
+				[button setTitle:@"Expand Match" forState:UIControlStateNormal];
+				[button setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+
+				button.tag = matchNumber;
+				[button addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 				[container addSubview:playGameView.view];
+
+				[container addSubview:button];
+
 				container.clipsToBounds = YES;
 				
 				[self.gamesScrollView addSubview:container];
@@ -344,12 +357,14 @@
 					  [handler setLocalPlayer:localPlayer];
 					  [handler setRemotePlayers:remotePlayers];
 
-					  void (^quitHandlerFullScreen)(void) =^
+					  void (^quitHandler)(void) =^
 					  {
-						  [self.navigationController popToViewController:self animated:YES];
+						  UIAlertView* view = [[UIAlertView alloc] initWithTitle:@"Delete Game" message:@"Are you sure you want to permanently delete this game? If you delete it, you will never be able to access it again." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+						  [view.LDContext setObject:match forKey:@"Match"];
+						  [view show];
 					  };
 
-					  UIViewController *gameView = [[PlayGameView alloc] initWithGame:newGame withQuitHandler:[quitHandlerFullScreen copy]  withCustomMainView:YES];
+					  UIViewController *gameView = [[PlayGameView alloc] initWithGame:newGame withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
 
 					  CGRect newFrame = gameView.view.frame;
 					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
@@ -475,11 +490,8 @@
 			}
 		}
 
-		if (player)
+		if (player && !([[game.gameState playerStateForPlayerID:[player getID]] hasLost] || [[game.gameState playerStateForPlayerID:[player getID]] hasWon]))
 			[handler playerQuitMatch:player withRemoval:NO];
-
-		for (GKTurnBasedParticipant* participant in match.participants)
-			participant.matchOutcome = GKTurnBasedMatchOutcomeQuit;
 
 		[match removeWithCompletionHandler:^(NSError* error)
 		 {

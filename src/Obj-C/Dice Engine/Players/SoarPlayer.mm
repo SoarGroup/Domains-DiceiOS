@@ -83,6 +83,11 @@ static int agentCount = 0;
 
 + (NSString*) makePlayerName
 {
+	agentCount++;
+
+	if (agentCount > 20)
+		agentCount = 1;
+
     switch (agentCount) {
 		default:
         case 1:
@@ -99,6 +104,32 @@ static int agentCount = 0;
 			return @"Dan";
 		case 7:
 			return @"Erin";
+		case 8:
+			return @"Watson";
+		case 9:
+			return @"Rosie";
+		case 10:
+			return @"Deep Blue";
+		case 11:
+			return @"Fred";
+		case 12:
+			return @"James";
+		case 13:
+			return @"Thomas";
+		case 14:
+			return @"Sarah";
+		case 15:
+			return @"Ashley";
+		case 16:
+			return @"Steven";
+		case 17:
+			return @"Courtney";
+		case 18:
+			return @"John";
+		case 19:
+			return @"Jessica";
+		case 20:
+			return @"Velma";
     }
 }
 
@@ -154,11 +185,6 @@ static int agentCount = 0;
 		DiceDatabase* database = [[DiceDatabase alloc] init];
 
         [turnLock lock];
-		
-		agentCount++;
-
-		if (agentCount >= 8)
-			agentCount = 1;
 
         self.name = aName;
 
