@@ -131,9 +131,7 @@
 
 				if (!playGameView)
 				{
-					playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
-
-					[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+					playGameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]  withCustomMainView:YES ];
 
 					playGameView.view.frame = CGRectMake(matchNumber * (playGameView.view.frame.size.width + 10), 0, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
@@ -146,16 +144,13 @@
 
 					playGameView.view.frame = CGRectMake(0, 50, playGameView.view.frame.size.width, playGameView.view.frame.size.height);
 
-					UIButton* button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, containerFrame.size.width, 50)];
-					[button setTitle:@"Expand Match" forState:UIControlStateNormal];
-					[button setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-
-					button.tag = matchNumber;
-					[button addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
 					[container addSubview:playGameView.view];
 
-					[container addSubview:button];
+					playGameView.fullscreenButton.hidden = NO;
+					playGameView.fullscreenButton.enabled = YES;
+					playGameView.fullscreenButton.tag = matchNumber;
+
+					[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 					container.clipsToBounds = YES;
 
