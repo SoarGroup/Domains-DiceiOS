@@ -17,8 +17,6 @@
 
 @interface MultiplayerView ()
 
-- (void)populateScrollView;
-
 - (void)iPadJoinMatchButtonPressed;
 - (void)iPhoneJoinMatchButtonPressed;
 
@@ -83,6 +81,7 @@
 
 	[self.miniGamesViewArray removeAllObjects];
 	[self.playGameViews removeAllObjects];
+	[self.handlerArray removeAllObjects];
 
 	if (iPad)
 		joinMatchPopoverViewController.spinner = self.joinSpinner;
@@ -151,6 +150,8 @@
 					playGameView.fullscreenButton.tag = matchNumber;
 
 					[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+					[playGameView.quitButton setTitle:@"Delete" forState:UIControlStateNormal];
 
 					container.clipsToBounds = YES;
 
@@ -313,97 +314,12 @@
 	}
 }
 
-- (void)joinedNewMatch:(GKMatchRequest*)request
+- (void)populateScrollView
 {
-	ApplicationDelegate* delegate = self.appDelegate;
-
-	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
-	 {
-		 for (GKTurnBasedMatch* match in matches)
-		 {
-			 if (![delegate.listener handlerForMatch:match])
-			 {
-				 // the new match
-
-				 [match loadMatchDataWithCompletionHandler:^(NSData* matchdata, NSError* error2)
-				  {
-					  NSLog(@"Multiplayer Match View: Updated Match Data Retrieved (iPad) SHA1 Hash: %@", [delegate sha1HashFromData:matchdata]);
-
-					  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegate];
-
-					  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
-
-					  if (!handler)
-					  {
-						  handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
-						  [delegate.listener addGameKitGameHandler:handler];
-					  }
-					  else
-						  handler.localGame = newGame;
-
-					  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchdata
-																				  withRequest:request
-																					withMatch:match
-																				  withHandler:handler];
-
-					  if (!mmd)
-					  {
-						  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
-						  return;
-					  }
-
-					  [newGame updateGame:[mmd theGame]];
-
-					  DiceLocalPlayer* localPlayer = nil;
-					  NSMutableArray* remotePlayers = [[NSMutableArray alloc] init];
-
-					  for (id<Player> player in newGame.players)
-					  {
-						  if ([player isKindOfClass:DiceLocalPlayer.class])
-							  localPlayer = player;
-						  else
-							  [remotePlayers addObject:player];
-					  }
-
-					  [handler setLocalPlayer:localPlayer];
-					  [handler setRemotePlayers:remotePlayers];
-
-					  void (^quitHandler)(void) =^
-					  {
-						  UIAlertView* view = [[UIAlertView alloc] initWithTitle:@"Delete Game" message:@"Are you sure you want to permanently delete this game? If you delete it, you will never be able to access it again." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-						  [view.LDContext setObject:match forKey:@"Match"];
-						  [view show];
-					  };
-
-					  UIViewController *gameView = [[PlayGameView alloc] initWithGame:newGame withQuitHandler:[quitHandler copy]  withCustomMainView:YES];
-
-					  CGRect newFrame = gameView.view.frame;
-					  newFrame.origin.x = gameView.view.frame.size.width * [self.playGameViews count];
-					  gameView.view.frame = newFrame;
-
-					  UIView* container = [[UIView alloc] initWithFrame:gameView.view.frame];
-
-					  gameView.view.frame = CGRectMake(0, 0, gameView.view.frame.size.width, gameView.view.frame.size.height);
-
-					  [container addSubview:gameView.view];
-					  container.clipsToBounds = YES;
-
-					  [self.gamesScrollView addSubview:container];
-
-					  [self.miniGamesViewArray addObject:newGame];
-					  [self.playGameViews addObject:container];
-					  [self.handlerArray addObject:handler];
-
-					  return;
-				  }];
-			 }
-		 }
-
-		 [self.gamesScrollView setContentSize:CGSizeMake([matches count] * 330, 568)];
-	 }];
+	[self populateScrollView:nil];
 }
 
-- (void)populateScrollView
+- (void)populateScrollView:(GKMatchRequest*)request
 {
 	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
 	 {
@@ -433,7 +349,7 @@
 					  game = handler.localGame;
 
 				  MultiplayerMatchData* mmd = [[MultiplayerMatchData alloc] initWithData:matchData
-																			 withRequest:nil
+																			 withRequest:request
 																			   withMatch:match
 																			 withHandler:handler];
 
@@ -445,16 +361,18 @@
 
 				  [mmd.theGame.gameState decodePlayers:match withHandler:handler];
 
-				  mmd.theGame.players = [NSArray arrayWithArray:mmd.theGame.gameState.players];
+				  if (mmd.theGame.gameState.players)
+					  mmd.theGame.players = [NSArray arrayWithArray:mmd.theGame.gameState.players];
+
 				  mmd.theGame.gameState.players = mmd.theGame.players;
 
 				  [game updateGame:[mmd theGame]];
 
-				  if (newGame)
-				  {
+				  if (![self->miniGamesViewArray containsObject:game])
 					  [self->miniGamesViewArray addObject:game];
+
+				  if (![self->handlerArray containsObject:handler])
 					  [self->handlerArray addObject:handler];
-				  }
 
 				  [self handleUpdateNotification:nil];
 			  }];
@@ -472,17 +390,17 @@
 {
 	int gameIndex = (int)[(UIButton*)sender tag];
 
+	PlayGameView* playGameView = [((UIView*)[self->playGameViews objectAtIndex:gameIndex]).LDContext objectForKey:@"PlayGameView"];
+
 	__block MultiplayerView* multiplayerView = self;
 	void (^quitHandler)(void) =^
 	{
 		[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
 	};
 
-	PlayGameView* playGameView = [[PlayGameView alloc] initWithGame:[miniGamesViewArray objectAtIndex:gameIndex] withQuitHandler:[quitHandler copy]];
+	PlayGameView *bigView = [[PlayGameView alloc] initWithGame:playGameView.game withQuitHandler:quitHandler withCustomMainView:NO];
 
-	[self.navigationController pushViewController:playGameView animated:YES];
-
-	[playGameView.quitButton setTitle:@"Back" forState:UIControlStateNormal];
+	[self.navigationController pushViewController:bigView animated:YES];
 }
 
 - (void)deleteMatchButtonPressed:(id)sender

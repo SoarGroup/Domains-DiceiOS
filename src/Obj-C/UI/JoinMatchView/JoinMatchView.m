@@ -145,7 +145,8 @@
 					 self.changeNumberOfAIPlayers.enabled = YES;
 					 self.changeMaximumNumberOfHumanPlayers.enabled = YES;
 					 self.changeMinimumNumberOfHumanPlayers.enabled = YES;
-					 [multiplayerViewLocal joinedNewMatch:request];
+
+					 [multiplayerViewLocal populateScrollView:request];
 				 }
 				 else
 				 {

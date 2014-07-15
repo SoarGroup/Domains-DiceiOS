@@ -39,6 +39,7 @@
 - (IBAction)scrollToTheFarRightButtonPressed:(id)sender;
 
 - (void)deleteMatchButtonPressed:(id)sender;
-- (void)joinedNewMatch:(GKMatchRequest*)request;
+- (void)populateScrollView;
+- (void)populateScrollView:(GKMatchRequest*)request;
 
 @end

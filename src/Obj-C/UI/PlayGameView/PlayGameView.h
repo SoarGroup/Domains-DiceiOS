@@ -21,8 +21,6 @@ const int pushMargin();
 
 @interface PlayGameView : UIViewController <PlayGame, NewRoundListener> {
 @private
-	void (^quitHandler)(void);
-
 	BOOL fullScreenView;
 
 	int currentBidCount;
@@ -44,6 +42,8 @@ const int pushMargin();
 	BOOL hasDisplayedRoundOverview;
 @public
 	BOOL shouldNotifyCurrentPlayer;
+
+	void (^quitHandler)(void);
 }
 
 // Utility Functions
