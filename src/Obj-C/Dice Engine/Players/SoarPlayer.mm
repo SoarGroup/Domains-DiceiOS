@@ -258,16 +258,23 @@ static int agentCount = 0;
 			if (!kernel->IsRemoteConnection())
 			{
 				path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
+
+				std::cout << agents[aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 			}
 			else
 			{
 				path = [NSString stringWithFormat:@"source \"/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/src/Soar Agent/%@.soar\"", ruleFile];
+
+				std::cout << agents[aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+
+				path = [NSString stringWithFormat:@"source \"/LiarsDice/%@.soar\"", ruleFile];
+
+				std::cout << agents[aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 			}
 			[kernelLock unlock];
 
 			NSLog(@"Path: %@", path);
 
-			std::cout << agents[aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 			std::cout << agents[aLock]->ExecuteCommandLine("watch 0") << std::endl;
 
 			agents[aLock]->InitSoar();
