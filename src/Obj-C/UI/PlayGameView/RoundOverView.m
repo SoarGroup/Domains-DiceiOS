@@ -66,53 +66,36 @@
 	UIImage* snapshot = [playGameViewLocal blurredSnapshot];
 	[self.transparencyLevel setImage:snapshot];
 
-    titleLabel.text = finalString;
 	titleLabel.accessibilityLabel = [playGameViewLocal accessibleTextForString:titleLabel.text];
 
-	NSArray* lines = [finalString componentsSeparatedByString:@"\n"];
-
-	NSError* error = nil;
-	NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
-
-	CGSize constrainedSize = CGSizeMake(titleLabel.frame.size.width, 9999);
-	NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:titleLabel.font, NSFontAttributeName, nil];
-
-	CGFloat y2 = 0;
-
-	if ([lines count] == 4)
-		y2 += [[lines objectAtIndex:0] boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height + 5;
-
-	CGRect titleFrame = titleLabel.frame;
-
-	for (int i = 0;i < [lines count];i++)
+	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+	for (int i = 0;i < [finalString length];++i)
 	{
-		NSString* line = [lines objectAtIndex:i];
+		unichar characterOne = [finalString characterAtIndex:i], characterTwo = 0;
 
-		NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+		if (i+1 < [finalString length])
+			characterTwo = [finalString characterAtIndex:i+1];
 
-		assert([matches count] <= 1);
-
-		if ([matches count] == 1) // Should only ever be one!
+		if (isdigit(characterOne) && characterTwo == 's')
 		{
-			NSTextCheckingResult* result = [matches objectAtIndex:0];
-			CGFloat x = -1;
+			int characterDigit = characterOne - '0';
 
-			NSString* before = [line substringToIndex:[result range].location];
-			x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+			attachment.image = [playGameViewLocal imageForDie:characterDigit];
+			[attachment setBounds:CGRectMake(0, 0, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
 
-			int number = [line characterAtIndex:result.range.location] - '0';
+			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
-			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y2, 20, 20)];
-			[imageView setImage:[playGameViewLocal imageForDie:number]];
+			[string appendAttributedString:attachmentString];
 
-			[titleLabel addSubview:imageView];
+			++i;
 		}
-
-		y2 += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+		else
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [finalString characterAtIndex:i]]]];
 	}
 
-	titleFrame.size.height = y2;
-	titleLabel.frame = titleFrame;
+	titleLabel.attributedText = string;
+	[titleLabel sizeToFit];
 
 	DiceGame* gameLocal = self.game;
 	PlayerState* playerLocal = self.player;

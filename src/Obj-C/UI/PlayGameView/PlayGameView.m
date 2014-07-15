@@ -265,50 +265,40 @@ NSArray *buildDiceImages() {
 		[titleLabel setTextColor:[UIColor whiteColor]];
 		titleLabel.numberOfLines = 0;
 
-		titleLabel.text = finalString;
-		[titleLabel sizeToFit];
 
 		frame = titleLabel.frame;
 		frame.origin.x = centerPush.bounds.size.width / 2.0 - frame.size.width / 2.0;
 		frame.origin.y = centerPush.bounds.size.height / 2.0 - frame.size.height / 2.0;
 		titleLabel.frame = frame;
 
-		NSArray* lines = [finalString componentsSeparatedByString:@"\n"];
-
-		NSError* error = nil;
-		NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
-
-		CGSize constrainedSize = CGSizeMake(titleLabel.frame.size.width, 9999);
-		NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:titleLabel.font, NSFontAttributeName, nil];
-
-		CGFloat y = 0;
-
-		for (int i = 0;i < [lines count];i++)
+		NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+		for (int i = 0;i < [finalString length];++i)
 		{
-			NSString* line = [lines objectAtIndex:i];
+			unichar characterOne = [finalString characterAtIndex:i], characterTwo = 0;
 
-			NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+			if (i+1 < [finalString length])
+				characterTwo = [finalString characterAtIndex:i+1];
 
-			assert([matches count] <= 1);
-
-			if ([matches count] == 1) // Should only ever be one!
+			if (isdigit(characterOne) && characterTwo == 's')
 			{
-				NSTextCheckingResult* result = [matches objectAtIndex:0];
-				CGFloat x = -1;
+				int characterDigit = characterOne - '0';
 
-				NSString* before = [line substringToIndex:[result range].location];
-				x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+				attachment.image = [self imageForDie:characterDigit];
+				[attachment setBounds:CGRectMake(0, 0, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
 
-				int number = [line characterAtIndex:result.range.location] - '0';
+				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
-				UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)];
-				[imageView setImage:[self imageForDie:number]];
+				[string appendAttributedString:attachmentString];
 
-				[titleLabel addSubview:imageView];
+				++i;
 			}
-
-			y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+			else
+				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [finalString characterAtIndex:i]]]];
 		}
+
+		titleLabel.attributedText = string;
+		[titleLabel sizeToFit];
 
 		self.gameStateLabel.hidden = YES;
 
@@ -914,56 +904,38 @@ NSArray *buildDiceImages() {
 	// Remove them all
 	[self.previousBidImageViews removeAllObjects];
 
-	self.gameStateLabel.text = headerString;
 	self.gameStateLabel.accessibilityLabel = [self accessibleTextForString:headerString];
 
-	NSArray* lines = [headerString componentsSeparatedByString:@"\n"];
-
-	NSError* error = nil;
-	NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
-
-	CGSize constrainedSize = CGSizeMake(gameStateLabel.frame.size.width, 9999);
-	NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:gameStateLabel.font, NSFontAttributeName, nil];
-
-	CGFloat y = 0;
-	CGFloat maxX = self.gameStateLabel.frame.size.width;
-
-	for (int i = 0;i < [lines count];i++)
+	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+	for (int i = 0;i < [headerString length];++i)
 	{
-		NSString* line = [lines objectAtIndex:i];
+		unichar characterOne = [headerString characterAtIndex:i], characterTwo = 0;
 
-		CGFloat lineX = [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+		if (i+1 < [headerString length])
+			characterTwo = [headerString characterAtIndex:i+1];
 
-		if (lineX > maxX)
-			maxX = lineX;
-
-		NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
-
-		assert([matches count] <= 1);
-
-		if ([matches count] == 1) // Should only ever be one or zero!
+		if (isdigit(characterOne) && characterTwo == 's')
 		{
-			NSTextCheckingResult* result = [matches objectAtIndex:0];
-			CGFloat x = -2;
+			int characterDigit = characterOne - '0';
 
-			NSString* before = [line substringToIndex:[result range].location];
-			x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
+			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+			attachment.image = [self imageForDie:characterDigit];
+			[attachment setBounds:CGRectMake(0, 0, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
 
-			int number = [line characterAtIndex:result.range.location] - '0';
+			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
-			UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 20, 20)];
-			[imageView setImage:[self imageForDie:number]];
+			[string appendAttributedString:attachmentString];
 
-			[self.gameStateLabel addSubview:imageView];
-			[previousBidImageViews addObject:imageView];
+			++i;
 		}
-
-		y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+		else
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [headerString characterAtIndex:i]]]];
 	}
 
+	gameStateLabel.attributedText = string;
+	[gameStateLabel sizeToFit];
+
 	CGRect playerFrame = self.gameStateLabel.frame;
-	playerFrame.size.height = y;
-	playerFrame.size.width = maxX;
 
 	CGSize screenSize = self.view.frame.size;
 
@@ -1181,51 +1153,42 @@ NSArray *buildDiceImages() {
 		nameLabel.attributedText = [localGame.gameState historyText:playerState.playerID colorName:control];
 		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
 
-		CGRect nameFrame = nameLabel.frame;
-
+		NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+		int imageCount = 0;
+		for (int i = 0;i < [nameLabel.attributedText.string length];++i)
 		{
-			NSArray* lines = [nameLabel.text componentsSeparatedByString:@"\n"];
+			unichar characterOne = [nameLabel.attributedText.string characterAtIndex:i], characterTwo = 0;
 
-			NSError* error = nil;
-			NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+			if (i+1 < [nameLabel.attributedText.string length])
+				characterTwo = [nameLabel.attributedText.string characterAtIndex:i+1];
 
-			CGSize constrainedSize = CGSizeMake(nameLabel.frame.size.width, 9999);
-			NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:nameLabel.font, NSFontAttributeName, nil];
-
-			CGFloat y2 = 0;
-
-			for (int j = 0;j < [lines count];j++)
+			if (isdigit(characterOne) && characterTwo == 's')
 			{
-				NSString* line = [lines objectAtIndex:j];
+				int characterDigit = characterOne - '0';
 
-				NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+				attachment.image = [self imageForDie:characterDigit];
+				[attachment setBounds:CGRectMake(0, 0, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
 
-				assert([matches count] <= 1);
+				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
-				if ([matches count] == 1) // Should only ever be one!
-				{
-					NSTextCheckingResult* result = [matches objectAtIndex:0];
-					CGFloat x2 = -2;
+				[string appendAttributedString:attachmentString];
 
-					NSString* before = [line substringToIndex:[result range].location];
-					x2 += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
-
-					int number = [line characterAtIndex:result.range.location] - '0';
-
-					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x2, y2, 25, 25)];
-					[imageView setImage:[self imageForDie:number]];
-
-					[nameLabel addSubview:imageView];
-					[previousBidImageViews addObject:imageView];
-				}
-
-				y2 += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+				++i;
+				++imageCount;
 			}
+			else
+			{
+				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabel.attributedText.string characterAtIndex:i]]]];
 
-			nameFrame.size.height = y2;
+				NSDictionary* attributes = [nameLabel.attributedText attributesAtIndex:i effectiveRange:nil];
+
+				[string addAttributes:attributes range:NSMakeRange(i-imageCount, 1)];
+			}
 		}
 
-		nameLabel.frame = nameFrame;
+		nameLabel.attributedText = string;
+		[nameLabel sizeToFit];
 
         if ([playerState isMyTurn] && ![playerState hasLost])
         {
@@ -1541,51 +1504,42 @@ NSArray *buildDiceImages() {
 		nameLabel.attributedText = nameLabelText;
 		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
 
-		CGRect nameFrame = nameLabel.frame;
-
+		NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+		int imageCount = 0;
+		for (int j = 0;j < [nameLabel.attributedText.string length];++j)
 		{
-			NSArray* lines = [nameLabel.text componentsSeparatedByString:@"\n"];
+			unichar characterOne = [nameLabel.attributedText.string characterAtIndex:j], characterTwo = 0;
 
-			NSError* error = nil;
-			NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"[1-6]s" options:0 error:&error];
+			if (j+1 < [nameLabel.attributedText.string length])
+				characterTwo = [nameLabel.attributedText.string characterAtIndex:j+1];
 
-			CGSize constrainedSize = CGSizeMake(nameLabel.frame.size.width, 9999);
-			NSDictionary* attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:nameLabel.font, NSFontAttributeName, nil];
-
-			CGFloat y = 0;
-
-			for (int j = 0;j < [lines count];j++)
+			if (isdigit(characterOne) && characterTwo == 's')
 			{
-				NSString* line = [lines objectAtIndex:j];
+				int characterDigit = characterOne - '0';
 
-				NSArray* matches = [regex matchesInString:line options:0 range:NSMakeRange(0, [line length])];
+				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+				attachment.image = [self imageForDie:characterDigit];
+				[attachment setBounds:CGRectMake(0, 0, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
 
-				assert([matches count] <= 1);
+				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
-				if ([matches count] == 1) // Should only ever be one!
-				{
-					NSTextCheckingResult* result = [matches objectAtIndex:0];
-					CGFloat x = -1;
+				[string appendAttributedString:attachmentString];
 
-					NSString* before = [line substringToIndex:[result range].location];
-					x += [before boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.width;
-
-					int number = [line characterAtIndex:result.range.location] - '0';
-
-					UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 25, 25)];
-					[imageView setImage:[self imageForDie:number]];
-
-					[nameLabel addSubview:imageView];
-					[previousBidImageViews addObject:imageView];
-				}
-
-				y += [line boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributesDictionary context:nil].size.height;
+				++j;
+				++imageCount;
 			}
+			else
+			{
+				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabel.attributedText.string characterAtIndex:j]]]];
 
-			nameFrame.size.height = y;
+				NSDictionary* attributes = [nameLabel.attributedText attributesAtIndex:j effectiveRange:nil];
+
+				[string addAttributes:attributes range:NSMakeRange(j-imageCount, 1)];
+			}
 		}
 
-		nameLabel.frame = nameFrame;
+		nameLabel.attributedText = string;
+		[nameLabel sizeToFit];
 
 		if ([playerStates[i] isMyTurn] && i != 0)
 		{
