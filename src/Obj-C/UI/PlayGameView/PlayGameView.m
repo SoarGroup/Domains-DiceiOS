@@ -285,7 +285,7 @@ NSArray *buildDiceImages() {
 
 				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 				attachment.image = [self imageForDie:characterDigit];
-				[attachment setBounds:CGRectMake(0, 0, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
+				[attachment setBounds:CGRectMake(0, -5, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
 
 				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
@@ -920,7 +920,7 @@ NSArray *buildDiceImages() {
 
 			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 			attachment.image = [self imageForDie:characterDigit];
-			[attachment setBounds:CGRectMake(0, 0, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
+			[attachment setBounds:CGRectMake(0, -5, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
 
 			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
@@ -1168,7 +1168,7 @@ NSArray *buildDiceImages() {
 
 				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 				attachment.image = [self imageForDie:characterDigit];
-				[attachment setBounds:CGRectMake(0, 0, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
+				[attachment setBounds:CGRectMake(0, -5, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
 
 				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
@@ -1519,7 +1519,7 @@ NSArray *buildDiceImages() {
 
 				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 				attachment.image = [self imageForDie:characterDigit];
-				[attachment setBounds:CGRectMake(0, 0, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
+				[attachment setBounds:CGRectMake(0, -5, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
 
 				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
@@ -1960,7 +1960,10 @@ NSArray *buildDiceImages() {
         return;
     }
 
-    NSString *title = [NSString stringWithFormat:@"Bid %d %@?", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)]];
+	NSString *title = [NSString stringWithFormat:@"Bid %d %@?", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)]];
+
+
+
     NSArray *push = [self makePushedDiceArray];
     NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu %@?", (unsigned long)[push count], ([push count] == 1 ? @"die" : @"dice")];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
@@ -1968,6 +1971,7 @@ NSArray *buildDiceImages() {
                                                     delegate:self
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles:@"Bid", nil];
+
     alert.tag = ACTION_BID;
 
     [alert show];

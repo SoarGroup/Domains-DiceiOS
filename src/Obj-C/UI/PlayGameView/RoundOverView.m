@@ -82,7 +82,7 @@
 
 			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
 			attachment.image = [playGameViewLocal imageForDie:characterDigit];
-			[attachment setBounds:CGRectMake(0, 0, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
+			[attachment setBounds:CGRectMake(0, -5, titleLabel.font.lineHeight, titleLabel.font.lineHeight)];
 
 			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
 
