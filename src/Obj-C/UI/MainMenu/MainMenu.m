@@ -83,6 +83,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	self.navigationController.navigationBarHidden = YES;
+	self.navigationController.navigationBar.translucent = NO;
 
 	ApplicationDelegate* delegate = self.appDelegate;
 	NSArray* handlers = [NSArray arrayWithArray:delegate.listener.handlers];

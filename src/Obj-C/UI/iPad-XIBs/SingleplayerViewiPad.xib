@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A283o" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
@@ -17,8 +16,11 @@
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xxy-I3-lQg">
-                    <rect key="frame" x="296" y="180" width="433" height="29"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xxy-I3-lQg">
+                    <rect key="frame" x="296" y="49" width="433" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="433" id="LS2-Ws-JeI"/>
+                    </constraints>
                     <segments>
                         <segment title="1"/>
                         <segment title="2"/>
@@ -30,14 +32,21 @@
                     </segments>
                     <color key="tintColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                 </segmentedControl>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of AI Opponents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPd-ni-wUn">
-                    <rect key="frame" x="416" y="151" width="192" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of AI Opponents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WPd-ni-wUn">
+                    <rect key="frame" x="416" y="20" width="192" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Npd-E6-e4C"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4F3-qQ-xuY">
-                    <rect key="frame" x="489" y="216" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4F3-qQ-xuY">
+                    <rect key="frame" x="489" y="85" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="UdN-UB-rz8"/>
+                        <constraint firstAttribute="height" constant="30" id="pwG-Ml-8M8"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Play!">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -49,6 +58,14 @@
                 </button>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="xxy-I3-lQg" firstAttribute="centerX" secondItem="WPd-ni-wUn" secondAttribute="centerX" id="CjI-3w-UDn"/>
+                <constraint firstItem="WPd-ni-wUn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="HFc-YN-liq"/>
+                <constraint firstItem="xxy-I3-lQg" firstAttribute="top" secondItem="WPd-ni-wUn" secondAttribute="bottom" constant="8" symbolic="YES" id="Sik-4n-Imb"/>
+                <constraint firstItem="4F3-qQ-xuY" firstAttribute="top" secondItem="xxy-I3-lQg" secondAttribute="bottom" constant="8" symbolic="YES" id="ZlN-BL-cWV"/>
+                <constraint firstItem="WPd-ni-wUn" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="kCe-kK-EMb"/>
+                <constraint firstItem="4F3-qQ-xuY" firstAttribute="centerX" secondItem="xxy-I3-lQg" secondAttribute="centerX" id="rnU-vV-0V4"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>

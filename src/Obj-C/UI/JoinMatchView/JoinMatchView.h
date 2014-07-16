@@ -14,6 +14,8 @@
 @interface JoinMatchView : UIViewController <EngineClass>
 {
 	BOOL iPad;
+
+	NSMutableSet* friendIDs;
 }
 
 - (id)initWithMainMenu:(MainMenu*)mainMenu withAppDelegate:(ApplicationDelegate*)delegate isPopOver:(BOOL)popOver withMultiplayerView:(MultiplayerView*)multiplayerView;
@@ -32,12 +34,17 @@
 @property (nonatomic, strong) IBOutlet UIStepper* changeMaximumNumberOfHumanPlayers;
 
 @property (nonatomic, strong) IBOutlet UIButton* joinMatchButton;
+@property (nonatomic, strong) IBOutlet UIButton* inviteFriendsButton;
+@property (nonatomic, strong) UIPopoverController* inviteFriendsController;
 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
+
 
 @property (nonatomic, assign) BOOL isPopOver;
 
 -(IBAction)joinMatchButtonPressed:(id)sender;
+-(IBAction)inviteFriendsButtonPressed:(id)sender;
+
 -(IBAction)stepperValueChanged:(UIStepper*)sender;
 
 @end

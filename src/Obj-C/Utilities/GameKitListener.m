@@ -17,9 +17,7 @@
 	self = [super init];
 
 	if (self)
-	{
 		self.handlers = [[NSMutableArray alloc] init];
-	}
 
 	return self;
 }
@@ -66,22 +64,8 @@
 - (void) player:(GKPlayer *)player didAcceptInvite:(GKInvite *)invite
 {
 	// TODO: Invites
+	NSLog(@"Player accepted invite.");
 }
-
-- (void) player:(GKPlayer *)player didCompleteChallenge:(GKChallenge *)challenge issuedByFriend:(GKPlayer *)friendPlayer
-{} // No Challenges
-
-- (void) player:(GKPlayer *)player didReceiveChallenge:(GKChallenge *)challenge
-{}
-
-- (void) player:(GKPlayer *)player didRequestMatchWithPlayers:(NSArray *)playerIDsToInvite
-{
-	// TODO: Implement creating a match from game center
-	NSLog(@"Game Center Match Request");
-}
-
-- (void) player:(GKPlayer *)player issuedChallengeWasCompleted:(GKChallenge *)challenge byFriend:(GKPlayer *)friendPlayer
-{} // No Challenges
 
 - (void) player:(GKPlayer *)player matchEnded:(GKTurnBasedMatch *)match
 {
@@ -94,15 +78,6 @@
 		}
 	}
 }
-
-- (void) player:(GKPlayer *)player receivedExchangeCancellation:(GKTurnBasedExchange *)exchange forMatch:(GKTurnBasedMatch *)match
-{} // No Exchanges
-
-- (void) player:(GKPlayer *)player receivedExchangeReplies:(NSArray *)replies forCompletedExchange:(GKTurnBasedExchange *)exchange forMatch:(GKTurnBasedMatch *)match
-{} // No Exchanges
-
-- (void) player:(GKPlayer *)player receivedExchangeRequest:(GKTurnBasedExchange *)exchange forMatch:(GKTurnBasedMatch *)match
-{} // No Exchanges
 
 - (void) player:(GKPlayer *)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive
 {
@@ -122,8 +97,5 @@
 		}
 	}
 }
-
-- (void) player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge
-{} // No Challenges
 
 @end

@@ -42,6 +42,7 @@
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = @"Rules";
     self.navigationItem.leftBarButtonItem.title = @"Main Menu";
+	self.navigationController.navigationBar.translucent = YES;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"rules" ofType:@"html"];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
 }

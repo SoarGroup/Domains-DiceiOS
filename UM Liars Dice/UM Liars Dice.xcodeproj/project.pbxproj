@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4D0161E019254154000827C6 /* default in Resources */ = {isa = PBXBuildFile; fileRef = 4D0161DF19254154000827C6 /* default */; };
 		4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */; };
+		4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D07AB651976EC0800EC955E /* InviteFriendsView.xib */; };
+		4D07AB6A1976EC3B00EC955E /* InviteFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D07AB691976EC3B00EC955E /* InviteFriendsView.m */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
@@ -114,6 +116,9 @@
 /* Begin PBXFileReference section */
 		4D0161DF19254154000827C6 /* default */ = {isa = PBXFileReference; lastKnownFileType = folder; path = default; sourceTree = "<group>"; };
 		4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMatchViewPopover.xib; sourceTree = "<group>"; };
+		4D07AB651976EC0800EC955E /* InviteFriendsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsView.xib; sourceTree = "<group>"; };
+		4D07AB681976EC3B00EC955E /* InviteFriendsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsView.h; sourceTree = "<group>"; };
+		4D07AB691976EC3B00EC955E /* InviteFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsView.m; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
@@ -352,6 +357,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D07AB671976EC3B00EC955E /* InviteFriendsView */ = {
+			isa = PBXGroup;
+			children = (
+				4D07AB681976EC3B00EC955E /* InviteFriendsView.h */,
+				4D07AB691976EC3B00EC955E /* InviteFriendsView.m */,
+			);
+			path = InviteFriendsView;
+			sourceTree = "<group>";
+		};
 		4DF393841923C4F400A523FB /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -594,6 +608,7 @@
 				4DF3943A1923C51C00A523FB /* AboutView */,
 				4DF3943D1923C51C00A523FB /* iPad-XIBs */,
 				4DF394491923C51C00A523FB /* iPhone-XIBs */,
+				4D07AB671976EC3B00EC955E /* InviteFriendsView */,
 				4DF394561923C51C00A523FB /* JoinMatchView */,
 				4DF394591923C51C00A523FB /* LoadingGameView */,
 				4DF3945C1923C51C00A523FB /* MainMenu */,
@@ -643,6 +658,7 @@
 				4DF3944A1923C51C00A523FB /* AboutView.xib */,
 				4DF3944B1923C51C00A523FB /* Application.xib */,
 				4DF3944C1923C51C00A523FB /* JoinMatchView.xib */,
+				4D07AB651976EC0800EC955E /* InviteFriendsView.xib */,
 				4DF3944D1923C51C00A523FB /* LoadingGameView.xib */,
 				4DF3944E1923C51C00A523FB /* MainMenu.xib */,
 				4DF3944F1923C51C00A523FB /* MultiplayerView.xib */,
@@ -964,6 +980,7 @@
 				4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */,
 				4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */,
 				4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */,
+				4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */,
 				4DF393AE1923C4F400A523FB /* Icon-iPad@2x.png in Resources */,
 				4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */,
 				4DF396351923C51D00A523FB /* Application.xib in Resources */,
@@ -982,6 +999,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D07AB6A1976EC3B00EC955E /* InviteFriendsView.m in Sources */,
 				4DF396221923C51D00A523FB /* PlayerState.m in Sources */,
 				4DF397B41923C5B800A523FB /* DiceLocalPlayer.m in Sources */,
 				4DF3964B1923C51D00A523FB /* DiceDatabase.m in Sources */,

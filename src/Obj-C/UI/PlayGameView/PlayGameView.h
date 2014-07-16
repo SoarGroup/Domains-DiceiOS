@@ -49,7 +49,6 @@ const int pushMargin();
 // Utility Functions
 +(UIImage*)barImage;
 -(UIImage *)imageForDie:(NSInteger)die;
--(UIImage *)blurredSnapshot;
 
 - (NSString*)accessibleTextForString:(NSString*)string;
 

@@ -168,6 +168,11 @@
 		}
 		else
 		{
+			for (UIView* view in gamesScrollView.subviews)
+				[view removeFromSuperview];
+			
+			[self.playGameViews removeAllObjects];
+
 			for (int matchNumber = 0;matchNumber < [self.miniGamesViewArray count];matchNumber++)
 			{
 				DiceGame* game = [self.miniGamesViewArray objectAtIndex:matchNumber];
@@ -492,8 +497,14 @@
 
 - (void)iPadJoinMatchButtonPressed
 {
-	self.popoverController = [[UIPopoverController alloc] initWithContentViewController:self.joinMatchPopoverViewController];
-	self.popoverController.popoverContentSize = CGSizeMake(320,320);
+	if (!self.popoverController)
+	{
+		UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:self.joinMatchPopoverViewController];
+		navigationController.navigationBarHidden = NO;
+		navigationController.navigationBar.translucent = NO;
+
+		self.popoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+	}
 
 	[self.popoverController presentPopoverFromRect:joinMatchButton.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
 }

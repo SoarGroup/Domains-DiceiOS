@@ -48,6 +48,7 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.mainMenu];
 
     self.navigationController.navigationBarHidden = YES;
+	self.navigationController.navigationBar.translucent = NO;
 
     [self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
@@ -56,9 +57,9 @@
 	self.rootViewController = self.window.rootViewController;
 
 	self.listener = [[GameKitListener alloc] init];
-	[self authenticateLocalPlayer];
-
 	[[GKLocalPlayer localPlayer] registerListener:self.listener];
+
+	[self authenticateLocalPlayer];
 
 	[[[UIAlertView alloc] initWithTitle:@"Liar's Dice Alpha" message:@"Liar's Dice is an ALPHA currently.  If you find any issues or want any features please email alexlt@umich.edu with requests or go to github.com/SoarGroup/Domains-DiceiOS and submit an issue." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 }
@@ -83,7 +84,9 @@
 			self->gameCenterLoginViewController = viewController;
 
 		if ([GKLocalPlayer localPlayer].isAuthenticated)
+		{
 			self.mainMenu.multiplayerEnabled = YES;
+		}
 		else
 		{
 			self.mainMenu.multiplayerEnabled = NO;

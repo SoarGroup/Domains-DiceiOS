@@ -2162,29 +2162,4 @@ NSArray *buildDiceImages() {
 	return barImage;
 }
 
-- (UIImage *)blurredSnapshot
-{
-    // Create the image context
-    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, self.view.window.screen.scale);
-
-    // There he is! The new API method
-    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
-
-    // Get the snapshot
-    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
-	
-    // Now apply the blur effect using Apple's UIImageEffect category
-	UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];
-    UIImage *blurredSnapshotImage = [snapshotImage applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
-	
-    // Or apply any other effects available in "UIImage+ImageEffects.h"
-    // UIImage *blurredSnapshotImage = [snapshotImage applyDarkEffect];
-    // UIImage *blurredSnapshotImage = [snapshotImage applyExtraLightEffect];
-	
-    // Be nice and clean your mess up
-    UIGraphicsEndImageContext();
-	
-    return blurredSnapshotImage;
-}
-
 @end

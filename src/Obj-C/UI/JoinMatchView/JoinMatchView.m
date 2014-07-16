@@ -15,6 +15,7 @@
 #import <GameKit/GameKit.h>
 #import "MultiplayerView.h"
 #import "PlayGameView.h"
+#import "InviteFriendsView.h"
 
 @interface JoinMatchView ()
 
@@ -24,7 +25,7 @@
 
 @synthesize numberOfAIPlayers, maximumNumberOfHumanPlayers, minimumNumberOfHumanPlayers;
 @synthesize changeMinimumNumberOfHumanPlayers, changeNumberOfAIPlayers, changeMaximumNumberOfHumanPlayers;
-@synthesize joinMatchButton, spinner, mainMenu, multiplayerView, delegate, isPopOver;
+@synthesize joinMatchButton, spinner, mainMenu, multiplayerView, delegate, isPopOver, inviteFriendsButton, inviteFriendsController;
 
 
 - (id)initWithMainMenu:(MainMenu *)menu withAppDelegate:(ApplicationDelegate *)appDelegate isPopOver:(BOOL)popOver withMultiplayerView:(MultiplayerView*)multiplayer;
@@ -62,10 +63,15 @@
 	NSLog(@"%@ deallocated", self.class);
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-	self.navigationController.navigationBarHidden = self.isPopOver;
+	if (self.inviteFriendsButton)
+	{
+		[[GKLocalPlayer localPlayer] loadFriendsWithCompletionHandler:^(NSArray* friends, NSError* error)
+		{
+			self.inviteFriendsButton.hidden = [friends count] == 0;
+		}];
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,6 +105,13 @@
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
 		request.minPlayers = changeMinimumNumberOfHumanPlayers.value + 1;
 		request.maxPlayers = changeMaximumNumberOfHumanPlayers.value + 1;
+
+		NSMutableArray* friendsToInvite = [NSMutableArray array];
+
+		for (GKPlayer* player in friendIDs)
+			[friendsToInvite addObject:player.playerID];
+
+		request.playersToInvite = friendsToInvite;
 
 		int group = 0;
 
@@ -243,6 +256,21 @@
 	changeMaximumNumberOfHumanPlayers.maximumValue = 7 - changeNumberOfAIPlayers.value;
 	changeMinimumNumberOfHumanPlayers.maximumValue = changeMaximumNumberOfHumanPlayers.maximumValue;
 	changeNumberOfAIPlayers.maximumValue = 7 - changeMaximumNumberOfHumanPlayers.value;
+}
+
+-(IBAction)inviteFriendsButtonPressed:(id)sender
+{
+	InviteFriendsView* ifv = [[InviteFriendsView alloc] init:iPad withQuitHandler:^(InviteFriendsView* view)
+							  {
+								  self->friendIDs = view->selectedFriends;
+
+								  self.inviteFriendsController = nil;
+							  } maxSelection:changeMaximumNumberOfHumanPlayers.value];
+
+	if (friendIDs)
+		ifv->selectedFriends = friendIDs;
+
+	[self.navigationController pushViewController:ifv animated:YES];
 }
 
 @end

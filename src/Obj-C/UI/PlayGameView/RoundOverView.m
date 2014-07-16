@@ -10,6 +10,7 @@
 #import "HistoryItem.h"
 #import "Die.h"
 #import "DiceGraphics.h"
+#import "UIImage+ImageEffects.h"
 
 #import "SoarPlayer.h"
 
@@ -63,7 +64,7 @@
 
 	PlayGameView* playGameViewLocal = self.playGameView;
 
-	UIImage* snapshot = [playGameViewLocal blurredSnapshot];
+	UIImage* snapshot = [playGameViewLocal.view blurredSnapshot];
 	[self.transparencyLevel setImage:snapshot];
 
 	titleLabel.accessibilityLabel = [playGameViewLocal accessibleTextForString:titleLabel.text];
