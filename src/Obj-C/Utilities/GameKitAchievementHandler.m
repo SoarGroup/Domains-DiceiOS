@@ -129,13 +129,13 @@
 		else if (game)
 		{
 			BOOL updated = NO;
-			if ([achievement.identifier containsString:@"BasicThings"])
+			if ([achievement.identifier rangeOfString:@"BasicThings"].location != NSNotFound)
 				updated = [GameKitAchievementHandler handleBasicAchievement:achievement game:game];
-			else if ([achievement.identifier containsString:@"ToStriveFor"])
+			else if ([achievement.identifier rangeOfString:@"ToStriveFor"].location != NSNotFound)
 				updated = [GameKitAchievementHandler handleStriveAchievement:achievement game:game];
-			else if ([achievement.identifier containsString:@"Hardest"])
+			else if ([achievement.identifier rangeOfString:@"Hardest"].location != NSNotFound)
 				updated = [GameKitAchievementHandler handleHardAchievement:achievement game:game];
-			else if ([achievement.identifier containsString:@"Hidden"])
+			else if ([achievement.identifier rangeOfString:@"Hidden"].location != NSNotFound)
 				updated = [GameKitAchievementHandler handleHiddenAchievement:achievement game:game];
 
 			if (updated)
