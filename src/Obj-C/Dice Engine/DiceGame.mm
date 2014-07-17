@@ -50,7 +50,8 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
 - (void) dealloc
 {
-	agents.erase(agents.find(self.gameLock));
+	if (agents.find(self.gameLock) != agents.end())
+		agents.erase(agents.find(self.gameLock));
 
 	NSLog(@"%@ deallocated", self.class);
 }
