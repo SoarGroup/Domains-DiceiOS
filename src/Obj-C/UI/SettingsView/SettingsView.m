@@ -121,4 +121,33 @@
 	[sender resignFirstResponder];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex != 1)
+		return;
+
+	if ([alertView.title isEqualToString:@"Reset Achievements?"])
+	{
+		[GKAchievement resetAchievementsWithCompletionHandler:^(NSError* error)
+		 {
+			 if (error)
+				 NSLog(@"Error: %@", error.description);
+		 }];
+	}
+	else
+	{
+
+	}
+}
+
+- (IBAction)resetAchievements:(id)sender
+{
+	[[[UIAlertView alloc] initWithTitle:@"Reset Achievements?" message:@"Are you sure you want to reset your current progress on your achievements?  This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+}
+
+- (IBAction)resetLeaderboards:(id)sender
+{
+	[[[UIAlertView alloc] initWithTitle:@"Reset Leaderboards?" message:@"Are you sure you want to reset your current progress on the leaderboards?  This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+}
+
 @end

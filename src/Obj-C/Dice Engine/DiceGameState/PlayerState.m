@@ -619,4 +619,10 @@
     return [arrayOfDice objectAtIndex:index];
 }
 
+- (id<Player>)playerPtr
+{
+	DiceGameState* localState = self.gameState;
+	return [localState.players objectAtIndex:playerID];
+}
+
 @end

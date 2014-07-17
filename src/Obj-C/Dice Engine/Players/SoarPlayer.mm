@@ -14,6 +14,8 @@
 #import "DiceGame.h"
 
 #import "DiceDatabase.h"
+#import "GameKitAchievementHandler.h"
+#import "ApplicationDelegate.h"
 
 #include <map>
 #include <unordered_map>
@@ -307,6 +309,10 @@ static int agentCount = 0;
 	}
 
 	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has someone managed to get into a situation where it can no longer continue.  After trying to restart it five times, it still continues to do this and so we consider Soar to be 'crashed.'  Unfortunately, this means your game will no longer function, therefore we recommend you quit the game." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
+
+	DiceGame* localGame = self.game;
+	ApplicationDelegate* delegate = localGame.appDelegate;
+	[delegate.achievements updateAchievements:nil];
 }
 
 - (void) doTurn:(NSNumber*)turnCount
@@ -947,8 +953,6 @@ static int agentCount = 0;
         sml::Identifier *ident = agents[turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
-		NSLog(@"%s", agents[turnLock]->ExecuteCommandLine("p -d 10 i1"));
-        
         NSLog(@"Command from output link, j=%d, command=%@", j, attrName);
         
         NSString *commandStatus = @"";

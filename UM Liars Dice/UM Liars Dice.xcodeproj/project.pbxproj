@@ -11,6 +11,7 @@
 		4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */; };
 		4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D07AB651976EC0800EC955E /* InviteFriendsView.xib */; };
 		4D07AB6A1976EC3B00EC955E /* InviteFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D07AB691976EC3B00EC955E /* InviteFriendsView.m */; };
+		4D1AE1F91978237200D6F4F5 /* GameKitAchievementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
@@ -119,6 +120,8 @@
 		4D07AB651976EC0800EC955E /* InviteFriendsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsView.xib; sourceTree = "<group>"; };
 		4D07AB681976EC3B00EC955E /* InviteFriendsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteFriendsView.h; sourceTree = "<group>"; };
 		4D07AB691976EC3B00EC955E /* InviteFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsView.m; sourceTree = "<group>"; };
+		4D1AE1F71978237200D6F4F5 /* GameKitAchievementHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitAchievementHandler.h; sourceTree = "<group>"; };
+		4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitAchievementHandler.m; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
@@ -767,6 +770,8 @@
 				4DF3947C1923C51C00A523FB /* GameKitListener.m */,
 				4DF3947D1923C51C00A523FB /* MultiplayerMatchData.h */,
 				4DF3947E1923C51C00A523FB /* MultiplayerMatchData.m */,
+				4D1AE1F71978237200D6F4F5 /* GameKitAchievementHandler.h */,
+				4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1030,6 +1035,7 @@
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,
 				4DF3964C1923C51D00A523FB /* GameKitGameHandler.m in Sources */,
+				4D1AE1F91978237200D6F4F5 /* GameKitAchievementHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

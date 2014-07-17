@@ -355,6 +355,9 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 -(void)handleAction:(DiceAction*)action
 {
 	[self handleAction:action notify:YES];
+
+	ApplicationDelegate* delegate = self.appDelegate;
+	[delegate.achievements updateAchievements:self];
 }
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
@@ -448,6 +451,9 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
     for (id <Player> player in self.players) {
         [player end];
     }
+
+	ApplicationDelegate* delegate = self.appDelegate;
+	[delegate.achievements updateAchievements:self];
 }
 
 @end

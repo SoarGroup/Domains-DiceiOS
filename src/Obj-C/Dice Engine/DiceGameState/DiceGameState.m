@@ -958,6 +958,27 @@
     player.hasLost = YES;
 	DiceGame* localGame = self.game;
 
+	int causeID = -1;
+
+	HistoryItem* lastItem = [self lastHistoryItem];
+
+	switch ([lastItem actionType]) {
+		case ACTION_CHALLENGE_BID:
+		case ACTION_CHALLENGE_PASS:
+			if ([lastItem value] == playerID)
+			{
+				PlayerState* lastItemState = [lastItem player];
+				causeID = [lastItemState playerID];
+				break;
+			}
+		case ACTION_EXACT:
+		default:
+			causeID = (int)playerID;
+			break;
+	}
+
+	[history addObject:[[HistoryItem alloc] initWithState:self andWithPlayer:player whereTypeIs:ACTION_LOST withValue:causeID]];
+
 	[[localGame getPlayerAtIndex:(int)playerID] notifyHasLost];
     --playersLeft;
 

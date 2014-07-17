@@ -11,6 +11,7 @@
 #import "MainMenu.h"
 
 #import "GameKitListener.h"
+#import "GameKitAchievementHandler.h"
 
 @interface ApplicationDelegate : NSObject <UIApplicationDelegate>
 {
@@ -23,6 +24,7 @@
 @property (readwrite, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) NSLock* databaseArrayLock;
 @property (nonatomic, strong) GameKitListener* listener;
+@property (nonatomic, strong) GameKitAchievementHandler* achievements;
 @property (nonatomic, strong) UIViewController* gameCenterLoginViewController;
 
 - (void)addInstance:(DiceDatabase*)database;

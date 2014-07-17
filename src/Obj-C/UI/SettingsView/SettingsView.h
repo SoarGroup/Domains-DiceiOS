@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsView : UIViewController <UITextFieldDelegate, EngineClass>
+@interface SettingsView : UIViewController <UITextFieldDelegate, EngineClass, UIAlertViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *difficultyLabel;
@@ -27,5 +27,8 @@
 - (IBAction)textFieldFinished:(id)sender;
 
 - (IBAction)remoteIPTextFieldTextFinalize:(id)sender;
+
+- (IBAction)resetAchievements:(id)sender;
+- (IBAction)resetLeaderboards:(id)sender;
 
 @end

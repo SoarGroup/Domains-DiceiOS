@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Player.h"
 
 @class DiceGameState;
 @class Bid;
@@ -79,5 +80,7 @@
 - (Die *) getDie:(int)index;
 
 - (NSInteger) getNumberOfPlayers;
+
+- (id<Player>)playerPtr;
 
 @end

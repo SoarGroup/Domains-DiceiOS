@@ -21,7 +21,7 @@
 
 @synthesize databaseArrayLock;
 
-@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController;
+@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController, achievements;
 
 - (id)init
 {
@@ -86,10 +86,13 @@
 		if ([GKLocalPlayer localPlayer].isAuthenticated)
 		{
 			self.mainMenu.multiplayerEnabled = YES;
+
+			self.achievements = [[GameKitAchievementHandler alloc] init];
 		}
 		else
 		{
 			self.mainMenu.multiplayerEnabled = NO;
+			self.achievements = NO;
 
 			BOOL playingMatchWithMultiplayer = NO;
 

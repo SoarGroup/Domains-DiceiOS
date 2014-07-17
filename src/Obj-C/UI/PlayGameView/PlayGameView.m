@@ -458,6 +458,7 @@ NSArray *buildDiceImages() {
 		fullScreenView = NO;
 
     self.navigationController.navigationBarHidden = !fullScreenView;
+	self.navigationController.navigationBar.translucent = YES;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUINotification:) name:@"UpdateUINotification" object:nil];
