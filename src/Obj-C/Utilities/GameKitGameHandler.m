@@ -143,8 +143,6 @@
 		if ([[localGame.players objectAtIndex:i] isKindOfClass:SoarPlayer.class])
 			continue;
 
-		assert(![[localGame.players objectAtIndex:i] isKindOfClass:DiceLocalPlayer.class]);
-
 		GKTurnBasedParticipant* gktbp = [nextPlayers objectAtIndex:0];
 		[nextPlayers removeObjectAtIndex:0];
 

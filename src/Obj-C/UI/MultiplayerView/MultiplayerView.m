@@ -407,7 +407,7 @@
 {
 	int gameIndex = (int)[(UIButton*)sender tag];
 
-	PlayGameView* playGameView = [((UIView*)[self->playGameViews objectAtIndex:gameIndex]).LDContext objectForKey:@"PlayGameView"];
+	DiceGame* localGame = [self->miniGamesViewArray objectAtIndex:gameIndex];
 
 	__block MultiplayerView* multiplayerView = self;
 	void (^quitHandler)(void) =^
@@ -415,7 +415,7 @@
 		[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
 	};
 
-	PlayGameView *bigView = [[PlayGameView alloc] initWithGame:playGameView.game withQuitHandler:quitHandler withCustomMainView:NO];
+	PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
 
 	[self.navigationController pushViewController:bigView animated:YES];
 }
