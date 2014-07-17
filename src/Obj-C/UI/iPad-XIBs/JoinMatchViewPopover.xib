@@ -83,9 +83,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCU-2y-poQ">
-                    <rect key="frame" x="98" y="267" width="125" height="33"/>
+                    <rect key="frame" x="116" y="267" width="88" height="33"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" title="Join New Match"/>
+                    <state key="normal" title="New Match"/>
                     <connections>
                         <action selector="joinMatchButtonPressed:" destination="-1" eventType="touchUpInside" id="gVo-MG-LWT"/>
                     </connections>
