@@ -249,10 +249,8 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
     for (id <Player> player in self.players)
     {
         if ([player isKindOfClass:[DiceLocalPlayer class]])
-        {
             ((DiceLocalPlayer*)player).gameView = self.gameView;
-        }
-    }
+	}
 }
 
 - (id <PlayGame>) gameView

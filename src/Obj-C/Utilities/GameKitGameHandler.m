@@ -185,46 +185,6 @@
 				[localParticipants addObject:participant];
 		}
 
-		if ([self myParticipant].matchOutcome != GKTurnBasedMatchOutcomeNone || remove)
-		{
-			if ([self myParticipant].matchOutcome == GKTurnBasedMatchOutcomeNone)
-			{
-				GKTurnBasedMatchOutcome outcome;
-
-				PlayerState* state = [[localGame gameState] getPlayerState:[player getID]];
-
-				if ([state hasLost])
-					outcome = GKTurnBasedMatchOutcomeLost;
-				else
-					outcome = GKTurnBasedMatchOutcomeQuit;
-
-				if ([[match currentParticipant].playerID isEqual:[GKLocalPlayer localPlayer].playerID])
-				{
-					[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
-					 {
-						 if (error)
-							 NSLog(@"Error when player quit: %@\n", error.description);
-					 }];
-				}
-				else
-				{
-					[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
-					 {
-						 if (error)
-							 NSLog(@"Error when player quit: %@\n", error.description);
-					 }];
-				}
-			}
-
-			[match removeWithCompletionHandler:^(NSError* error)
-			 {
-				 if (error)
-					 NSLog(@"Error Removing Match: %@\n", error.description);
-			 }];
-
-			return;
-		}
-
 		GKTurnBasedMatchOutcome outcome;
 
 		PlayerState* state = [[localGame gameState] getPlayerState:[player getID]];
@@ -234,22 +194,22 @@
 		else
 			outcome = GKTurnBasedMatchOutcomeQuit;
 
+		void (^completionHandler)(NSError* error) = ^(NSError* error){
+			if (error)
+				NSLog(@"Error when player quit: %@\n", error.description);
+
+			if (remove)
+				[self->match removeWithCompletionHandler:^(NSError* removeError)
+				 {
+					 if (removeError)
+						 NSLog(@"Error Removing Match: %@\n", removeError.description);
+				 }];
+		};
+
 		if ([[match currentParticipant].playerID isEqual:[GKLocalPlayer localPlayer].playerID])
-		{
-			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
-			 {
-				 if (error)
-					 NSLog(@"Error when player quit: %@\n", error.description);
-			 }];
-		}
+			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:completionHandler];
 		else
-		{
-			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:^(NSError* error)
-			 {
-				 if (error)
-					 NSLog(@"Error when player quit: %@\n", error.description);
-			 }];
-		}
+			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:completionHandler];
 	}
 }
 

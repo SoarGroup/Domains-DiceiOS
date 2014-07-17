@@ -370,12 +370,15 @@
 						  if (errorRemoving)
 							  NSLog(@"Error: %@", errorRemoving.description);
 					  }];
+					  handler.localGame = nil;
+					  [delegate.listener removeGameKitGameHandler:handler];
 					  return;
 				  }
 
 				  [mmd.theGame.gameState decodePlayers:match withHandler:handler];
 
-				  if (mmd.theGame.gameState.players)
+				  if (mmd.theGame.gameState.players &&
+					  [mmd.theGame.gameState.players count] > 0)
 					  mmd.theGame.players = [NSArray arrayWithArray:mmd.theGame.gameState.players];
 
 				  mmd.theGame.gameState.players = mmd.theGame.players;
