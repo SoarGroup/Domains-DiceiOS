@@ -195,7 +195,11 @@ static int agentCount = 0;
 		{
 			[kernelLock lock];
 			// No Agent created yet for this lock
-			agents[aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p-%@", aLock, [[[NSDateFormatter alloc] init] stringFromDate:[NSDate date]]] UTF8String]);
+			NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+			[formatter setTimeStyle:NSDateFormatterShortStyle];
+			[formatter setDateStyle:NSDateFormatterShortStyle];
+			NSString* dateString = [formatter stringFromDate:[NSDate date]];
+			agents[aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p-%@", aLock, dateString] UTF8String]);
 
 			if (agents[aLock] == nil)
 			{
