@@ -23,7 +23,6 @@
 {
     GameTime time;
 	int nextID;
-
 @public
 	BOOL shouldNotifyOfNewRound;
 }
@@ -70,5 +69,6 @@
 @property(readwrite, assign) BOOL deferNotification;
 @property(readwrite, assign) BOOL newRound;
 
+@property(readwrite, strong) NSLock* gameLock;
 
 @end

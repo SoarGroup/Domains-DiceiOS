@@ -20,9 +20,11 @@
 
 #include "NSMutableArrayShuffle.h"
 
+extern std::map<__weak NSLock*, sml::Agent*> agents;
+
 @implementation DiceGame
 
-@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound;
+@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock;
 
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
 {
@@ -48,6 +50,8 @@
 
 - (void) dealloc
 {
+	agents.erase(agents.find(self.gameLock));
+
 	NSLog(@"%@ deallocated", self.class);
 }
 

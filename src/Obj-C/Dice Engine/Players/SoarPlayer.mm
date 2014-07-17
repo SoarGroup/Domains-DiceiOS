@@ -64,7 +64,7 @@ typedef enum {
     neq
 } Predicate;
 
-static std::map<__weak NSLock*, sml::Agent*> agents;
+std::map<__weak NSLock*, sml::Agent*> agents;
 static sml::Kernel* kernel;
 static NSLock* kernelLock;
 
@@ -195,7 +195,7 @@ static int agentCount = 0;
 		{
 			[kernelLock lock];
 			// No Agent created yet for this lock
-			agents[aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p", aLock] UTF8String]);
+			agents[aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p-%@", aLock, [[[NSDateFormatter alloc] init] stringFromDate:[NSDate date]]] UTF8String]);
 
 			if (agents[aLock] == nil)
 			{
