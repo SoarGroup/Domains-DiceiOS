@@ -34,6 +34,7 @@
 @synthesize settingsButton;
 @synthesize aboutButton;
 @synthesize removeAllMultiplayerGames;
+@synthesize multiplayerController;
 
 - (id)initWithAppDelegate:(id)anAppDelegate
 {
@@ -119,7 +120,12 @@
 		[noMultiplayer show];
 	}
 	else
-		[self.navigationController pushViewController:[[MultiplayerView alloc] initWithMainMenu:self withAppDelegate:delegate]  animated:YES];
+	{
+		//if (!self.multiplayerController)
+			self.multiplayerController = [[MultiplayerView alloc] initWithMainMenu:self withAppDelegate:delegate];
+
+		[self.navigationController pushViewController:self.multiplayerController animated:YES];
+	}
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

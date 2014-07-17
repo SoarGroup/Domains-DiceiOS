@@ -35,4 +35,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *removeAllMultiplayerGames;
 
+@property (strong, nonatomic) UIViewController* multiplayerController;
+
 @end

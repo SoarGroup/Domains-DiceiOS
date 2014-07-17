@@ -363,6 +363,16 @@
 					  return;
 				  }
 
+				  if (!mmd.theGame.gameState && !request)
+				  {
+					  [match removeWithCompletionHandler:^(NSError* errorRemoving)
+					  {
+						  if (errorRemoving)
+							  NSLog(@"Error: %@", errorRemoving.description);
+					  }];
+					  return;
+				  }
+
 				  [mmd.theGame.gameState decodePlayers:match withHandler:handler];
 
 				  if (mmd.theGame.gameState.players)
