@@ -16,11 +16,11 @@
             <rect key="frame" x="0.0" y="64" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7Z-gg-Oi2">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="446"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7Z-gg-Oi2">
+                    <rect key="frame" x="0.0" y="64" width="320" height="446"/>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-HJ-eiH">
-                    <rect key="frame" x="105" y="454" width="111" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gK-HJ-eiH">
+                    <rect key="frame" x="105" y="518" width="111" height="30"/>
                     <state key="normal" title="Join New Match">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -31,6 +31,14 @@
                 </button>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="6gK-HJ-eiH" firstAttribute="centerX" secondItem="Z7Z-gg-Oi2" secondAttribute="centerX" id="2yR-P9-7oi"/>
+                <constraint firstItem="Z7Z-gg-Oi2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ABz-pd-hHI"/>
+                <constraint firstItem="6gK-HJ-eiH" firstAttribute="top" secondItem="Z7Z-gg-Oi2" secondAttribute="bottom" constant="8" symbolic="YES" id="l2G-1z-o4s"/>
+                <constraint firstAttribute="bottom" secondItem="6gK-HJ-eiH" secondAttribute="bottom" constant="20" symbolic="YES" id="m6d-ad-JAX"/>
+                <constraint firstAttribute="trailing" secondItem="Z7Z-gg-Oi2" secondAttribute="trailing" id="pyQ-l8-amp"/>
+                <constraint firstItem="Z7Z-gg-Oi2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="trW-iC-J2q"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

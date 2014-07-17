@@ -65,16 +65,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	self.navigationController.navigationBarHidden = NO;
-
-	self.navigationController.title = @"Multiplayer Matches";
-	self.navigationItem.title = @"Multiplayer Matches";
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	self.navigationController.navigationBarHidden = NO;
+	self.navigationController.navigationBar.translucent = YES;
+
+	self.navigationController.title = @"Multiplayer Matches";
+	self.navigationItem.title = @"Multiplayer Matches";
 
 	for (UIView* view in self.gamesScrollView.subviews)
 		[view removeFromSuperview];
@@ -380,6 +379,9 @@
 					  [self->handlerArray addObject:handler];
 
 				  [self handleUpdateNotification:nil];
+
+				  if (request)
+					  [self->gamesScrollView scrollRectToVisible:CGRectMake(self->gamesScrollView.contentSize.width-1, 1, 1, 1) animated:YES];
 			  }];
 		 }
 	 }];

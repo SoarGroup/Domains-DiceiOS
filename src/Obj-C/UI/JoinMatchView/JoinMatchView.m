@@ -72,6 +72,8 @@
 			self.inviteFriendsButton.hidden = [friends count] == 0;
 		}];
 	}
+
+	self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -139,7 +141,6 @@
 			case 8: group |= kAI_8;
 				break;
 			default:
-				NSLog(@"Error selecting AI group!");
 				break;
 		}
 

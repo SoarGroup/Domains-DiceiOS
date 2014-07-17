@@ -18,13 +18,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyp-pd-FyW">
-                    <rect key="frame" x="0.0" y="0.0" width="1024" height="650"/>
+                    <rect key="frame" x="0.0" y="64" width="1024" height="650"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="erj-Xd-6Zx"/>
                     </connections>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHC-C9-v0x">
-                    <rect key="frame" x="20" y="654" width="76" height="30"/>
+                    <rect key="frame" x="20" y="718" width="76" height="30"/>
                     <state key="normal" title="Join Match">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,21 +34,22 @@
                     </connections>
                 </button>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gTJ-SX-Eyr">
-                    <rect key="frame" x="104" y="659" width="20" height="20"/>
+                    <rect key="frame" x="104" y="723" width="20" height="20"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="EHC-C9-v0x" secondAttribute="bottom" constant="84" id="Ej4-ea-RGA"/>
-                <constraint firstItem="jyp-pd-FyW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="F6y-m2-2m1"/>
-                <constraint firstItem="EHC-C9-v0x" firstAttribute="top" secondItem="jyp-pd-FyW" secondAttribute="bottom" constant="4" id="ZZw-Wy-HWy"/>
-                <constraint firstItem="jyp-pd-FyW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dTk-2U-gns"/>
-                <constraint firstItem="gTJ-SX-Eyr" firstAttribute="centerY" secondItem="EHC-C9-v0x" secondAttribute="centerY" id="fQV-Ve-UTK"/>
-                <constraint firstItem="EHC-C9-v0x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fd3-bp-5l2"/>
-                <constraint firstItem="gTJ-SX-Eyr" firstAttribute="leading" secondItem="EHC-C9-v0x" secondAttribute="trailing" constant="8" symbolic="YES" id="s2P-eB-cMW"/>
-                <constraint firstAttribute="trailing" secondItem="jyp-pd-FyW" secondAttribute="trailing" id="uYp-ip-trj"/>
+                <constraint firstAttribute="bottom" secondItem="EHC-C9-v0x" secondAttribute="bottom" constant="20" symbolic="YES" id="7Zm-ho-Ctg"/>
+                <constraint firstItem="jyp-pd-FyW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="7iV-JS-frC"/>
+                <constraint firstItem="EHC-C9-v0x" firstAttribute="top" secondItem="jyp-pd-FyW" secondAttribute="bottom" constant="4" id="8lP-Vc-bnK"/>
+                <constraint firstItem="gTJ-SX-Eyr" firstAttribute="leading" secondItem="EHC-C9-v0x" secondAttribute="trailing" constant="8" symbolic="YES" id="K8b-eg-0ay"/>
+                <constraint firstAttribute="trailing" secondItem="jyp-pd-FyW" secondAttribute="trailing" id="KFc-ge-zeh"/>
+                <constraint firstItem="EHC-C9-v0x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="UQ8-mi-FIt"/>
+                <constraint firstItem="jyp-pd-FyW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c8f-f0-Unb"/>
+                <constraint firstItem="EHC-C9-v0x" firstAttribute="centerY" secondItem="gTJ-SX-Eyr" secondAttribute="centerY" id="uwu-Fd-GTa"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
         </view>
