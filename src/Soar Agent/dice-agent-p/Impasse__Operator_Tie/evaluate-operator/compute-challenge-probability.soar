@@ -1,5 +1,6 @@
 
 sp {evaluate-operator*propose*compute-challenge-probability
+	#:interrupt
    (state <s> ^name evaluate-operator
               ^top-state.io.input-link.history.action << bid push >>
               ^operator <op> +)

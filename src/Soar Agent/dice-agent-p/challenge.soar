@@ -1,7 +1,7 @@
 sp {dice*propose*challenge*bid
    (state <s> ^name dice
               ^my-turn true
-              ^last-bid <last-bid>
+              ^io.input-link.state.last-bid <last-bid>
               ^io.input-link.affordances.action <a>)
    (<a> ^name challenge
         ^available true
@@ -19,7 +19,7 @@ sp {dice*propose*challenge*bid
 sp {dice*propose*challenge*pass-bid
    (state <s> ^name dice
               ^my-turn true
-              ^last-bid <last-bid>
+              ^io.input-link.state.last-bid <last-bid>
               ^top-state.io.input-link.history <h>
               ^io.input-link.affordances.action <a>
 			  ^io.input-link.players.me <me>)
@@ -42,7 +42,7 @@ sp {dice*propose*challenge*pass-bid
 sp {dice*propose*challenge*pass
    (state <s> ^name dice
               ^my-turn true
-              ^last-bid <last-bid>
+              ^io.input-link.state.last-bid <last-bid>
               ^top-state.io.input-link.history <history>
               ^io.input-link.affordances.action <a>)
    (<history> ^action pass
@@ -60,7 +60,7 @@ sp {dice*propose*challenge*pass
 sp {dice*propose*challenge*push-pass
    (state <s> ^name dice
               ^my-turn true
-              ^last-bid <last-bid>
+              ^io.input-link.state.last-bid <last-bid>
               ^top-state.io.input-link.history <h>
               ^io.input-link.affordances.action <a>)
    (<h> ^action push
@@ -79,7 +79,7 @@ sp {dice*propose*challenge*push-pass
 sp {dice*propose*challenge*pass-pass
    (state <s> ^name dice
               ^my-turn true
-              ^last-bid <last-bid>
+              ^io.input-link.state.last-bid <last-bid>
               ^top-state.io.input-link.history <h>
               ^io.input-link.affordances.action <a>)
    (<h> ^action pass
