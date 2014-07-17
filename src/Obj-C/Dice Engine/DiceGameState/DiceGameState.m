@@ -179,6 +179,7 @@
 				assert(localParticipant);
 
 				[participants removeObject:localParticipant];
+				break;
 			}
 		}
 	}
