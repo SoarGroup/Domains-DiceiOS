@@ -383,9 +383,9 @@
 					[item actionType] != ACTION_CHALLENGE_PASS)
 					continue;
 
-				PlayerState* player = [game.players objectAtIndex:[item value]];
+				id<Player> player = [game.players objectAtIndex:[item value]];
 
-				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+				if (![player isKindOfClass:DiceLocalPlayer.class])
 					continue;
 
 				if ([item result] == 0)
@@ -529,9 +529,9 @@
 					[item actionType] != ACTION_CHALLENGE_PASS)
 					continue;
 
-				PlayerState* player = [game.players objectAtIndex:[item value]];
+				id<Player> player = [game.players objectAtIndex:[item value]];
 
-				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+				if (![player isKindOfClass:DiceLocalPlayer.class])
 					continue;
 
 				if ([item result] == 0)
@@ -597,9 +597,9 @@
 						[item actionType] != ACTION_CHALLENGE_PASS)
 						continue;
 
-					PlayerState* player = [game.players objectAtIndex:[item value]];
+					id<Player> player = [game.players objectAtIndex:[item value]];
 
-					if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+					if (![player isKindOfClass:DiceLocalPlayer.class])
 						continue;
 
 					if ([item result] == 1)
@@ -665,9 +665,9 @@
 					[item actionType] != ACTION_CHALLENGE_PASS)
 					continue;
 
-				PlayerState* player = [game.players objectAtIndex:[item value]];
+				id<Player> player = [game.players objectAtIndex:[item value]];
 
-				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+				if (![player isKindOfClass:DiceLocalPlayer.class])
 					continue;
 
 				if ([item result] == 0)
