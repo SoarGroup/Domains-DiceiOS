@@ -63,6 +63,18 @@
 	if (matchHasEnded)
 		return;
 
+	if (!self.remotePlayers)
+	{
+		NSMutableArray* remotes = [[NSMutableArray alloc] init];
+		for (DiceRemotePlayer* player in self.localGame.players)
+		{
+			if ([player isKindOfClass:DiceRemotePlayer.class])
+				[remotes addObject:player];
+		}
+
+		self.remotePlayers = remotes;
+	}
+
 	[match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* error)
 	 {
 		 if (!error)
