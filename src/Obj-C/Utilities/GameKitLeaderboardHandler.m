@@ -145,6 +145,9 @@
 
 	winloss_overall *= 1000;
 
+	if (winsOverall + lossesOverall <= 30)
+		winloss_overall = 0;
+
 	long double winloss_hardestai = 0.0;
 
 	if (lossesHardestAI == 0)
@@ -154,6 +157,9 @@
 
 	winloss_hardestai *= 1000;
 
+	if (winsHardestAI + lossesHardestAI <= 30)
+		winloss_hardestai = 0;
+
 	long double winsloss_multiplayer = 0.0;
 
 	if (lossesMultiplayer == 0)
@@ -162,6 +168,9 @@
 		winsloss_multiplayer = ((long double)winsMultiplayer)/((long double)lossesMultiplayer);
 
 	winsloss_multiplayer *= 1000;
+
+	if (winsMultiplayer + lossesMultiplayer <= 30)
+		winsloss_multiplayer = 0;
 
 
 
@@ -174,6 +183,9 @@
 
 	successful_challenges *= 1000;
 
+	if (challengesSuccess + challengesLoss <= 30)
+		successful_challenges = 0;
+
 	long double successful_exacts = 0.0;
 
 	if (exactLoss == 0)
@@ -183,6 +195,9 @@
 
 	successful_exacts *= 1000;
 
+	if (exactSuccess + exactLoss <= 30)
+		successful_exacts = 0;
+
 	long double survival_challenges = 0.0;
 
 	if (lossChallenges == 0)
@@ -191,6 +206,9 @@
 		survival_challenges = ((long double)winChallenges)/((long double)lossChallenges);
 
 	survival_challenges *= 1000;
+
+	if (winChallenges + lossChallenges <= 30)
+		survival_challenges = 0;
 
 	NSMutableArray* scores = [NSMutableArray array];
 
