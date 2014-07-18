@@ -920,7 +920,10 @@ NSArray *buildDiceImages() {
     {
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceLocalPlayer.class])
+			{
 				self.state = [localGame.gameState playerStateForPlayerID:[player getID]];
+				((DiceLocalPlayer*)player).gameView = self;
+			}
 
 		localState = self.state;
     }

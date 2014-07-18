@@ -209,7 +209,12 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 	if (self.gameState.hasAPlayerWonTheGame)
 	{
 		for (id<Player> player in players)
+		{
 			[player end];
+
+			if ([player isKindOfClass:DiceLocalPlayer.class])
+				[(DiceLocalPlayer*)player end:YES];
+		}
 
 		return;
 	}
@@ -309,10 +314,6 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
 -(void)publishState
 {
-	self.gameState.game = self;
-	PlayGameView* localGameView = self.gameView;
-	PlayerState* localState = [localGameView state];
-
     for (id <Player> player in players)
     {
 		PlayerState* state = [gameState getPlayerState:[player getID]];
@@ -320,6 +321,10 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
         [player updateState:state];
     }
+
+	self.gameState.game = self;
+	PlayGameView* localGameView = self.gameView;
+	PlayerState* localState = [localGameView state];
 
 	if (![localState hasLost] && (newRound || shouldNotifyOfNewRound) && localGameView)
 	{

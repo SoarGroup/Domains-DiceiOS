@@ -107,8 +107,28 @@
 		return;
 
 	PlayGameView* localView = self.gameView;
+
+	if (localView == nil)
+	{
+		PlayerState* localState = self.playerState;
+		DiceGameState* gameState = localState.gameState;
+		DiceGame* game = gameState.game;
+
+		self.gameView = game.gameView;
+		localView = self.gameView;
+	}
+
+	if (localView == nil || localView.navigationController.visibleViewController != localView)
+		return;
+
 	id<Player> gameWinner = localView.game.gameState.gameWinner;
-	NSString *title = [NSString stringWithFormat:@"%@ Wins!", [gameWinner getDisplayName]];
+	NSString* winner = [gameWinner getDisplayName];
+	NSString* winString = @"Wins";
+
+	if ([winner isEqualToString:@"You"])
+		winString = @"Win";
+
+	NSString *title = [NSString stringWithFormat:@"%@ %@!", winner, winString];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
 													message:nil
 												   delegate:self

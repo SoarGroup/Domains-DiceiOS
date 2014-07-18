@@ -233,6 +233,33 @@
 	for (NSArray* array in rounds)
 		for (HistoryItem* item in array)
 			[item canDecodePlayer];
+
+	for (GKTurnBasedParticipant* participant in match.participants)
+	{
+		if (participant.matchOutcome == GKTurnBasedMatchOutcomeLost ||
+			participant.matchOutcome == GKTurnBasedMatchOutcomeQuit)
+		{
+			for (id<Player> player in players)
+			{
+				if ([player isKindOfClass:DiceRemotePlayer.class] &&
+					[[(DiceRemotePlayer*)player participant].playerID isEqualToString:participant.playerID])
+				{
+					// Found the player who has lost, check to make sure they have
+					PlayerState* state = [self playerStateForPlayerID:[player getID]];
+
+					if (![state hasLost])
+					{
+						state.numberOfDice = 0;
+						[state.arrayOfDice removeAllObjects];
+
+						[self playerLosesGame:state.playerID];
+
+						[self goToNextPlayerWhoHasntLost];
+					}
+				}
+			}
+		}
+	}
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
