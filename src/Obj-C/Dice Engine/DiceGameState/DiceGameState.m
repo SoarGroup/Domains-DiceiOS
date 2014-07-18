@@ -546,16 +546,16 @@
         return NO;
     }
     
-//    if (*didTheChallengerWin)
-//    {
-//        int targetIndex = [self getIndexOfPlayerWithId:targetID];
-//        self.currentTurn = targetIndex % [self.playerStates count];
-//        [self goToNextPlayerWhoHasntLost];
-//    }
-//    else
-//    {
-//        self.currentTurn = (self.currentTurn) % [self.playerStates count];
-//    }
+    if (*didTheChallengerWin)
+    {
+        int targetIndex = [self getIndexOfPlayerWithId:targetID];
+        self.currentTurn = targetIndex % [self.playerStates count];
+        [self goToNextPlayerWhoHasntLost];
+    }
+    else
+    {
+        self.currentTurn = (self.currentTurn) % [self.playerStates count];
+    }
 
     // This is handled in "playerLosesRound" above
     // [self goToNextPlayerWhoHasntLost];

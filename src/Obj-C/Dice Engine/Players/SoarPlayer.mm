@@ -389,7 +389,7 @@ static int agentCount = 0;
 
 			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
 
-			if (!agentInterrupted && (startTime - 1) < [[NSDate date] timeIntervalSince1970])
+			if (!agentInterrupted && (startTime + 5) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
 
