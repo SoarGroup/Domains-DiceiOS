@@ -33,5 +33,6 @@
 + (DiceAction *) passAction:(NSInteger)playerID push:(NSArray*)push;
 + (DiceAction *) acceptAction:(NSInteger)playerID;
 + (DiceAction *) pushAction:(NSInteger)playerID push:(NSArray *)push;
++ (DiceAction *) lost:(NSInteger)playerID;
 
 @end

@@ -70,4 +70,12 @@
     return ret;
 }
 
++ (DiceAction *) lost:(NSInteger)playerID
+{
+	DiceAction *ret = [[DiceAction alloc] init];
+	ret.actionType = ACTION_LOST;
+	ret.playerID = playerID;
+	return ret;
+}
+
 @end

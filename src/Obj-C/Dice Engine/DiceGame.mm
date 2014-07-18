@@ -399,6 +399,8 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
             [gameState handlePush:action.playerID withPush:action.push];
             break;
         }
+		case ACTION_LOST:
+			break;
         default:
         {
             return;

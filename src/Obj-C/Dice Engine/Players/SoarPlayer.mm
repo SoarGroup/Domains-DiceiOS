@@ -73,7 +73,7 @@ static NSLock* kernelLock;
 @interface SoarPlayer()
 
 - (DiceSMLData *) GameStateToWM:(sml::Identifier *) inputLink;
-- (void) doTurn:(NSNumber*)arg;
+- (void) doTurn;
 
 @end
 
@@ -297,7 +297,7 @@ static int agentCount = 0;
 
 - (void)itsYourTurn
 {
-    [NSThread detachNewThreadSelector:@selector(doTurn:) toTarget:self withObject:[NSNumber numberWithInt:0]];
+    [NSThread detachNewThreadSelector:@selector(doTurn) toTarget:self withObject:nil];
 }
 
 - (void)showErrorAlert
@@ -315,7 +315,35 @@ static int agentCount = 0;
 	[delegate.achievements updateAchievements:nil];
 }
 
-- (void) doTurn:(NSNumber*)turnCount
+- (void) restartSoar
+{
+	PlayerState* localState = self.playerState;
+	localState.numberOfDice -= 1;
+	[localState.arrayOfDice removeLastObject];
+
+	if (localState.numberOfDice == 0 && ![localState hasLost])
+	{
+		DiceGameState* state = localState.gameState;
+		DiceGame* localGame = self.game;
+
+		[state playerLosesRound:self.playerID];
+
+		[state createNewRound];
+
+		if (state.gameWinner)
+			[state.gameWinner notifyHasWon];
+
+		[localGame handleAction:[DiceAction lost:self.playerID] notify:YES];
+
+		return [self showErrorAlert];
+	}
+	else if ([localState hasLost])
+		return;
+	else
+		return [self doTurn];
+}
+
+- (void) doTurn
 {
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
@@ -361,16 +389,13 @@ static int agentCount = 0;
 
 			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
 
-			if (!agentInterrupted && (startTime + 5) < [[NSDate date] timeIntervalSince1970])
+			if (!agentInterrupted && (startTime - 1) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
 
-				NSLog(@"Restarting Soar due to timeout (%i)", [turnCount intValue]);
+				NSLog(@"Restarting Soar due to timeout");
 
-				if ([turnCount intValue] > 5)
-					return [self showErrorAlert];
-				else
-					return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
+				[self restartSoar];
 			}
 
 			if (agentInterrupted)
@@ -386,12 +411,9 @@ static int agentCount = 0;
 				{
 					[turnLock unlock];
 
-					NSLog(@"Restarting Soar due to goal stack depth exceeded (%i)", [turnCount intValue]);
+					NSLog(@"Restarting Soar due to goal stack depth exceeded");
 
-					if ([turnCount intValue] > 5)
-						return [self showErrorAlert];
-					else
-						return [self doTurn:[NSNumber numberWithInt:([turnCount intValue] + 1)]];
+					[self restartSoar];
 				}
 			}
 
@@ -794,6 +816,9 @@ static int agentCount = 0;
                 case ACTION_ILLEGAL:
                     action = const_cast<char*>((const char*)"illegal");
                     break;
+				case ACTION_LOST:
+					action = const_cast<char*>((const char*)"lost");
+					break;
 				case ACTION_QUIT:
 				default:
 				{
@@ -900,6 +925,9 @@ static int agentCount = 0;
                 case ACTION_ILLEGAL:
                     action = const_cast<char*>((const char*)"illegal");
                     break;
+				case ACTION_LOST:
+					action = const_cast<char*>((const char*)"lost");
+					break;
 				case ACTION_QUIT:
 				default:
 				{
