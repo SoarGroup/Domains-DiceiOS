@@ -918,8 +918,11 @@ NSArray *buildDiceImages() {
 
     if (localState == nil)
     {
-		[self initializeUI];
-        return;
+		for (id<Player> player in localGame.players)
+			if ([player isKindOfClass:DiceLocalPlayer.class])
+				self.state = [localGame.gameState playerStateForPlayerID:[player getID]];
+
+		localState = self.state;
     }
 
 	Bid *previousBid = localGame.gameState.previousBid;
