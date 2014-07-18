@@ -330,6 +330,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 8:
 			// Win a match that has at least one AI on the hardest difficulty in it.
 			if (game.gameState.gameWinner != nil &&
@@ -353,6 +354,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 9:
 			// Win a match that has at least one human opponent in it.
 			if (game.gameState.gameWinner != nil &&
@@ -375,6 +377,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 10:
 			// In a match, survive a challenge against you without losing a die.
 			for (HistoryItem* item in game.gameState.flatHistory)
@@ -416,6 +419,7 @@
 				return YES;
 			}
 		}
+			break;
 		case 12:
 			// Play a multiplayer match with at least one friend.
 			for (id<Player> player in game.players)
@@ -431,6 +435,7 @@
 					}
 				}
 			}
+			break;
 		case 13:
 			// Win a multiplayer match that has at least one friend in it.
 			if (game.gameState.gameWinner != nil &&
@@ -454,6 +459,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 14:
 			// Play a multiplayer match that has at least one AI and one human opponent.
 			{
@@ -474,6 +480,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 15:
 			// Win a multiplayer match that has at least one AI and one human opponent.
 			if (game.gameState.gameWinner != nil &&
@@ -496,6 +503,7 @@
 				basicAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		default:
 			NSLog(@"Unknown achievement ID! %i", achievementID);
 			break;
@@ -518,6 +526,7 @@
 				striveAchievement.percentComplete += 5.0;
 				return YES;
 			}
+			break;
 		case 2:
 		{
 			int challengeCount = 0;
@@ -609,6 +618,7 @@
 				striveAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 5:
 			// Win 5 matches in a row.
 		{
@@ -654,6 +664,7 @@
 				hardAchievement.percentComplete += 1.0;
 				return YES;
 			}
+			break;
 		case 2:
 		{
 			int challengeCount = 0;
@@ -698,6 +709,7 @@
 				hardAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 4:
 			// In a match with at least five starting players, until there only four players remaining, only have one turn per round.  This means that the turn will never “get back” to you.
 			if ([game.players count] >= 5 &&
@@ -724,6 +736,7 @@
 				hardAchievement.percentComplete = 100.0;
 				return YES;
 			}
+			break;
 		case 5:
 			// Win 10 matches in a row against the hardest AI.
 		{
@@ -815,6 +828,7 @@
 					return YES;
 				}
 			}
+			break;
 		case 2:
 			// Be a beta tester for Liar’s Dice.
 #ifdef DEBUG
