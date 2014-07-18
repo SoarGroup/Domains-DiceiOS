@@ -395,7 +395,7 @@ static int agentCount = 0;
 
 				NSLog(@"Restarting Soar due to timeout");
 
-				[self restartSoar];
+				return [self restartSoar];
 			}
 
 			if (agentInterrupted)
@@ -413,7 +413,7 @@ static int agentCount = 0;
 
 					NSLog(@"Restarting Soar due to goal stack depth exceeded");
 
-					[self restartSoar];
+					return [self restartSoar];
 				}
 			}
 

@@ -50,6 +50,9 @@
 
 - (void)end;
 
+- (BOOL)isMultiplayer;
+- (BOOL)hasHardestAI;
+
 // Getting information about the game
 -(NSInteger)getNumberOfPlayers;
 

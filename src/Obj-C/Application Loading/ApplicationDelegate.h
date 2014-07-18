@@ -12,6 +12,7 @@
 
 #import "GameKitListener.h"
 #import "GameKitAchievementHandler.h"
+#import "GameKitLeaderboardHandler.h"
 
 @interface ApplicationDelegate : NSObject <UIApplicationDelegate>
 {
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) NSLock* databaseArrayLock;
 @property (nonatomic, strong) GameKitListener* listener;
 @property (nonatomic, strong) GameKitAchievementHandler* achievements;
+@property (nonatomic, strong) GameKitLeaderboardHandler* leaderboards;
 @property (nonatomic, strong) UIViewController* gameCenterLoginViewController;
 
 - (void)addInstance:(DiceDatabase*)database;

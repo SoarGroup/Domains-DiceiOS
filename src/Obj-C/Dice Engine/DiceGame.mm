@@ -459,6 +459,26 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
 	ApplicationDelegate* delegate = self.appDelegate;
 	[delegate.achievements updateAchievements:self];
+	[delegate.leaderboards updateGame:self];
+}
+
+- (BOOL)isMultiplayer
+{
+	for (id<Player> player in players)
+		if ([player isKindOfClass:DiceRemotePlayer.class])
+			return YES;
+
+	return NO;
+}
+
+- (BOOL)hasHardestAI
+{
+	for (id<Player> player in players)
+		if ([player isKindOfClass:SoarPlayer.class] &&
+			[(SoarPlayer*)player difficulty] == 4)
+			return YES;
+
+	return NO;
 }
 
 @end
