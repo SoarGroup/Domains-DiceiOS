@@ -112,6 +112,14 @@
 
 			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
 
+			 [updatedGame.gameState decodePlayers:self->match withHandler:self];
+
+			 if (updatedGame.gameState.players &&
+				 [updatedGame.gameState.players count] > 0)
+				 updatedGame.players = [NSArray arrayWithArray:updatedGame.gameState.players];
+
+			 updatedGame.gameState.players = updatedGame.players;
+
 			 [self->localGame updateGame:updatedGame];
 		 }
 		 else

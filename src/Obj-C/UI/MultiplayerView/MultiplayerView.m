@@ -446,12 +446,8 @@
 			}
 		}
 
-		if (player &&
-			!([[game.gameState playerStateForPlayerID:[player getID]] hasLost] ||
-			  [[game.gameState playerStateForPlayerID:[player getID]] hasWon]))
-		{
+		if (player)
 			[handler playerQuitMatch:player withRemoval:YES];
-		}
 
 		int handlerIndex = 0;
 		for (;handlerIndex < [handlerArray count];handlerIndex++)
