@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Application">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner">
             <connections>
                 <outlet property="delegate" destination="bYg-Ix-Cfg" id="h4M-LL-qlT"/>
             </connections>

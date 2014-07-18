@@ -25,9 +25,9 @@
 		self.playerID = -2;
 		self.displayName = nil;
 
-		if (self.participant.playerID != nil)
+		if (self.participant.player.playerID != nil)
 		{
-			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 			 {
 				 if (error)
 					 NSLog(@"Error loading player identifiers: %@", error.description);
@@ -52,7 +52,7 @@
 	//if (self.participant.status == GKTurnBasedParticipantStatusMatching ||
 	//	self.participant.status == GKTurnBasedParticipantStatusUnknown)
 
-	if (self.participant.playerID == nil || !self.displayName)
+	if (self.participant.player.playerID == nil || !self.displayName)
 		return @"Player";
 
 	return self.displayName;
@@ -60,15 +60,15 @@
 
 - (NSString*) getGameCenterName
 {
-	return self.participant.playerID;
+	return self.participant.player.playerID;
 }
 
 - (void) updateState:(PlayerState*)state
 {
-	if (self.participant.playerID &&
+	if (self.participant.player.playerID &&
 		!self.displayName)
 	{
-		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 		 {
 			 if (error)
 				 NSLog(@"Error loading player identifiers: %@", error.description);
@@ -95,7 +95,7 @@
 - (void) itsYourTurn
 {
 	GameKitGameHandler* handlerLocal = self.handler;
-	NSLog(@"Advanced to next turn! %@", self.participant.playerID);
+	NSLog(@"Advanced to next turn! %@", self.participant.player.playerID);
 	[handlerLocal advanceToRemotePlayer:self];
 }
 
@@ -124,10 +124,10 @@
 
 	participant = participant2;
 
-	if (!self.participant.playerID)
+	if (!self.participant.player.playerID)
 		return;
 
-	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:self.participant.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
+	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:self.participant.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 	 {
 		 if (error)
 			 NSLog(@"Error loading player identifiers: %@", error.description);

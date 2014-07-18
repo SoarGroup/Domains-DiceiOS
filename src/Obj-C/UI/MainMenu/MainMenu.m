@@ -23,6 +23,8 @@
 #import "SingleplayerView.h"
 #import "MultiplayerView.h"
 
+#import <GameKit/GameKit.h>
+
 @implementation MainMenu
 
 @synthesize appDelegate;
@@ -79,6 +81,7 @@
 
 	self.navigationController.title = @"Main Menu";
 	self.navigationItem.title = @"Main Menu";
+	self.navigationController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -149,7 +152,16 @@
 
 - (IBAction)statsButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[StatsView alloc] init]  animated:YES];
+	if (!self.multiplayerEnabled)
+		[self.navigationController pushViewController:[[StatsView alloc] init]  animated:YES];
+	else
+	{
+		GKGameCenterViewController* gameCenterController = [[GKGameCenterViewController alloc] init];
+		gameCenterController.delegate = self;
+		//gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+
+		[self.navigationController presentViewController:gameCenterController animated:YES completion:nil];
+	}
 }
 
 - (IBAction)settingsButtonPressed:(id)sender
@@ -210,20 +222,42 @@
 	return [GKLocalPlayer localPlayer].authenticated;
 }
 
-//-(BOOL)shouldAutorotate
-//{
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//		return !UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
-//	else
-//		return !UIInterfaceOrientationIsPortrait(self.interfaceOrientation);
-//}
-//
-//- (NSUInteger)supportedInterfaceOrientations
-//{
-//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//		return UIInterfaceOrientationMaskLandscape;
-//	else
-//		return UIInterfaceOrientationMaskPortrait;
-//}
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+	NSLog(@"Ran");
+}
+
+- (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController
+{
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+		return UIInterfaceOrientationMaskPortrait;
+	else
+		return UIInterfaceOrientationMaskLandscape;
+}
+
+- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController
+{
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+		return UIInterfaceOrientationPortrait;
+	else
+		return UIInterfaceOrientationLandscapeLeft;
+}
+
+-(BOOL)shouldAutorotate
+{
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		return !UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+	else
+		return !UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation]);
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+		return UIInterfaceOrientationMaskLandscape;
+	else
+		return UIInterfaceOrientationMaskPortrait;
+}
 
 @end

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GameKit/GameKit.h>
 
 @class ApplicationDelegate;
 
-@interface MainMenu : UIViewController <UIAlertViewDelegate>
+@interface MainMenu : UIViewController <UIAlertViewDelegate, UINavigationControllerDelegate, GKGameCenterControllerDelegate>
 
 @property (nonatomic, assign) BOOL multiplayerEnabled;
 @property (readwrite, weak) ApplicationDelegate *appDelegate;
