@@ -10,13 +10,13 @@
 #import <UIKit/UIKit.h>
 
 typedef enum DiceImageType {
-    DIE_1 = 0,
-    DIE_2 = 1,
-    DIE_3 = 2,
-    DIE_4 = 3,
-    DIE_5 = 4,
-    DIE_6 = 5,
-    DIE_UNKNOWN = 6,
+    DIE_1 = 1,
+    DIE_2 = 2,
+    DIE_3 = 3,
+    DIE_4 = 4,
+    DIE_5 = 5,
+    DIE_6 = 6,
+    DIE_UNKNOWN = 7,
     MAX_IMAGE_TYPE = 7
 } DiceImageType;
 

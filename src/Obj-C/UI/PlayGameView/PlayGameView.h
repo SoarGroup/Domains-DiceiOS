@@ -19,27 +19,25 @@
 
 const int pushMargin();
 
+enum UITags
+{
+	DiceViewTag = 5,
+	PlayerLabelTag = 8,
+	ChallengeButtonTag = 7,
+	ActivitySpinnerTag = 6
+};
+
 @interface PlayGameView : UIViewController <PlayGame, NewRoundListener> {
 @private
-	BOOL fullScreenView;
-
 	int currentBidCount;
 	double internalCurrentBidCount;
     int currentBidFace;
 
-	NSMutableArray *challengeButtons;
-    NSMutableArray *tempViews;
-
-	UIView* centerPush;
-
 	BOOL canContinueRound;
-
-	// Temporary stuff
-	UIAlertView* alertView2;
-	NSInteger buttonIndex2;
 
 	BOOL hasTouchedBidCounterThisTurn;
 	BOOL hasDisplayedRoundOverview;
+	BOOL showAllDice;
 @public
 	BOOL shouldNotifyCurrentPlayer;
 
@@ -47,7 +45,7 @@ const int pushMargin();
 }
 
 // Utility Functions
-+(UIImage*)barImage;
+@property (nonatomic, strong) NSArray* images;
 -(UIImage *)imageForDie:(NSInteger)die;
 
 - (NSString*)accessibleTextForString:(NSString*)string;
@@ -61,27 +59,32 @@ const int pushMargin();
 @property (nonatomic, strong) IBOutlet UIButton *exactButton;
 @property (nonatomic, strong) IBOutlet UIButton *passButton;
 @property (nonatomic, strong) IBOutlet UIButton *quitButton;
+@property (nonatomic, strong) IBOutlet UIButton *continueRoundButton;
 @property (nonatomic, strong) IBOutlet UIButton *fullscreenButton;
 
-// Properties based on lables
+// Properties based on labels
 @property (nonatomic, strong) IBOutlet UILabel *gameStateLabel;
 @property (nonatomic, strong) IBOutlet UILabel *bidCountLabel;
+@property (nonatomic, strong) IBOutlet UIImageView *bidFaceLabel;
 
 // Properties based on variables
-@property (readwrite, strong) NSMutableArray *challengeButtons;
 @property (readwrite, strong) DiceGame *game;
 @property (readwrite, assign) BOOL hasPromptedEnd;
-@property (readwrite, strong) NSArray *images;
 @property (readwrite, weak) PlayerState *state;
-@property (readwrite, strong) NSMutableArray *tempViews;
-@property (readwrite, assign) BOOL isCustom;
 @property (readwrite, atomic, assign) BOOL animationFinished;
-@property (readwrite, strong) NSMutableArray* previousBidImageViews;
 
 // Properties based on views
-@property (nonatomic, strong) IBOutlet UIImageView *bidFaceLabel;
-@property (nonatomic, strong) IBOutlet UIView *controlStateView;
-@property (nonatomic, strong) IBOutlet UIScrollView *gameStateView;
+@property (nonatomic, strong) IBOutlet UIView *player1View;
+@property (nonatomic, strong) IBOutlet UIView *player2View;
+@property (nonatomic, strong) IBOutlet UIView *player3View;
+@property (nonatomic, strong) IBOutlet UIView *player4View;
+@property (nonatomic, strong) IBOutlet UIView *player5View;
+@property (nonatomic, strong) IBOutlet UIView *player6View;
+@property (nonatomic, strong) IBOutlet UIView *player7View;
+@property (nonatomic, strong) IBOutlet UIView *player8View;
+
+@property (nonatomic, strong) NSArray *playerViews;
+@property (nonatomic, strong) IBOutlet UIScrollView *playerScrollView;
 
 @property (nonatomic, weak) MultiplayerView* multiplayerView;
 @property (nonatomic, strong) NSMutableArray* overViews;
@@ -96,6 +99,7 @@ const int pushMargin();
 - (IBAction)challengePressed:(id)sender;
 - (IBAction)exactPressed:(id)sender;
 - (IBAction)passPressed:(id)sender;
+- (IBAction)dieButtonPressed:(id)sender;
 
 // Initialization Functions
 - (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler;

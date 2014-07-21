@@ -190,7 +190,7 @@
 				UIButton* playMatch = [[UIButton alloc] init];
 				UIButton* deleteMatch = [[UIButton alloc] init];
 
-				UIImageView* whiteBar = [[UIImageView alloc] init];
+				UIView* whiteBar = [[UIView alloc] init];
 
 				CGRect frame = CGRectMake(15, 0, self.gamesScrollView.frame.size.width - 15, 30);
 				matchName.frame = frame;
@@ -294,7 +294,7 @@
 				frame.size.width -= 15;
 				frame.size.height = 3;
 
-				[whiteBar setImage:[PlayGameView barImage]];
+				[whiteBar setBackgroundColor:[UIColor whiteColor]];
 				whiteBar.frame = frame;
 
 				CGRect viewFrame = CGRectMake(15, matchNumber * 30 * 6, self.gamesScrollView.frame.size.width - 15, 180);
