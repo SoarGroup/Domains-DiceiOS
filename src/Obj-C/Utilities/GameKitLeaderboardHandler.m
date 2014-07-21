@@ -37,6 +37,12 @@
 	if (!game.gameState.gameWinner)
 		return;
 
+	if ([NSThread isMainThread])
+	{
+		[self performSelectorInBackground:@selector(updateGame:) withObject:game];
+		return;
+	}
+
 	volatile int* leaderboardsCompleted = malloc(sizeof(unsigned int));
 	*leaderboardsCompleted = 0;
 

@@ -285,8 +285,9 @@ extern std::map<void*, sml::Agent*> agents;
 {
     assert(!started);
     assert(players != nil);
-    if ([player isKindOfClass:[DiceLocalPlayer class]])
-		[((DiceLocalPlayer*)player).gameViews addObject:self.gameView];
+	PlayGameView* localView = self.gameView;
+    if ([player isKindOfClass:[DiceLocalPlayer class]] && localView)
+		[((DiceLocalPlayer*)player).gameViews addObject:localView];
     
     NSMutableArray *mut = [[NSMutableArray alloc] initWithArray:self.players];
     [mut addObject:player];
