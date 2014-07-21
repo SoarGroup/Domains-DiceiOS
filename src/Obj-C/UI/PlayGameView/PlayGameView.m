@@ -1295,6 +1295,11 @@ NSArray *buildDiceImages() {
             challengeButton.tag = playerState.playerID;
             [challengeButton addTarget:self action:@selector(challengePressed:) forControlEvents:UIControlEventTouchUpInside];
 			[challengeButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0] forState:UIControlStateNormal];
+
+			NSString* name = [NSString stringWithFormat:@"%@'s", [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName]];
+
+			challengeButton.accessibilityLabel = [NSString stringWithFormat:@"Challenge %@'s Bid.", name];
+
             [parent addSubview:challengeButton];
             [challengeButtons addObject:challengeButton];
             [tempViews addObject:challengeButton];
@@ -1496,6 +1501,8 @@ NSArray *buildDiceImages() {
 	// Add all the players with their locations
 	for (int i = 0;i < playerCount;++i)
 	{
+		PlayerState* playerState = [playerStates objectAtIndex:i];
+
 		UIView* playerLocation = nil;
 
 		if (i != 0)
@@ -1624,6 +1631,8 @@ NSArray *buildDiceImages() {
 				UIImageView* dieView = [[UIImageView alloc] initWithFrame:imageFrame];
 				[dieView setImage:dieImage];
 				[dieView setUserInteractionEnabled:NO];
+				dieButton.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, unpushed", die.dieValue];
+				dieButton.accessibilityHint = @"Tap to push the die.";
 
 				[dieButton addSubview:dieView];
 				dieButton.tag = dieIndex;
@@ -1640,6 +1649,16 @@ NSArray *buildDiceImages() {
 				UIImageView *dieView = [[UIImageView alloc] initWithFrame:dieFrame];
 				[dieView setImage:[self imageForDie:dieFace]];
 				[diceView addSubview:dieView];
+
+				NSString* name = [NSString stringWithFormat:@"%@'s", [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName]];
+
+				if (i == 0)
+					name = @"Your";
+
+				if (die.hasBeenPushed || localGame.gameState.gameWinner)
+					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Face Value of %i, pushed", name, die.dieValue];
+				else
+					dieView.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, Unknown Face Value", name];
 
 				if (die.hasBeenPushed)
 				{
@@ -1749,6 +1768,10 @@ NSArray *buildDiceImages() {
 			[challengeButton addTarget:self action:@selector(challengePressed:) forControlEvents:UIControlEventTouchUpInside];
 			[challengeButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0] forState:UIControlStateNormal];
 			challengeButton.titleLabel.font = [UIFont systemFontOfSize:17.0];
+
+			NSString* name = [NSString stringWithFormat:@"%@'s", [[localGame.players objectAtIndex:[playerState playerID]] getDisplayName]];
+
+			challengeButton.accessibilityLabel = [NSString stringWithFormat:@"Challenge %@'s Bid.", name];
 
 			[playerLocation addSubview:challengeButton];
 
