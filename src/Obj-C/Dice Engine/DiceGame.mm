@@ -20,7 +20,7 @@
 
 #include "NSMutableArrayShuffle.h"
 
-extern std::map<__weak NSLock*, sml::Agent*> agents;
+extern std::map<void*, sml::Agent*> agents;
 
 @implementation DiceGame
 
@@ -50,8 +50,17 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
 - (void) dealloc
 {
-	if (agents.find(self.gameLock) != agents.end())
-		agents.erase(agents.find(self.gameLock));
+	if (self.gameLock)
+	{
+		auto it = agents.find((__bridge void*)self.gameLock);
+		if (it != agents.end())
+		{
+			NSLock* lock = (__bridge_transfer NSLock*)it->first;
+
+			agents.erase(it);
+			NSLog(@"Releasing Lock: %p", lock);
+		}
+	}
 
 	NSLog(@"%@ deallocated", self.class);
 }
@@ -153,13 +162,24 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
+	id remoteGameView = remote.gameView;
+	if (remoteGameView)
+		gameView = remoteGameView;
+
 	if (remote.players)
 	{
 		self.players = [NSArray arrayWithArray:remote.players];
 
 		for (id<Player> p in self.players)
 		{
-			if ([p isKindOfClass:SoarPlayer.class])
+			if ([p isKindOfClass:DiceLocalPlayer.class])
+			{
+				DiceLocalPlayer* player = p;
+				PlayGameView* localView = gameView;
+				player.gameView = localView;
+				player.playerState = [self.gameState playerStateForPlayerID:player.getID];
+			}
+			else if ([p isKindOfClass:SoarPlayer.class])
 				((SoarPlayer*)p).game = self;
 		}
 	}
@@ -167,10 +187,6 @@ extern std::map<__weak NSLock*, sml::Agent*> agents;
 	id remoteAppDelegate = remote.appDelegate;
 	if (remoteAppDelegate)
 		appDelegate = remoteAppDelegate;
-
-	id remoteGameView = remote.gameView;
-	if (remoteGameView)
-		gameView = remoteGameView;
 
 	started = remote.started;
 	deferNotification = remote.deferNotification;

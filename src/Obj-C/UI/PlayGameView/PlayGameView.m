@@ -1797,8 +1797,8 @@ NSArray *buildDiceImages() {
 			 self.animationFinished = finished;
 		 }];
 
-		while (!self.animationFinished)
-			[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+		//while (!self.animationFinished)
+		//	[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 	}
 }
 
