@@ -10,7 +10,7 @@
 
 #define NUMBER_OF_SIDES 6
 
-@interface Die : NSObject <EngineClass>
+@interface Die : NSObject
 
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withPrefix:(NSString*)prefix;
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count withPrefix:(NSString*)prefix;

@@ -16,7 +16,7 @@
 @class PlayerState;
 @class DiceGame;
 
-@protocol NewRoundListener <NSObject, NSCoding, EngineClass>
+@protocol NewRoundListener <NSObject, NSCoding>
 - (BOOL) roundEnding;
 - (BOOL) roundBeginning;
 @end

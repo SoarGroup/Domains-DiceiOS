@@ -11,7 +11,7 @@
 #import "PlayerState.h"
 #import "PlayGameView.h"
 
-@interface RoundOverView : UIViewController <UIScrollViewDelegate, EngineClass> {
+@interface RoundOverView : UIViewController <UIScrollViewDelegate> {
 	NSString* finalString;
 	
 	NSMutableArray *previousBidImageViews;

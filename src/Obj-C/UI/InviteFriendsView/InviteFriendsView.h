@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InviteFriendsView : UIViewController <EngineClass, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface InviteFriendsView : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 {
 	int maxSelection;
 	

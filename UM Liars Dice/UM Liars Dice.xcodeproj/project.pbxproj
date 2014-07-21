@@ -130,7 +130,6 @@
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		4D8405B71965CB2100AD10D1 /* EngineClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineClass.h; sourceTree = "<group>"; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB0E98B192BB9BA0018EAEB /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
@@ -554,7 +553,6 @@
 			isa = PBXGroup;
 			children = (
 				4DF394161923C51C00A523FB /* main.m */,
-				4D8405B71965CB2100AD10D1 /* EngineClass.h */,
 				4DF394181923C51C00A523FB /* Application Loading */,
 				4DF3941D1923C51C00A523FB /* Dice Engine */,
 				4DF394391923C51C00A523FB /* UI */,

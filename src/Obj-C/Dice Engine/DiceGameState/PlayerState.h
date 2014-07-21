@@ -13,7 +13,7 @@
 @class Bid;
 @class Die;
 
-@interface PlayerState : NSObject <EngineClass> {
+@interface PlayerState : NSObject {
 @private
     BOOL specialRules;
 }

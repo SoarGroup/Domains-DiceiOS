@@ -21,7 +21,7 @@ extern const int kAI_6;
 extern const int kAI_7;
 extern const int kAI_8;
 
-@interface MultiplayerMatchData : NSObject <EngineClass>
+@interface MultiplayerMatchData : NSObject
 
 @property (strong, nonatomic) DiceGame* theGame;
 @property (strong, nonatomic) NSData* theData;

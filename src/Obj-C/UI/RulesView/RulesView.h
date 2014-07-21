@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RulesView : UIViewController <EngineClass>
+@interface RulesView : UIViewController
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 
 @end

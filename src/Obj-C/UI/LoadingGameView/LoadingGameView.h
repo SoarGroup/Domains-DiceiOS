@@ -13,7 +13,7 @@
 @class MainMenu;
 @class GameKitGameHandler;
 
-@interface LoadingGameView : UIViewController <EngineClass> {
+@interface LoadingGameView : UIViewController {
     UIActivityIndicatorView *spinnerView;
 }
 

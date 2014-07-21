@@ -10,7 +10,7 @@
 
 #import "DiceDatabase.h"
 
-@interface StatsView : UIViewController <EngineClass>
+@interface StatsView : UIViewController
 {
 	int lineCount;
 }

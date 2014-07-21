@@ -11,7 +11,7 @@
 
 #import "GameKitGameHandler.h"
 
-@interface GameKitListener : NSObject <GKLocalPlayerListener, EngineClass>
+@interface GameKitListener : NSObject <GKLocalPlayerListener>
 {
 
 }

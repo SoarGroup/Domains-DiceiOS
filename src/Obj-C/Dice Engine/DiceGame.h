@@ -19,7 +19,7 @@
 
 @class ApplicationDelegate;
 
-@interface DiceGame : NSObject <NSCoding, EngineClass>
+@interface DiceGame : NSObject <NSCoding>
 {
     GameTime time;
 	int nextID;

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface Bid : NSObject <EngineClass>
+@interface Bid : NSObject
 
 @property (nonatomic, strong) NSArray *diceToPush;
 @property (nonatomic, readonly) NSInteger playerID;
