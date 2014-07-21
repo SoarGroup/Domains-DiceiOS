@@ -50,9 +50,8 @@
     self.navigationController.navigationBarHidden = YES;
 	self.navigationController.navigationBar.translucent = NO;
 
-    [self.window addSubview:self.navigationController.view];
-	[self.window makeKeyAndVisible];
 	[self.window setRootViewController:self.navigationController];
+	[self.window makeKeyAndVisible];
 
 	self.rootViewController = self.window.rootViewController;
 

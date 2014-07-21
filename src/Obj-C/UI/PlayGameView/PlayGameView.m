@@ -1338,6 +1338,7 @@ NSArray *buildDiceImages() {
 
 	// Location mapping based on the number of players
 	// Unfortunately there isn't a good way to debug this or come up with an algorithm for this so I just hard coded it
+
 	CGPoint player1Location = {screenSize.width / 2.0 - viewSize.width / 2.0, 7.0 / 8.0 * screenSize.height - viewSize.height / 2.0 - 40};
 	CGRect player1TextLabelFrame = {{-35, -25}, {230, 75}};
 	CGRect player1DiceFrame = {{0, 115}, {280, 65}};
@@ -1730,18 +1731,17 @@ NSArray *buildDiceImages() {
 
 		// Possibly add challenge button.
 		if (canBid && [self canChallengePlayer:((PlayerState*)playerStates[i]).playerID] && !localGame.gameState.gameWinner) {
-			CGRect frame = CGRectMake(200, 0, 100, 40);
+			CGRect frame = CGRectMake(200, 80, 100, 40);
 
-			if (i == 7)
+			if ((i == 3 && playerCount == 4) ||
+				(i == 4 && playerCount == 5) ||
+				((i == 5 || i == 6) && playerCount >= 6))
+				frame.origin.x = 0;
+			else if (i == 7)
 			{
-				frame.origin.y = -40;
 				frame.origin.x = 0;
+				frame.origin.y = 40;
 			}
-			else if (i == 6 || i == 5 || (playerCount == 5 && i == 4) || (playerCount == 4 && i == 3))
-				frame.origin.x = 0;
-
-			frame.origin.x += locations[i].x;
-			frame.origin.y += locations[i].y;
 
 			UIButton *challengeButton = [[UIButton alloc] initWithFrame:frame];
 			[challengeButton setTitle:@"Challenge" forState:UIControlStateNormal];
@@ -1750,8 +1750,7 @@ NSArray *buildDiceImages() {
 			[challengeButton setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28/255.0 alpha:1.0] forState:UIControlStateNormal];
 			challengeButton.titleLabel.font = [UIFont systemFontOfSize:17.0];
 
-			[self.view addSubview:challengeButton];
-			[self.view bringSubviewToFront:challengeButton];
+			[playerLocation addSubview:challengeButton];
 
 			[challengeButtons addObject:challengeButton];
 			[tempViews addObject:challengeButton];
