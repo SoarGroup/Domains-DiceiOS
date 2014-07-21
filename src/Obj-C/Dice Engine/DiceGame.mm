@@ -176,7 +176,9 @@ extern std::map<void*, sml::Agent*> agents;
 			{
 				DiceLocalPlayer* player = p;
 				PlayGameView* localView = gameView;
-				player.gameView = localView;
+				if (localView)
+					[((DiceLocalPlayer*)player).gameViews addObject:localView];
+
 				player.playerState = [self.gameState playerStateForPlayerID:player.getID];
 			}
 			else if ([p isKindOfClass:SoarPlayer.class])
@@ -270,7 +272,7 @@ extern std::map<void*, sml::Agent*> agents;
     for (id <Player> player in self.players)
     {
         if ([player isKindOfClass:[DiceLocalPlayer class]])
-            ((DiceLocalPlayer*)player).gameView = self.gameView;
+			[((DiceLocalPlayer*)player).gameViews addObject:self.gameView];
 	}
 }
 
@@ -284,9 +286,7 @@ extern std::map<void*, sml::Agent*> agents;
     assert(!started);
     assert(players != nil);
     if ([player isKindOfClass:[DiceLocalPlayer class]])
-    {
-        ((DiceLocalPlayer*)player).gameView = self.gameView;
-    }
+		[((DiceLocalPlayer*)player).gameViews addObject:self.gameView];
     
     NSMutableArray *mut = [[NSMutableArray alloc] initWithArray:self.players];
     [mut addObject:player];

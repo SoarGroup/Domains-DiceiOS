@@ -25,7 +25,7 @@
 @property (atomic, weak) GameKitGameHandler* handler;
 @property (atomic, strong) NSString *name;
 @property (atomic, weak) PlayerState *playerState;
-@property (atomic, weak) PlayGameView *gameView;
+@property (atomic, strong) NSMutableArray *gameViews;
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler*)handler withParticipant:(GKTurnBasedParticipant*)participant;
 

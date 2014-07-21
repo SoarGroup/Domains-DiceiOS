@@ -463,19 +463,15 @@ NSArray *buildDiceImages() {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUINotification:) name:@"UpdateUINotification" object:nil];
 
-	if (self.game.gameState.gameWinner)
-	{
-		DiceGame* localGame = self.game;
+	DiceGame* localGame = self.game;
 
+	if (self.game.gameState.gameWinner)
 		for (id<Player> player in localGame.players)
-		{
 			if ([player isKindOfClass:DiceLocalPlayer.class])
 			{
 				[(DiceLocalPlayer*)player end:YES];
 				break;
 			}
-		}
-	}
 }
 
 - (void)fullScreenViewInitialization
@@ -670,7 +666,7 @@ NSArray *buildDiceImages() {
 	{
 		if ([player isKindOfClass:DiceLocalPlayer.class])
 		{
-			[(DiceLocalPlayer*)player setGameView:self];
+			[((DiceLocalPlayer*)player).gameViews addObject:self];
 			break;
 		}
 	}
@@ -922,7 +918,7 @@ NSArray *buildDiceImages() {
 			if ([player isKindOfClass:DiceLocalPlayer.class])
 			{
 				self.state = [localGame.gameState playerStateForPlayerID:[player getID]];
-				((DiceLocalPlayer*)player).gameView = self;
+				[((DiceLocalPlayer*)player).gameViews addObject:self];
 			}
 
 		localState = self.state;

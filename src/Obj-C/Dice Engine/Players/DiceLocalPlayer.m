@@ -15,7 +15,7 @@
 
 @implementation DiceLocalPlayer
 
-@synthesize name, playerState, gameView, handler, participant;
+@synthesize name, playerState, gameViews, handler, participant;
 
 - (id)initWithName:(NSString*)aName withHandler:(GameKitGameHandler *)newHandler withParticipant:(GKTurnBasedParticipant *)localPlayer
 {
@@ -26,6 +26,7 @@
         playerID = -1;
 		handler = newHandler;
 		participant = localPlayer;
+		gameViews = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -58,9 +59,9 @@
 - (void) updateState:(PlayerState*)state
 {
     self.playerState = state;
-	PlayGameView* gameViewLocal = self.gameView;
 	PlayerState* playerStateLocal = self.playerState;
-    [gameViewLocal updateState:playerStateLocal];
+	for (PlayGameView* view in self.gameViews)
+		[view updateState:playerStateLocal];
 }
 
 - (int) getID
@@ -75,11 +76,13 @@
 
 - (void) itsYourTurn
 {
-	PlayGameView* gameViewLocal = self.gameView;
-	[gameViewLocal updateUI];
+	for (PlayGameView* view in self.gameViews)
+	{
+		[view updateUI];
 
-	UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
-									gameViewLocal.gameStateLabel);
+		UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
+									view.gameStateLabel);
+	}
 }
 
 - (void)notifyHasLost
@@ -106,35 +109,26 @@
 	if (![NSThread isMainThread] || !showAlert)
 		return;
 
-	PlayGameView* localView = self.gameView;
-
-	if (localView == nil)
+	for (PlayGameView* localView in self.gameViews)
 	{
-		PlayerState* localState = self.playerState;
-		DiceGameState* gameState = localState.gameState;
-		DiceGame* game = gameState.game;
+		if (localView == nil || localView.navigationController.visibleViewController != localView)
+			return;
 
-		self.gameView = game.gameView;
-		localView = self.gameView;
+		id<Player> gameWinner = localView.game.gameState.gameWinner;
+		NSString* winner = [gameWinner getDisplayName];
+		NSString* winString = @"Wins";
+
+		if ([winner isEqualToString:@"You"])
+			winString = @"Win";
+
+		NSString *title = [NSString stringWithFormat:@"%@ %@!", winner, winString];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+														message:nil
+													   delegate:self
+											  cancelButtonTitle:nil
+											  otherButtonTitles:@"Okay", nil];
+		[alert show];
 	}
-
-	if (localView == nil || localView.navigationController.visibleViewController != localView)
-		return;
-
-	id<Player> gameWinner = localView.game.gameState.gameWinner;
-	NSString* winner = [gameWinner getDisplayName];
-	NSString* winString = @"Wins";
-
-	if ([winner isEqualToString:@"You"])
-		winString = @"Win";
-
-	NSString *title = [NSString stringWithFormat:@"%@ %@!", winner, winString];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-													message:nil
-												   delegate:self
-										  cancelButtonTitle:nil
-										  otherButtonTitles:@"Okay", nil];
-	[alert show];
 }
 
 - (void)removeHandler
