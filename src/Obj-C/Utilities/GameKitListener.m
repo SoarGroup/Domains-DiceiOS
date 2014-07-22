@@ -7,10 +7,12 @@
 //
 
 #import "GameKitListener.h"
+#import "ApplicationDelegate.h"
+#import "MultiplayerView.h"
 
 @implementation GameKitListener
 
-@synthesize handlers;
+@synthesize handlers, delegate;
 
 - (id)init
 {
@@ -81,21 +83,31 @@
 
 - (void) player:(GKPlayer *)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive
 {
-	// TODO: Handle timeout case
-	// TODO: Handle invite case
-
 	NSLog(@"Recieved turn event for match: %@", match);
+	ApplicationDelegate* localDelegate = self.delegate;
+
+	GameKitGameHandler* gkHandler = nil;
 
 	for (GameKitGameHandler* handler in handlers)
 	{
 		if ([[handler getMatch].matchID isEqualToString:match.matchID])
 		{
 			// Found handler for match
-			[handler updateMatchData];
-
+			gkHandler = handler;
 			break;
 		}
 	}
+
+	if ((!gkHandler || ![localDelegate.navigationController.visibleViewController isKindOfClass:MultiplayerView.class]) && didBecomeActive)
+	{
+		// New Match, invite
+
+		[localDelegate.mainMenu multiplayerGameButtonPressed:nil];
+	}
+	else if (gkHandler)
+		[gkHandler updateMatchData];
+	else
+		NSLog(@"No Handler for match!");
 }
 
 @end

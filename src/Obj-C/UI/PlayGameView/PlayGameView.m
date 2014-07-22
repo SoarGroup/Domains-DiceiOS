@@ -804,6 +804,8 @@ NSArray *buildDiceImages() {
 
 		if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeQuit)
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ has quit", playerName]];
+		else if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeTimeExpired)
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ timed out", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 		else if ([playerState hasLost])
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:playerName];
 		else if ([playerState hasWon])

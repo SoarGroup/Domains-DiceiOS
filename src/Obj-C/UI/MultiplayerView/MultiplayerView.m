@@ -393,8 +393,9 @@
 
 				  [self handleUpdateNotification:nil];
 
-				  if (request)
-					  [self->gamesScrollView scrollRectToVisible:CGRectMake(self->gamesScrollView.contentSize.width-1, 1, 1, 1) animated:YES];
+				  if (request || newGame)
+					  [self->gamesScrollView scrollRectToVisible:CGRectMake(matchNumber * 330, 1, 1, 1)
+														animated:YES];
 			  }];
 		 }
 	 }];

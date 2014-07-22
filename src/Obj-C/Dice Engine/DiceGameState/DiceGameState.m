@@ -237,7 +237,8 @@
 	for (GKTurnBasedParticipant* participant in match.participants)
 	{
 		if (participant.matchOutcome == GKTurnBasedMatchOutcomeLost ||
-			participant.matchOutcome == GKTurnBasedMatchOutcomeQuit)
+			participant.matchOutcome == GKTurnBasedMatchOutcomeQuit ||
+			participant.matchOutcome == GKTurnBasedMatchOutcomeTimeExpired)
 		{
 			for (id<Player> player in players)
 			{

@@ -56,6 +56,7 @@
 	self.rootViewController = self.window.rootViewController;
 
 	self.listener = [[GameKitListener alloc] init];
+	self.listener.delegate = self;
 	[[GKLocalPlayer localPlayer] registerListener:self.listener];
 
 	[self authenticateLocalPlayer];
