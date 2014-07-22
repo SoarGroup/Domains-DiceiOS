@@ -58,14 +58,40 @@
 	UIImage* snapshot = [localGameView.view blurredSnapshot];
 	[self.transparencyLevel setImage:snapshot];
 
-	// State initialization
-	PlayerState* localState = self.player;
 	DiceGame* localGame = self.game;
 
-	playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
-											  ((UIView*)[playerViews objectAtIndex:[localGame.players count]]).frame.origin.y);
+	playerViews = @[player1View,
+					player2View,
+					player3View,
+					player4View,
+					player5View,
+					player6View,
+					player7View,
+					player8View];
 
-	NSString *headerString = [localState headerString:NO]; // This sets it
+	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
+		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
+
+	((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
+
+	playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
+											  [localGame.players count] * 128);
+
+	PlayerState* localState = self.player;
+
+	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
+
+	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class])
+	{
+		[reorderedPlayers insertObject:[reorderedPlayers lastObject] atIndex:0];
+		[reorderedPlayers removeLastObject];
+	}
+
+	for (int i = 0;i < [reorderedPlayers count];++i)
+		((UIView*)[playerViews objectAtIndex:i]).tag = [[reorderedPlayers objectAtIndex:i] getID];
+
+	// State initialization
+	NSString *headerString = finalString; // This sets it
 
 	self.gameStateLabel.accessibilityLabel = [localGameView accessibleTextForString:headerString];
 
@@ -171,40 +197,7 @@
 		[gameView.overViews removeObject:self];
 	}
 
-	DiceGame* localGame = self.game;
-	PlayerState* localState = self.player;
-	PlayerState* lastPlayerState = [[localGame.gameState lastHistoryItem] player];
-
-	for (;[lastPlayerState playerID] > 0 && [[lastPlayerState playerPtr] isKindOfClass:SoarPlayer.class];lastPlayerState = [localGame.gameState playerStateForPlayerID:([lastPlayerState playerID] - 1)]);
-
-
-	localGame.gameState.canContinueGame = YES;
-
-	NSString *title = nil, *message = nil;
-
-	if ([localGame.gameState usingSpecialRules]) {
-		title = [NSString stringWithFormat:@"Special Rules!"];
-		message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
-	}
-	else if ([localState hasWon])
-		title = [NSString stringWithFormat:@"You Win!"];
-	else if ([localGame.gameState hasAPlayerWonTheGame])
-		title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
-	else if ([localState hasLost])
-		title = [NSString stringWithFormat:@"You Lost the Game"];
-	else if (localGame.newRound && [lastPlayerState playerID] != [localState playerID])
-	{
-		NSString* name = [[lastPlayerState playerPtr] getDisplayName];
-
-		title = @"Please Wait";
-		message = [NSString stringWithFormat:@"Please wait until %@ has finished looking at the round overview.", name];
-	}
-
-	[[[UIAlertView alloc] initWithTitle:title
-								message:message
-							   delegate:nil
-					  cancelButtonTitle:@"Okay"
-					  otherButtonTitles:nil] show];
+	[gameView continueRoundPressed:nil];
 }
 
 @end

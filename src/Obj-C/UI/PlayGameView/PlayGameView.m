@@ -88,6 +88,8 @@
 
 - (void)realRoundEnding;
 
+- (void)updateUI:(NSString*)gameStateLabel;
+
 @end
 
 @implementation PlayGameView
@@ -226,7 +228,7 @@ NSArray *buildDiceImages() {
 	}
 	else
 	{
-		[self updateUI];
+		[self updateUI:finalString];
 
 		canContinueRound = NO;
 		self.continueRoundButton.hidden = NO;
@@ -244,11 +246,11 @@ NSArray *buildDiceImages() {
 	}
 }
 
-- (void)continueRoundPressed:(id)sender
+- (IBAction)continueRoundPressed:(UIButton*)sender
 {
 	canContinueRound = YES;
-	self.continueRoundButton.enabled = NO;
-	self.continueRoundButton.hidden = YES;
+	sender.enabled = NO;
+	sender.hidden = YES;
 
 	self.exactButton.enabled = YES;
 	self.passButton.enabled = YES;
@@ -291,11 +293,12 @@ NSArray *buildDiceImages() {
 		message = [NSString stringWithFormat:@"Please wait until %@ has finished looking at the round overview.", name];
 	}
 
-	[[[UIAlertView alloc] initWithTitle:title
-								message:message
-							   delegate:nil
-					  cancelButtonTitle:@"Okay"
-					  otherButtonTitles:nil] show];
+	if (title)
+		[[[UIAlertView alloc] initWithTitle:title
+									message:message
+								   delegate:nil
+						  cancelButtonTitle:@"Okay"
+						  otherButtonTitles:nil] show];
 
 	[localGame notifyCurrentPlayer];
 }
@@ -374,6 +377,17 @@ NSArray *buildDiceImages() {
 		playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
 												  ([localGame.players count]-1) * 128);
 	}
+
+	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
+
+	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class])
+	{
+		[reorderedPlayers insertObject:[reorderedPlayers lastObject] atIndex:0];
+		[reorderedPlayers removeLastObject];
+	}
+
+	for (int i = 0;i < [reorderedPlayers count];++i)
+		((UIView*)[playerViews objectAtIndex:i]).tag = [[reorderedPlayers objectAtIndex:i] getID];
 }
 
 -(BOOL) navigationShouldPopOnBackButton {
@@ -578,6 +592,11 @@ NSArray *buildDiceImages() {
 
 - (void)updateUI
 {
+	[self updateUI:nil];
+}
+
+- (void)updateUI:(NSString*)stateLabel
+{
 	if (![NSThread isMainThread])
 	{
 		[self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
@@ -609,6 +628,9 @@ NSArray *buildDiceImages() {
 
 	Bid *previousBid = localGame.gameState.previousBid;
     NSString *headerString = [localState headerString:NO]; // This sets it
+
+	if (stateLabel != nil)
+		headerString = stateLabel;
 
 	self.gameStateLabel.accessibilityLabel = [self accessibleTextForString:headerString];
 
@@ -751,17 +773,16 @@ NSArray *buildDiceImages() {
 		if ([playerState playerHasPassed])
 			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", playerName]]];
 
-		nameLabel.attributedText = nameLabelText;
-		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabel.attributedText.string];
+		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabelText.string];
 
 		string = [[NSMutableAttributedString alloc] init];
 		int imageCount = 0;
-		for (int j = 0;j < [nameLabel.attributedText.string length];++j)
+		for (int j = 0;j < [nameLabelText.string length];++j)
 		{
-			unichar characterOne = [nameLabel.attributedText.string characterAtIndex:j], characterTwo = 0;
+			unichar characterOne = [nameLabelText.string characterAtIndex:j], characterTwo = 0;
 
-			if (j+1 < [nameLabel.attributedText.string length])
-				characterTwo = [nameLabel.attributedText.string characterAtIndex:j+1];
+			if (j+1 < [nameLabelText.string length])
+				characterTwo = [nameLabelText.string characterAtIndex:j+1];
 
 			if (isdigit(characterOne) && characterTwo == 's')
 			{
@@ -780,9 +801,9 @@ NSArray *buildDiceImages() {
 			}
 			else
 			{
-				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabel.attributedText.string characterAtIndex:j]]]];
+				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabelText.string characterAtIndex:j]]]];
 
-				NSDictionary* attributes = [nameLabel.attributedText attributesAtIndex:j effectiveRange:nil];
+				NSDictionary* attributes = [nameLabelText attributesAtIndex:j effectiveRange:nil];
 
 				[string addAttributes:attributes range:NSMakeRange(j-imageCount, 1)];
 			}
@@ -821,7 +842,6 @@ NSArray *buildDiceImages() {
 			if (dieFace == DIE_UNKNOWN || die.hasBeenPushed)
 				dieButton.enabled = NO;
 
-			[dieButton setImage:dieImage forState:UIControlStateDisabled];
 			[dieButton setImage:dieImage forState:UIControlStateNormal];
 
 			if (die.hasBeenPushed)
@@ -1046,7 +1066,7 @@ NSArray *buildDiceImages() {
 	UIButton* challengeButton = (UIButton*)sender;
 	UIView* location = [challengeButton superview];
 
-	int playerID = (int)[playerViews indexOfObject:location];
+	int playerID = (int)location.tag;
 
 	HistoryItem* previousItem = nil;
 

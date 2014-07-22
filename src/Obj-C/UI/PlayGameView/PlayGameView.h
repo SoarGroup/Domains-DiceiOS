@@ -21,10 +21,10 @@ const int pushMargin();
 
 enum UITags
 {
-	DiceViewTag = 5,
-	PlayerLabelTag = 8,
-	ChallengeButtonTag = 7,
-	ActivitySpinnerTag = 6
+	DiceViewTag = 9,
+	PlayerLabelTag = 10,
+	ChallengeButtonTag = 11,
+	ActivitySpinnerTag = 12
 };
 
 @interface PlayGameView : UIViewController <PlayGame, NewRoundListener> {
@@ -100,6 +100,7 @@ enum UITags
 - (IBAction)exactPressed:(id)sender;
 - (IBAction)passPressed:(id)sender;
 - (IBAction)dieButtonPressed:(id)sender;
+- (IBAction)continueRoundPressed:(UIButton*)sender;
 
 // Initialization Functions
 - (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler;

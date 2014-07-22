@@ -73,7 +73,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39D-Ji-XE4">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39D-Ji-XE4">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="GFd-pY-DQQ"/>
@@ -82,7 +82,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLj-1c-3ff">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLj-1c-3ff">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAj-b6-NBp">
@@ -146,7 +146,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="AWz-Ff-mfM" secondAttribute="bottom" id="uIt-Fc-BRe"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bG-38-vQG">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bG-38-vQG">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -157,7 +157,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="5w1-OK-9X1"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KVv-dI-G4D">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KVv-dI-G4D">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -188,7 +188,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOg-xR-V60">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOg-xR-V60">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="VJi-ax-nmo"/>
@@ -197,7 +197,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPy-kz-xQf">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPy-kz-xQf">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oim-8U-fNZ">
@@ -261,7 +261,7 @@
                                                 <constraint firstItem="oim-8U-fNZ" firstAttribute="top" secondItem="VPy-kz-xQf" secondAttribute="top" constant="15" id="k9N-Nc-Pjf"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xdk-2s-8gY">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xdk-2s-8gY">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -272,7 +272,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="lY0-KH-jWr"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9ea-62-qn6">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9ea-62-qn6">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -303,7 +303,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DT8-Fa-DhG">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DT8-Fa-DhG">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="0lX-kY-5e2"/>
@@ -312,7 +312,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bnd-tW-ZPe">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bnd-tW-ZPe">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7q3-5r-GPg">
@@ -376,7 +376,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="g1n-pO-Lv2" secondAttribute="trailing" constant="3" id="u6z-Tz-jm5"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FE5-xK-SBL">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FE5-xK-SBL">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -387,7 +387,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="X8o-oG-oVW"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-T9-gM8">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="9Ll-T9-gM8">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -418,7 +418,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tp6-CB-dLU">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tp6-CB-dLU">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="CGz-ia-Sys"/>
@@ -427,7 +427,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZT-bA-J9q">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZT-bA-J9q">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JdR-QY-rJe">
@@ -491,7 +491,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="7dE-Xe-goX" secondAttribute="trailing" constant="3" id="ug6-He-IFY"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPx-Fr-6QN">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xPx-Fr-6QN">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -502,7 +502,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="rcA-Ld-ZP8"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7VP-Q1-lZi">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7VP-Q1-lZi">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -533,7 +533,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uT-0m-QFh">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uT-0m-QFh">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="TZi-lz-oRT"/>
@@ -542,7 +542,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gC3-lo-UZg">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gC3-lo-UZg">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zFX-Gg-GrZ">
@@ -606,7 +606,7 @@
                                                 <constraint firstItem="6uG-gn-5CO" firstAttribute="leading" secondItem="Y72-Nx-EZh" secondAttribute="trailing" constant="6" id="vbi-Iw-kkS"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkP-1T-Jjc">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkP-1T-Jjc">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -617,7 +617,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="asf-nV-tNs"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="lmJ-Px-zcE">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="lmJ-Px-zcE">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -648,7 +648,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8x-DS-IC1">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s8x-DS-IC1">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Gjn-6r-uok"/>
@@ -657,7 +657,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lFx-Nv-Kaq">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lFx-Nv-Kaq">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSl-fj-aSR">
@@ -721,7 +721,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="Cd1-dm-biQ" secondAttribute="trailing" constant="3" id="yQV-Qz-jkU"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9f-eq-0J5">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9f-eq-0J5">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -732,7 +732,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="Klj-WI-e8G"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bS5-dM-lwa">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bS5-dM-lwa">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -756,14 +756,14 @@
                                         <constraint firstAttribute="trailing" secondItem="e8Y-6G-d0Q" secondAttribute="trailing" id="tPf-B5-hgk"/>
                                     </constraints>
                                 </view>
-                                <view appearanceType="aqua" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI1-I7-1cr">
+                                <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI1-I7-1cr">
                                     <rect key="frame" x="0.0" y="768" width="280" height="120"/>
                                     <subviews>
                                         <view appearanceType="aqua" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8FC-kn-tzJ">
                                             <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zc-1N-kzb">
+                                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Zc-1N-kzb">
                                             <rect key="frame" x="0.0" y="10" width="280" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="ayq-32-9Ag"/>
@@ -772,7 +772,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view appearanceType="aqua" tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nof-oP-gHm">
+                                        <view appearanceType="aqua" tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nof-oP-gHm">
                                             <rect key="frame" x="0.0" y="55" width="280" height="65"/>
                                             <subviews>
                                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUg-qm-Yf4">
@@ -836,7 +836,7 @@
                                                 <constraint firstItem="UUg-qm-Yf4" firstAttribute="leading" secondItem="Nof-oP-gHm" secondAttribute="leading" constant="3" id="uib-Qk-ndU"/>
                                             </constraints>
                                         </view>
-                                        <button appearanceType="aqua" opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="taZ-Q4-zK4">
+                                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="taZ-Q4-zK4">
                                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <state key="normal" title="Challenge">
@@ -847,7 +847,7 @@
                                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="MaD-mK-rBV"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Elv-HB-7wv">
+                                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Elv-HB-7wv">
                                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
@@ -1028,7 +1028,7 @@
                                 <action selector="bidFaceMinusPressed:" destination="-1" eventType="touchUpInside" id="GNR-0B-M81"/>
                             </connections>
                         </button>
-                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enG-vo-fI1">
+                        <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enG-vo-fI1">
                             <rect key="frame" x="0.0" y="0.0" width="212" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="bbS-s1-lJF"/>
@@ -1037,7 +1037,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view tag="5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DDf-Wa-TrH">
+                        <view tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DDf-Wa-TrH">
                             <rect key="frame" x="0.0" y="29" width="212" height="55"/>
                             <subviews>
                                 <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lw7-SN-1c4">
