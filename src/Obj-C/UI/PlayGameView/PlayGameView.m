@@ -368,8 +368,12 @@ NSArray *buildDiceImages() {
 	if ([[self nibName] rangeOfString:@"iPad"].location != NSNotFound)
 		fullscreenButton.hidden = NO;
 	else
+	{
+		((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
+
 		playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
-												  ((UIView*)[playerViews objectAtIndex:[localGame.players count]]).frame.origin.y);
+												  ([localGame.players count]-1) * 128);
+	}
 }
 
 -(BOOL) navigationShouldPopOnBackButton {
