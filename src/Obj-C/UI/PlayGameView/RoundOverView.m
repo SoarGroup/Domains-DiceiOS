@@ -166,6 +166,9 @@
 
 			[dieButton setImage:dieImage forState:UIControlStateNormal];
 		}
+
+		for (int dieIndex = (int)[playerState.arrayOfDice count]; dieIndex < 5; ++dieIndex)
+			((UIButton*)[diceView viewWithTag:dieIndex]).hidden = YES;
 	}
 }
 

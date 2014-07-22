@@ -345,14 +345,33 @@ NSArray *buildDiceImages() {
 			break;
 		}
 
-	playerViews = @[player1View,
-					player2View,
-					player3View,
-					player4View,
-					player5View,
-					player6View,
-					player7View,
-					player8View];
+	NSMutableArray* array = [NSMutableArray array];
+
+	if (player1View)
+		[array addObject:player1View];
+
+	if (player2View)
+		[array addObject:player2View];
+
+	if (player3View)
+		[array addObject:player3View];
+
+	if (player4View)
+		[array addObject:player4View];
+
+	if (player5View)
+		[array addObject:player5View];
+
+	if (player6View)
+		[array addObject:player6View];
+
+	if (player7View)
+		[array addObject:player7View];
+
+	if (player8View)
+		[array addObject:player8View];
+
+	playerViews = array;
 
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
@@ -675,6 +694,8 @@ NSArray *buildDiceImages() {
     self.bidFaceMinusButton.enabled = canBid;
     self.exactButton.enabled = canBid && [localState canExact];
 
+	continueRoundButton.hidden = YES;
+
 	hasTouchedBidCounterThisTurn = NO;
 
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
@@ -827,6 +848,8 @@ NSArray *buildDiceImages() {
 		NSMutableArray* diceToAnimate = [NSMutableArray array];
 		NSMutableArray* diceFramesToAnimate = [NSMutableArray array];
 
+		NSMutableArray* diceNotPushed = [NSMutableArray array];
+
 		for (int dieIndex = 0; dieIndex < [playerState.arrayOfDice count]; ++dieIndex)
 		{
 			Die *die = [playerState getDie:dieIndex];
@@ -838,9 +861,12 @@ NSArray *buildDiceImages() {
 			UIImage *dieImage = [self imageForDie:dieFace];
 
 			UIButton* dieButton = (UIButton*)[diceView viewWithTag:dieIndex];
+			dieButton.enabled = YES;
 
 			if (dieFace == DIE_UNKNOWN || die.hasBeenPushed)
 				dieButton.enabled = NO;
+			else if (!die.hasBeenPushed)
+					[diceNotPushed addObject:dieButton];
 
 			[dieButton setImage:dieImage forState:UIControlStateNormal];
 
@@ -897,7 +923,59 @@ NSArray *buildDiceImages() {
 				else
 					dieButton.frame = dieFrame;
 			}
+			else
+			{
+				CGRect dieFrame = dieButton.frame;
+
+				if ([self.nibName rangeOfString:@"iPad"].location == NSNotFound ||
+					z == 0 ||
+					z == 7)
+					dieFrame.origin.y = 15;
+				else
+				{
+					// iPad Specific
+					if (playerCount == 2 && z == 1)
+						dieFrame.origin.y = 0;
+					else if (playerCount == 3 || playerCount == 4)
+					{
+						if (z == 1)
+							dieFrame.origin.x = 0;
+						else if (z == 2)
+							dieFrame.origin.y = 0;
+						else if (z == 3)
+							dieFrame.origin.x = 15;
+					}
+					else if (playerCount == 5)
+					{
+						if (z == 1 || z == 2)
+							dieFrame.origin.x = 0;
+						else if (z == 3)
+							dieFrame.origin.y = 0;
+						else if (z == 4)
+							dieFrame.origin.x = 15;
+					}
+					else
+					{
+						if (z == 1 || z == 2)
+							dieFrame.origin.x = 0;
+						else if (z == 3 || z == 4)
+							dieFrame.origin.y = 0;
+						else if (z == 5 || z == 6)
+							dieFrame.origin.x = 15;
+						else if (z == 7)
+							dieFrame.origin.y = 15;
+					}
+				}
+				
+				dieButton.frame = dieFrame;
+			}
 		}
+
+		if ([diceNotPushed count] == 1)
+			((UIButton*)[diceNotPushed firstObject]).enabled = NO;
+
+		for (int dieIndex = (int)[playerState.arrayOfDice count]; dieIndex < 5; ++dieIndex)
+			((UIButton*)[diceView viewWithTag:dieIndex]).hidden = YES;
 
 		if ([diceToAnimate count] > 0)
 			[UIView animateWithDuration:0.3f animations:^{
