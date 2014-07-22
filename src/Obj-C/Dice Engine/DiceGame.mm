@@ -316,6 +316,9 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void)startGame
 {
+	if (self.gameState.gameWinner)
+		return;
+	
     if (self.started)
 	{
 		[self publishState];

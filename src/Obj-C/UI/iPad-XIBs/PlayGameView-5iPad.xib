@@ -158,6 +158,9 @@
                             <state key="normal" title="Exact">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="exactPressed:" destination="-1" eventType="touchUpInside" id="sQB-D8-51P"/>
                             </connections>
@@ -167,6 +170,9 @@
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <state key="normal" title="Pass">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="passPressed:" destination="-1" eventType="touchUpInside" id="U0I-M7-ySq"/>
@@ -178,6 +184,9 @@
                             <state key="normal" title="-">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="bidCountMinusPressed:" destination="-1" eventType="touchUpInside" id="d0t-m4-fLu"/>
                             </connections>
@@ -188,6 +197,9 @@
                             <state key="normal" title="+">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="bidCountPlusPressed:" destination="-1" eventType="touchUpInside" id="DMN-lT-Sx3"/>
                             </connections>
@@ -197,6 +209,9 @@
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                             <state key="normal" title="+">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="bidFacePlusPressed:" destination="-1" eventType="touchUpInside" id="e3Q-g3-Iwp"/>
@@ -211,6 +226,9 @@
                             <state key="normal" title="-">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
                             <connections>
                                 <action selector="bidFaceMinusPressed:" destination="-1" eventType="touchUpInside" id="dIw-Ag-q7b"/>
                             </connections>
@@ -220,6 +238,9 @@
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <state key="normal" title="Bid">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                            </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="bidPressed:" destination="-1" eventType="touchUpInside" id="i6O-CD-3J2"/>

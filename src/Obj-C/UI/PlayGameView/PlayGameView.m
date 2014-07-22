@@ -324,13 +324,15 @@ NSArray *buildDiceImages() {
 
 	DiceGame* localGame = self.game;
 
-	if (self.game.gameState.gameWinner)
+	if (localGame.gameState.gameWinner)
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceLocalPlayer.class])
 			{
 				[(DiceLocalPlayer*)player end:YES];
 				break;
 			}
+
+	[self updateUI];
 }
 
 - (void)viewDidLoad
@@ -686,6 +688,9 @@ NSArray *buildDiceImages() {
 	// Player UI
     BOOL canBid = [localState canBid];
 
+	if (localGame.gameState.gameWinner)
+		canBid = NO;
+
 	// Enable the buttons if we actually can do those actions at this update cycle
     self.passButton.enabled = canBid && [localState canPass];
     self.bidButton.enabled = canBid;
@@ -778,6 +783,7 @@ NSArray *buildDiceImages() {
 	for (int z = 0;z < playerCount;++z)
 	{
 		PlayerState* playerState = [playerStatesReordered objectAtIndex:z];
+		id<Player> playerPtr = [playerState playerPtr];
 
 		UIView* view = [playerViews objectAtIndex:z];
 
@@ -787,13 +793,20 @@ NSArray *buildDiceImages() {
 
 		NSMutableAttributedString* nameLabelText = [localGame.gameState historyText:playerState.playerID colorName:(z == 0)];
 
-		NSString* playerName = [[playerState playerPtr] getDisplayName];
+		NSString* playerName = [playerPtr getDisplayName];
 
 		if ([playerState playerHasExacted])
 			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", playerName]]];
 
 		if ([playerState playerHasPassed])
 			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", playerName]]];
+
+		if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeQuit)
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ has quit", playerName]];
+		else if ([playerState hasLost])
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:playerName];
+		else if ([playerState hasWon])
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ won!", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 
 		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabelText.string];
 
@@ -991,46 +1004,48 @@ NSArray *buildDiceImages() {
 		else
 			[view viewWithTag:ChallengeButtonTag].hidden = YES;
 	}
+
+	if (!canBid)
+		for (UIButton* view in [player1View viewWithTag:DiceViewTag].subviews)
+			view.enabled = NO;
 }
 
 - (Bid*)minimumLegalBid:(Bid*)previousBid withCurrentFace:(int)currentFace
 {
 	DiceGame* localGame = self.game;
 
-	if (previousBid)
-	{
-		int maxBidCount = 0;
-
-		for (PlayerState* pstate in localGame.gameState.playerStates)
-		{
-			if ([pstate isKindOfClass:[PlayerState class]])
-				maxBidCount += [[pstate arrayOfDice] count];
-		}
-
-		Bid* newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:currentFace];
-
-		while (![newBid isLegalRaise:previousBid specialRules:localGame.gameState.usingSpecialRules playerSpecialRules:NO])
-		{
-			if (newBid.numberOfDice > maxBidCount)
-			{
-				if (previousBid.rankOfDie == 1)
-					return nil;
-
-				int nextRank = (previousBid.rankOfDie + 1);
-
-				if (nextRank > 6)
-					nextRank = 1;
-
-				newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:nextRank];
-			}
-			else
-				newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:(newBid.numberOfDice + 1) rank:newBid.rankOfDie];
-		}
-
-		return newBid;
-	}
-	else
+	if (localGame.gameState.gameWinner || !previousBid)
 		return [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:2];
+
+	int maxBidCount = 0;
+
+	for (PlayerState* pstate in localGame.gameState.playerStates)
+	{
+		if ([pstate isKindOfClass:[PlayerState class]])
+			maxBidCount += [[pstate arrayOfDice] count];
+	}
+
+	Bid* newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:currentFace];
+
+	while (![newBid isLegalRaise:previousBid specialRules:localGame.gameState.usingSpecialRules playerSpecialRules:NO])
+	{
+		if (newBid.numberOfDice > maxBidCount)
+		{
+			if (previousBid.rankOfDie == 1)
+				return nil;
+
+			int nextRank = (previousBid.rankOfDie + 1);
+
+			if (nextRank > 6)
+				nextRank = 1;
+
+			newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:1 rank:nextRank];
+		}
+		else
+			newBid = [[Bid alloc] initWithPlayerID:-1 name:nil dice:(newBid.numberOfDice + 1) rank:newBid.rankOfDie];
+	}
+
+	return newBid;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
