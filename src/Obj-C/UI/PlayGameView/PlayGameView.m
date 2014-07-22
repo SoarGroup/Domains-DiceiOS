@@ -229,6 +229,7 @@ NSArray *buildDiceImages() {
 	}
 	else
 	{
+		showAllDice = YES;
 		[self updateUI:finalString];
 
 		canContinueRound = NO;
@@ -880,7 +881,7 @@ NSArray *buildDiceImages() {
 			if (dieFace == DIE_UNKNOWN || die.hasBeenPushed)
 				dieButton.enabled = NO;
 			else if (!die.hasBeenPushed)
-					[diceNotPushed addObject:dieButton];
+				[diceNotPushed addObject:dieButton];
 
 			[dieButton setImage:dieImage forState:UIControlStateNormal];
 
@@ -1252,8 +1253,6 @@ NSArray *buildDiceImages() {
     }
 
 	NSString *title = [NSString stringWithFormat:@"Bid %d %@?", currentBidCount, [self stringForDieFace:currentBidFace andIsPlural:(currentBidCount > 1)]];
-
-
 
     NSArray *push = [self makePushedDiceArray];
     NSString *message = (push == nil || [push count] == 0) ? nil : [NSString stringWithFormat:@"And push %lu %@?", (unsigned long)[push count], ([push count] == 1 ? @"die" : @"dice")];

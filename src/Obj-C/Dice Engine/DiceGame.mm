@@ -362,7 +362,16 @@ extern std::map<void*, sml::Agent*> agents;
         return;
     }
     NSLog(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
-    [[gameState getCurrentPlayer] itsYourTurn];
+
+	PlayGameView* view = self.gameView;
+	PlayerState* currentState = view.state;
+	DiceLocalPlayer* player = currentState.playerPtr;
+	ApplicationDelegate* delegate = self.appDelegate;
+	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
+	GKTurnBasedMatch* match = handler.match;
+
+	if ([match.currentParticipant.playerID isEqualToString:player.participant.playerID])
+		[[gameState getCurrentPlayer] itsYourTurn];
 }
 
 -(NSInteger)getNumberOfPlayers
