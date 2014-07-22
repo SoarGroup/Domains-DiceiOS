@@ -25,23 +25,14 @@
 
 - (id) initWithGame:(DiceGame*) aGame player:(PlayerState*)aPlayer playGameView:(PlayGameView *)aPlayGameView withFinalString:(NSString*)finalString2
 {
-	NSString* device = [UIDevice currentDevice].model;
-	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
-
-	if ([device isEqualToString:@"iPhone"])
-		device = @"";
-
-	self = [super initWithNibName:[@"RoundOverView" stringByAppendingString:device] bundle:nil];
+	self = [super initWithNibName:@"RoundOverView" bundle:nil];
 
 	if (self)
 	{
         self.game = aGame;
         self.player = aPlayer;
         self.playGameView = aPlayGameView;
-		iPad = [device length] != 0;
 		finalString = finalString2;
-		
-		previousBidImageViews = [[NSMutableArray alloc] init];
 
 		self.accessibilityLabel = @"Round Over";
 		self.accessibilityHint = @"The round is over, this screen is displaying a list of the dice your opponents had.";
