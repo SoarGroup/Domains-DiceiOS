@@ -266,7 +266,15 @@ NSArray *buildDiceImages() {
 	PlayerState* localState = self.state;
 	PlayerState* lastPlayerState = [[localGame.gameState lastHistoryItem] player];
 
-	for (;[lastPlayerState playerID] > 0 && [[lastPlayerState playerPtr] isKindOfClass:SoarPlayer.class];lastPlayerState = [localGame.gameState playerStateForPlayerID:([lastPlayerState playerID] - 1)]);
+	while ([[lastPlayerState playerPtr] isKindOfClass:SoarPlayer.class])
+	{
+		int playerID = [lastPlayerState playerID] - 1;
+
+		if (playerID < 0)
+			playerID = (int)[localGame.players count] - 1;
+
+		lastPlayerState = [localGame.gameState playerStateForPlayerID:playerID];
+	}
 
 	localGame.gameState.canContinueGame = YES;
 

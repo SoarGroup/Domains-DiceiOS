@@ -370,7 +370,7 @@ extern std::map<void*, sml::Agent*> agents;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
 	GKTurnBasedMatch* match = handler.match;
 
-	if ([match.currentParticipant.playerID isEqualToString:player.participant.playerID])
+	if (!handler || [match.currentParticipant.playerID isEqualToString:player.participant.playerID])
 		[[gameState getCurrentPlayer] itsYourTurn];
 }
 
