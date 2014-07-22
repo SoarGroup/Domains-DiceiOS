@@ -338,7 +338,7 @@ NSArray *buildDiceImages() {
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 
 	DiceGame* localGame = self.game;
 

@@ -24,7 +24,6 @@
 @property (nonatomic, weak) MainMenu* mainMenu;
 @property (nonatomic, strong) IBOutlet UIButton* joinMatchButton;
 @property (nonatomic, strong) IBOutlet UIScrollView* gamesScrollView;
-@property (nonatomic, strong) IBOutlet UIButton* scrollToTheFarRightButton;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* joinSpinner;
 
 @property (atomic, strong) NSMutableArray* miniGamesViewArray;
@@ -36,7 +35,6 @@
 @property (nonatomic, strong) UIPopoverController* popoverController;
 
 - (IBAction)joinMatchButtonPressed:(id)sender;
-- (IBAction)scrollToTheFarRightButtonPressed:(id)sender;
 
 - (void)deleteMatchButtonPressed:(id)sender;
 - (void)populateScrollView;

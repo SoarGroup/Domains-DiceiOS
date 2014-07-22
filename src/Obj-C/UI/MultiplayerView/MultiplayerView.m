@@ -24,7 +24,7 @@
 
 @implementation MultiplayerView
 
-@synthesize joinMatchButton, gamesScrollView, scrollToTheFarRightButton, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner, containers;
+@synthesize joinMatchButton, gamesScrollView, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner, containers;
 
 @synthesize miniGamesViewArray, playGameViews, handlerArray;
 
@@ -523,11 +523,6 @@
 - (void)iPhoneJoinMatchButtonPressed
 {
 	[self.navigationController pushViewController:[[JoinMatchView alloc] initWithMainMenu:self.mainMenu withAppDelegate:self.appDelegate isPopOver:NO withMultiplayerView:self]  animated:YES];
-}
-
-- (IBAction)scrollToTheFarRightButtonPressed:(id)sender
-{
-	
 }
 
 @end
