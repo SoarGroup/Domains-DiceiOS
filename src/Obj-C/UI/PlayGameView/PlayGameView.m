@@ -162,6 +162,7 @@ NSArray *buildDiceImages() {
         currentBidFace = 2;
         quitHandler = QuitHandler;
 
+		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
 
