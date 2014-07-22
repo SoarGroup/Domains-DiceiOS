@@ -21,6 +21,8 @@
 		4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */; };
+		4D48E027197F06AB009DA895 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E025197F06AB009DA895 /* README.md */; };
+		4D48E028197F06AB009DA895 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E026197F06AB009DA895 /* LICENSE.md */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
@@ -138,13 +140,14 @@
 		4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitLeaderboardHandler.m; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PlayGameView-2iPad.xib"; sourceTree = "<group>"; };
+		4D48E025197F06AB009DA895 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		4D48E026197F06AB009DA895 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DB0E98B192BB9BA0018EAEB /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -852,7 +855,8 @@
 		CD86D63813BB9E450005A182 = {
 			isa = PBXGroup;
 			children = (
-				4DB0E98B192BB9BA0018EAEB /* README */,
+				4D48E025197F06AB009DA895 /* README.md */,
+				4D48E026197F06AB009DA895 /* LICENSE.md */,
 				4DB7B1DB17EB45C000CA94CE /* Images.xcassets */,
 				4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */,
 				C6951844155045D900BD15DA /* Supporting Files */,
@@ -1047,6 +1051,7 @@
 				4DF3961F1923C51D00A523FB /* DiceGameState.m in Sources */,
 				4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */,
 				4DF396471923C51D00A523FB /* SettingsView.m in Sources */,
+				4D48E028197F06AB009DA895 /* LICENSE.md in Sources */,
 				4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */,
 				4DF3961C1923C51D00A523FB /* DiceGame.mm in Sources */,
 				4DF3961D1923C51D00A523FB /* Bid.m in Sources */,
@@ -1055,6 +1060,7 @@
 				4DF396421923C51D00A523FB /* MainMenu.m in Sources */,
 				4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */,
 				4DF396461923C51D00A523FB /* RulesView.m in Sources */,
+				4D48E027197F06AB009DA895 /* README.md in Sources */,
 				4DF396201923C51D00A523FB /* Die.m in Sources */,
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,
