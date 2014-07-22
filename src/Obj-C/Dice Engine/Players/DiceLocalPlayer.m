@@ -58,6 +58,17 @@
 
 - (void) updateState:(PlayerState*)state
 {
+	if (!participant)
+	{
+		GameKitGameHandler* gkh = handler;
+		for (GKTurnBasedParticipant* p in gkh.match.participants)
+			if ([p.playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
+			{
+				participant = p;
+				break;
+			}
+	}
+
     self.playerState = state;
 	PlayerState* playerStateLocal = self.playerState;
 	for (PlayGameView* view in self.gameViews)
