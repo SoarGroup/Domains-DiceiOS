@@ -14,5 +14,6 @@ typedef enum ActionType {
     ACTION_PASS = 6,
     ACTION_ILLEGAL = 7,
     ACTION_QUIT = 8,
-	ACTION_LOST = 9
+	ACTION_LOST = 9,
+	TUTORIAL = 10
 } ActionType;

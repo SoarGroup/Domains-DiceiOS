@@ -90,6 +90,8 @@
 
 - (void)updateUI:(NSString*)gameStateLabel;
 
+- (void)handleTutorial;
+
 @end
 
 @implementation PlayGameView
@@ -107,7 +109,6 @@
 @synthesize fullscreenButton;
 @synthesize continueRoundButton;
 @synthesize multiplayerView, overViews;
-@synthesize images;
 @synthesize playerScrollView;
 
 @synthesize game, state, animationFinished;
@@ -116,15 +117,6 @@
 
 NSString *numberName(int number) {
     return [NSString stringWithFormat:@"%ds", number];
-}
-
-NSArray *buildDiceImages() {
-    NSMutableArray *ar = [NSMutableArray array];
-    // Guarenteed that DIE_1 - DIE_6 are in order in the enum
-    for (int i = DIE_1; i <= MAX_IMAGE_TYPE; ++i)
-        [ar addObject:[DiceGraphics imageWithType:i]];
-
-    return ar;
 }
 
 - (id)initWithGame:(DiceGame *)theGame withQuitHandler:(void (^)(void))QuitHandler
@@ -165,10 +157,41 @@ NSArray *buildDiceImages() {
 		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
-
-		images = buildDiceImages();
     }
     return self;
+}
+
+- (id)initTutorialWithQuitHandler:(void (^)(void))QuitHandler
+{
+	NSString* device = [UIDevice currentDevice].model;
+	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+
+	NSString* nibName = @"TutorialView";
+
+	if (![device isEqualToString:@"iPhone"])
+		nibName = [nibName stringByAppendingString:@"-iPad"];
+
+	self = [super initWithNibName:nibName bundle:nil];
+
+	if (self)
+	{
+		// Custom initialization
+		self.game = nil;
+		self.state = nil;
+		currentBidCount = 1;
+		internalCurrentBidCount = 1;
+		currentBidFace = 2;
+		quitHandler = QuitHandler;
+
+		overViews = [NSMutableArray array];
+		hasPromptedEnd = NO;
+		hasDisplayedRoundOverview = NO;
+
+		tutorial = YES;
+		step = 0;
+	}
+
+	return self;
 }
 
 - (BOOL) roundEnding
@@ -250,6 +273,12 @@ NSArray *buildDiceImages() {
 
 - (IBAction)continueRoundPressed:(UIButton*)sender
 {
+	if (tutorial)
+	{
+		[self handleTutorial];
+		return;
+	}
+
 	canContinueRound = YES;
 	sender.enabled = NO;
 	sender.hidden = YES;
@@ -344,6 +373,21 @@ NSArray *buildDiceImages() {
 	[self updateUI];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	if (tutorial)
+	{
+		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Liar's Dice!"
+														message:@"Welcome to the Liar's Dice Tutorial.  This tutorial assumes you have familiarity with Liar's Dice.  It is designed to familiarize you with our interface for the game.  If you aren't familiar with Liar's Dice, please go back to the main menu and read at least the brief rules.  If at any time you would like to stop, either tap 'Main Menu' in these alerts or tap 'Main Menu' in the navigation bar above."
+													   delegate:self
+											  cancelButtonTitle:@"Main Menu"
+											  otherButtonTitles:@"Continue", nil];
+
+		alert.tag = TUTORIAL;
+		[alert show];
+	}
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -384,6 +428,9 @@ NSArray *buildDiceImages() {
 		[array addObject:player8View];
 
 	playerViews = array;
+
+	if (tutorial)
+		return;
 
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
@@ -427,10 +474,24 @@ NSArray *buildDiceImages() {
 	return NO;
 }
 
--(UIImage *)imageForDie:(NSInteger)die
++ (UIImage *)imageForDie:(NSInteger)die
 {
-    if (die <= 0 || die > 6) return [self.images objectAtIndex:DIE_UNKNOWN-1];
-    return [self.images objectAtIndex:(die-1)];
+	return [DiceGraphics imageWithType:(DiceImageType)die];
+}
+
++ (NSInteger)dieForImage:(UIImage*)image
+{
+	NSData *data1 = UIImagePNGRepresentation(image);
+
+	for (int i = DIE_1;i <= DIE_6;++i)
+	{
+		NSData *data2 = UIImagePNGRepresentation([DiceGraphics imageWithType:(DiceImageType)i]);
+
+		if ([data1 isEqualToData:data2])
+			return i;
+	}
+
+	return DIE_UNKNOWN;
 }
 
 -(NSString *)stringForDieFace:(NSInteger)die andIsPlural:(BOOL)plural {
@@ -493,16 +554,41 @@ NSArray *buildDiceImages() {
     self.bidCountLabel.text = [NSString stringWithFormat:@"%d", currentBidCount];
 	self.bidCountLabel.accessibilityLabel = [NSString stringWithFormat:@"Bid Die Count, Face Value of %i", currentBidCount];
 
-	[self.bidFaceLabel setImage:[self imageForDie:currentBidFace]];
+	[self.bidFaceLabel setImage:[PlayGameView imageForDie:currentBidFace]];
 	self.bidFaceLabel.accessibilityLabel = [NSString stringWithFormat:@"Bid Die Face, Face Value of %i", currentBidFace];
 }
 
 - (IBAction) dieButtonPressed:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
+	UIButton *button = (UIButton*)sender;
+
+	if (tutorial && step != 8)
+	{
+		[self handleTutorial];
+		return;
+	}
+
     NSInteger dieIndex = button.tag;
 
 	PlayerState* localState = self.state;
+
+	if (tutorial)
+	{
+		localState = [[PlayerState alloc] initWithName:@"You" withID:0 withNumberOfDice:5 withDiceGameState:nil];
+		[localState.arrayOfDice removeAllObjects];
+
+		NSArray* subviews = [player1View viewWithTag:DiceViewTag].subviews;
+		for (UIButton* dieButton in subviews)
+		{
+			Die* dieObject = [[Die alloc] initWithNumber:(int)[PlayGameView dieForImage:dieButton.imageView.image]];
+
+			if (dieButton.frame.origin.y == 0)
+				dieObject.markedToPush = YES;
+
+			[localState.arrayOfDice addObject:dieObject];
+		}
+	}
+
 
     Die *dieObject = [localState.arrayOfDice objectAtIndex:dieIndex];
     if (dieObject.hasBeenPushed)
@@ -512,7 +598,8 @@ NSArray *buildDiceImages() {
 
 	if (dieObject.markedToPush)
 	{
-		self.passButton.enabled = YES;
+		if (!tutorial)
+			self.passButton.enabled = YES;
 
 		button.accessibilityLabel = [NSString stringWithFormat:@"Your Die, Face Value of %i, pushed", dieObject.dieValue];
 		button.accessibilityHint = @"Tap to unpush this die";
@@ -555,13 +642,17 @@ NSArray *buildDiceImages() {
 
 	if ([nonMarkedOrPushedDice count] == 1)
 		((UIButton*)[[player1View viewWithTag:DiceViewTag] viewWithTag:[[nonMarkedOrPushedDice firstObject] intValue]]).enabled = NO;
-	else
+	else if (!tutorial)
 		for (NSNumber* number in nonMarkedOrPushedDice)
 			((UIButton*)[[player1View viewWithTag:DiceViewTag] viewWithTag:[number intValue]]).enabled = YES;
 
 	[UIView animateWithDuration:0.3f animations:^{
 		button.frame = newFrame;
-	}];
+	} completion:^(BOOL finished)
+	 {
+		 if (finished && self->tutorial && self->step == 8 && [nonMarkedOrPushedDice count] == 1)
+			 [self handleTutorial];
+	 }];
 }
 
 - (NSString*)accessibleTextForString:(NSString*)string
@@ -635,6 +726,9 @@ NSArray *buildDiceImages() {
 		return;
 	}
 
+	if (tutorial)
+		return;
+
 	// State initialization
 	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
@@ -665,33 +759,8 @@ NSArray *buildDiceImages() {
 
 	self.gameStateLabel.accessibilityLabel = [self accessibleTextForString:headerString];
 
-	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
-	for (int i = 0;i < [headerString length];++i)
-	{
-		unichar characterOne = [headerString characterAtIndex:i], characterTwo = 0;
+	gameStateLabel.attributedText = [PlayGameView formatTextString:headerString];
 
-		if (i+1 < [headerString length])
-			characterTwo = [headerString characterAtIndex:i+1];
-
-		if (isdigit(characterOne) && characterTwo == 's')
-		{
-			int characterDigit = characterOne - '0';
-
-			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-			attachment.image = [self imageForDie:characterDigit];
-			[attachment setBounds:CGRectMake(0, -5, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
-
-			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-
-			[string appendAttributedString:attachmentString];
-
-			++i;
-		}
-		else
-			[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [headerString characterAtIndex:i]]]];
-	}
-
-	gameStateLabel.attributedText = string;
 	[gameStateLabel sizeToFit];
 
 	// Player UI
@@ -821,41 +890,7 @@ NSArray *buildDiceImages() {
 
 		nameLabel.accessibilityLabel = [self accessibleTextForString:nameLabelText.string];
 
-		string = [[NSMutableAttributedString alloc] init];
-		int imageCount = 0;
-		for (int j = 0;j < [nameLabelText.string length];++j)
-		{
-			unichar characterOne = [nameLabelText.string characterAtIndex:j], characterTwo = 0;
-
-			if (j+1 < [nameLabelText.string length])
-				characterTwo = [nameLabelText.string characterAtIndex:j+1];
-
-			if (isdigit(characterOne) && characterTwo == 's')
-			{
-				int characterDigit = characterOne - '0';
-
-				NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-				attachment.image = [self imageForDie:characterDigit];
-				[attachment setBounds:CGRectMake(0, -5, nameLabel.font.lineHeight, nameLabel.font.lineHeight)];
-
-				NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
-
-				[string appendAttributedString:attachmentString];
-
-				++j;
-				++imageCount;
-			}
-			else
-			{
-				[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabelText.string characterAtIndex:j]]]];
-
-				NSDictionary* attributes = [nameLabelText attributesAtIndex:j effectiveRange:nil];
-
-				[string addAttributes:attributes range:NSMakeRange(j-imageCount, 1)];
-			}
-		}
-		
-		nameLabel.attributedText = string;
+		nameLabel.attributedText = [PlayGameView formatTextAttributedString:nameLabelText];
 
 		// Update the spinner
 		UIActivityIndicatorView* spinner = (UIActivityIndicatorView*)[view viewWithTag:ActivitySpinnerTag];
@@ -883,7 +918,7 @@ NSArray *buildDiceImages() {
 			if (die.hasBeenPushed || z == 0 || showAllDice || localGame.gameState.gameWinner)
 				dieFace = die.dieValue;
 
-			UIImage *dieImage = [self imageForDie:dieFace];
+			UIImage *dieImage = [PlayGameView imageForDie:dieFace];
 
 			UIButton* dieButton = (UIButton*)[diceView viewWithTag:dieIndex];
 			dieButton.enabled = YES;
@@ -1147,6 +1182,9 @@ NSArray *buildDiceImages() {
 			maxBidCount += [[pstate arrayOfDice] count];
 	}
 
+	if (tutorial)
+		maxBidCount = 10;
+
 	if (maxBidCount != 0)
 	{
 		currentBidCount = (currentBidCount - 1 + maxBidCount) % maxBidCount + 1;
@@ -1159,12 +1197,74 @@ NSArray *buildDiceImages() {
 	}
 
     [self updateCurrentBidLabels];
+
+	if (tutorial && ((step == 2 && currentBidCount == 5 && currentBidFace == 5) ||
+					 (step == 9 && currentBidCount == 7 && currentBidFace == 6)))
+	{
+		if (step == 9)
+		{
+			bidButton.enabled = YES;
+			bidCountMinusButton.enabled = NO;
+			bidCountPlusButton.enabled = NO;
+			bidFaceMinusButton.enabled = NO;
+			bidFacePlusButton.enabled = NO;
+
+			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+			pulse.fromValue = (id)[UIColor clearColor].CGColor;
+			pulse.toValue = (id)[UIColor redColor].CGColor;
+			pulse.duration = 1.0;
+			pulse.autoreverses = YES;
+			pulse.removedOnCompletion = NO;
+			//pulse.fillMode = kCAFillModeBoth;
+			pulse.repeatCount = HUGE_VALF;
+
+			[bidButton.layer addAnimation:pulse forKey:@"backgroundColor"];
+
+			[bidCountMinusButton.layer removeAllAnimations];
+			[bidCountPlusButton.layer removeAllAnimations];
+			[bidFaceMinusButton.layer removeAllAnimations];
+			[bidFacePlusButton.layer removeAllAnimations];
+		}
+		else
+			[self handleTutorial];
+	}
 }
 
 -(void)constrainAndUpdateBidFace {
     int maxFace = 6;
     currentBidFace = (currentBidFace - 1 + maxFace) % maxFace + 1;
     [self updateCurrentBidLabels];
+
+	if (tutorial && ((step == 2 && currentBidCount == 5 && currentBidFace == 5) ||
+					 (step == 9 && currentBidCount == 7 && currentBidFace == 6)))
+	{
+		if (step == 9)
+		{
+			bidButton.enabled = YES;
+			bidCountMinusButton.enabled = NO;
+			bidCountPlusButton.enabled = NO;
+			bidFaceMinusButton.enabled = NO;
+			bidFacePlusButton.enabled = NO;
+
+			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+			pulse.fromValue = (id)[UIColor clearColor].CGColor;
+			pulse.toValue = (id)[UIColor redColor].CGColor;
+			pulse.duration = 1.0;
+			pulse.autoreverses = YES;
+			pulse.removedOnCompletion = NO;
+			//pulse.fillMode = kCAFillModeBoth;
+			pulse.repeatCount = HUGE_VALF;
+
+			[bidButton.layer addAnimation:pulse forKey:@"backgroundColor"];
+
+			[bidCountMinusButton.layer removeAllAnimations];
+			[bidCountPlusButton.layer removeAllAnimations];
+			[bidFaceMinusButton.layer removeAllAnimations];
+			[bidFacePlusButton.layer removeAllAnimations];
+		}
+		else
+			[self handleTutorial];
+	}
 }
 
 - (IBAction)challengePressed:(id)sender {
@@ -1192,15 +1292,25 @@ NSArray *buildDiceImages() {
 		}
 	}
 
+	if (tutorial)
+		previousItem = [[HistoryItem alloc] initWithState:nil andWithPlayer:[[PlayerState alloc] initWithName:@"Alice" withID:1 withNumberOfDice:5 withDiceGameState:nil] withBid:[[Bid alloc] initWithPlayerID:1 name:@"Alice" dice:6 rank:3]];
+
 	assert(previousItem != nil);
 
 	NSString* messageString = nil;
 	PlayerState* stateLocal = [previousItem player];
+
 	NSString* buttonTitle = [[self.game.players objectAtIndex:stateLocal.playerID] getDisplayName];
+
+	if (tutorial)
+		buttonTitle = @"Alice";
 
 	if (previousItem.actionType == ACTION_BID)
 	{
 		messageString = [previousItem asString];
+		if (tutorial)
+			messageString = @"Alice bid 6 threes";
+
 		buttonTitle = [NSString stringWithFormat:@"%@'s bid", buttonTitle];
 	}
 	else
@@ -1221,6 +1331,9 @@ NSArray *buildDiceImages() {
 
 	PlayerState* stateLocal = self.state;
 
+	if (tutorial)
+		stateLocal = [[PlayerState alloc] initWithName:@"You" withID:0 withNumberOfDice:5 withDiceGameState:nil];
+
 	if ([[stateLocal markedToPushDice] count] > 0)
 		message = [NSString stringWithFormat:@"Pass and push %lu %@?", (unsigned long)[[stateLocal markedToPushDice] count], ([[stateLocal markedToPushDice] count] == 1 ? @"die" : @"dice")];
 
@@ -1238,11 +1351,14 @@ NSArray *buildDiceImages() {
 	PlayerState* stateLocal = self.state;
 	DiceGame* localGame = self.game;
 
+	if (tutorial)
+		stateLocal = [[PlayerState alloc] initWithName:@"You" withID:0 withNumberOfDice:5 withDiceGameState:nil];
+
 	NSMutableArray *markedToPushDiceWithPushedDice = [NSMutableArray arrayWithArray:[stateLocal markedToPushDice]];
 	[markedToPushDiceWithPushedDice addObjectsFromArray:[stateLocal pushedDice]];
 
     Bid *bid = [[Bid alloc] initWithPlayerID:stateLocal.playerID name:stateLocal.playerName dice:currentBidCount rank:currentBidFace push:markedToPushDiceWithPushedDice];
-    if (!([localGame.gameState getCurrentPlayerState].playerID == stateLocal.playerID &&
+    if (!tutorial && !([localGame.gameState getCurrentPlayerState].playerID == stateLocal.playerID &&
 		  [localGame.gameState checkBid:bid playerSpecialRules:([localGame.gameState usingSpecialRules] &&
 																[stateLocal numberOfDice] > 1)])) {
         NSString *title = @"Illegal raise";
@@ -1299,9 +1415,20 @@ NSArray *buildDiceImages() {
 	DiceGame* localGame = self.game;
 
 	if (buttonIndex == alertView.cancelButtonIndex)
-        return;
+	{
+		if (tutorial && alertView.tag == TUTORIAL)
+			quitHandler();
+
+		return;
+	}
 
 	DiceAction* action = nil;
+
+	if (alertView.tag != TUTORIAL && tutorial)
+	{
+		[self handleTutorial];
+		return;
+	}
 
     switch (alertView.tag)
     {
@@ -1343,6 +1470,11 @@ NSArray *buildDiceImages() {
 			action = [DiceAction passAction:localState.playerID
                                                    push:[self makePushedDiceArray]];
             break;
+		case TUTORIAL:
+			if (step == 0)
+				[self handleTutorial];
+
+			return;
 		case ACTION_QUIT:
 			quitHandler();
         default:
@@ -1370,6 +1502,408 @@ NSArray *buildDiceImages() {
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
 	return UIStatusBarStyleLightContent;
+}
+
++ (NSAttributedString*)formatTextString:(NSString*)nameLabelText
+{
+	NSAttributedString* attributed = [[NSAttributedString alloc] initWithString:nameLabelText];
+
+	return [PlayGameView formatTextAttributedString:attributed];
+}
+
++ (NSAttributedString*)formatTextAttributedString:(NSAttributedString*)nameLabelText
+{
+	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+	int imageCount = 0;
+	for (int j = 0;j < [nameLabelText.string length];++j)
+	{
+		unichar characterOne = [nameLabelText.string characterAtIndex:j], characterTwo = 0;
+
+		if (j+1 < [nameLabelText.string length])
+			characterTwo = [nameLabelText.string characterAtIndex:j+1];
+
+		if (isdigit(characterOne) && characterTwo == 's')
+		{
+			int characterDigit = characterOne - '0';
+
+			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+			attachment.image = [PlayGameView imageForDie:characterDigit];
+			[attachment setBounds:CGRectMake(0, -5, 21, 21)];
+
+			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+
+			[string appendAttributedString:attachmentString];
+
+			++j;
+			++imageCount;
+		}
+		else
+		{
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [nameLabelText.string characterAtIndex:j]]]];
+
+			NSDictionary* attributes = [nameLabelText attributesAtIndex:j effectiveRange:nil];
+
+			[string addAttributes:attributes range:NSMakeRange(j-imageCount, 1)];
+		}
+	}
+
+	return string;
+}
+
+- (void)handleTutorial
+{
+	NSString *title = nil, *message = nil;
+
+	NSMutableArray* views = [NSMutableArray array];
+
+	[[player1View viewWithTag:DiceViewTag].layer removeAllAnimations];
+	[((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).layer removeAllAnimations];
+	[((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).layer removeAllAnimations];
+	[((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).layer removeAllAnimations];
+	[((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).layer removeAllAnimations];
+	[((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).layer removeAllAnimations];
+
+	((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).translatesAutoresizingMaskIntoConstraints = YES;
+	((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).translatesAutoresizingMaskIntoConstraints = YES;
+	((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).translatesAutoresizingMaskIntoConstraints = YES;
+	((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).translatesAutoresizingMaskIntoConstraints = YES;
+	((UIView*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).translatesAutoresizingMaskIntoConstraints = YES;
+
+	[[player2View viewWithTag:DiceViewTag].layer removeAllAnimations];
+	[[player2View viewWithTag:ChallengeButtonTag].layer removeAllAnimations];
+	[bidCountPlusButton.layer removeAllAnimations];
+	[bidCountMinusButton.layer removeAllAnimations];
+	[bidFaceMinusButton.layer removeAllAnimations];
+	[bidFacePlusButton.layer removeAllAnimations];
+	[bidButton.layer removeAllAnimations];
+	[exactButton.layer removeAllAnimations];
+	[passButton.layer removeAllAnimations];
+	[continueRoundButton.layer removeAllAnimations];
+	[bidFacePlusButton.layer removeAllAnimations];
+
+	((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).enabled = NO;
+	((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).enabled = NO;
+	((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).enabled = NO;
+	((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).enabled = NO;
+	((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).enabled = NO;
+
+	bidButton.enabled = NO;
+	exactButton.enabled = NO;
+	passButton.enabled = NO;
+	bidCountMinusButton.enabled = NO;
+	bidCountPlusButton.enabled = NO;
+	bidFacePlusButton.enabled = NO;
+	bidFaceMinusButton.enabled = NO;
+
+	[player2View viewWithTag:ChallengeButtonTag].hidden = YES;
+	[player2View viewWithTag:ActivitySpinnerTag].hidden = YES;
+
+	continueRoundButton.hidden = YES;
+
+	gameStateLabel.text = @"";
+
+	((UILabel*)[player2View viewWithTag:PlayerLabelTag]).text = @"Alice";
+	((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
+
+	if (step == 0)
+	{
+		title = @"Bidding";
+		message = @"In Liar's Dice players bid based on their current dice.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
+		[views addObject:[player1View viewWithTag:DiceViewTag]];
+
+		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).enabled = YES;
+		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).enabled = YES;
+		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).enabled = YES;
+		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).enabled = YES;
+		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).enabled = YES;
+	}
+	else if (step == 1)
+	{
+		title = @"Bidding";
+		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two actual fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one of the left represents the number you are bidding, since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the face, this should be a five die.  Select 5 Fives to continue.";
+
+		[views addObjectsFromArray:@[bidCountPlusButton,
+									 bidCountMinusButton,
+									 bidFaceMinusButton,
+									 bidFacePlusButton]];
+
+		bidCountMinusButton.enabled = YES;
+		bidCountPlusButton.enabled = YES;
+		bidFacePlusButton.enabled = YES;
+		bidFaceMinusButton.enabled = YES;
+	}
+	else if (step == 2)
+	{
+		title = @"Bidding";
+		message = @"Now that you have selected 5 Fives, let's bid this.  Highlighted in red is the bid button, tap this to bid 5 Fives.";
+		[views addObject:bidButton];
+
+		bidButton.enabled = YES;
+	}
+	else if (step == 3)
+	{
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UIButton* firstDie = (UIButton*)[aliceDice viewWithTag:0];
+		UIButton* secondDie = (UIButton*)[aliceDice viewWithTag:1];
+
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+		UILabel* myLabel = (UILabel*)[player1View viewWithTag:PlayerLabelTag];
+
+		[firstDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+		[secondDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+		firstDie.frame = CGRectMake(3, 0, 50, 50);
+		secondDie.frame = CGRectMake(56, 0, 50, 50);
+
+		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s"];
+		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s"];
+
+		title = @"Challenging";
+		message = @"Woah! Alice bid 6 threes.  We know that isn't there, let's challenge her.  Highlighted in red is the challenge button.  Tap to challenge her";
+
+		UIButton* challengeButton = (UIButton*)[player2View viewWithTag:ChallengeButtonTag];
+		challengeButton.hidden = NO;
+		challengeButton.enabled = YES;
+
+		[views addObject:challengeButton];
+
+	}
+	else if (step == 4)
+	{
+		// iPad Only
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+		int index = 0;
+		for (UIButton* button in aliceDice.subviews)
+		{
+			switch (index) {
+				case 0:
+				case 1:
+					break;
+				case 2:
+					[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+					break;
+				case 3:
+					[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+					break;
+				case 4:
+					[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+					break;
+				default:
+					break;
+			}
+
+			index++;
+		}
+
+		aliceLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s."];
+
+		gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s.\nThere were 5 3s.\nYou challenged Alice's bid.\nAlice lost a die."];
+
+		title = @"Round Over!";
+		message = @"The round ended!  In this screen you can see all the dice your opponents had.  Also, in the center of the screen is the info about the last round including who did what to end the round, and if it was a bid, how many dice were bid and how many were there.  Tap continue round, highlighted in red, to continue.";
+
+		[views addObject:continueRoundButton];
+
+		continueRoundButton.hidden = NO;
+		continueRoundButton.enabled = YES;
+	}
+	else if (step == 5)
+	{
+		UIView* myDice = [player1View viewWithTag:DiceViewTag];
+
+		for (UIButton* button in myDice.subviews)
+			[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+		for (UIButton* button in aliceDice.subviews)
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
+
+		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
+
+		aliceLabel.attributedText = gameStateLabel.attributedText =  [PlayGameView formatTextString:@"Alice bid 4 2s"];
+
+		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
+
+		title = @"Passes";
+		message = @"It looks like you have a rare hand, all five dice of the same face.  Let's pass since we have a pass.  Tap the pass button, highlighted in red.";
+
+		[views addObject:passButton];
+
+		passButton.enabled = YES;
+	}
+	else if (step == 6)
+	{
+		// iPad Only
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+		int index = 0;
+		for (UIButton* button in aliceDice.subviews)
+		{
+			switch (index) {
+				case 0:
+				case 1:
+					[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+					break;
+				case 2:
+				case 3:
+					[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+					break;
+				default:
+					break;
+			}
+
+			index++;
+		}
+
+		aliceLabel.text = @"Alice challenged your pass.";
+		gameStateLabel.attributedText = [PlayGameView formatTextString:@"You passed.\nAlice challenged your pass.\nAlice lost a die."];
+
+		title = @"Round Over!";
+		message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+
+		[views addObject:continueRoundButton];
+
+		continueRoundButton.enabled = YES;
+		continueRoundButton.hidden = NO;
+	}
+	else if (step == 7)
+	{
+		UIView* myDice = [player1View viewWithTag:DiceViewTag];
+
+		[[myDice.subviews objectAtIndex:0] setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+		[[myDice.subviews objectAtIndex:1] setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+		[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+		[[myDice.subviews objectAtIndex:3] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+		[[myDice.subviews objectAtIndex:4] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+		for (UIButton* button in aliceDice.subviews)
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
+
+		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
+		((UIView*)[aliceDice.subviews objectAtIndex:3]).hidden = YES;
+
+		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 4 6s"];
+
+		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
+
+		title = @"Pushing";
+		message = @"We're going to learn how to push.  Pushing is when you reveal your dice to your opponents as a way of increasing the confidence in your bid.  When you push, your unpushed dice are rerolled.  Let's push all our sixes, highlighted in red.";
+
+		[views addObject:[myDice.subviews objectAtIndex:0]];
+		[views addObject:[myDice.subviews objectAtIndex:1]];
+		[views addObject:[myDice.subviews objectAtIndex:3]];
+		[views addObject:[myDice.subviews objectAtIndex:4]];
+
+		((UIButton*)[myDice.subviews objectAtIndex:0]).enabled = YES;
+		((UIButton*)[myDice.subviews objectAtIndex:1]).enabled = YES;
+		((UIButton*)[myDice.subviews objectAtIndex:3]).enabled = YES;
+		((UIButton*)[myDice.subviews objectAtIndex:4]).enabled = YES;
+	}
+	else if (step == 8)
+	{
+		title = @"Pushing";
+		message = @"These dice haven't been pushed quite yet.  You can still undo any pushes at this point.  When you tap bid though, your dice will be pushed and you will be unable to conceal them again.  Bid 7 sixes.";
+
+		[views addObject:bidCountMinusButton];
+		[views addObject:bidCountPlusButton];
+		[views addObject:bidFaceMinusButton];
+		[views addObject:bidFacePlusButton];
+
+		bidCountMinusButton.enabled = YES;
+		bidCountPlusButton.enabled = YES;
+		bidFacePlusButton.enabled = YES;
+		bidFaceMinusButton.enabled = YES;
+	}
+	else if (step == 9)
+	{
+		// iPad Only
+		UIView* myDice = [player1View viewWithTag:DiceViewTag];
+		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+		int index = 0;
+		for (UIButton* button in aliceDice.subviews)
+		{
+			switch (index) {
+				case 0:
+				case 1:
+					[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+					break;
+				case 2:
+					[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+					button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
+					break;
+				case 3:
+				case 4:
+					[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+					if (index == 4)
+						button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
+					break;
+				default:
+					break;
+			}
+
+			index++;
+		}
+
+		aliceLabel.text = @"Alice challenged your bid.";
+		gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];
+
+		[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+
+		title = @"Round Over!";
+		message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+
+		[views addObject:continueRoundButton];
+		continueRoundButton.enabled = YES;
+		continueRoundButton.hidden = NO;
+	}
+	else if (step == 10)
+	{
+		title = @"Done!";
+		message = @"Congratulations on finishing the tutorial!  Now you are all set for playing Liar's Dice on your own against the AI, your friends, and random opponents.";
+
+		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+														message:message
+													   delegate:self
+											  cancelButtonTitle:@"Main Menu"
+											  otherButtonTitles:nil];
+
+		alert.tag = TUTORIAL;
+		
+		[alert show];
+
+		return;
+	}
+
+	step++;
+
+	CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+	pulse.fromValue = (id)[UIColor clearColor].CGColor;
+	pulse.toValue = (id)[UIColor redColor].CGColor;
+	pulse.duration = 1.0;
+	pulse.autoreverses = YES;
+	pulse.removedOnCompletion = NO;
+	//pulse.fillMode = kCAFillModeBoth;
+	pulse.repeatCount = HUGE_VALF;
+
+	for (UIView* view in views)
+		[view.layer addAnimation:pulse forKey:@"backgroundColor"];
+
+	UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+													message:message
+												   delegate:self
+										  cancelButtonTitle:@"Main Menu"
+										  otherButtonTitles:@"Okay", nil];
+	alert.tag = TUTORIAL;
+	[alert show];
 }
 
 @end

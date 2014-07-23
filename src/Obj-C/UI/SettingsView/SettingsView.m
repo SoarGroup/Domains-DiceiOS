@@ -11,6 +11,8 @@
 
 #import <GameKit/GameKit.h>
 
+#import "PlayGameView.h"
+
 @interface SettingsView ()
 
 @end
@@ -148,6 +150,16 @@
 - (IBAction)resetLeaderboards:(id)sender
 {
 	[[[UIAlertView alloc] initWithTitle:@"Reset Leaderboards?" message:@"Are you sure you want to reset your current progress on the leaderboards?  This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+}
+
+- (IBAction)tutorial:(id)sender
+{
+	void (^quitHandler)(void) =^ {
+		[[self navigationController] popToRootViewControllerAnimated:YES];
+	};
+
+	[self.navigationController pushViewController:[[PlayGameView alloc] initTutorialWithQuitHandler:[quitHandler copy]]
+										 animated:YES];
 }
 
 @end

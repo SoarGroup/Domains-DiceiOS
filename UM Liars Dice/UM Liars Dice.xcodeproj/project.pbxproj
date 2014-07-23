@@ -23,6 +23,8 @@
 		4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */; };
 		4D48E027197F06AB009DA895 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E025197F06AB009DA895 /* README.md */; };
 		4D48E028197F06AB009DA895 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E026197F06AB009DA895 /* LICENSE.md */; };
+		4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02B197FFDCB009DA895 /* TutorialView.xib */; };
+		4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
@@ -142,6 +144,8 @@
 		4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PlayGameView-2iPad.xib"; sourceTree = "<group>"; };
 		4D48E025197F06AB009DA895 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4D48E026197F06AB009DA895 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
+		4D48E02B197FFDCB009DA895 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
+		4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TutorialView-iPad.xib"; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -665,6 +669,7 @@
 				4D17A9EB197DBA38006C4A64 /* PlayGameView-4iPad.xib */,
 				4D17A9E4197DB935006C4A64 /* PlayGameView-3iPad.xib */,
 				4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */,
+				4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */,
 				4DF394451923C51C00A523FB /* RulesViewiPad.xib */,
 				4DF394461923C51C00A523FB /* SettingsViewiPad.xib */,
 				4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */,
@@ -690,6 +695,7 @@
 				4DF394531923C51C00A523FB /* SettingsView.xib */,
 				4DF394541923C51C00A523FB /* SingleplayerView.xib */,
 				4DF394551923C51C00A523FB /* StatsView.xib */,
+				4D48E02B197FFDCB009DA895 /* TutorialView.xib */,
 			);
 			path = "iPhone-XIBs";
 			sourceTree = "<group>";
@@ -957,6 +963,7 @@
 				4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */,
 				4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */,
 				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
+				4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */,
 				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
 				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
@@ -1020,6 +1027,7 @@
 				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
 				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
+				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
 				4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -99,7 +99,7 @@
 			int characterDigit = characterOne - '0';
 
 			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-			attachment.image = [localGameView imageForDie:characterDigit];
+			attachment.image = [PlayGameView imageForDie:characterDigit];
 			[attachment setBounds:CGRectMake(0, -5, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
 
 			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
@@ -149,7 +149,7 @@
 		{
 			Die *die = [playerState getDie:dieIndex];
 
-			UIImage *dieImage = [localGameView imageForDie:die.dieValue];
+			UIImage *dieImage = [PlayGameView imageForDie:die.dieValue];
 
 			UIButton* dieButton = (UIButton*)[diceView viewWithTag:dieIndex];
 

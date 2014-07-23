@@ -38,6 +38,9 @@ enum UITags
 	BOOL hasTouchedBidCounterThisTurn;
 	BOOL hasDisplayedRoundOverview;
 	BOOL showAllDice;
+
+	BOOL tutorial;
+	int step;
 @public
 	BOOL shouldNotifyCurrentPlayer;
 
@@ -45,8 +48,8 @@ enum UITags
 }
 
 // Utility Functions
-@property (nonatomic, strong) NSArray* images;
--(UIImage *)imageForDie:(NSInteger)die;
++ (UIImage *)imageForDie:(NSInteger)die;
++ (NSInteger)dieForImage:(UIImage*)image;
 
 - (NSString*)accessibleTextForString:(NSString*)string;
 
@@ -105,6 +108,12 @@ enum UITags
 // Initialization Functions
 - (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler;
 - (id)initWithGame:(DiceGame*)theGame withQuitHandler:(void (^)(void))QuitHandler withCustomMainView:(BOOL)custom;
+
+- (id)initTutorialWithQuitHandler:(void (^)(void))QuitHandler;
+
++ (NSAttributedString*)formatTextString:(NSString*)nameLabelText;
++ (NSAttributedString*)formatTextAttributedString:(NSAttributedString*)nameLabelText;
+
 
 @end
 
