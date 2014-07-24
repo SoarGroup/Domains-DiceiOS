@@ -224,7 +224,7 @@ extern std::map<void*, sml::Agent*> agents;
 			}
 
 			for (;index < [newHistory count];++index)
-				NSLog(@"REPLAY HISTORY: %@", [newHistory objectAtIndex:index]);
+				NSLog(@"REPLAY HISTORY: %@", [[newHistory objectAtIndex:index] debugDescription]);
 		}
 
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
