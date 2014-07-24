@@ -625,4 +625,9 @@
 	return [localState.players objectAtIndex:playerID];
 }
 
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"PlayerState: (hasDoneSpecialRules: %@) (PlayerID: %i) (PlayerName: %@) (Lock: %@) (PlayerHasPassed: %@) (PlayerHasExacted: %@) (NumberOfDice: %i) (HasLost: %@) (PlayerHasPushedAllDice: %@) (MaxNumberOfDice: %i) (GameState: %@) (ArrayOfDice: %@)", hasDoneSpecialRules ? @"YES" : @"NO", playerID, playerName, lock, playerHasPassed ? @"YES" : @"NO", playerHasExacted ? @"YES" : @"NO", numberOfDice, hasLost ? @"YES" : @"NO", playerHasPushedAllDice ? @"YES" : @"NO", maxNumberOfDice, gameState, arrayOfDice];
+}
+
 @end

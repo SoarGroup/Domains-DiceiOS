@@ -78,4 +78,51 @@
 	return ret;
 }
 
++ (NSString*) actionTypeToString:(ActionType)formatType
+{
+	NSString *result = nil;
+
+	switch(formatType) {
+		case ACTION_ACCEPT:
+			result = @"ACTION_ACCEPT";
+			break;
+		case ACTION_BID:
+			result = @"ACTION_BID";
+			break;
+		case ACTION_PUSH:
+			result = @"ACTION_PUSH";
+			break;
+		case ACTION_CHALLENGE_BID:
+			result = @"ACTION_CHALLENGE_BID";
+			break;
+		case ACTION_CHALLENGE_PASS:
+			result = @"ACTION_CHALLENGE_PASS";
+			break;
+		case ACTION_EXACT:
+			result = @"ACTION_EXACT";
+			break;
+		case ACTION_PASS:
+			result = @"ACTION_PASS";
+			break;
+		case ACTION_QUIT:
+			result = @"ACTION_QUIT";
+			break;
+		case ACTION_LOST:
+			result = @"ACTION_LOST";
+			break;
+		case TUTORIAL:
+			result = @"TUTORIAL";
+			break;
+		default:
+			[NSException raise:NSGenericException format:@"Unexpected FormatType."];
+	}
+
+	return result;
+}
+
+- (NSString*)description
+{
+	return [NSString stringWithFormat:@"DiceAction: (ActionType: %@) (PlayerID: %li) (Count: %i) (Face: %i) (Push: %@) (TargetID: %li)", [DiceAction actionTypeToString:actionType], (long)playerID, count, face, push, (long)targetID];
+}
+
 @end

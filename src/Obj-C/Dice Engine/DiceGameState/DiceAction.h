@@ -11,14 +11,7 @@
 #import "DiceGameState.h"
 #import "DiceTypes.h"
 
-@interface DiceAction : NSObject {
-    ActionType actionType;
-    NSInteger playerID;
-    int count;
-    int face;
-    NSArray *push;
-    NSInteger targetID;
-}
+@interface DiceAction : NSObject
 
 @property (readwrite, assign) ActionType actionType;
 @property (readwrite, assign) NSInteger playerID;

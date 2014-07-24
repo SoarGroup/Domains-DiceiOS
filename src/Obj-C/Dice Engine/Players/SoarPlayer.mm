@@ -1150,29 +1150,29 @@ static int agentCount = 0;
 	if (action.actionType == ACTION_BID)
 		notify = NO;
 
+	if (*sleep)
+		notify = YES;
+
 	didNotify = notify;
 
     if (action != nil)
     {
-        NSLog(@"Agent performing action of type: %d", action.actionType);
+        NSLog(@"Agent performing action: %@", action);
         if (diceToPush != nil)
         {
-            NSLog(@"Pushing dice, count: %lu", (unsigned long)[diceToPush count]);
+            NSLog(@"Pushing dice: %@", diceToPush);
             action.push = diceToPush;           
         }
 
-
 		[localGame handleAction:action notify:notify];
-		//[actions addObject:action];
         *needsRefresh = YES;
     }
     else if (diceToPush != nil)
     {
-        NSLog(@"Agent just pushing, count: %lu", (unsigned long)[diceToPush count]);
+        NSLog(@"Agent just pushing, %@", diceToPush);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
-		[localGame handleAction:new_action notify:notify];
-		//[actions addObject:new_action];
+		[localGame handleAction:new_action notify:YES];
     }
 
 	if (localHandler)

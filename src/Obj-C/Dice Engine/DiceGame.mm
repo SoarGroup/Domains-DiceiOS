@@ -445,8 +445,9 @@ extern std::map<void*, sml::Agent*> agents;
 
 	PlayGameView* localGameView = self.gameView;
 	PlayerState* localState = localGameView.state;
+	ApplicationDelegate* delegate = self.appDelegate;
 
-	if (gameState.gameWinner || [localState hasLost])
+	if (gameState.gameWinner || ([localState hasLost] && [delegate.listener handlerForGame:self] != nil))
 		return;
 
 	if (notify)
