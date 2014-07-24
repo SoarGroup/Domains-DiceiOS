@@ -256,6 +256,7 @@ NSString *numberName(int number) {
 	{
 		showAllDice = YES;
 		[self updateUI:finalString];
+		showAllDice = NO;
 
 		canContinueRound = NO;
 		self.continueRoundButton.hidden = NO;
@@ -771,8 +772,6 @@ NSString *numberName(int number) {
 	self.gameStateLabel.accessibilityLabel = [self accessibleTextForString:headerString];
 
 	gameStateLabel.attributedText = [PlayGameView formatTextString:headerString];
-
-	[gameStateLabel sizeToFit];
 
 	// Player UI
     BOOL canBid = [localState canBid];

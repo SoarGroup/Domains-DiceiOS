@@ -128,7 +128,11 @@ const int kAI_8 = 0x47;
 
 			for (int i = 0;i < totalPlayerCount;i++)
 			{
+#ifdef DEBUG
+				BOOL isAI = (BOOL)(rand() % 2);
+#else
 				BOOL isAI = (BOOL)arc4random_uniform(2);
+#endif
 
 				if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
 				{

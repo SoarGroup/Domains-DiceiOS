@@ -58,7 +58,11 @@
 
 - (void)roll
 {
+#ifdef DEBUG
+	dieValue = (rand() % NUMBER_OF_SIDES + 1);
+#else
     dieValue = (arc4random_uniform((unsigned)NUMBER_OF_SIDES) + 1);
+#endif
 }
 
 - (void)push

@@ -222,7 +222,11 @@ static int agentCount = 0;
 			agents[(__bridge void*)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 #endif
 
+#ifdef DEBUG
+			int seed = rand();
+#else
 			int seed = arc4random_uniform(RAND_MAX);
+#endif
 
 			agents[(__bridge void*)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
 

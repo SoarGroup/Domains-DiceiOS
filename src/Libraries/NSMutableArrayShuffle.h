@@ -24,7 +24,11 @@
 	NSUInteger count = [self count];
 	for (NSUInteger i = 0; i < count; ++i) {
 		NSInteger remainingCount = count - i;
+#ifdef DEBUG
+		NSInteger exchangeIndex = i + rand() % remainingCount;
+#else
 		NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t)remainingCount);
+#endif
 		[self exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
 	}
 }

@@ -33,8 +33,23 @@
     return self;
 }
 
+- (void) redirectConsoleLogToDocumentFolder
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+														 NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *logPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"console-%f.log", [[NSDate date] timeIntervalSince1970]]];
+	freopen([logPath fileSystemRepresentation],"a+",stderr);
+}
+
 -(void) applicationDidFinishLaunching:(UIApplication *)application
 {
+	[self redirectConsoleLogToDocumentFolder];
+
+	int seed = arc4random_uniform(RAND_MAX);
+	srand(seed);
+	NSLog(@"Seed:%i", seed);
+
 	[[NSNotificationCenter defaultCenter]
 		addObserver: self
 		   selector: @selector (storeDidChange:)

@@ -265,7 +265,6 @@
 	}
 
 	gameStateLabel.attributedText = string;
-	[gameStateLabel sizeToFit];
 
 	// Update the contents of the gameStateView
 	NSArray *playerStates = localGame.gameState.playerStates;

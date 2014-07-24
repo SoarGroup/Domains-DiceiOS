@@ -73,10 +73,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-	
-    int seed = arc4random_uniform(RAND_MAX);
-    srand(seed);
-    NSLog(@"Seed:%i", seed);
 
 	self.navigationController.navigationBarHidden = YES;
 
