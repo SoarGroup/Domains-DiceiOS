@@ -234,6 +234,8 @@
 		for (HistoryItem* item in array)
 			[item canDecodePlayer];
 
+	BOOL didLeave = NO;
+
 	for (GKTurnBasedParticipant* participant in match.participants)
 	{
 		if (participant.matchOutcome == GKTurnBasedMatchOutcomeLost ||
@@ -256,11 +258,15 @@
 						[self playerLosesGame:state.playerID];
 
 						[self goToNextPlayerWhoHasntLost];
+						didLeave = YES;
 					}
 				}
 			}
 		}
 	}
+
+	if (didLeave)
+		[self createNewRound];
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
