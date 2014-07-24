@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
@@ -905,12 +906,6 @@
                         <outlet property="delegate" destination="-1" id="wBd-sn-JwR"/>
                     </connections>
                 </scrollView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Player Info" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="uRI-uY-tAZ">
-                    <rect key="frame" x="88" y="20" width="212" height="45"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8qZ-W6-P3A">
                     <rect key="frame" x="20" y="83" width="280" height="129"/>
                     <subviews>
@@ -1162,6 +1157,12 @@
                         <constraint firstItem="AYx-qc-glW" firstAttribute="top" secondItem="DDf-Wa-TrH" secondAttribute="bottom" constant="8" symbolic="YES" id="xwx-tA-v76"/>
                     </constraints>
                 </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Player Info" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="uRI-uY-tAZ">
+                    <rect key="frame" x="88" y="17" width="212" height="58"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
