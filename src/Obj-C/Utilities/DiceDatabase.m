@@ -144,4 +144,16 @@
 	return [defaults objectForKey:key];
 }
 
+
+- (BOOL)hasSeenTutorial
+{
+	return [(NSNumber*)[defaults objectForKey:@"DoneTutorial"] boolValue];
+}
+
+- (void)setHasSeenTutorial
+{
+	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DoneTutorial"];
+	[defaults synchronize];
+}
+
 @end

@@ -38,13 +38,13 @@ enum UITags
 	BOOL hasTouchedBidCounterThisTurn;
 	BOOL hasDisplayedRoundOverview;
 	BOOL showAllDice;
-
-	BOOL tutorial;
-	int step;
 @public
 	BOOL shouldNotifyCurrentPlayer;
 
 	void (^quitHandler)(void);
+
+	BOOL tutorial;
+	int step;
 }
 
 // Utility Functions

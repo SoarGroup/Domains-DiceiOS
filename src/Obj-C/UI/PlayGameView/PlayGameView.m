@@ -375,7 +375,7 @@ NSString *numberName(int number) {
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	if (tutorial)
+	if (tutorial && step == 0)
 	{
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Liar's Dice!"
 														message:@"Welcome to the Liar's Dice Tutorial.  This tutorial assumes you have familiarity with Liar's Dice.  It is designed to familiarize you with our interface for the game.  If you aren't familiar with Liar's Dice, please go back to the main menu and read at least the brief rules.  If at any time you would like to stop, either tap 'Main Menu' in these alerts or tap 'Main Menu' in the navigation bar above."
@@ -1417,7 +1417,14 @@ NSString *numberName(int number) {
 	if (buttonIndex == alertView.cancelButtonIndex)
 	{
 		if (tutorial && alertView.tag == TUTORIAL)
-			quitHandler();
+		{
+			if ((step == 5 || step == 7 || step == 10) && ![alertView.title isEqualToString:@"Done!"])
+				[self dismissViewControllerAnimated:YES completion:^{
+					self->quitHandler();
+				}];
+			else
+				quitHandler();
+		}
 
 		return;
 	}
@@ -1608,7 +1615,7 @@ NSString *numberName(int number) {
 	if (step == 0)
 	{
 		title = @"Bidding";
-		message = @"In Liar's Dice players bid based on their current dice.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
+		message = @"In Liar's Dice, players bid based on their current dice and opponents revealed.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
 		[views addObject:[player1View viewWithTag:DiceViewTag]];
 
 		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).enabled = YES;
@@ -1620,7 +1627,7 @@ NSString *numberName(int number) {
 	else if (step == 1)
 	{
 		title = @"Bidding";
-		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two actual fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one of the left represents the number you are bidding, since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the face, this should be a five die.  Select 5 Fives to continue.";
+		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two actual fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one on the left represents the number you are bidding.  Since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the die face, this should be five.  Select 5 Fives to continue.";
 
 		[views addObjectsFromArray:@[bidCountPlusButton,
 									 bidCountMinusButton,
@@ -1658,7 +1665,7 @@ NSString *numberName(int number) {
 		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s"];
 
 		title = @"Challenging";
-		message = @"Woah! Alice bid 6 threes.  We know that isn't there, let's challenge her.  Highlighted in red is the challenge button.  Tap to challenge her";
+		message = @"Woah! Alice bid 6 threes.  We know that is unlikely, so let's challenge her.  Highlighted in red is the challenge button.  Tap to challenge her";
 
 		UIButton* challengeButton = (UIButton*)[player2View viewWithTag:ChallengeButtonTag];
 		challengeButton.hidden = NO;
@@ -1669,41 +1676,60 @@ NSString *numberName(int number) {
 	}
 	else if (step == 4)
 	{
-		// iPad Only
-		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
-		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+		message = @"The round ended!  In this screen you can see all the dice your opponents had.  Also, this screen contains info about the last round including who did what to end the round.  ";
 
-		int index = 0;
-		for (UIButton* button in aliceDice.subviews)
+		if ([self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		{
-			switch (index) {
-				case 0:
-				case 1:
-					break;
-				case 2:
-					[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
-					break;
-				case 3:
-					[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
-					break;
-				case 4:
-					[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
-					break;
-				default:
-					break;
+			// iPad Only
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						break;
+					case 2:
+						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+						break;
+					case 3:
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						break;
+					case 4:
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						break;
+					default:
+						break;
+				}
+
+				index++;
 			}
 
-			index++;
+			aliceLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s."];
+
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s.\nThere were 5 3s.\nYou challenged Alice's bid.\nAlice lost a die."];
+
+			message = [message stringByAppendingString:@"Tap continue round to move on."];
+		}
+		else
+		{
+			RoundOverView *roundOverView = [[RoundOverView alloc] initWithGame:nil
+																		player:nil
+																  playGameView:self
+															   withFinalString:nil];
+
+			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
+
+			message = [message stringByAppendingString:@"Tap done to move on."];
 		}
 
-		aliceLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s."];
-
-		gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s.\nThere were 5 3s.\nYou challenged Alice's bid.\nAlice lost a die."];
 
 		title = @"Round Over!";
-		message = @"The round ended!  In this screen you can see all the dice your opponents had.  Also, in the center of the screen is the info about the last round including who did what to end the round, and if it was a bid, how many dice were bid and how many were there.  Tap continue round, highlighted in red, to continue.";
 
-		[views addObject:continueRoundButton];
+		if (continueRoundButton)
+			[views addObject:continueRoundButton];
 
 		continueRoundButton.hidden = NO;
 		continueRoundButton.enabled = YES;
@@ -1728,7 +1754,7 @@ NSString *numberName(int number) {
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 
 		title = @"Passes";
-		message = @"It looks like you have a rare hand, all five dice of the same face.  Let's pass since we have a pass.  Tap the pass button, highlighted in red.";
+		message = @"It looks like you have a rare hand, all five dice of the same face.  Let's pass since we haven't already passed this round.  Tap the pass button, highlighted in red.";
 
 		[views addObject:passButton];
 
@@ -1736,36 +1762,52 @@ NSString *numberName(int number) {
 	}
 	else if (step == 6)
 	{
-		// iPad Only
-		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
-		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
-
-		int index = 0;
-		for (UIButton* button in aliceDice.subviews)
+		if ([self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		{
-			switch (index) {
-				case 0:
-				case 1:
-					[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
-					break;
-				case 2:
-				case 3:
-					[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
-					break;
-				default:
-					break;
+			// iPad Only
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						break;
+					case 2:
+					case 3:
+						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+						break;
+					default:
+						break;
+				}
+
+				index++;
 			}
 
-			index++;
+			aliceLabel.text = @"Alice challenged your pass.";
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You passed.\nAlice challenged your pass.\nAlice lost a die."];
+
+			message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+		}
+		else
+		{
+			RoundOverView *roundOverView = [[RoundOverView alloc] initWithGame:nil
+																		player:nil
+																  playGameView:self
+															   withFinalString:nil];
+
+			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
+
+			message = @"The round ended! Tap done, highlighted in red, to continue.";
 		}
 
-		aliceLabel.text = @"Alice challenged your pass.";
-		gameStateLabel.attributedText = [PlayGameView formatTextString:@"You passed.\nAlice challenged your pass.\nAlice lost a die."];
-
 		title = @"Round Over!";
-		message = @"The round ended! Tap continue round, highlighted in red, to continue.";
 
-		[views addObject:continueRoundButton];
+		if (continueRoundButton)
+			[views addObject:continueRoundButton];
 
 		continueRoundButton.enabled = YES;
 		continueRoundButton.hidden = NO;
@@ -1823,63 +1865,78 @@ NSString *numberName(int number) {
 	}
 	else if (step == 9)
 	{
-		// iPad Only
-		UIView* myDice = [player1View viewWithTag:DiceViewTag];
-		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
-		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
-
-		int index = 0;
-		for (UIButton* button in aliceDice.subviews)
+		if ([self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		{
-			switch (index) {
-				case 0:
-				case 1:
-					[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
-					break;
-				case 2:
-					[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
-					button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
-					break;
-				case 3:
-				case 4:
-					[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
-					if (index == 4)
-						button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
-					break;
-				default:
-					break;
+			// iPad Only
+			UIView* myDice = [player1View viewWithTag:DiceViewTag];
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+						break;
+					case 2:
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
+						break;
+					case 3:
+					case 4:
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+						if (index == 4)
+							button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
+						break;
+					default:
+						break;
+				}
+
+				index++;
 			}
 
-			index++;
+			aliceLabel.text = @"Alice challenged your bid.";
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];
+
+			[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+			message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+		}
+		else
+		{
+			RoundOverView *roundOverView = [[RoundOverView alloc] initWithGame:nil
+																		player:nil
+																  playGameView:self
+															   withFinalString:nil];
+
+			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
+			message = @"The round ended! Tap done, highlighted in red, to continue.";
 		}
 
-		aliceLabel.text = @"Alice challenged your bid.";
-		gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];
-
-		[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
-
 		title = @"Round Over!";
-		message = @"The round ended! Tap continue round, highlighted in red, to continue.";
 
-		[views addObject:continueRoundButton];
+
+		if (continueRoundButton)
+			[views addObject:continueRoundButton];
 		continueRoundButton.enabled = YES;
 		continueRoundButton.hidden = NO;
 	}
 	else if (step == 10)
 	{
 		title = @"Done!";
-		message = @"Congratulations on finishing the tutorial!  Now you are all set for playing Liar's Dice on your own against the AI, your friends, and random opponents.";
+		message = @"Congratulations on finishing the tutorial!  Now you are all set for playing Liar's Dice on your own against the AI, your friends, and/or random opponents.";
 
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
 														message:message
 													   delegate:self
 											  cancelButtonTitle:@"Main Menu"
 											  otherButtonTitles:nil];
-
+		
 		alert.tag = TUTORIAL;
 		
 		[alert show];
-
+		
 		return;
 	}
 
@@ -1888,14 +1945,17 @@ NSString *numberName(int number) {
 	CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
 	pulse.fromValue = (id)[UIColor clearColor].CGColor;
 	pulse.toValue = (id)[UIColor redColor].CGColor;
-	pulse.duration = 1.0;
+	pulse.duration = 2.0;
 	pulse.autoreverses = YES;
 	pulse.removedOnCompletion = NO;
 	//pulse.fillMode = kCAFillModeBoth;
 	pulse.repeatCount = HUGE_VALF;
 
 	for (UIView* view in views)
+	{
+		[view.layer setCornerRadius:5.0f];
 		[view.layer addAnimation:pulse forKey:@"backgroundColor"];
+	}
 
 	UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
 													message:message

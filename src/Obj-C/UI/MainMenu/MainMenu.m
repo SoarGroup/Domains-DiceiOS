@@ -105,6 +105,19 @@
 	[self.navigationController pushViewController:[[SingleplayerView alloc] initWithAppDelegate:self.appDelegate andWithMainMenu:self] animated:YES];
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	DiceDatabase* database = [[DiceDatabase alloc] init];
+
+	if (![database hasSeenTutorial])
+	{
+		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Would you like to play the tutorial?" message:@"It appears you have never played Liar's Dice before.  Would you like to play the tutorial now?  If you select no now, you can always replay it in the Settings menu." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+		alert.tag = 99;
+		[alert show];
+	}
+}
+
 - (IBAction)multiplayerGameButtonPressed:(id)sender
 {
 	ApplicationDelegate* delegate = self.appDelegate;
@@ -135,7 +148,22 @@
 {
 	ApplicationDelegate* delegate = self.appDelegate;
 
-	if (buttonIndex == 1 && delegate.gameCenterLoginViewController)
+	if (alertView.tag == 99)
+	{
+		DiceDatabase* database = [[DiceDatabase alloc] init];
+		[database setHasSeenTutorial];
+
+		if (buttonIndex != alertView.cancelButtonIndex)
+		{
+			void (^quitHandler)(void) =^ {
+				[[self navigationController] popToRootViewControllerAnimated:YES];
+			};
+
+			[self.navigationController pushViewController:[[PlayGameView alloc] initTutorialWithQuitHandler:[quitHandler copy]]
+												 animated:YES];
+		}
+	}
+	else if (buttonIndex == 1 && delegate.gameCenterLoginViewController)
 	{
 		[self.navigationController presentViewController:delegate.gameCenterLoginViewController animated:YES completion:^(void)
 		 {

@@ -60,6 +60,158 @@
 					player7View,
 					player8View];
 
+	if (localGameView->tutorial)
+	{
+		for (NSUInteger i = 2;i < [playerViews count];i++)
+			((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
+
+		((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
+
+		for (int i = 0;i < 5;++i)
+		{
+			UIButton* button = [[localGameView.player1View viewWithTag:DiceViewTag].subviews objectAtIndex:i];
+			UIButton* button2 = [[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:i];
+			UIImage* image = button.imageView.image;
+
+			[button2 setImage:image forState:UIControlStateNormal];
+			button2.hidden = button.hidden;
+		}
+
+		for (int i = 0;i < 5;++i)
+		{
+			UIButton* button = [[localGameView.player2View viewWithTag:DiceViewTag].subviews objectAtIndex:i];
+			UIButton* button2 = [[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:i];
+			UIImage* image = button.imageView.image;
+
+			[button2 setImage:image forState:UIControlStateNormal];
+			button2.hidden = button.hidden;
+		}
+
+		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
+		((UILabel*)[player2View viewWithTag:PlayerLabelTag]).text = @"Alice";
+
+		NSMutableArray* views = [NSMutableArray array];
+
+		if (localGameView->step == 4)
+		{
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						break;
+					case 2:
+						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+						break;
+					case 3:
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						break;
+					case 4:
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						break;
+					default:
+						break;
+				}
+
+				index++;
+			}
+
+			aliceLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s."];
+
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s.\nThere were 5 3s.\nYou challenged Alice's bid.\nAlice lost a die."];
+
+			[views addObject:doneButton];
+		}
+		else if (localGameView->step == 6)
+		{
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						break;
+					case 2:
+					case 3:
+						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+						break;
+					default:
+						break;
+				}
+
+				index++;
+			}
+
+			aliceLabel.text = @"Alice challenged your pass.";
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You passed.\nAlice challenged your pass.\nAlice lost a die."];
+
+			[views addObject:doneButton];
+		}
+		else if (localGameView->step == 9)
+		{
+			UIView* myDice = [player1View viewWithTag:DiceViewTag];
+			UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
+			UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
+
+			int index = 0;
+			for (UIButton* button in aliceDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+						break;
+					case 2:
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
+						break;
+					case 3:
+					case 4:
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+						if (index == 4)
+							button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
+						break;
+					default:
+						break;
+				}
+
+				index++;
+			}
+
+			aliceLabel.text = @"Alice challenged your bid.";
+			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];
+
+			[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+			
+			[views addObject:doneButton];
+		}
+
+		CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+		pulse.fromValue = (id)[UIColor clearColor].CGColor;
+		pulse.toValue = (id)[UIColor redColor].CGColor;
+		pulse.duration = 2.0;
+		pulse.autoreverses = YES;
+		pulse.removedOnCompletion = NO;
+		//pulse.fillMode = kCAFillModeBoth;
+		pulse.repeatCount = HUGE_VALF;
+
+		for (UIView* view in views)
+		{
+			[view.layer setCornerRadius:5.0f];
+			[view.layer addAnimation:pulse forKey:@"backgroundColor"];
+		}
+
+		return;
+	}
+
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
 

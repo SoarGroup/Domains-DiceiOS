@@ -26,7 +26,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Player Info" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="uRI-uY-tAZ">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="uRI-uY-tAZ">
                     <rect key="frame" x="20" y="70" width="280" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="xoo-pg-s6b"/>
@@ -38,7 +38,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8qZ-W6-P3A">
                     <rect key="frame" x="20" y="133" width="280" height="129"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rg1-Wf-5Yd">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rg1-Wf-5Yd">
                             <rect key="frame" x="2" y="92" width="60" height="38"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="2br-ah-554"/>
@@ -55,7 +55,7 @@
                                 <action selector="exactPressed:" destination="-1" eventType="touchUpInside" id="J11-f4-vCj"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYx-qc-glW">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYx-qc-glW">
                             <rect key="frame" x="70" y="92" width="60" height="38"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="0kV-di-DkQ"/>
@@ -71,7 +71,7 @@
                                 <action selector="passPressed:" destination="-1" eventType="touchUpInside" id="upi-Wi-jp7"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqM-zi-9N1">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqM-zi-9N1">
                             <rect key="frame" x="200" y="92" width="40" height="38"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             <state key="normal" title="-">
@@ -84,7 +84,7 @@
                                 <action selector="bidCountMinusPressed:" destination="-1" eventType="touchUpInside" id="lcl-Nd-1cW"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRR-Ex-7XU">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRR-Ex-7XU">
                             <rect key="frame" x="200" y="0.0" width="40" height="55"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="pVq-Fn-PKH"/>
@@ -100,7 +100,7 @@
                                 <action selector="bidCountPlusPressed:" destination="-1" eventType="touchUpInside" id="S7l-de-5rw"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCS-kv-LcV">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCS-kv-LcV">
                             <rect key="frame" x="239" y="0.0" width="40" height="55"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                             <state key="normal" title="+">
@@ -113,7 +113,7 @@
                                 <action selector="bidFacePlusPressed:" destination="-1" eventType="touchUpInside" id="eiG-U4-bzS"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-jy-4VQ">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-jy-4VQ">
                             <rect key="frame" x="138" y="92" width="60" height="38"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                             <state key="normal" title="Bid">
@@ -129,7 +129,7 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="die-2.png" translatesAutoresizingMaskIntoConstraints="NO" id="IuH-R7-hCR">
                             <rect key="frame" x="247" y="63" width="25" height="21"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayp-de-0Fz">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayp-de-0Fz">
                             <rect key="frame" x="240" y="92" width="40" height="38"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             <state key="normal" title="-">
@@ -154,7 +154,7 @@
                         <view tag="9" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DDf-Wa-TrH">
                             <rect key="frame" x="0.0" y="29" width="212" height="55"/>
                             <subviews>
-                                <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lw7-SN-1c4">
+                                <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lw7-SN-1c4">
                                     <rect key="frame" x="1" y="15" width="40" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="52d-no-oIg"/>
@@ -166,7 +166,7 @@
                                         <action selector="dieButtonPressed:" destination="-1" eventType="touchUpInside" id="Pbb-h1-epn"/>
                                     </connections>
                                 </button>
-                                <button appearanceType="aqua" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eX5-mE-vcc">
+                                <button appearanceType="aqua" opaque="NO" tag="1" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eX5-mE-vcc">
                                     <rect key="frame" x="40" y="15" width="40" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="Suh-DS-qYQ"/>
@@ -178,7 +178,7 @@
                                         <action selector="dieButtonPressed:" destination="-1" eventType="touchUpInside" id="pwY-6l-MpM"/>
                                     </connections>
                                 </button>
-                                <button appearanceType="aqua" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GX4-aT-moF">
+                                <button appearanceType="aqua" opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GX4-aT-moF">
                                     <rect key="frame" x="79" y="15" width="40" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="u6x-C8-Ks6"/>
@@ -190,7 +190,7 @@
                                         <action selector="dieButtonPressed:" destination="-1" eventType="touchUpInside" id="mCn-PP-mfz"/>
                                     </connections>
                                 </button>
-                                <button appearanceType="aqua" opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBP-gQ-aHl">
+                                <button appearanceType="aqua" opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBP-gQ-aHl">
                                     <rect key="frame" x="118" y="15" width="40" height="40"/>
                                     <state key="normal" image="die-5.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -199,7 +199,7 @@
                                         <action selector="dieButtonPressed:" destination="-1" eventType="touchUpInside" id="hbL-WW-fhe"/>
                                     </connections>
                                 </button>
-                                <button appearanceType="aqua" opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXO-7z-jZa">
+                                <button appearanceType="aqua" opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXO-7z-jZa">
                                     <rect key="frame" x="157" y="15" width="40" height="40"/>
                                     <state key="normal" image="die-6.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -366,7 +366,7 @@
                                 <constraint firstItem="vGl-Je-Mh2" firstAttribute="leading" secondItem="3fr-mH-Dk1" secondAttribute="trailing" constant="6" id="rlM-Ec-UT5"/>
                             </constraints>
                         </view>
-                        <button appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bG-38-vQG">
+                        <button hidden="YES" appearanceType="aqua" opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bG-38-vQG">
                             <rect key="frame" x="209" y="26" width="71" height="30"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Challenge">
@@ -377,7 +377,7 @@
                                 <action selector="challengePressed:" destination="-1" eventType="touchUpInside" id="5w1-OK-9X1"/>
                             </connections>
                         </button>
-                        <activityIndicatorView appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KVv-dI-G4D">
+                        <activityIndicatorView hidden="YES" appearanceType="aqua" opaque="NO" tag="12" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="KVv-dI-G4D">
                             <rect key="frame" x="181" y="31" width="20" height="20"/>
                         </activityIndicatorView>
                     </subviews>
