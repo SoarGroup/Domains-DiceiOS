@@ -1647,7 +1647,7 @@ NSString *numberName(int number) {
 	else if (step == 1)
 	{
 		title = @"Bidding";
-		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two natural fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one on the left represents the number you are bidding.  Since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the die face, this should be five.  Select 5 Fives to continue.";
+		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two natural fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The selector on the left represents the die count you will bid.  The one on the right represents the die face you will bid.  Change these to be 5 Fives to continue.";
 
 		bidFaceLabelHint.hidden = NO;
 		bidCountLabelHint.hidden = NO;
@@ -1691,7 +1691,7 @@ NSString *numberName(int number) {
 		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s."];
 
 		title = @"Challenging";
-		message = @"Woah! Alice bid 6 threes.  We know that is unlikely, so let's challenge her.  Highlighted in red is the challenge button.  Tap to challenge her";
+		message = @"Woah! Alice bid 6 threes.  We know that is unlikely, so let's challenge her.  Highlighted in red is the challenge button, tap this to challenge her.";
 
 		UIButton* challengeButton = (UIButton*)[player2View viewWithTag:ChallengeButtonTag];
 		challengeButton.hidden = NO;
@@ -1737,7 +1737,7 @@ NSString *numberName(int number) {
 
 			gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s.\nThere were 5 3s.\nYou challenged Alice's bid.\nAlice lost a die."];
 
-			message = [message stringByAppendingString:@"Tap continue round to move on."];
+			message = [message stringByAppendingString:@"Tap Continue Round to move on."];
 		}
 		else
 		{
@@ -1748,7 +1748,7 @@ NSString *numberName(int number) {
 
 			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
 
-			message = [message stringByAppendingString:@"Tap done to move on."];
+			message = [message stringByAppendingString:@"Tap Done to move on."];
 		}
 
 
@@ -1816,7 +1816,7 @@ NSString *numberName(int number) {
 			aliceLabel.text = @"Alice challenged your pass.";
 			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You passed.\nAlice challenged your pass.\nAlice lost a die."];
 
-			message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+			message = @"The round ended! Tap Continue Round, highlighted in red, to continue.";
 		}
 		else
 		{
@@ -1827,7 +1827,7 @@ NSString *numberName(int number) {
 
 			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
 
-			message = @"The round ended! Tap done, highlighted in red, to continue.";
+			message = @"The round ended! Tap Done, highlighted in red, to continue.";
 		}
 
 		title = @"Round Over!";
@@ -1862,7 +1862,7 @@ NSString *numberName(int number) {
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 
 		title = @"Pushing";
-		message = @"We're going to learn how to push.  Pushing is when you reveal your dice to your opponents as a way of increasing the confidence in your bid.  When you push, your unpushed dice are rerolled.  Let's push all our sixes, highlighted in red.";
+		message = @"Pushing is when you reveal your dice to your opponents as a way of increasing the confidence in your bid.  When you push, your unpushed dice are rerolled.  Let's push all our sixes, highlighted in red.";
 
 		[views addObject:[myDice.subviews objectAtIndex:0]];
 		[views addObject:[myDice.subviews objectAtIndex:1]];
@@ -1877,7 +1877,7 @@ NSString *numberName(int number) {
 	else if (step == 8)
 	{
 		title = @"Pushing";
-		message = @"These dice haven't been pushed quite yet.  You can still undo any pushes at this point.  When you tap bid though, your dice will be pushed and you will be unable to conceal them again.  Bid 7 sixes.";
+		message = @"Until you hit Bid, you can change which dice you are going to push.  In our case we don't want to do this though.  Bid 7 sixes to continue.";
 
 		bidFaceLabelHint.hidden = NO;
 		bidCountLabelHint.hidden = NO;
@@ -1933,7 +1933,7 @@ NSString *numberName(int number) {
 			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];
 
 			[[myDice.subviews objectAtIndex:2] setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
-			message = @"The round ended! Tap continue round, highlighted in red, to continue.";
+			message = @"The round ended! Tap Continue Round, highlighted in red, to continue.";
 		}
 		else
 		{
@@ -1943,7 +1943,7 @@ NSString *numberName(int number) {
 															   withFinalString:nil];
 
 			[self.navigationController presentViewController:roundOverView animated:YES completion:nil];
-			message = @"The round ended! Tap done, highlighted in red, to continue.";
+			message = @"The round ended! Tap Done, highlighted in red, to continue.";
 		}
 
 		title = @"Round Over!";
