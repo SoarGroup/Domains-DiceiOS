@@ -206,6 +206,27 @@ extern std::map<void*, sml::Agent*> agents;
 
 	if (remote.gameState)
 	{
+		NSArray* myHistory = self.gameState.flatHistory;
+		NSArray* newHistory = remote.gameState.flatHistory;
+
+		if ([myHistory count] < [newHistory count])
+			NSLog(@"WARNING: History is less! This should not happen!");
+
+		if ([myHistory count] != [newHistory count])
+		{
+			int index = (int)[myHistory count];
+
+			if (![[[newHistory objectAtIndex:([myHistory count]-1)] description] isEqualToString:[[myHistory lastObject] description]])
+			{
+				NSLog(@"WARNING: History objects are not equivalent! This will go horribly wrong!  Replaying entire history!");
+
+				index = 0;
+			}
+
+			for (;index < [newHistory count];++index)
+				NSLog(@"REPLAY HISTORY: %@", [newHistory objectAtIndex:index]);
+		}
+
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
 			didAdvanceTurns = YES;
 
@@ -394,7 +415,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
-    NSLog(@"Handling action: %i", action.actionType);
+    NSLog(@"Handling action: %@", action);
     self.deferNotification = NO;
 
 	self.gameState.game = self;
