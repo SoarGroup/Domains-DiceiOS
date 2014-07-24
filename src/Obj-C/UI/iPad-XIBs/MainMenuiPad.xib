@@ -8,9 +8,9 @@
             <connections>
                 <outlet property="aboutButton" destination="FXg-I3-Sux" id="amf-AB-B6t"/>
                 <outlet property="aiOnlyGameButton" destination="PUS-Rb-9Zg" id="TT7-NE-1pA"/>
+                <outlet property="helpButton" destination="SvW-QR-bS0" id="kx1-jW-cPP"/>
                 <outlet property="multiplayerGameButton" destination="x9s-1m-gFn" id="A6g-vX-6gX"/>
                 <outlet property="removeAllMultiplayerGames" destination="Tp4-Bo-qFS" id="WqD-uU-SNL"/>
-                <outlet property="rulesButton" destination="SvW-QR-bS0" id="Di5-FK-bs8"/>
                 <outlet property="settingsButton" destination="rhh-GJ-2Zy" id="OFk-5a-WGr"/>
                 <outlet property="statsButton" destination="e5p-jc-GAn" id="ymE-yz-aeF"/>
                 <outlet property="view" destination="iN0-l3-epB" id="grF-84-Z4i"/>
@@ -65,11 +65,11 @@
                         <constraint firstAttribute="width" constant="62" id="Rga-b5-m5d"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="Rules">
+                    <state key="normal" title="Help">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="rulesButtonPressed:" destination="-1" eventType="touchUpInside" id="o5n-Zo-kLz"/>
+                        <action selector="helpButtonPressed:" destination="-1" eventType="touchUpInside" id="hnp-Gl-2Ag"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5p-jc-GAn">

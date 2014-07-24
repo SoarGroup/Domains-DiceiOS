@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
@@ -8,9 +9,9 @@
             <connections>
                 <outlet property="aboutButton" destination="EcY-Fi-9Ub" id="1iG-8J-8d1"/>
                 <outlet property="aiOnlyGameButton" destination="Naf-g9-JpX" id="2Ll-Iv-Vof"/>
+                <outlet property="helpButton" destination="Yci-zA-iea" id="qm9-Dj-QDw"/>
                 <outlet property="multiplayerGameButton" destination="qm2-mF-IoV" id="Mtd-fw-0kg"/>
                 <outlet property="removeAllMultiplayerGames" destination="y8a-4e-TUd" id="ijb-si-RCI"/>
-                <outlet property="rulesButton" destination="Yci-zA-iea" id="pGp-B1-wzn"/>
                 <outlet property="settingsButton" destination="VCa-cI-cFN" id="Llz-W9-UIk"/>
                 <outlet property="statsButton" destination="PiJ-Vg-bc4" id="buq-v4-zml"/>
                 <outlet property="view" destination="1" id="1lG-Ma-BxB"/>
@@ -63,11 +64,11 @@
                         <constraint firstAttribute="height" constant="50" id="M6g-VD-8dI"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="Rules">
+                    <state key="normal" title="Help">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="rulesButtonPressed:" destination="-1" eventType="touchUpInside" id="keo-Gh-dv9"/>
+                        <action selector="helpButtonPressed:" destination="-1" eventType="touchUpInside" id="0XB-FW-f53"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PiJ-Vg-bc4">

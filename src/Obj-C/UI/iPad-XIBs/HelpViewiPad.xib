@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpView">
+            <connections>
+                <outlet property="aiOnlyGameButton" destination="PUS-Rb-9Zg" id="TT7-NE-1pA"/>
+                <outlet property="view" destination="iN0-l3-epB" id="grF-84-Z4i"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUS-Rb-9Zg">
+                    <rect key="frame" x="436" y="275" width="153" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="hWN-hD-RB3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <state key="normal" title="Tutorial">
+                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="aiOnlyGameButtonPressed:" destination="-1" eventType="touchUpInside" id="qvZ-pE-wxZ"/>
+                        <action selector="tutorialButtonPressed:" destination="-1" eventType="touchUpInside" id="a9m-81-qoM"/>
+                    </connections>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 2.0 Beta 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBA-mH-54y">
+                    <rect key="frame" x="20" y="727" width="140" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="140" id="4Lk-4w-80e"/>
+                        <constraint firstAttribute="height" constant="21" id="7rq-g9-g7w"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by Soar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5t-V3-TH5">
+                    <rect key="frame" x="872" y="727" width="132" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfk-Ey-QXf">
+                    <rect key="frame" x="436" y="170" width="153" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="153" id="Jcd-ad-hCR"/>
+                        <constraint firstAttribute="height" constant="50" id="nA9-kw-Vrd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <state key="normal" title="Rules">
+                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="aiOnlyGameButtonPressed:" destination="-1" eventType="touchUpInside" id="9Ga-77-8Sj"/>
+                        <action selector="rulesButtonPressed:" destination="-1" eventType="touchUpInside" id="43o-bE-eE6"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="trailing" secondItem="pfk-Ey-QXf" secondAttribute="trailing" id="2eR-NP-R1W"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="V3L-5f-lgU"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="top" secondItem="pfk-Ey-QXf" secondAttribute="bottom" constant="55" id="VEc-R3-lR7"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="leading" secondItem="pfk-Ey-QXf" secondAttribute="leading" id="dzv-eo-Rxm"/>
+                <constraint firstAttribute="trailing" secondItem="k5t-V3-TH5" secondAttribute="trailing" constant="20" symbolic="YES" id="ijM-7e-7g1"/>
+                <constraint firstItem="eBA-mH-54y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="j0n-Ub-gPr"/>
+                <constraint firstItem="pfk-Ey-QXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="170" id="rPV-oZ-e99"/>
+                <constraint firstItem="eBA-mH-54y" firstAttribute="top" secondItem="k5t-V3-TH5" secondAttribute="top" id="rRg-P3-rnw"/>
+                <constraint firstItem="eBA-mH-54y" firstAttribute="baseline" secondItem="k5t-V3-TH5" secondAttribute="baseline" id="xbB-Y7-CCo"/>
+                <constraint firstAttribute="bottom" secondItem="eBA-mH-54y" secondAttribute="bottom" constant="20" symbolic="YES" id="zv9-4i-9pc"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="257" y="301"/>
+        </view>
+    </objects>
+</document>

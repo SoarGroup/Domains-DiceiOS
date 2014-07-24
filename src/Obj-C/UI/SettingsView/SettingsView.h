@@ -29,8 +29,5 @@
 - (IBAction)remoteIPTextFieldTextFinalize:(id)sender;
 
 - (IBAction)resetAchievements:(id)sender;
-- (IBAction)resetLeaderboards:(id)sender;
-
-- (IBAction)tutorial:(id)sender;
 
 @end

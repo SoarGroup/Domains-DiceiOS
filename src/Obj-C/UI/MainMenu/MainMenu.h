@@ -20,7 +20,7 @@
 
 - (IBAction)aiOnlyGameButtonPressed:(id)sender;
 - (IBAction)multiplayerGameButtonPressed:(id)sender;
-- (IBAction)rulesButtonPressed:(id)sender;
+- (IBAction)helpButtonPressed:(id)sender;
 - (IBAction)statsButtonPressed:(id)sender;
 - (IBAction)settingsButtonPressed:(id)sender;
 - (IBAction)aboutButtonPressed:(id)sender;
@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) IBOutlet UIButton *aiOnlyGameButton;
 @property (nonatomic, strong) IBOutlet UIButton *multiplayerGameButton;
-@property (nonatomic, strong) IBOutlet UIButton *rulesButton;
+@property (nonatomic, strong) IBOutlet UIButton *helpButton;
 @property (nonatomic, strong) IBOutlet UIButton *statsButton;
 @property (strong, nonatomic) IBOutlet UIButton *settingsButton;
 @property (strong, nonatomic) IBOutlet UIButton *aboutButton;

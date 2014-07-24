@@ -25,6 +25,9 @@
 		4D48E028197F06AB009DA895 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E026197F06AB009DA895 /* LICENSE.md */; };
 		4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02B197FFDCB009DA895 /* TutorialView.xib */; };
 		4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */; };
+		4D48E03219818381009DA895 /* HelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E03119818381009DA895 /* HelpView.xib */; };
+		4D48E036198183F9009DA895 /* HelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E035198183F9009DA895 /* HelpView.m */; };
+		4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E037198184E3009DA895 /* HelpViewiPad.xib */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
@@ -146,6 +149,10 @@
 		4D48E026197F06AB009DA895 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		4D48E02B197FFDCB009DA895 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TutorialView-iPad.xib"; sourceTree = "<group>"; };
+		4D48E03119818381009DA895 /* HelpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpView.xib; sourceTree = "<group>"; };
+		4D48E034198183F9009DA895 /* HelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpView.h; sourceTree = "<group>"; };
+		4D48E035198183F9009DA895 /* HelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpView.m; sourceTree = "<group>"; };
+		4D48E037198184E3009DA895 /* HelpViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewiPad.xib; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -386,6 +393,15 @@
 				4D07AB691976EC3B00EC955E /* InviteFriendsView.m */,
 			);
 			path = InviteFriendsView;
+			sourceTree = "<group>";
+		};
+		4D48E033198183F9009DA895 /* HelpView */ = {
+			isa = PBXGroup;
+			children = (
+				4D48E034198183F9009DA895 /* HelpView.h */,
+				4D48E035198183F9009DA895 /* HelpView.m */,
+			);
+			path = HelpView;
 			sourceTree = "<group>";
 		};
 		4DF393841923C4F400A523FB /* Assets */ = {
@@ -635,6 +651,7 @@
 				4DF3945C1923C51C00A523FB /* MainMenu */,
 				4DF3945F1923C51C00A523FB /* MultiplayerView */,
 				4DF394621923C51C00A523FB /* PlayGameView */,
+				4D48E033198183F9009DA895 /* HelpView */,
 				4DF394681923C51C00A523FB /* RulesView */,
 				4DF3946B1923C51C00A523FB /* SettingsView */,
 				4DF3946E1923C51C00A523FB /* SingleplayerView */,
@@ -659,6 +676,7 @@
 			children = (
 				4DF3943E1923C51C00A523FB /* AboutViewiPad.xib */,
 				4DF3943F1923C51C00A523FB /* ApplicationiPad.xib */,
+				4D48E037198184E3009DA895 /* HelpViewiPad.xib */,
 				4DF394401923C51C00A523FB /* LoadingGameViewiPad.xib */,
 				4DF394411923C51C00A523FB /* MainMenuiPad.xib */,
 				4DF394421923C51C00A523FB /* MultiplayerViewiPad.xib */,
@@ -684,6 +702,7 @@
 			children = (
 				4DF3944A1923C51C00A523FB /* AboutView.xib */,
 				4DF3944B1923C51C00A523FB /* Application.xib */,
+				4D48E03119818381009DA895 /* HelpView.xib */,
 				4DF3944C1923C51C00A523FB /* JoinMatchView.xib */,
 				4D07AB651976EC0800EC955E /* InviteFriendsView.xib */,
 				4DF3944D1923C51C00A523FB /* LoadingGameView.xib */,
@@ -977,6 +996,7 @@
 				4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */,
 				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
 				4D17A9F0197DBAF4006C4A64 /* PlayGameView-6iPad.xib in Resources */,
+				4D48E03219818381009DA895 /* HelpView.xib in Resources */,
 				4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */,
 				4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */,
 				4D17A9EC197DBA38006C4A64 /* PlayGameView-4iPad.xib in Resources */,
@@ -993,6 +1013,7 @@
 				4DF396141923C51D00A523FB /* about.html in Resources */,
 				4DF393A81923C4F400A523FB /* die-4.png in Resources */,
 				4DF396151923C51D00A523FB /* rules.html in Resources */,
+				4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */,
 				4DF393BC1923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection in Resources */,
 				4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */,
 				4DF393A61923C4F400A523FB /* die-2.png in Resources */,
@@ -1047,6 +1068,7 @@
 				4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */,
 				4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */,
 				4DF3964D1923C51D00A523FB /* GameKitListener.m in Sources */,
+				4D48E036198183F9009DA895 /* HelpView.m in Sources */,
 				4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */,
 				4DF396211923C51D00A523FB /* HistoryItem.m in Sources */,
 				4DF396491923C51D00A523FB /* StatsView.m in Sources */,

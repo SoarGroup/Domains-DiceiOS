@@ -15,6 +15,7 @@
 #import "PlayGameView.h"
 #import "SoarPlayer.h"
 #import "LoadingGameView.h"
+#import "HelpView.h"
 #import "RulesView.h"
 #import "StatsView.h"
 #import "SettingsView.h"
@@ -31,7 +32,7 @@
 
 @synthesize aiOnlyGameButton;
 @synthesize multiplayerGameButton;
-@synthesize rulesButton;
+@synthesize helpButton;
 @synthesize statsButton;
 @synthesize settingsButton;
 @synthesize aboutButton;
@@ -176,9 +177,9 @@
 	}
 }
 
-- (IBAction)rulesButtonPressed:(id)sender
+- (IBAction)helpButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[RulesView alloc] init]  animated:YES];
+	[self.navigationController pushViewController:[[HelpView alloc] init]  animated:YES];
 }
 
 - (IBAction)statsButtonPressed:(id)sender
