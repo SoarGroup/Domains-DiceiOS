@@ -30,3 +30,8 @@
     return contextInfo;
 }
 @end
+
+#ifndef DEBUG
+#undef NSLog
+#define NSLog(args, ...)
+#endif
