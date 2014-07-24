@@ -292,7 +292,6 @@ NSString *numberName(int number) {
 	self.bidFaceMinusButton.enabled = YES;
 
 	DiceGame* localGame = self.game;
-	PlayerState* localState = self.state;
 	PlayerState* lastPlayerState = [[localGame.gameState lastHistoryItem] player];
 
 	while ([[lastPlayerState playerPtr] isKindOfClass:SoarPlayer.class])
@@ -309,20 +308,38 @@ NSString *numberName(int number) {
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
 
+	[localGame notifyCurrentPlayer];
+}
+
+- (BOOL) roundBeginning
+{
+	hasTouchedBidCounterThisTurn = NO;
+	hasDisplayedRoundOverview = NO;
+
+	if (![NSThread isMainThread])
+	{
+		[self performSelectorOnMainThread:@selector(roundBeginning) withObject:nil waitUntilDone:YES];
+		return NO;
+	}
+
 	NSString *title = nil, *message = nil;
 
+	DiceGame* localGame = self.game;
+	PlayerState* localState = self.state;
+	PlayerState* lastPlayerState = [[localGame.gameState lastHistoryItem] player];
+
 	if ([localGame.gameState usingSpecialRules]) {
-        title = [NSString stringWithFormat:@"Special Rules!"];
-        message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
-    }
-    else if ([localState hasWon])
-        title = [NSString stringWithFormat:@"You Win!"];
-    else if ([localGame.gameState hasAPlayerWonTheGame])
-        title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
-    else if ([localState hasLost] && !self.hasPromptedEnd)
+		title = [NSString stringWithFormat:@"Special Rules!"];
+		message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
+	}
+	else if ([localState hasWon])
+		title = [NSString stringWithFormat:@"You Win!"];
+	else if ([localGame.gameState hasAPlayerWonTheGame])
+		title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
+	else if ([localState hasLost] && !self.hasPromptedEnd)
 	{
-        self.hasPromptedEnd = YES;
-        title = [NSString stringWithFormat:@"You Lost the Game"];
+		self.hasPromptedEnd = YES;
+		title = [NSString stringWithFormat:@"You Lost the Game"];
 	}
 	else if (localGame.newRound && [lastPlayerState playerID] != [localState playerID])
 	{
@@ -338,14 +355,6 @@ NSString *numberName(int number) {
 								   delegate:nil
 						  cancelButtonTitle:@"Okay"
 						  otherButtonTitles:nil] show];
-
-	[localGame notifyCurrentPlayer];
-}
-
-- (BOOL) roundBeginning
-{
-	hasTouchedBidCounterThisTurn = NO;
-	hasDisplayedRoundOverview = NO;
 
     return NO;
 }
