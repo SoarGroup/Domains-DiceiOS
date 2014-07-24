@@ -196,7 +196,7 @@
 
 		CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
 		pulse.fromValue = (id)[UIColor clearColor].CGColor;
-		pulse.toValue = (id)[UIColor redColor].CGColor;
+		pulse.toValue = (id)[UIColor clearColor].CGColor;
 		pulse.duration = 2.0;
 		pulse.autoreverses = YES;
 		pulse.removedOnCompletion = NO;

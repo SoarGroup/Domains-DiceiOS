@@ -112,7 +112,7 @@
 
 	if (![database hasSeenTutorial])
 	{
-		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Would you like to play the tutorial?" message:@"It appears you have never played Liar's Dice before.  Would you like to play the tutorial now?  If you select no now, you can always replay it in the Settings menu." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Learn Liar's Dice" message:@"It appears you have not completed the tutorial.  If you are not familiar with the rules of Liar's Dice, please read at least the summary of the rules.  If you are familiar with the rules of Liar's Dice, I recommend you go through the tutorial to learn the UI we use." delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles:@"Rules", @"Tutorial", nil];
 		alert.tag = 99;
 		[alert show];
 	}
@@ -151,9 +151,8 @@
 	if (alertView.tag == 99)
 	{
 		DiceDatabase* database = [[DiceDatabase alloc] init];
-		[database setHasSeenTutorial];
 
-		if (buttonIndex != alertView.cancelButtonIndex)
+		if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Tutorial"])
 		{
 			void (^quitHandler)(void) =^ {
 				[[self navigationController] popToRootViewControllerAnimated:YES];
@@ -162,6 +161,10 @@
 			[self.navigationController pushViewController:[[PlayGameView alloc] initTutorialWithQuitHandler:[quitHandler copy]]
 												 animated:YES];
 		}
+		else if (buttonIndex == alertView.cancelButtonIndex)
+			[database setHasSeenTutorial];
+		else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Rules"])
+			[self.navigationController pushViewController:[[RulesView alloc] init] animated:YES];
 	}
 	else if (buttonIndex == 1 && delegate.gameCenterLoginViewController)
 	{

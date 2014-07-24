@@ -111,6 +111,8 @@
 @synthesize multiplayerView, overViews;
 @synthesize playerScrollView;
 
+@synthesize bidCountLabelHint, bidFaceLabelHint;
+
 @synthesize game, state, animationFinished;
 
 @synthesize player1View, player2View, player3View, player4View, player5View, player6View, player7View, player8View, playerViews;
@@ -387,9 +389,9 @@ NSString *numberName(int number) {
 	if (tutorial && step == 0)
 	{
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Liar's Dice!"
-														message:@"Welcome to the Liar's Dice Tutorial.  This tutorial assumes you have familiarity with Liar's Dice.  It is designed to familiarize you with our interface for the game.  If you aren't familiar with Liar's Dice, please go back to the main menu and read at least the brief rules.  If at any time you would like to stop, either tap 'Main Menu' in these alerts or tap 'Main Menu' in the navigation bar above."
+														message:@"This tutorial is designed to familiarize you with our interface for the game."
 													   delegate:self
-											  cancelButtonTitle:@"Main Menu"
+											  cancelButtonTitle:@"Exit Tutorial"
 											  otherButtonTitles:@"Continue", nil];
 
 		alert.tag = TUTORIAL;
@@ -1218,10 +1220,13 @@ NSString *numberName(int number) {
 			bidFaceMinusButton.enabled = NO;
 			bidFacePlusButton.enabled = NO;
 
+			bidFaceLabelHint.hidden = NO;
+			bidCountLabelHint.hidden = NO;
+
 			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-			pulse.fromValue = (id)[UIColor clearColor].CGColor;
-			pulse.toValue = (id)[UIColor redColor].CGColor;
-			pulse.duration = 1.0;
+			pulse.fromValue = (id)[UIColor redColor].CGColor;
+			pulse.toValue = (id)[UIColor clearColor].CGColor;
+			pulse.duration = 2.0;
 			pulse.autoreverses = YES;
 			pulse.removedOnCompletion = NO;
 			//pulse.fillMode = kCAFillModeBoth;
@@ -1255,10 +1260,13 @@ NSString *numberName(int number) {
 			bidFaceMinusButton.enabled = NO;
 			bidFacePlusButton.enabled = NO;
 
+			bidFaceLabelHint.hidden = NO;
+			bidCountLabelHint.hidden = NO;
+
 			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-			pulse.fromValue = (id)[UIColor clearColor].CGColor;
-			pulse.toValue = (id)[UIColor redColor].CGColor;
-			pulse.duration = 1.0;
+			pulse.fromValue = (id)[UIColor redColor].CGColor;
+			pulse.toValue = (id)[UIColor clearColor].CGColor;
+			pulse.duration = 2.0;
 			pulse.autoreverses = YES;
 			pulse.removedOnCompletion = NO;
 			//pulse.fillMode = kCAFillModeBoth;
@@ -1616,6 +1624,9 @@ NSString *numberName(int number) {
 
 	continueRoundButton.hidden = YES;
 
+	bidFaceLabelHint.hidden = YES;
+	bidCountLabelHint.hidden = YES;
+
 	gameStateLabel.text = @"";
 
 	((UILabel*)[player2View viewWithTag:PlayerLabelTag]).text = @"Alice";
@@ -1624,7 +1635,7 @@ NSString *numberName(int number) {
 	if (step == 0)
 	{
 		title = @"Bidding";
-		message = @"In Liar's Dice, players bid based on their current dice and opponents revealed.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
+		message = @"In Liar's Dice, players bid using knowledge of their current dice and opponents revealed dice.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
 		[views addObject:[player1View viewWithTag:DiceViewTag]];
 
 		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).enabled = YES;
@@ -1636,7 +1647,13 @@ NSString *numberName(int number) {
 	else if (step == 1)
 	{
 		title = @"Bidding";
-		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two actual fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one on the left represents the number you are bidding.  Since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the die face, this should be five.  Select 5 Fives to continue.";
+		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two natural fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The one on the left represents the number you are bidding.  Since we want to bid 5 Fives, this should say 5 instead of one.  The one on the right represents the die face, this should be five.  Select 5 Fives to continue.";
+
+		bidFaceLabelHint.hidden = NO;
+		bidCountLabelHint.hidden = NO;
+
+		[bidFaceLabelHint setImage:[PlayGameView imageForDie:DIE_5]];
+		[bidCountLabelHint setText:@"5"];
 
 		[views addObjectsFromArray:@[bidCountPlusButton,
 									 bidCountMinusButton,
@@ -1670,8 +1687,8 @@ NSString *numberName(int number) {
 		firstDie.frame = CGRectMake(3, 0, 50, 50);
 		secondDie.frame = CGRectMake(56, 0, 50, 50);
 
-		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s"];
-		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s"];
+		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 6 3s."];
+		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s."];
 
 		title = @"Challenging";
 		message = @"Woah! Alice bid 6 threes.  We know that is unlikely, so let's challenge her.  Highlighted in red is the challenge button.  Tap to challenge her";
@@ -1758,7 +1775,7 @@ NSString *numberName(int number) {
 
 		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
 
-		aliceLabel.attributedText = gameStateLabel.attributedText =  [PlayGameView formatTextString:@"Alice bid 4 2s"];
+		aliceLabel.attributedText = gameStateLabel.attributedText =  [PlayGameView formatTextString:@"Alice bid 4 2s."];
 
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 
@@ -1840,7 +1857,7 @@ NSString *numberName(int number) {
 		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
 		((UIView*)[aliceDice.subviews objectAtIndex:3]).hidden = YES;
 
-		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 4 6s"];
+		aliceLabel.attributedText = gameStateLabel.attributedText = [PlayGameView formatTextString:@"Alice bid 4 6s."];
 
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 
@@ -1861,6 +1878,12 @@ NSString *numberName(int number) {
 	{
 		title = @"Pushing";
 		message = @"These dice haven't been pushed quite yet.  You can still undo any pushes at this point.  When you tap bid though, your dice will be pushed and you will be unable to conceal them again.  Bid 7 sixes.";
+
+		bidFaceLabelHint.hidden = NO;
+		bidCountLabelHint.hidden = NO;
+
+		[bidFaceLabelHint setImage:[PlayGameView imageForDie:DIE_6]];
+		[bidCountLabelHint setText:@"7"];
 
 		[views addObject:bidCountMinusButton];
 		[views addObject:bidCountPlusButton];
@@ -1939,21 +1962,24 @@ NSString *numberName(int number) {
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
 														message:message
 													   delegate:self
-											  cancelButtonTitle:@"Main Menu"
+											  cancelButtonTitle:@"Exit Tutorial"
 											  otherButtonTitles:nil];
 		
 		alert.tag = TUTORIAL;
 		
 		[alert show];
-		
+
+		DiceDatabase* database = [[DiceDatabase alloc] init];
+		[database setHasSeenTutorial];
+
 		return;
 	}
 
 	step++;
 
 	CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-	pulse.fromValue = (id)[UIColor clearColor].CGColor;
-	pulse.toValue = (id)[UIColor redColor].CGColor;
+	pulse.fromValue = (id)[UIColor redColor].CGColor;
+	pulse.toValue = (id)[UIColor clearColor].CGColor;
 	pulse.duration = 2.0;
 	pulse.autoreverses = YES;
 	pulse.removedOnCompletion = NO;
@@ -1969,7 +1995,7 @@ NSString *numberName(int number) {
 	UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
 													message:message
 												   delegate:self
-										  cancelButtonTitle:@"Main Menu"
+										  cancelButtonTitle:@"Exit Tutorial"
 										  otherButtonTitles:@"Okay", nil];
 	alert.tag = TUTORIAL;
 	[alert show];
