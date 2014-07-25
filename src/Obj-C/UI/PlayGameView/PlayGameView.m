@@ -741,6 +741,14 @@ NSString *numberName(int number) {
 	if (tutorial)
 		return;
 
+	self.exactButton.enabled = NO;
+	self.passButton.enabled = NO;
+	self.bidButton.enabled = NO;
+	self.bidCountPlusButton.enabled = NO;
+	self.bidCountMinusButton.enabled = NO;
+	self.bidFacePlusButton.enabled = NO;
+	self.bidFaceMinusButton.enabled = NO;
+
 	// State initialization
 	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
