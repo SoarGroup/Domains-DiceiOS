@@ -377,9 +377,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D4E58551982EA8F00710625 /* libPods.a in Frameworks */,
+				4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */,
 				4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */,
 				4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */,
-				4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */,
 				4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */,
 				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
 				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,

@@ -462,7 +462,15 @@ NSString *numberName(int number) {
 		fullscreenButton.hidden = NO;
 	else
 	{
-		((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
+		id last = [playerViews objectAtIndex:localGame.players.count - 1];
+
+		[playerScrollView addConstraint:[NSLayoutConstraint constraintWithItem:last
+																	 attribute:NSLayoutAttributeBottom
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:playerScrollView
+																	 attribute:NSLayoutAttributeBottom
+																	multiplier:1.0
+																	  constant:0]];
 
 		playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
 												  ([localGame.players count]-1) * 128);

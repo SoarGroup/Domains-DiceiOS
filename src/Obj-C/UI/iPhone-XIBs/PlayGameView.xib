@@ -60,7 +60,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Hj-zeF" userLabel="ScrollView">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Hj-zeF" userLabel="ScrollView">
                     <rect key="frame" x="20" y="220" width="280" height="334"/>
                     <subviews>
                         <view appearanceType="aqua" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsN-Mi-ivr">
@@ -895,7 +895,6 @@
                         <constraint firstItem="xxI-Jf-qK0" firstAttribute="trailing" secondItem="oI1-I7-1cr" secondAttribute="trailing" id="fst-Sw-4fN"/>
                         <constraint firstItem="VMe-Gu-G3C" firstAttribute="leading" secondItem="yUO-gl-h34" secondAttribute="leading" id="hOL-gS-qKA"/>
                         <constraint firstItem="gsN-Mi-ivr" firstAttribute="top" secondItem="Q0u-Hj-zeF" secondAttribute="top" id="oN5-Qj-Tn6"/>
-                        <constraint firstAttribute="bottom" secondItem="MOG-QE-6YD" secondAttribute="bottom" constant="-42" id="qd9-1N-62N"/>
                         <constraint firstItem="yxG-5B-qFB" firstAttribute="leading" secondItem="Q0u-Hj-zeF" secondAttribute="leading" id="qxT-L8-Tg9"/>
                         <constraint firstItem="xxI-Jf-qK0" firstAttribute="top" secondItem="VMe-Gu-G3C" secondAttribute="bottom" constant="8" symbolic="YES" id="qy6-xd-9xH"/>
                         <constraint firstItem="MOG-QE-6YD" firstAttribute="top" secondItem="yxG-5B-qFB" secondAttribute="bottom" constant="8" symbolic="YES" id="sBx-qf-Kvq"/>
