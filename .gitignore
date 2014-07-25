@@ -9,3 +9,5 @@ UM Liars Dice/UM Liars Dice.xcodeproj/xcuserdata
 
 Pods/
 Podfile.lock
+
+*.xcuserstate
