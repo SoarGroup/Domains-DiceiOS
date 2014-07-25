@@ -366,7 +366,7 @@
 		self.canContinueGame = YES;
 		[self createNewRound:NO];
 
-		int seed = arc4random_uniform(RAND_MAX);
+		seed = arc4random_uniform(RAND_MAX);
 		srand(seed);
 		DDLogDebug(@"Seed:%i", seed);
     }
@@ -896,9 +896,9 @@
 		diceString = @"";
 
     if (playerIDorMinusOne < 0)
-        return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
+        return [NSString stringWithFormat:@"Seed: %i, %@ bid %d %ds%@%@%d %ds.", seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
 
-	return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
+	return [NSString stringWithFormat:@"Seed: %i, %@ bid %d %ds%@%@%d %ds, %d unknown.", seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods
