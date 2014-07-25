@@ -31,7 +31,5 @@
 }
 @end
 
-#ifndef DEBUG
-#undef NSLog
-#define NSLog(args, ...)
-#endif
+extern const int ddLogLevel;
+#import "DDLog.h"

@@ -202,7 +202,7 @@
 			case ACTION_QUIT:
 			default:
 			{
-				NSLog(@"Impossible Situation? HistoryItem.m:128");
+				DDLogError(@"Impossible Situation? HistoryItem.m:128");
 				break;
 			}
         }
@@ -268,7 +268,7 @@
 			case ACTION_QUIT:
 			default:
 			{
-				NSLog(@"Impossible Situation? HistoryItem.m:128");
+				DDLogError(@"Impossible Situation? HistoryItem.m:128");
 				break;
 			}
         }

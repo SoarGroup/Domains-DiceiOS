@@ -57,7 +57,7 @@
 
 - (void) dealloc
 {
-	NSLog(@"%@ deallocated", self.class);
+	DDLogVerbose(@"%@ deallocated", self.class);
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -334,7 +334,7 @@
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
 				  ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-				  NSLog(@"Multiplayer Match View: Updated Match Data (Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
+				  DDLogVerbose(@"Multiplayer Match View: Updated Match Data (Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 				  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 
@@ -359,7 +359,7 @@
 
 				  if (!mmd)
 				  {
-					  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [matchDataError description]);
+					  DDLogError(@"Failed to load multiplayer data from game center: %@!\n", [matchDataError description]);
 					  return;
 				  }
 
@@ -368,7 +368,7 @@
 					  [match removeWithCompletionHandler:^(NSError* errorRemoving)
 					  {
 						  if (errorRemoving)
-							  NSLog(@"Error: %@", errorRemoving.description);
+							  DDLogError(@"Error: %@", errorRemoving.description);
 					  }];
 					  handler.localGame = nil;
 					  [delegate.listener removeGameKitGameHandler:handler];

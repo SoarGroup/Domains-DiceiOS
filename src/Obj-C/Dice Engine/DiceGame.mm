@@ -58,11 +58,11 @@ extern std::map<void*, sml::Agent*> agents;
 			NSLock* lock = (__bridge_transfer NSLock*)it->first;
 
 			agents.erase(it);
-			NSLog(@"Releasing Lock: %p", lock);
+			DDLogDebug(@"Releasing Lock: %p", lock);
 		}
 	}
 
-	NSLog(@"%@ deallocated", self.class);
+	DDLogDebug(@"%@ deallocated", self.class);
 }
 
 -(DiceGame*)init
@@ -210,7 +210,7 @@ extern std::map<void*, sml::Agent*> agents;
 		NSArray* newHistory = remote.gameState.flatHistory;
 
 		if ([myHistory count] < [newHistory count])
-			NSLog(@"WARNING: History is less! This should not happen!");
+			DDLogDebug(@"History is less! This should not happen!");
 
 		if ([myHistory count] != [newHistory count])
 		{
@@ -218,13 +218,13 @@ extern std::map<void*, sml::Agent*> agents;
 
 			if (![[[newHistory objectAtIndex:([myHistory count]-1)] description] isEqualToString:[[myHistory lastObject] description]])
 			{
-				NSLog(@"WARNING: History objects are not equivalent! This will go horribly wrong!  Replaying entire history!");
+				DDLogDebug(@"History objects are not equivalent! This will go horribly wrong!  Replaying entire history!");
 
 				index = 0;
 			}
 
 			for (;index < [newHistory count];++index)
-				NSLog(@"REPLAY HISTORY: %@", [[newHistory objectAtIndex:index] debugDescription]);
+				DDLogDebug(@"REPLAY HISTORY: %@", [[newHistory objectAtIndex:index] debugDescription]);
 		}
 
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
@@ -379,10 +379,10 @@ extern std::map<void*, sml::Agent*> agents;
 -(void) notifyCurrentPlayer
 {
     if ([self.gameState hasAPlayerWonTheGame]) {
-            NSLog(@"Game over, no need to notify player");
+            DDLogVerbose(@"Game over, no need to notify player");
         return;
     }
-    NSLog(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
+    DDLogVerbose(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
 
 	PlayGameView* view = self.gameView;
 	PlayerState* currentState = view.state;
@@ -415,7 +415,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
-    NSLog(@"Handling action: %@", action);
+    DDLogDebug(@"Handling action: %@", action);
     self.deferNotification = NO;
 
 	self.gameState.game = self;

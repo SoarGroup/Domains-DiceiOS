@@ -33,6 +33,7 @@
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
+		4DDDFBB91982B54200CAC998 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
 		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
 		4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393871923C4F400A523FB /* Center-Push@2x.png */; };
 		4DF393A51923C4F400A523FB /* die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393881923C4F400A523FB /* die-1.png */; };
@@ -125,6 +126,7 @@
 		CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64D13BB9E450005A182 /* CoreData.framework */; };
 		CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71C13BBB1B60005A182 /* OpenGLES.framework */; };
 		CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */; };
+		D59885C2ADB84DF5968CAFB9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F437F92BD1543BEB6138317 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,6 +164,7 @@
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4DDDFBB81982B54200CAC998 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4DE8FF531964648F003C583B /* NSMutableArrayShuffle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSMutableArrayShuffle.h; sourceTree = "<group>"; };
 		4DF393861923C4F400A523FB /* Center-Push.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push.png"; sourceTree = "<group>"; };
 		4DF393871923C4F400A523FB /* Center-Push@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push@2x.png"; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 		4DF397C71923C9A600A523FB /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-harder.soar"; sourceTree = "<group>"; };
 		4DF397C81923C9A600A523FB /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-hardest.soar"; sourceTree = "<group>"; };
 		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
+		6F437F92BD1543BEB6138317 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
 		C6951846155045E900BD15DA /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
 		CD86D64713BB9E450005A182 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -370,6 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDDFBB91982B54200CAC998 /* CFNetwork.framework in Frameworks */,
 				4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */,
 				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
 				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
@@ -380,6 +386,7 @@
 				CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */,
 				CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */,
 				4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */,
+				D59885C2ADB84DF5968CAFB9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,12 +896,14 @@
 				4DF393BE1923C51C00A523FB /* src */,
 				CD86D64613BB9E450005A182 /* Frameworks */,
 				4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */,
+				9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4DDDFBB81982B54200CAC998 /* CFNetwork.framework */,
 				4D6B2B36194111C900B4F0AA /* GameKit.framework */,
 				4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */,
 				4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */,
@@ -905,6 +914,7 @@
 				CD86D64913BB9E450005A182 /* Foundation.framework */,
 				CD86D64B13BB9E450005A182 /* CoreGraphics.framework */,
 				CD86D64D13BB9E450005A182 /* CoreData.framework */,
+				6F437F92BD1543BEB6138317 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -916,9 +926,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD86D66E13BB9E460005A182 /* Build configuration list for PBXNativeTarget "UM Liars Dice" */;
 			buildPhases = (
+				76027B9653CC4CB6BBD36428 /* Check Pods Manifest.lock */,
 				CD86D63F13BB9E450005A182 /* Sources */,
 				CD86D64013BB9E450005A182 /* Frameworks */,
 				CD86D64113BB9E450005A182 /* Resources */,
+				D9BCD6F8299E463EABFEA25A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1055,6 +1067,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		76027B9653CC4CB6BBD36428 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D9BCD6F8299E463EABFEA25A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CD86D63F13BB9E450005A182 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1154,6 +1199,7 @@
 		};
 		C6951843155043DB00BD15DA /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1171,6 +1217,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PREFIX_HEADER = "UM Liars Dice-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
@@ -1200,7 +1247,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "DA34147B-6568-4C41-982B-F6FA9A74346B";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1313,6 +1360,7 @@
 		};
 		CD86D66F13BB9E460005A182 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1362,7 +1410,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "DA34147B-6568-4C41-982B-F6FA9A74346B";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1373,6 +1421,7 @@
 		};
 		CD86D67013BB9E460005A182 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1419,7 +1468,7 @@
 				);
 				OTHER_LDFLAGS = "-lSoar";
 				PRODUCT_NAME = "UM Liars Dice";
-				PROVISIONING_PROFILE = "DA34147B-6568-4C41-982B-F6FA9A74346B";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = all;
 				TARGETED_DEVICE_FAMILY = "1,2";

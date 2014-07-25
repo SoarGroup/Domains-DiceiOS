@@ -36,7 +36,7 @@
 
 - (void)dealloc
 {
-	NSLog(@"Game Kit Game Handler deallocated\n");
+	DDLogVerbose(@"Game Kit Game Handler deallocated\n");
 }
 
 - (void) saveMatchData
@@ -47,14 +47,14 @@
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-	NSLog(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
+	DDLogVerbose(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
 
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
-		NSLog(@"Sent match data!");
+		DDLogVerbose(@"Sent match data!");
 
 		if (error)
-			NSLog(@"Error upon saving match data: %@\n", error.description);
+			DDLogError(@"Error upon saving match data: %@\n", error.description);
 	}];
 }
 
@@ -108,7 +108,7 @@
 			 }
 
 			 ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-			 NSLog(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
+			 DDLogVerbose(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
 
@@ -123,7 +123,7 @@
 			 [self->localGame updateGame:updatedGame];
 		 }
 		 else
-			 NSLog(@"Error upon loading match data: %@\n", error.description);
+			 DDLogError(@"Error upon loading match data: %@\n", error.description);
 	 }];
 }
 
@@ -142,7 +142,7 @@
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-	NSLog(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
+	DDLogVerbose(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
 
 	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:participants];
 
@@ -161,7 +161,7 @@
 	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error advancing to next player: %@\n", error.description);
+			 DDLogError(@"Error advancing to next player: %@\n", error.description);
 	 }];
 }
 
@@ -204,13 +204,13 @@
 
 		void (^completionHandler)(NSError* error) = ^(NSError* error){
 			if (error)
-				NSLog(@"Error when player quit: %@\n", error.description);
+				DDLogError(@"Error when player quit: %@\n", error.description);
 
 			if (remove)
 				[self->match removeWithCompletionHandler:^(NSError* removeError)
 				 {
 					 if (removeError)
-						 NSLog(@"Error Removing Match: %@\n", removeError.description);
+						 DDLogError(@"Error Removing Match: %@\n", removeError.description);
 				 }];
 		};
 
@@ -250,7 +250,7 @@
 	[match endMatchInTurnWithMatchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error ending match: %@\n", error.description);
+			 DDLogError(@"Error ending match: %@\n", error.description);
 	 }];
 
 	return YES;

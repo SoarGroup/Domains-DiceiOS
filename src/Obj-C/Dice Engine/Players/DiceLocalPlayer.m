@@ -35,7 +35,7 @@
 
 - (void)dealloc
 {
-	NSLog(@"Dice Local Player deallocated\n");
+	DDLogVerbose(@"Dice Local Player deallocated\n");
 }
 
 - (NSString*) getDisplayName

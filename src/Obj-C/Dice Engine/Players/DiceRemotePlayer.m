@@ -30,7 +30,7 @@
 			[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:remotePlayer.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 			 {
 				 if (error)
-					 NSLog(@"Error loading player identifiers: %@", error.description);
+					 DDLogError(@"Loading player identifiers: %@", error.description);
 				 else
 					 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
 
@@ -44,7 +44,7 @@
 
 - (void)dealloc
 {
-	NSLog(@"Dice Remote Player deallocated\n");
+	DDLogVerbose(@"Dice Remote Player deallocated\n");
 }
 
 - (NSString*) getDisplayName
@@ -71,7 +71,7 @@
 		[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:participant.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 		 {
 			 if (error)
-				 NSLog(@"Error loading player identifiers: %@", error.description);
+				 DDLogError(@"loading player identifiers: %@", error.description);
 			 else
 				 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
 
@@ -95,7 +95,7 @@
 - (void) itsYourTurn
 {
 	GameKitGameHandler* handlerLocal = self.handler;
-	NSLog(@"Advanced to next turn! %@", self.participant.player.playerID);
+	DDLogDebug(@"Advanced to next turn! %@", self.participant.player.playerID);
 	[handlerLocal advanceToRemotePlayer:self];
 }
 
@@ -130,7 +130,7 @@
 	[GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:self.participant.player.playerID] withCompletionHandler:^(NSArray* array, NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error loading player identifiers: %@", error.description);
+			 DDLogError(@"loading player identifiers: %@", error.description);
 		 else
 			 self.displayName = [(GKPlayer*)[array objectAtIndex:0] displayName];
 

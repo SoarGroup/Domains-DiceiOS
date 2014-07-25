@@ -96,7 +96,7 @@
 	BOOL foundLocalPlayer = NO;
 	for (NSString* player in playersArrayToDecode)
 	{
-		NSLog(@"Recieved player: %@", player);
+		DDLogVerbose(@"Recieved player: %@", player);
 
 		if (![[player substringWithRange:NSMakeRange(0, 4)] isEqualToString:@"Soar"] &&
 			![player isEqualToString:@"Human"]) // Complete Player
@@ -138,7 +138,7 @@
 		}
 		else
 		{
-			NSLog(@"Got AI: %@", player);
+			DDLogVerbose(@"Got AI: %@", player);
 
 			int difficulty = [player characterAtIndex:[player length]-1] - '0';
 
@@ -368,7 +368,7 @@
 
 		int seed = arc4random_uniform(RAND_MAX);
 		srand(seed);
-		NSLog(@"Seed:%i", seed);
+		DDLogDebug(@"Seed:%i", seed);
     }
     return self;
 }
@@ -376,7 +376,7 @@
 // Dealloc method, release all of our variables
 - (void)dealloc
 {
-	NSLog(@"%@ deallocated", self.class);
+	DDLogVerbose(@"%@ deallocated", self.class);
 }
 
 - (void)addNewRoundListener:(id <NewRoundListener>)listener {
@@ -594,7 +594,7 @@
     
     //Make sure the exact is correct otherwise say it wasn't
     if ([self countDice:[bid rankOfDie]] == [bid numberOfDice]) {
-        NSLog(@"%i: exact was correct", [player playerID]);
+        DDLogVerbose(@"%i: exact was correct", [player playerID]);
         HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                     andWithPlayer:player
                                                       whereTypeIs:ACTION_EXACT
@@ -608,7 +608,7 @@
         
         *wasTheExactRight = YES;
     } else {
-        NSLog(@"%i: exact was wrong", [player playerID]);
+        DDLogVerbose(@"%i: exact was wrong", [player playerID]);
         [self playerLosesRound:playerID];
         HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
                                                     andWithPlayer:player
@@ -916,7 +916,7 @@
 		return;
 	}
 
-	NSLog(@"Created New Round");
+	DDLogVerbose(@"Created New Round");
 
     BOOL deferNotification = NO;
     for (id <NewRoundListener> listener in theNewRoundListeners) {
@@ -976,11 +976,11 @@
     [history addObject:[[HistoryItem alloc]
                          initWithMetaInformation:[self stateString:-1]]
                         ];
-    NSLog(@"%@ lost the round.", [[self getPlayerState:playerID] asString]);
-    NSLog(@"%@", [self stateString:-1]);
+    DDLogVerbose(@"%@ lost the round.", [[self getPlayerState:playerID] asString]);
+    DDLogVerbose(@"%@", [self stateString:-1]);
     PlayerState *player = [self getPlayerState:playerID];
     player.numberOfDice = player.numberOfDice - 1;
-    NSLog(@"%@ has %i dice", [player playerName], [player numberOfDice]);
+    DDLogVerbose(@"%@ has %i dice", [player playerName], [player numberOfDice]);
 
 	if (player.numberOfDice == 0)
         [self playerLosesGame:playerID];
@@ -992,7 +992,7 @@
 - (void)playerLosesGame:(NSInteger)playerID
 {
     [self.losers addObject:[NSNumber numberWithInt:[self getIndexOfPlayerWithId:playerID]]];
-    NSLog(@"%@ lost the game.", [[self getPlayerState:playerID] asString]);
+    DDLogVerbose(@"%@ lost the game.", [[self getPlayerState:playerID] asString]);
     PlayerState *player = [self getPlayerState:playerID];
     player.hasLost = YES;
 	DiceGame* localGame = self.game;
@@ -1026,7 +1026,7 @@
 		[self goToNextPlayerWhoHasntLost];
 
 		gameWinner = [self getCurrentPlayer];
-        NSLog(@"%@ won!", [gameWinner getGameCenterName]);
+        DDLogVerbose(@"%@ won!", [gameWinner getGameCenterName]);
     }
 }
 
@@ -1157,7 +1157,7 @@
 // Gets the total number of dice in the game
 - (int)countAllDice {
     int ret = 0;
-    NSLog(@"Count all dice");
+    DDLogVerbose(@"Count all dice");
     for (PlayerState *playerState in playerStates) {
         ret += [playerState.arrayOfDice count];
     }

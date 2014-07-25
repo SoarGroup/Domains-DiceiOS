@@ -26,7 +26,7 @@
 
 - (void) dealloc
 {
-	NSLog(@"%@ deallocated", self.class);}
+	DDLogVerbose(@"%@ deallocated", self.class);}
 
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler
 {
@@ -66,7 +66,7 @@
 - (void) player:(GKPlayer *)player didAcceptInvite:(GKInvite *)invite
 {
 	// TODO: Invites
-	NSLog(@"Player accepted invite.");
+	DDLogVerbose(@"Player accepted invite.");
 }
 
 - (void) player:(GKPlayer *)player matchEnded:(GKTurnBasedMatch *)match
@@ -83,7 +83,7 @@
 
 - (void) player:(GKPlayer *)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive
 {
-	NSLog(@"Recieved turn event for match: %@", match);
+	DDLogVerbose(@"Recieved turn event for match: %@", match);
 	ApplicationDelegate* localDelegate = self.delegate;
 
 	GameKitGameHandler* gkHandler = nil;
@@ -107,7 +107,7 @@
 	else if (gkHandler)
 		[gkHandler updateMatchData];
 	else
-		NSLog(@"No Handler for match!");
+		DDLogDebug(@"No Handler for match!");
 }
 
 @end

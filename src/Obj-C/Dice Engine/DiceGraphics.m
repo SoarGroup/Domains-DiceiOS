@@ -50,7 +50,7 @@
     }
     UIImage *ret = [UIImage imageNamed:[imageName stringByAppendingFormat:@".png"]];
     if (ret == nil) {
-        NSLog(@"nil image with name \"%@\"", imageName);
+        DDLogDebug(@"nil image with name \"%@\"", imageName);
     }
     return ret;
 }

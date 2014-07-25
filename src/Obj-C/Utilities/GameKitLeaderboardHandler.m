@@ -50,7 +50,7 @@
 		[leaderboard loadScoresWithCompletionHandler:^(NSArray* scores, NSError* error)
 		 {
 			 if (error)
-				 NSLog(@"Error: %@", error.description);
+				 DDLogError(@"Error: %@", error.description);
 
 			 OSAtomicIncrement32(leaderboardsCompleted);
 		 }];
@@ -250,7 +250,7 @@
 	[GKScore reportScores:scores withCompletionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error: %@", error.description);
+			 DDLogError(@"Error: %@", error.description);
 	 }];
 
 	[defaults setObject:[NSNumber numberWithUnsignedInteger:lossesOverall]

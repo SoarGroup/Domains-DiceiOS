@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+const int ddLogLevel = LOG_LEVEL_VERBOSE;
+
 int main(int argc, char *argv[])
 {
 	[[NSThread currentThread] setName:@"Main Liar's Dice Thread"];
 
-	int retVal = UIApplicationMain(argc, argv, nil, nil);
-	return retVal;
+	@autoreleasepool {
+		return UIApplicationMain(argc, argv, nil, nil);
+	}
 }

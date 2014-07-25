@@ -35,7 +35,7 @@ const int kAI_8 = 0x47;
 		NSData* data = [NSKeyedArchiver archivedDataWithRootObject:game];
 
 		ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-		NSLog(@"Multiplayer Match Data: Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
+		DDLogVerbose(@"Multiplayer Match Data: Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
 
 		if (!data)
 			return nil;
@@ -65,7 +65,7 @@ const int kAI_8 = 0x47;
 				[match removeWithCompletionHandler:^(NSError* error)
 				 {
 					 if (error)
-						 NSLog(@"Error Removing Invalid Match: %@", error.description);
+						 DDLogError(@"Error Removing Invalid Match: %@", error.description);
 				 }];
 
 				return nil;
@@ -163,7 +163,7 @@ const int kAI_8 = 0x47;
 			[match removeWithCompletionHandler:^(NSError* error)
 			{
 				if (error)
-					NSLog(@"Error Removing Invalid Match: %@", error.description);
+					DDLogError(@"Error Removing Invalid Match: %@", error.description);
 			}];
 		}
 	}
@@ -173,7 +173,7 @@ const int kAI_8 = 0x47;
 
 - (void) dealloc
 {
-	NSLog(@"%@ deallocated", self.class);
+	DDLogVerbose(@"%@ deallocated", self.class);
 }
 
 @end

@@ -27,7 +27,7 @@
 			 if (!error)
 				 self->achievements = [GameKitAchievementHandler addMissingAchievements:newAchievements];
 			 else
-				 NSLog(@"Error: %@", error.description);
+				 DDLogError(@"Error: %@", error.description);
 		 }];
 	}
 
@@ -108,7 +108,7 @@
 	[GKAchievement resetAchievementsWithCompletionHandler:^(NSError* error)
 	 {
 		 if (error)
-			 NSLog(@"Error: %@", error.description);
+			 DDLogError(@"Error: %@", error.description);
 	 }];
 }
 
@@ -147,7 +147,7 @@
 		[GKAchievement reportAchievements:updatedAchievements withCompletionHandler:^(NSError* error)
 		 {
 			 if (error)
-				 NSLog(@"Error: %@", error.description);
+				 DDLogError(@"Error: %@", error.description);
 		 }];
 }
 
@@ -505,7 +505,7 @@
 			}
 			break;
 		default:
-			NSLog(@"Unknown achievement ID! %i", achievementID);
+			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
 	}
 
@@ -643,7 +643,7 @@
 			break;
 		}
 		default:
-			NSLog(@"Unknown achievement ID! %i", achievementID);
+			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
 	}
 
@@ -792,7 +792,7 @@
 			}
 			break;
 		default:
-			NSLog(@"Unknown achievement ID! %i", achievementID);
+			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
 	}
 
@@ -850,7 +850,7 @@
 			hiddenAchievement.percentComplete = 100.0;
 			return YES;
 		default:
-			NSLog(@"Unknown achievement ID! %i", achievementID);
+			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
 	}
 

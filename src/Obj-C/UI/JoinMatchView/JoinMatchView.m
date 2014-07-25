@@ -60,7 +60,7 @@
 
 - (void) dealloc
 {
-	NSLog(@"%@ deallocated", self.class);
+	DDLogVerbose(@"%@ deallocated", self.class);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -168,7 +168,7 @@
 					  {
 						  ApplicationDelegate* delegateLocal = self.delegate;
 
-						  NSLog(@"Join Match View: Match Data Retrieved SHA1 Hash: %@", [delegateLocal sha1HashFromData:matchdata]);
+						  DDLogVerbose(@"Join Match View: Match Data Retrieved SHA1 Hash: %@", [delegateLocal sha1HashFromData:matchdata]);
 
 						  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegateLocal];
 						  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];
@@ -180,7 +180,7 @@
 
 						  if (!mmd)
 						  {
-							  NSLog(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
+							  DDLogError(@"Failed to load multiplayer data from game center: %@!\n", [error2 description]);
 							  return;
 						  }
 
@@ -215,7 +215,7 @@
 			 }
 			 else
 			 {
-				 NSLog(@"No match returned from game center! %@\n", error.description);
+				 DDLogError(@"No match returned from game center! %@\n", error.description);
 
 				 if (error.code == 6)
 				 {

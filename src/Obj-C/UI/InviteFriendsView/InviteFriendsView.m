@@ -41,10 +41,10 @@
 							  [self->friendsTable reloadData];
 						  }
 						  else
-							  NSLog(@"Error: %@", lpfierror.description);
+							  DDLogError(@"Error: %@", lpfierror.description);
 					  }];
 				 else
-					 NSLog(@"Error: %@", error.description);
+					 DDLogError(@"Error: %@", error.description);
 			 }];
 		}
 	}

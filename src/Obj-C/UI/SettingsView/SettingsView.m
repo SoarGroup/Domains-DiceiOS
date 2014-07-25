@@ -133,7 +133,7 @@
 		[GKAchievement resetAchievementsWithCompletionHandler:^(NSError* error)
 		 {
 			 if (error)
-				 NSLog(@"Error: %@", error.description);
+				 DDLogError(@"Error: %@", error.description);
 		 }];
 	}
 	else

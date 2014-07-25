@@ -229,7 +229,7 @@
 		 [[matches objectAtIndex:0] removeWithCompletionHandler:^(NSError* matchError)
 		  {
 			  if (matchError)
-				  NSLog(@"Error Removing Invalid Match: %@", error.description);
+				  DDLogError(@"Error Removing Invalid Match: %@", error.description);
 
 			  [self removeAllMultiplayerGamesPressed:nil];
 		  }];
@@ -254,7 +254,6 @@
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
 {
 	[gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
-	NSLog(@"Ran");
 }
 
 - (NSUInteger)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController

@@ -23,7 +23,7 @@
     if (self) {
         // set our local variables
         if (dice <= 0) {
-            NSLog(@"Creating bid with zero dice!");
+            DDLogDebug(@"Creating bid with zero dice!");
             // HACK
             dice = 1;
         }

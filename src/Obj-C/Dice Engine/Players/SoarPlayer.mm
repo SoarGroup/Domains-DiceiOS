@@ -25,7 +25,7 @@ void testWme(sml::WMElement *wme)
     const char *name = wme->GetIdentifierName();
     // NSLog(@"Testing wme \"%s\"", name);
     if (strlen(name) < 2)
-		NSLog(@"Identifier name too short! \"%s\"", name);
+		DDLogCDebug(@"Identifier name too short! \"%s\"", name);
 }
 
 void sdb(char * command, sml::Agent *agent)
@@ -36,7 +36,7 @@ void sdb(char * command, sml::Agent *agent)
 void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m) {
 	[[NSThread currentThread] setName:@"Soar Agent Thread"];
 
-    NSLog(@"%s> %s", a->GetAgentName(), m);
+    DDLogCVerbose(@"%s> %s", a->GetAgentName(), m);
 }
 
 class DiceSMLData {
@@ -173,7 +173,7 @@ static int agentCount = 0;
 
 		if (kernel->HadError())
 		{
-			NSLog(@"Kernel: %s", kernel->GetLastErrorDescription());
+			DDLogError(@"Kernel: %s", kernel->GetLastErrorDescription());
 			kernel = nil;
 		}
 
@@ -213,7 +213,7 @@ static int agentCount = 0;
 
 			if (agents[(__bridge void*)aLock] == NULL)
 			{
-				NSLog(@"Kernel (Agent Creation): %s", kernel->GetLastErrorDescription());
+				DDLogError(@"Kernel (Agent Creation): %s", kernel->GetLastErrorDescription());
 				[turnLock unlock];
 				return nil;
 			}
@@ -291,7 +291,7 @@ static int agentCount = 0;
 			}
 			[kernelLock unlock];
 
-			NSLog(@"Path: %@", path);
+			DDLogVerbose(@"Path: %@", path);
 
 			std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine("watch 0") << std::endl;
 
@@ -308,7 +308,7 @@ static int agentCount = 0;
 
 - (void)dealloc
 {
-	NSLog(@"Soar Player Release\n");
+	DDLogVerbose(@"Soar Player Release\n");
 }
 
 - (void)itsYourTurn
@@ -367,7 +367,7 @@ static int agentCount = 0;
 
 	agents[(__bridge void*)turnLock]->InitSoar();
 
-    NSLog(@"Agent do turn");
+    DDLogVerbose(@"Agent do turn");
     
     BOOL agentSlept = NO;
     BOOL agentHalted = NO;
@@ -410,7 +410,7 @@ static int agentCount = 0;
 			{
 				[turnLock unlock];
 
-				NSLog(@"Restarting Soar due to timeout");
+				DDLogDebug(@"Restarting Soar due to timeout");
 
 				return [self restartSoar];
 			}
@@ -428,7 +428,7 @@ static int agentCount = 0;
 				{
 					[turnLock unlock];
 
-					NSLog(@"Restarting Soar due to goal stack depth exceeded");
+					DDLogDebug(@"Restarting Soar due to goal stack depth exceeded");
 
 					return [self restartSoar];
 				}
@@ -449,7 +449,7 @@ static int agentCount = 0;
 		[localGame notifyCurrentPlayer];
 	}
 
-	NSLog(@"Halting agent");
+	DDLogVerbose(@"Halting agent");
 	sml::WMElement *halter = NULL;
 	if (!agentHalted)
 	{
@@ -474,7 +474,7 @@ static int agentCount = 0;
 		newData = NULL;
 	}
 
-    NSLog(@"Agent done");
+    DDLogVerbose(@"Agent done");
 
     if (newData != NULL)
     {
@@ -497,7 +497,7 @@ static int agentCount = 0;
 {
     using namespace sml;
  
-    NSLog(@"Beginning GameStateToWM");
+    DDLogVerbose(@"Beginning GameStateToWM");
     
     Identifier *idState = NULL;
     Identifier *idPlayers = NULL;
@@ -839,7 +839,7 @@ static int agentCount = 0;
 				case ACTION_QUIT:
 				default:
 				{
-					NSLog(@"Impossible Situation? HistoryItem.m:128");
+					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
 					break;
 				}
             }
@@ -948,7 +948,7 @@ static int agentCount = 0;
 				case ACTION_QUIT:
 				default:
 				{
-					NSLog(@"Impossible Situation? HistoryItem.m:128");
+					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
 					break;
 				}
             }
@@ -982,14 +982,14 @@ static int agentCount = 0;
             }
         }
     }
-        NSLog(@"Ending GameStateToWM");
+        DDLogVerbose(@"Ending GameStateToWM");
     return new DiceSMLData(idState, idPlayers, idAffordances, idHistory, idRounds);
 }
 
 // Should only be called if turnLock is locked.
 - (void) handleAgentCommandsWithRefresh:(BOOL *)needsRefresh sleep:(BOOL *)sleep;
 {
-    NSLog(@"Agent handling agent commands");
+    DDLogVerbose(@"Agent handling agent commands");
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
@@ -998,7 +998,7 @@ static int agentCount = 0;
         sml::Identifier *ident = agents[(__bridge void*)turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
-        NSLog(@"Command from output link, j=%d, command=%@", j, attrName);
+        DDLogVerbose(@"Command from output link, j=%d, command=%@", j, attrName);
         
         NSString *commandStatus = @"";
         if (ident->GetParameterValue("status") != NULL)
@@ -1127,7 +1127,7 @@ static int agentCount = 0;
             }
             else
             {
-				NSLog(@"Error: agent attempted to use command \"%@\"", attrName);
+				DDLogError(@"Error: agent attempted to use command \"%@\"", attrName);
                 
                 ident->AddStatusError();
             }
@@ -1161,10 +1161,10 @@ static int agentCount = 0;
 
     if (action != nil)
     {
-        NSLog(@"Agent performing action: %@", action);
+        DDLogVerbose(@"Agent performing action: %@", action);
         if (diceToPush != nil)
         {
-            NSLog(@"Pushing dice: %@", diceToPush);
+            DDLogVerbose(@"Pushing dice: %@", diceToPush);
             action.push = diceToPush;           
         }
 
@@ -1173,7 +1173,7 @@ static int agentCount = 0;
     }
     else if (diceToPush != nil)
     {
-        NSLog(@"Agent just pushing, %@", diceToPush);
+        DDLogVerbose(@"Agent just pushing, %@", diceToPush);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
 		[localGame handleAction:new_action notify:YES];
