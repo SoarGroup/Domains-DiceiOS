@@ -28,12 +28,14 @@
 		4D48E03219818381009DA895 /* HelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E03119818381009DA895 /* HelpView.xib */; };
 		4D48E036198183F9009DA895 /* HelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E035198183F9009DA895 /* HelpView.m */; };
 		4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E037198184E3009DA895 /* HelpViewiPad.xib */; };
+		4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
+		4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
+		4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
+		4D4E58551982EA8F00710625 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4E58541982EA8F00710625 /* libPods.a */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
-		4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
-		4DDDFBB91982B54200CAC998 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
 		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
 		4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393871923C4F400A523FB /* Center-Push@2x.png */; };
 		4DF393A51923C4F400A523FB /* die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393881923C4F400A523FB /* die-1.png */; };
@@ -121,12 +123,10 @@
 		4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C81923C9A600A523FB /* dice-hardest.soar */; };
 		4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C91923C9A600A523FB /* dice-medium.soar */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
-		CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
 		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
 		CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64D13BB9E450005A182 /* CoreData.framework */; };
 		CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71C13BBB1B60005A182 /* OpenGLES.framework */; };
 		CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D71E13BBB1BA0005A182 /* QuartzCore.framework */; };
-		D59885C2ADB84DF5968CAFB9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F437F92BD1543BEB6138317 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +155,7 @@
 		4D48E034198183F9009DA895 /* HelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpView.h; sourceTree = "<group>"; };
 		4D48E035198183F9009DA895 /* HelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpView.m; sourceTree = "<group>"; };
 		4D48E037198184E3009DA895 /* HelpViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewiPad.xib; sourceTree = "<group>"; };
+		4D4E58541982EA8F00710625 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -375,18 +376,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DDDFBB91982B54200CAC998 /* CFNetwork.framework in Frameworks */,
+				4D4E58551982EA8F00710625 /* libPods.a in Frameworks */,
+				4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */,
+				4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */,
+				4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */,
 				4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */,
 				4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */,
-				4DDA885913FD9C35008D3900 /* SystemConfiguration.framework in Frameworks */,
 				CD86D71F13BBB1BB0005A182 /* QuartzCore.framework in Frameworks */,
 				CD86D71D13BBB1B60005A182 /* OpenGLES.framework in Frameworks */,
 				CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */,
-				CD86D64A13BB9E450005A182 /* Foundation.framework in Frameworks */,
 				CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */,
 				CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */,
 				4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */,
-				D59885C2ADB84DF5968CAFB9 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,6 +904,7 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D4E58541982EA8F00710625 /* libPods.a */,
 				4DDDFBB81982B54200CAC998 /* CFNetwork.framework */,
 				4D6B2B36194111C900B4F0AA /* GameKit.framework */,
 				4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */,
@@ -1234,8 +1236,8 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
 				LLVM_LTO = NO;
@@ -1396,8 +1398,8 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
 				LLVM_LTO = NO;
@@ -1455,8 +1457,8 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				LIBRARY_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";
 				LLVM_LTO = YES;

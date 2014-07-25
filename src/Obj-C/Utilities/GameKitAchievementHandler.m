@@ -428,7 +428,16 @@
 				{
 					DiceRemotePlayer* remote = player;
 
-					if (remote.participant.player.isFriend)
+					BOOL isFriend = NO;
+
+					for (NSString* string in [GKLocalPlayer localPlayer].friends)
+						if ([string isEqualToString:remote.participant.playerID])
+						{
+							isFriend = YES;
+							break;
+						}
+
+					if (isFriend)
 					{
 						basicAchievement.percentComplete = 100.0;
 						return YES;
@@ -445,8 +454,17 @@
 
 				for (id<Player> player in game.players)
 				{
+					BOOL isFriend = NO;
+
+					for (NSString* string in [GKLocalPlayer localPlayer].friends)
+						if ([string isEqualToString:((DiceRemotePlayer*)player).participant.playerID])
+						{
+							isFriend = YES;
+							break;
+						}
+
 					if ([player isKindOfClass:DiceRemotePlayer.class] &&
-						((DiceRemotePlayer*)player).participant.player.isFriend)
+						isFriend)
 					{
 						hasFriend = YES;
 						break;
