@@ -365,6 +365,10 @@
 		self.currentTurn = 0;
 		self.canContinueGame = YES;
 		[self createNewRound:NO];
+
+		int seed = arc4random_uniform(RAND_MAX);
+		srand(seed);
+		NSLog(@"Seed:%i", seed);
     }
     return self;
 }

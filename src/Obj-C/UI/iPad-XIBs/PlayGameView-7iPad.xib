@@ -337,7 +337,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view appearanceType="aqua" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ogv-9B-YhM">
-                    <rect key="frame" x="20" y="388" width="280" height="280"/>
+                    <rect key="frame" x="20" y="420" width="280" height="280"/>
                     <subviews>
                         <view appearanceType="aqua" tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VND-X2-EMf">
                             <rect key="frame" x="0.0" y="0.0" width="65" height="275"/>
@@ -399,7 +399,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view appearanceType="aqua" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2WW-hK-6nl">
-                    <rect key="frame" x="724" y="388" width="280" height="280"/>
+                    <rect key="frame" x="724" y="420" width="280" height="280"/>
                     <subviews>
                         <view appearanceType="aqua" tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z5t-LN-ecA">
                             <rect key="frame" x="215" y="2" width="65" height="275"/>
@@ -461,7 +461,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view appearanceType="aqua" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEw-b2-5R2">
-                    <rect key="frame" x="228" y="69" width="280" height="120"/>
+                    <rect key="frame" x="200" y="69" width="280" height="120"/>
                     <subviews>
                         <view appearanceType="aqua" tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bx-NM-7a3">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="65"/>
@@ -523,7 +523,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view appearanceType="aqua" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qj7-bK-fLE">
-                    <rect key="frame" x="516" y="69" width="280" height="120"/>
+                    <rect key="frame" x="520" y="69" width="280" height="120"/>
                     <subviews>
                         <view appearanceType="aqua" tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DQX-jE-0c9">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="65"/>

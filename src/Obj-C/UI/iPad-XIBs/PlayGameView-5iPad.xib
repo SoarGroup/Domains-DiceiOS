@@ -397,7 +397,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view appearanceType="aqua" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ogv-9B-YhM">
-                    <rect key="frame" x="20" y="388" width="280" height="280"/>
+                    <rect key="frame" x="20" y="420" width="280" height="280"/>
                     <subviews>
                         <view appearanceType="aqua" tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VND-X2-EMf">
                             <rect key="frame" x="0.0" y="0.0" width="65" height="275"/>
