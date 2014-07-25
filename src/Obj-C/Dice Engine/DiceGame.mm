@@ -212,7 +212,7 @@ extern std::map<void*, sml::Agent*> agents;
 		if (myHistory && newHistory && [myHistory count] < [newHistory count])
 			DDLogDebug(@"History is less! This should not happen!");
 
-		if (myHistory && newHistory && [myHistory count] != [newHistory count])
+		if (myHistory && newHistory &&  [newHistory count] >= [myHistory count])
 		{
 			int index = (int)[myHistory count];
 
