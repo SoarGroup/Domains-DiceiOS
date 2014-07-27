@@ -1007,9 +1007,9 @@ NSString *numberName(int number) {
 					}
 				}
 
-				if (!die.markedToPush)
+				if (die.markedToPush)
 				{
-					die.markedToPush = YES;
+					die.markedToPush = NO;
 					[diceToAnimate addObject:dieButton];
 					[diceFramesToAnimate addObject:[NSValue valueWithCGRect:dieFrame]];
 				}
