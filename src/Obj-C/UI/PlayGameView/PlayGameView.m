@@ -1488,7 +1488,7 @@ NSString *numberName(int number) {
 
 	DiceAction* action = nil;
 
-	if (alertView.tag != TUTORIAL && tutorial)
+	if (alertView.tag != TUTORIAL && alertView.tag != ACTION_QUIT && tutorial)
 	{
 		[self handleTutorial];
 		return;
