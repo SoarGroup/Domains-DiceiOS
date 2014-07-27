@@ -123,9 +123,9 @@ static int agentCount = 0;
 		case 9:
 			return @"Rosie";
 		case 10:
-			return @"Deep Blue";
+			return @"Maize";
 		case 11:
-			return @"Fred";
+			return @"Blue";
 		case 12:
 			return @"James";
 		case 13:
