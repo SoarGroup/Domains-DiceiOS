@@ -51,8 +51,6 @@
     if (self)
 	{
         self.appDelegate = anAppDelegate;
-
-		self.title = @"Main Menu";
 		self.multiplayerEnabled = NO;
 	}
 	
@@ -75,8 +73,6 @@
     // Do any additional setup after loading the view from its nib.
 
 	self.navigationController.navigationBarHidden = YES;
-
-	self.navigationController.title = @"Main Menu";
 	self.navigationItem.title = @"Main Menu";
 	self.navigationController.delegate = self;
 }
@@ -94,7 +90,6 @@
 
 #ifdef DEBUG
 	self.removeAllMultiplayerGames.enabled = YES;
-	self.removeAllMultiplayerGames.hidden = NO;
 #endif
 }
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
