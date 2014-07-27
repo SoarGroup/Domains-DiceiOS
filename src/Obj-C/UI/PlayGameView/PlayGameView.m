@@ -269,8 +269,6 @@ NSString *numberName(int number) {
 		self.bidCountMinusButton.enabled = NO;
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
-
-		[[[UIAlertView alloc] initWithTitle:@"Round Over!" message:@"The round has ended." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 	}
 }
 
