@@ -459,10 +459,12 @@ NSString *numberName(int number) {
 
 	if (AICount > 0 && humanCount == 0)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs - Single Player Match", AICount];
-	else if (humanCount > 0 && AICount == 0)
+	else if (humanCount > 0 && AICount == 0 && [self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i Human Opponents - Multiplayer Match", humanCount];
-	else if (AICount > 0 && humanCount > 0)
+	else if (AICount > 0 && humanCount > 0 && [self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs, %i Human Opponents - Multiplayer Match", AICount, humanCount];
+	else if ([self.nibName rangeOfString:@"iPad"].location == NSNotFound)
+		self.navigationItem.title = [NSString stringWithFormat:@"Multiplayer Match"];
 	else if (tutorial)
 		self.navigationItem.title = @"Tutorial";
 
