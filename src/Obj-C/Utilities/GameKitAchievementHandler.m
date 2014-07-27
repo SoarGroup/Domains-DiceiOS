@@ -118,6 +118,8 @@
 
 	for (GKAchievement* achievement in achievements)
 	{
+		achievement.showsCompletionBanner = YES;
+
 		if (achievement.percentComplete == 100)
 			continue;
 
