@@ -446,9 +446,6 @@ NSString *numberName(int number) {
 
 	playerViews = array;
 
-	if (tutorial)
-		return;
-
 	int humanCount = 0;
 	int AICount = 0;
 
@@ -460,15 +457,45 @@ NSString *numberName(int number) {
 			AICount++;
 	}
 
-	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
-		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
-
 	if (AICount > 0 && humanCount == 0)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs - Single Player Match", AICount];
 	else if (humanCount > 0 && AICount == 0)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i Human Opponents - Multiplayer Match", humanCount];
 	else if (AICount > 0 && humanCount > 0)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs, %i Human Opponents - Multiplayer Match", AICount, humanCount];
+	else if (tutorial)
+		self.navigationItem.title = @"Tutorial";
+
+	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
+	{
+		id last = nil;
+
+		if (tutorial)
+			last = player2View;
+		else
+			last = [playerViews objectAtIndex:localGame.players.count - 1];
+
+		[playerScrollView addConstraint:[NSLayoutConstraint constraintWithItem:last
+																	 attribute:NSLayoutAttributeBottom
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:playerScrollView
+																	 attribute:NSLayoutAttributeBottom
+																	multiplier:1.0
+																	  constant:0]];
+
+		if (tutorial)
+			playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
+													  128);
+		else
+			playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
+													  ([localGame.players count]-1) * 128);
+	}
+
+	if (tutorial)
+		return;
+
+	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
+		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
 
     [localGame startGame];
 
@@ -480,22 +507,6 @@ NSString *numberName(int number) {
 
 	if ([localGame.gameState.theNewRoundListeners count] == 0)
 		[localGame.gameState addNewRoundListener:self];
-
-	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
-	{
-		id last = [playerViews objectAtIndex:localGame.players.count - 1];
-
-		[playerScrollView addConstraint:[NSLayoutConstraint constraintWithItem:last
-																	 attribute:NSLayoutAttributeBottom
-																	 relatedBy:NSLayoutRelationEqual
-																		toItem:playerScrollView
-																	 attribute:NSLayoutAttributeBottom
-																	multiplier:1.0
-																	  constant:0]];
-
-		playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
-												  ([localGame.players count]-1) * 128);
-	}
 
 	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
 
@@ -1661,6 +1672,12 @@ NSString *numberName(int number) {
 
 	[player2View viewWithTag:ChallengeButtonTag].hidden = YES;
 	[player2View viewWithTag:ActivitySpinnerTag].hidden = YES;
+
+	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).hidden = NO;
+	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).hidden = NO;
+	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).hidden = NO;
+	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).hidden = NO;
+	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).hidden = NO;
 
 	continueRoundButton.hidden = YES;
 
