@@ -1270,8 +1270,8 @@ NSString *numberName(int number) {
 			bidFaceMinusButton.enabled = NO;
 			bidFacePlusButton.enabled = NO;
 
-			bidFaceLabelHint.hidden = NO;
-			bidCountLabelHint.hidden = NO;
+			bidFaceLabelHint.hidden = YES;
+			bidCountLabelHint.hidden = YES;
 
 			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
 			pulse.fromValue = (id)[UIColor redColor].CGColor;
@@ -1310,8 +1310,8 @@ NSString *numberName(int number) {
 			bidFaceMinusButton.enabled = NO;
 			bidFacePlusButton.enabled = NO;
 
-			bidFaceLabelHint.hidden = NO;
-			bidCountLabelHint.hidden = NO;
+			bidFaceLabelHint.hidden = YES;
+			bidCountLabelHint.hidden = YES;
 
 			CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
 			pulse.fromValue = (id)[UIColor redColor].CGColor;
