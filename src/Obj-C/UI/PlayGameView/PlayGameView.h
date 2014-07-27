@@ -61,9 +61,7 @@ enum UITags
 @property (nonatomic, strong) IBOutlet UIButton *bidFacePlusButton;
 @property (nonatomic, strong) IBOutlet UIButton *exactButton;
 @property (nonatomic, strong) IBOutlet UIButton *passButton;
-@property (nonatomic, strong) IBOutlet UIButton *quitButton;
 @property (nonatomic, strong) IBOutlet UIButton *continueRoundButton;
-@property (nonatomic, strong) IBOutlet UIButton *fullscreenButton;
 
 @property (nonatomic, strong) IBOutlet UILabel *bidCountLabelHint;
 @property (nonatomic, strong) IBOutlet UIImageView *bidFaceLabelHint;

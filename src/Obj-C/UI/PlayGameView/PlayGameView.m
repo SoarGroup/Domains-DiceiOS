@@ -95,7 +95,7 @@
 @end
 
 @implementation PlayGameView
-@synthesize quitButton, hasPromptedEnd;
+@synthesize hasPromptedEnd;
 @synthesize bidCountLabel;
 @synthesize bidFaceLabel;
 @synthesize bidCountPlusButton;
@@ -106,7 +106,6 @@
 @synthesize bidButton;
 @synthesize exactButton;
 @synthesize gameStateLabel;
-@synthesize fullscreenButton;
 @synthesize continueRoundButton;
 @synthesize multiplayerView, overViews;
 @synthesize playerScrollView;
@@ -372,8 +371,8 @@ NSString *numberName(int number) {
 {
 	[super viewWillAppear:animated];
 
-    self.navigationController.navigationBarHidden = [self.nibName rangeOfString:@"iPad"].location == NSNotFound;
-	self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBarHidden = NO;
+	self.navigationController.navigationBar.translucent = [self.nibName rangeOfString:@"iPad"].location != NSNotFound;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUINotification:) name:@"UpdateUINotification" object:nil];
@@ -482,9 +481,7 @@ NSString *numberName(int number) {
 	if ([localGame.gameState.theNewRoundListeners count] == 0)
 		[localGame.gameState addNewRoundListener:self];
 
-	if ([[self nibName] rangeOfString:@"iPad"].location != NSNotFound)
-		fullscreenButton.hidden = NO;
-	else
+	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
 	{
 		id last = [playerViews objectAtIndex:localGame.players.count - 1];
 

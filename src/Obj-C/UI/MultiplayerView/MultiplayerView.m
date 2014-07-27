@@ -15,6 +15,8 @@
 #import <GameKit/GameKit.h>
 #import <objc/runtime.h>
 
+#import "UIImage+ImageEffects.h"
+
 @interface MultiplayerView ()
 
 - (void)iPadJoinMatchButtonPressed;
@@ -144,13 +146,24 @@
 
 					[container addSubview:playGameView.view];
 
-					playGameView.fullscreenButton.hidden = NO;
-					playGameView.fullscreenButton.enabled = YES;
-					playGameView.fullscreenButton.tag = matchNumber;
+					UIButton* quitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 140, 40)];
+					[quitButton setTitle:@"Delete Match" forState:UIControlStateNormal];
+					[quitButton setTitleColor:[UIColor maizeColor] forState:UIControlStateNormal];
 
-					[playGameView.fullscreenButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+					UIButton* expandButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 140, 40)];
+					[expandButton setTitle:@"Expand Match" forState:UIControlStateNormal];
+					[expandButton setTitleColor:[UIColor maizeColor] forState:UIControlStateNormal];
+					expandButton.tag = matchNumber;
 
-					[playGameView.quitButton setTitle:@"Delete" forState:UIControlStateNormal];
+					[expandButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
+					[quitButton addTarget:playGameView action:@selector(backPressed:) forControlEvents:UIControlEventTouchUpInside];
+#pragma clang diagnostic pop
+
+					[container addSubview:quitButton];
+					[container addSubview:expandButton];
 
 					container.clipsToBounds = YES;
 

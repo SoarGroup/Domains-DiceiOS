@@ -54,8 +54,8 @@
     // Do any additional setup after loading the view from its nib.
 
 	[self.spinnerView startAnimating];
-	self.navigationController.title = @"Quit";
-	self.navigationItem.title = @"Quit";
+
+	self.navigationItem.title = @"Main Menu";
 }
 
 - (void) viewDidAppear:(BOOL)animated {

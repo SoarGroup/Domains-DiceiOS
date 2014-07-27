@@ -113,3 +113,10 @@
 - (UIImage*)blurredSnapshot;
 
 @end
+
+@interface UIColor (MoreColors)
+
++ (UIColor*)maizeColor;
++ (UIColor*)umichBlueColor;
+
+@end
