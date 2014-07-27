@@ -948,6 +948,7 @@ NSString *numberName(int number) {
 
 			UIButton* dieButton = (UIButton*)[diceView viewWithTag:dieIndex];
 			dieButton.enabled = YES;
+			dieButton.hidden = NO;
 
 			if (dieFace == DIE_UNKNOWN || die.hasBeenPushed)
 				dieButton.enabled = NO;
