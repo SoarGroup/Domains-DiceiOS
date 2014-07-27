@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
@@ -155,7 +156,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="As9-Zu-D5z"/>
                                     </constraints>
-                                    <state key="normal" image="die-unknown.png">
+                                    <state key="normal" image="die-1.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -167,7 +168,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="qjn-Tf-dU7"/>
                                     </constraints>
-                                    <state key="normal" image="die-unknown.png">
+                                    <state key="normal" image="die-1.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -179,7 +180,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="QxL-4R-bBB"/>
                                     </constraints>
-                                    <state key="normal" image="die-unknown.png">
+                                    <state key="normal" image="die-5.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -188,7 +189,7 @@
                                 </button>
                                 <button appearanceType="aqua" opaque="NO" tag="3" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3M-s1-eEA">
                                     <rect key="frame" x="118" y="15" width="40" height="40"/>
-                                    <state key="normal" image="die-unknown.png">
+                                    <state key="normal" image="die-5.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -197,7 +198,7 @@
                                 </button>
                                 <button appearanceType="aqua" opaque="NO" tag="4" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOT-9i-AYw">
                                     <rect key="frame" x="157" y="15" width="40" height="40"/>
-                                    <state key="normal" image="die-unknown.png">
+                                    <state key="normal" image="die-6.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
@@ -303,7 +304,7 @@
                         <constraint firstAttribute="height" constant="21" id="Plv-BQ-3cy"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <scrollView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iUb-W4-Uh7" userLabel="ScrollView">
@@ -459,7 +460,10 @@
         </view>
     </objects>
     <resources>
+        <image name="die-1.png" width="96" height="96"/>
         <image name="die-2.png" width="96" height="96"/>
+        <image name="die-5.png" width="96" height="96"/>
+        <image name="die-6.png" width="96" height="96"/>
         <image name="die-unknown.png" width="96" height="96"/>
     </resources>
 </document>
