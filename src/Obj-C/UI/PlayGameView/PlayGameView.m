@@ -258,6 +258,14 @@ NSString *numberName(int number) {
 		[self updateUI:finalString];
 		showAllDice = NO;
 
+		for (UIView* player in playerViews)
+		{
+			UIActivityIndicatorView* spinner = (UIActivityIndicatorView*)[player viewWithTag:ActivitySpinnerTag];
+
+			if ([spinner isKindOfClass:UIActivityIndicatorView.class])
+				spinner.hidden = YES;
+		}
+
 		canContinueRound = NO;
 		self.continueRoundButton.hidden = NO;
 		self.continueRoundButton.enabled = YES;
