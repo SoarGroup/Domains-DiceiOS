@@ -34,7 +34,6 @@
 	// Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = @"About Liar's Dice";
-    self.navigationItem.leftBarButtonItem.title = @"Back";
 	self.navigationController.navigationBar.translucent = YES;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"about" ofType:@"html"];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
