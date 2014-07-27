@@ -7,18 +7,9 @@
 //
 
 #import "DiceGraphics.h"
+#import "UIImage+ImageEffects.h"
 
 @implementation DiceGraphics
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
 
 + (UIImage *) imageWithType:(DiceImageType) type {
     NSString *imageName;
