@@ -1430,7 +1430,10 @@ NSString *numberName(int number) {
 	DiceGame* localGame = self.game;
 
     Bid *previousBid = localGame.gameState.previousBid;
+	NSString* oldName = previousBid.playerName;
+	previousBid.playerName = [[localGame.players objectAtIndex:previousBid.playerID] getDisplayName];
     NSString *bidStr = [previousBid asString];
+	previousBid.playerName = oldName;
 
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Exact?"
                                                      message:bidStr
