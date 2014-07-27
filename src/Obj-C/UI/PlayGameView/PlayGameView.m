@@ -1675,12 +1675,6 @@ NSString *numberName(int number) {
 	[player2View viewWithTag:ChallengeButtonTag].hidden = YES;
 	[player2View viewWithTag:ActivitySpinnerTag].hidden = YES;
 
-	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).hidden = NO;
-	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:1]).hidden = NO;
-	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:2]).hidden = NO;
-	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:3]).hidden = NO;
-	((UIButton*)[[player2View viewWithTag:DiceViewTag].subviews objectAtIndex:4]).hidden = NO;
-
 	continueRoundButton.hidden = YES;
 
 	bidFaceLabelHint.hidden = YES;
