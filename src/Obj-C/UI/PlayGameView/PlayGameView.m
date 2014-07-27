@@ -450,8 +450,26 @@ NSString *numberName(int number) {
 	if (tutorial)
 		return;
 
+	int humanCount = 0;
+	int AICount = 0;
+
+	for (NSUInteger i = 0; i < [localGame.players count];++i)
+	{
+		if ([[localGame.players objectAtIndex:i] isKindOfClass:DiceRemotePlayer.class])
+			humanCount++;
+		else if ([[localGame.players objectAtIndex:i] isKindOfClass:SoarPlayer.class])
+			AICount++;
+	}
+
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
+
+	if (AICount > 0 && humanCount == 0)
+		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs - Single Player Match", AICount];
+	else if (humanCount > 0 && AICount == 0)
+		self.navigationItem.title = [NSString stringWithFormat:@"%i Human Opponents - Multiplayer Match", humanCount];
+	else if (AICount > 0 && humanCount > 0)
+		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs, %i Human Opponents - Multiplayer Match", AICount, humanCount];
 
     [localGame startGame];
 
