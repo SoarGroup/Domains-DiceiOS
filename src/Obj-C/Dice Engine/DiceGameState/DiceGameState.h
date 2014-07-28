@@ -39,7 +39,6 @@
 -(void)decodePlayers:(GKTurnBasedMatch*)match withHandler:(GameKitGameHandler*)handler;
 
 - (id)initWithPlayers:(NSArray *)players numberOfDice:(int)numberOfDice game:(DiceGame*)game;
-- (void)dealloc;
 
 - (BOOL)handleBid:(NSInteger)playerID withBid:(Bid *)bid;
 - (BOOL)handlePush:(NSInteger)playerID withPush:(NSArray *)push;

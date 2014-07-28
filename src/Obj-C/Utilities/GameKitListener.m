@@ -24,10 +24,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	DDLogVerbose(@"%@ deallocated", self.class);}
-
 - (void) addGameKitGameHandler:(GameKitGameHandler*)handler
 {
 	[handlers addObject:handler];

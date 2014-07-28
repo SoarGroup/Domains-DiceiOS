@@ -58,11 +58,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-	DDLogVerbose(@"%@ deallocated", self.class);
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	if (self.inviteFriendsButton)

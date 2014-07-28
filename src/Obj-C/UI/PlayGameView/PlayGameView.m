@@ -158,6 +158,7 @@ NSString *numberName(int number) {
 		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
+		canContinueRound = YES;
     }
     return self;
 }
@@ -187,6 +188,7 @@ NSString *numberName(int number) {
 		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
+		canContinueRound = YES;
 
 		tutorial = YES;
 		step = 0;
@@ -197,15 +199,16 @@ NSString *numberName(int number) {
 
 - (BOOL) roundEnding
 {
+	DDLogVerbose(@"Round Ending!");
+
 	if (hasDisplayedRoundOverview)
 		return YES;
 
+	DDLogVerbose(@"Has not displayed overview!");
+
 	DiceGame* localGame = self.game;
-
 	localGame.gameState.canContinueGame = NO;
-
 	shouldNotifyCurrentPlayer = localGame->shouldNotifyOfNewRound;
-
 	hasDisplayedRoundOverview = YES;
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
@@ -255,6 +258,7 @@ NSString *numberName(int number) {
 	{
 		showAllDice = YES;
 		[self updateUI:finalString];
+		canContinueRound = NO;
 		showAllDice = NO;
 
 		for (UIView* player in playerViews)
@@ -265,7 +269,6 @@ NSString *numberName(int number) {
 				spinner.hidden = YES;
 		}
 
-		canContinueRound = NO;
 		self.continueRoundButton.hidden = NO;
 		self.continueRoundButton.enabled = YES;
 
@@ -316,7 +319,7 @@ NSString *numberName(int number) {
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"ContinueRoundPressed" object:nil];
 
-	[localGame notifyCurrentPlayer];
+	[self updateUI];
 }
 
 - (BOOL) roundBeginning
@@ -379,6 +382,8 @@ NSString *numberName(int number) {
 
 	DiceGame* localGame = self.game;
 
+	[localGame.gameState addNewRoundListener:self];
+
 	if (localGame.gameState.gameWinner)
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceLocalPlayer.class])
@@ -388,6 +393,14 @@ NSString *numberName(int number) {
 			}
 
 	[self updateUI];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+
+	DiceGame* localGame = self.game;
+	[localGame.gameState.theNewRoundListeners removeObject:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -507,9 +520,6 @@ NSString *numberName(int number) {
 	if (handler)
 		[handler saveMatchData];
 
-	if ([localGame.gameState.theNewRoundListeners count] == 0)
-		[localGame.gameState addNewRoundListener:self];
-
 	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
 
 	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class])
@@ -600,6 +610,13 @@ NSString *numberName(int number) {
 
 - (void)updateState:(PlayerState*)newState
 {
+	DiceGame* localGame = self.game;
+	if (![localGame.gameState.theNewRoundListeners containsObject:self])
+	{
+		[localGame.gameState.theNewRoundListeners removeAllObjects];
+		[localGame.gameState.theNewRoundListeners addObject:self];
+	}
+
     self.state = newState;
 	[self updateUI];
 }
@@ -783,6 +800,9 @@ NSString *numberName(int number) {
 	if (tutorial)
 		return;
 
+	if (!canContinueRound)
+		return;
+
 	self.exactButton.enabled = NO;
 	self.passButton.enabled = NO;
 	self.bidButton.enabled = NO;
@@ -792,8 +812,8 @@ NSString *numberName(int number) {
 	self.bidFaceMinusButton.enabled = NO;
 
 	// State initialization
-	PlayerState* localState = self.state;
 	DiceGame* localGame = self.game;
+	PlayerState* localState = self.state;
 
 	if (localGame.newRound && !hasDisplayedRoundOverview)
 		[self roundEnding];

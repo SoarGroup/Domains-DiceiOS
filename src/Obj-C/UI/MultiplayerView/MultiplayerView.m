@@ -59,8 +59,6 @@
 
 - (void) dealloc
 {
-	DDLogVerbose(@"%@ deallocated", self.class);
-
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -77,12 +75,15 @@
 	self.navigationController.title = @"Multiplayer Matches";
 	self.navigationItem.title = @"Multiplayer Matches";
 
-	for (UIView* view in self.gamesScrollView.subviews)
-		[view removeFromSuperview];
+//	for (UIView* view in self.gamesScrollView.subviews)
+//		[view removeFromSuperview];
+//
+//	[self.miniGamesViewArray removeAllObjects];
+//	[self.playGameViews removeAllObjects];
+//	[self.handlerArray removeAllObjects];
 
-	[self.miniGamesViewArray removeAllObjects];
-	[self.playGameViews removeAllObjects];
-	[self.handlerArray removeAllObjects];
+	for (UIView* view in self.gamesScrollView.subviews)
+		[(PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"] viewWillAppear:animated];
 
 	if (iPad)
 		joinMatchPopoverViewController.spinner = self.joinSpinner;
@@ -93,6 +94,14 @@
 
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdateNotification:) name:@"UpdateUINotification" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+
+	for (UIView* view in self.gamesScrollView.subviews)
+		[(PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"] viewWillDisappear:animated];
 }
 
 - (void)handleUpdateNotification:(NSNotification*)notification

@@ -42,11 +42,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	DDLogVerbose(@"Dice Remote Player deallocated\n");
-}
-
 - (NSString*) getDisplayName
 {
 	//if (self.participant.status == GKTurnBasedParticipantStatusMatching ||

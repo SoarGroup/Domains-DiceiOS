@@ -302,11 +302,6 @@ static int agentCount = 0;
 - (void) end
 {}
 
-- (void)dealloc
-{
-	DDLogVerbose(@"Soar Player Release\n");
-}
-
 - (void)itsYourTurn
 {
     [NSThread detachNewThreadSelector:@selector(doTurn) toTarget:self withObject:nil];

@@ -166,9 +166,4 @@ const int kAI_8 = 0x47;
 	return self;
 }
 
-- (void) dealloc
-{
-	DDLogVerbose(@"%@ deallocated", self.class);
-}
-
 @end

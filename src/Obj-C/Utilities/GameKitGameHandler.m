@@ -34,11 +34,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	DDLogVerbose(@"Game Kit Game Handler deallocated\n");
-}
-
 - (void) saveMatchData
 {
 	if (matchHasEnded || ![[[match currentParticipant] playerID] isEqualToString:[[GKLocalPlayer localPlayer] playerID]])

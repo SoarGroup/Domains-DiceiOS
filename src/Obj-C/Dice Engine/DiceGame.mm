@@ -63,8 +63,6 @@ extern std::map<void*, sml::Agent*> agents;
 			DDLogDebug(@"Releasing Lock: %p", lock);
 		}
 	}
-
-	DDLogDebug(@"%@ deallocated", self.class);
 }
 
 -(DiceGame*)init
@@ -166,13 +164,15 @@ extern std::map<void*, sml::Agent*> agents;
 	if (!remote)
 		return;
 
+	DDLogVerbose(@"Recieved update");
+
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
 	id remoteGameView = remote.gameView;
 	if (remoteGameView)
 		gameView = remoteGameView;
 
-	if (remote.players)
+	if (remote.players && (!self.players || self.players.count == 0))
 	{
 		self.players = [NSArray arrayWithArray:remote.players];
 
@@ -203,13 +203,6 @@ extern std::map<void*, sml::Agent*> agents;
 
 	BOOL didAdvanceTurns = NO;
 
-	if (remote->newRound != newRound)
-	{
-		if (remote->newRound)
-			for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
-				[listener roundBeginning];
-	}
-
 	if (remote.gameState)
 	{
 		NSArray* myHistory = self.gameState.flatHistory;
@@ -236,20 +229,11 @@ extern std::map<void*, sml::Agent*> agents;
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
 			didAdvanceTurns = YES;
 
-		if (remote.newRound)
-		{
-			// Round over
-			for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
-				[listener roundEnding];
-		}
-
 		self.gameState = remote.gameState;
 
 		if (players)
 			self.gameState.players = players;
 	}
-
-	[self publishState];
 
 	if (self.gameState.hasAPlayerWonTheGame)
 	{
@@ -263,34 +247,24 @@ extern std::map<void*, sml::Agent*> agents;
 
 		return;
 	}
-	
+
+	PlayGameView* localView = self.gameView;
+	if ([self.gameState.theNewRoundListeners count] == 0 && localView)
+		[self.gameState addNewRoundListener:localView];
+
+	if (!remote->newRound && newRound)
+		for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
+			[listener roundBeginning];
+
 	newRound = remote->newRound;
 
-	int currentTurnGK = self.gameState.currentTurn;
-	if ([GKLocalPlayer localPlayer].isAuthenticated)
-	{
-		ApplicationDelegate* delegate = self.appDelegate;
-		GKTurnBasedParticipant* currentParticipant = [[delegate.listener handlerForGame:self].match currentParticipant];
+	[self publishState];
 
-		for (int i = 0;i < [self.players count];++i)
-		{
-			id<Player> p = [self.players objectAtIndex:i];
+	if (newRound)
+		return;
 
-			if ([[currentParticipant playerID] isEqualToString:[p getGameCenterName]])
-			{
-				currentTurnGK = i;
-				break;
-			}
-		}
-	}
-
-	if (didAdvanceTurns && ![[self.players objectAtIndex:currentTurnGK] isKindOfClass:DiceRemotePlayer.class])
+	if (didAdvanceTurns)
 		[self notifyCurrentPlayer];
-
-	PlayerState* playerState = [[self.gameState lastHistoryItem] player];
-
-	if (newRound && [[players objectAtIndex:[playerState playerID]] isKindOfClass:DiceLocalPlayer.class])
-		[self.gameState createNewRound];
 }
 
 - (void) setGameView:(PlayGameView*)aGameView
@@ -390,15 +364,17 @@ extern std::map<void*, sml::Agent*> agents;
     }
     DDLogVerbose(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
 
-	PlayGameView* view = self.gameView;
-	PlayerState* currentState = view.state;
-	DiceLocalPlayer* player = currentState.playerPtr;
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
 	GKTurnBasedMatch* match = handler.match;
+	NSString* currentPlayerID = match.currentParticipant.playerID;
+	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
-	if (!handler || [match.currentParticipant.playerID isEqualToString:player.participant.playerID])
+	if (!handler || [currentPlayerID isEqualToString:localPlayerID])
+	{
+		// I am in control of the match
 		[[gameState getCurrentPlayer] itsYourTurn];
+	}
 }
 
 -(NSInteger)getNumberOfPlayers
@@ -461,11 +437,8 @@ extern std::map<void*, sml::Agent*> agents;
             break;
         }
 		case ACTION_LOST:
-			break;
         default:
-        {
-            return;
-        }
+			break;
     }
 
 	[self publishState];

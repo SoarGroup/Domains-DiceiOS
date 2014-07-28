@@ -32,12 +32,6 @@
     return self;
 }
 
-
-- (void)dealloc
-{
-	DDLogVerbose(@"Dice Local Player deallocated\n");
-}
-
 - (NSString*) getDisplayName
 {
 	NSString* displayName = self.name;

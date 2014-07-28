@@ -369,12 +369,6 @@
     return self;
 }
 
-// Dealloc method, release all of our variables
-- (void)dealloc
-{
-	DDLogVerbose(@"%@ deallocated", self.class);
-}
-
 - (void)addNewRoundListener:(id <NewRoundListener>)listener {
     [theNewRoundListeners addObject:listener];
 }
@@ -914,12 +908,8 @@
 
 	DDLogVerbose(@"Created New Round");
 
-    BOOL deferNotification = NO;
-    for (id <NewRoundListener> listener in theNewRoundListeners) {
-        if ([listener roundEnding]) {
-            deferNotification = YES;
-        }
-    }
+    for (id <NewRoundListener> listener in theNewRoundListeners)
+		[listener roundEnding];
 
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* appDelegate = localGame.appDelegate;
@@ -938,10 +928,9 @@
 
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
+
         if ([player isInSpecialRules] && playersLeft > 2)
-        {
             inSpecialRules = YES;
-        }
     }
 
 	self.previousBid = nil;
@@ -954,16 +943,11 @@
         history = [[NSMutableArray alloc] init];
 
     [history addObject:[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] ];
-    for (id <NewRoundListener> listener in theNewRoundListeners) {
-        if ([listener roundBeginning]) {
-            deferNotification = YES;
-        }
-    }
 
-    if (deferNotification)
-		localGame.deferNotification = YES;
-	else
-		[localGame notifyCurrentPlayer];
+	for (id <NewRoundListener> listener in theNewRoundListeners)
+		[listener roundBeginning];
+
+    [localGame notifyCurrentPlayer];
 }
 
 //Make a player lose the round (set the flags that they've lost)
