@@ -73,7 +73,7 @@
 	if ([username length] == 0)
 		username = @"Player";
 
-	int seed = 1942348834;//arc4random_uniform(RAND_MAX);
+	int seed = arc4random_uniform(RAND_MAX);
 	srand(seed);
 	DDLogDebug(@"Seed:%i", seed);
 
