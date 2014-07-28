@@ -20,6 +20,9 @@
 
 - (void)sortDice
 {
+	if ([arrayOfDice count] == 0)
+		return;
+
 	for (int i = 0;i < [arrayOfDice count];++i)
 	{
 		int j = i;
