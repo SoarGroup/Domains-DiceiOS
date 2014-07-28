@@ -18,6 +18,46 @@
 
 @synthesize playerID, playerHasPassed, playerHasExacted, playerHasPushedAllDice, gameState, numberOfDice, maxNumberOfDice, hasLost, playerName, arrayOfDice, lock, hasDoneSpecialRules;
 
+- (void)sortDice
+{
+	for (int i = 0;i < [arrayOfDice count];++i)
+	{
+		int j = i;
+
+		while (j > 0 && !((Die*)[arrayOfDice objectAtIndex:j-1]).hasBeenPushed)
+		{
+			[arrayOfDice exchangeObjectAtIndex:j withObjectAtIndex:j-1];
+			j--;
+		}
+	}
+
+	int firstNonPushed = 0;
+
+	while (((Die*)[arrayOfDice objectAtIndex:firstNonPushed]).hasBeenPushed) firstNonPushed++;
+
+	for (int i = 0;i < firstNonPushed;++i)
+	{
+		int j = i;
+
+		while (j > 0 && ((Die*)[arrayOfDice objectAtIndex:j-1]).dieValue > ((Die*)[arrayOfDice objectAtIndex:j]).dieValue)
+		{
+			[arrayOfDice exchangeObjectAtIndex:j withObjectAtIndex:j-1];
+			j--;
+		}
+	}
+
+	for (int i = firstNonPushed;i < [arrayOfDice count];++i)
+	{
+		int j = i;
+
+		while (j > firstNonPushed && ((Die*)[arrayOfDice objectAtIndex:j-1]).dieValue > ((Die*)[arrayOfDice objectAtIndex:j]).dieValue)
+		{
+			[arrayOfDice exchangeObjectAtIndex:j withObjectAtIndex:j-1];
+			j--;
+		}
+	}
+}
+
 // Set the number of dice that the player has while making sure its 1)
 // not more than the max number of dice and 2) not less than 0.
 - (void)setNumberOfDice:(int)newNumberOfDice
@@ -73,6 +113,8 @@
             //Set our dice
         for (int i = 0;i < dice;i++)
 			[arrayOfDice addObject:[[Die alloc] init:localGame]];
+
+		[self sortDice];
 
         specialRules = NO;
         hasDoneSpecialRules = NO;
@@ -167,21 +209,7 @@
         [arrayOfDice addObject:newDie];
     }
 
-	if ([[gameStateLocal getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
-	{
-		for (int i = 1;i < [arrayOfDice count];i++)
-		{
-			Die* die = [arrayOfDice objectAtIndex:i];
-			int dieValue = [die dieValue];
-			int hole = i;
-			
-			while (hole > 0 && [[arrayOfDice objectAtIndex:(hole - 1)] dieValue] > dieValue)
-			{
-				[arrayOfDice exchangeObjectAtIndex:hole withObjectAtIndex:(hole-1)];
-				hole -= 1;
-			}
-		}
-	}
+	[self sortDice];
 	
     [self.lock unlock];
 }
@@ -214,23 +242,9 @@
 	}
 
 	// Sort dice
-	arrayOfDice = [NSMutableArray arrayWithArray:[arrayOfDice sortedArrayUsingComparator:^(Die* obj1, Die* obj2)
-				   {
-					   if (obj1.hasBeenPushed && !obj2.hasBeenPushed)
-						   return (NSComparisonResult)NSOrderedAscending;
-					   else if (obj2.hasBeenPushed && !obj1.hasBeenPushed)
-						   return (NSComparisonResult)NSOrderedDescending;
-					   else
-					   {
-						   if (obj1.dieValue > obj2.dieValue)
-							   return (NSComparisonResult)NSOrderedDescending;
-						   else if (obj1.dieValue < obj2.dieValue)
-							   return (NSComparisonResult)NSOrderedAscending;
+	[self sortDice];
 
-						   return (NSComparisonResult)NSOrderedSame;
-					   }
-				   }]];
-        //Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
+	//Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
     playerHasPushedAllDice = NO;
     [self.lock unlock];
 }
