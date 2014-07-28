@@ -19,6 +19,8 @@
 		integerSeed = [aDecoder decodeIntegerForKey:@"Random:seed"];
 		numbersGenerated = [aDecoder decodeIntegerForKey:@"Random:numbersGenerated"];
 
+		DDLogDebug(@"Seed:%lu", (unsigned long)integerSeed);
+
 		seed = new std::seed_seq{integerSeed};
 		random = std::minstd_rand0(*seed);
 
@@ -42,6 +44,8 @@
 	if (self)
 	{
 		integerSeed = intSeed;
+
+		DDLogDebug(@"Seed:%lu", (unsigned long)integerSeed);
 
 		seed = new std::seed_seq{integerSeed};
 		random = std::minstd_rand0(*seed);
