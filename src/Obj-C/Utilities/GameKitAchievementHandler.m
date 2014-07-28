@@ -854,6 +854,8 @@
 #ifdef DEBUG
 			hiddenAchievement.percentComplete = 100.0;
 			return YES;
+#else
+			return NO;
 #endif
 			break;
 		case 3:
@@ -867,8 +869,8 @@
 		case 4:
 			// Play the Michigan Fight Song.
 			// Conditions not yet there
-			hiddenAchievement.percentComplete = 100.0;
-			return YES;
+			hiddenAchievement.percentComplete = 0.0;
+			return NO;
 		default:
 			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
