@@ -320,7 +320,7 @@ static int agentCount = 0;
 		return;
 	}
 
-	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has someone managed to get into a situation where it can no longer continue.  After trying to restart it five times, it still continues to do this and so we consider Soar to be 'crashed.'  Unfortunately, this means your game will no longer function, therefore we recommend you quit the game." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
+	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has encountered an error in processing and reasoning.  Please report an issue at github.com/SoarGroup/Domains-DiceiOS/issues.  Please include the seed, the time it occured, what device (including name, iOS Version, and UUID).  Please also attach any error logs to your issue (found via iPhone Configurator)." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
 
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* delegate = localGame.appDelegate;
@@ -388,7 +388,7 @@ static int agentCount = 0;
 
 			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
 
-			if (!agentInterrupted && (startTime + 5) < [[NSDate date] timeIntervalSince1970])
+			if (!agentInterrupted && (startTime + 15) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
 
@@ -415,7 +415,6 @@ static int agentCount = 0;
 					return [self restartSoar];
 				}
 			}
-
         } while (!agentHalted && (agents[(__bridge void*)turnLock]->GetNumberCommands() == 0));
         
         if (agents[(__bridge void*)turnLock]->GetNumberCommands() != 0)
