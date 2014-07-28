@@ -955,7 +955,7 @@ NSString *numberName(int number) {
 		// Update the spinner
 		UIActivityIndicatorView* spinner = (UIActivityIndicatorView*)[view viewWithTag:ActivitySpinnerTag];
 
-		if ([playerState isMyTurn] && [playerState playerID] != 0)
+		if ([playerState isMyTurn])
 		{
 			[spinner startAnimating];
 			spinner.hidden = NO;
