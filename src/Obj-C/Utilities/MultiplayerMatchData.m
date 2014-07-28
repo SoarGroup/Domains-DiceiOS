@@ -93,6 +93,11 @@ const int kAI_8 = 0x47;
 		else if (request)
 		{
 		request:
+			{
+				int seed = arc4random_uniform(RAND_MAX);
+				srand(seed);
+				DDLogDebug(@"Seed:%i", seed);
+			}
 
 			self.theGame = [[DiceGame alloc] init];
 

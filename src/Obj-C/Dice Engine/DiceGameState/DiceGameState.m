@@ -365,10 +365,6 @@
 		self.currentTurn = 0;
 		self.canContinueGame = YES;
 		[self createNewRound:NO];
-
-		seed = arc4random_uniform(RAND_MAX);
-		srand(seed);
-		DDLogDebug(@"Seed:%i", seed);
     }
     return self;
 }
