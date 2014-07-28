@@ -95,7 +95,18 @@
 	GameKitGameHandler* handlerLocal = self.handler;
 
 	if (handlerLocal)
+	{
 		handlerLocal.match.currentParticipant.matchOutcome = GKTurnBasedMatchOutcomeLost;
+
+		DiceRemotePlayer* next = nil;
+
+		for (id<Player> player in handlerLocal.localGame.players)
+			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[handlerLocal.localGame.gameState playerStateForPlayerID:[player getID]] hasLost])
+				next = player;
+
+		if (next)
+			[handlerLocal advanceToRemotePlayer:next];
+	}
 }
 
 - (void)notifyHasWon
