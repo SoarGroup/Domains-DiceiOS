@@ -1022,6 +1022,15 @@ NSString *numberName(int number) {
 						else if (z == 4)
 							dieFrame.origin.x = 0;
 					}
+					else if (playerCount == 6)
+					{
+						if (z == 1 || z == 2)
+							dieFrame.origin.x = 15;
+						else if (z == 3)
+							dieFrame.origin.y = 15;
+						else if (z == 4 || z == 5)
+							dieFrame.origin.x = 0;
+					}
 					else
 					{
 						if (z == 1 || z == 2)
@@ -1073,6 +1082,15 @@ NSString *numberName(int number) {
 						else if (z == 3)
 							dieFrame.origin.y = 0;
 						else if (z == 4)
+							dieFrame.origin.x = 15;
+					}
+					else if (playerCount == 6)
+					{
+						if (z == 1 || z == 2)
+							dieFrame.origin.x = 0;
+						else if (z == 3)
+							dieFrame.origin.y = 0;
+						else if (z == 4 || z == 5)
 							dieFrame.origin.x = 15;
 					}
 					else
