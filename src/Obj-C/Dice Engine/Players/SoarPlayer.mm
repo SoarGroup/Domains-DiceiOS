@@ -330,29 +330,15 @@ static int agentCount = 0;
 - (void) restartSoar
 {
 	PlayerState* localState = self.playerState;
-	localState.numberOfDice -= 1;
-	[localState.arrayOfDice removeLastObject];
+	DiceGameState* state = localState.gameState;
 
-	if (localState.numberOfDice == 0 && ![localState hasLost])
-	{
-		DiceGameState* state = localState.gameState;
-		DiceGame* localGame = self.game;
+	[state playerLosesRound:self.playerID];
+	[state createNewRound];
 
-		[state playerLosesRound:self.playerID];
+	if (state.gameWinner)
+		[state.gameWinner notifyHasWon];
 
-		[state createNewRound];
-
-		if (state.gameWinner)
-			[state.gameWinner notifyHasWon];
-
-		[localGame handleAction:[DiceAction lost:self.playerID] notify:YES];
-
-		return [self showErrorAlert];
-	}
-	else if ([localState hasLost])
-		return;
-	else
-		return [self doTurn];
+	[self showErrorAlert];
 }
 
 - (void) doTurn
@@ -1078,7 +1064,6 @@ static int agentCount = 0;
                 
                 if (goodCommand)
                 {
-                    
                     NSMutableArray *mut = [[NSMutableArray alloc] init];
                     for (int i = 0;i < ident->GetNumberChildren();i++) {
                         NSNumber *number = [NSNumber numberWithInt:faces[i]];
