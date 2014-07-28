@@ -24,7 +24,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 @implementation DiceGame
 
-@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock;
+@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock, randomGenerator;
 
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
 {
@@ -43,6 +43,8 @@ extern std::map<void*, sml::Agent*> agents;
 
 		shouldNotifyOfNewRound = NO;
 		newRound = NO;
+
+		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
 	}
 
     return self;
@@ -129,6 +131,8 @@ extern std::map<void*, sml::Agent*> agents;
 		self.gameState = [decoder decodeObjectForKey:@"DiceGame:gameState"];
 		self.gameState.game = self;
 
+		self.randomGenerator = [decoder decodeObjectForKey:@"DiceGame:randomGenerator"];
+
 		if ([decoder containsValueForKey:@"NewRound"])
 			newRound = YES;
 	}
@@ -146,6 +150,8 @@ extern std::map<void*, sml::Agent*> agents;
 	[encoder encodeInt:time.month forKey:@"DiceGame:time:month"];
 	[encoder encodeInt:time.second forKey:@"DiceGame:time:second"];
 	[encoder encodeInt:time.year forKey:@"DiceGame:time:year"];
+
+	[encoder encodeObject:randomGenerator forKey:@"DiceGame:randomGenerator"];
 
 	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
 
@@ -320,7 +326,7 @@ extern std::map<void*, sml::Agent*> agents;
 {
 	NSMutableArray* playerArray = [NSMutableArray arrayWithArray:self.players];
 
-	[playerArray shuffle];
+	[playerArray shuffle:self];
 
 	for (int i = 0;i < [playerArray count];++i)
 	{

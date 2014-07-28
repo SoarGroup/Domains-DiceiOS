@@ -6,10 +6,12 @@
 #include <Cocoa/Cocoa.h>
 #endif
 
+@class DiceGame;
+
 // This category enhances NSMutableArray by providing
 // methods to randomly shuffle the elements.
 @interface NSMutableArray (Shuffling)
-- (void)shuffle;
+- (void)shuffle:(DiceGame*)game;
 @end
 
 
@@ -19,16 +21,13 @@
 
 @implementation NSMutableArray (Shuffling)
 
-- (void)shuffle
+- (void)shuffle:(DiceGame*)game
 {
 	NSUInteger count = [self count];
 	for (NSUInteger i = 0; i < count; ++i) {
 		NSInteger remainingCount = count - i;
-#ifdef DEBUG
-		NSInteger exchangeIndex = i + rand() % remainingCount;
-#else
-		NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t)remainingCount);
-#endif
+		NSInteger exchangeIndex = i + [game.randomGenerator randomNumber] % remainingCount;
+
 		[self exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
 	}
 }

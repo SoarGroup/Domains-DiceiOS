@@ -33,11 +33,9 @@
             imageName = @"die-6";
             break;
         case DIE_UNKNOWN:
+		default:
             imageName = @"die-unknown";
             break;
-        default:
-			imageName = @"unknown";
-			break;
     }
     UIImage *ret = [UIImage imageNamed:[imageName stringByAppendingFormat:@".png"]];
     if (ret == nil) {

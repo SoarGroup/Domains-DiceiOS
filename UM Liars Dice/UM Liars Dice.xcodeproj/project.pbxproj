@@ -122,6 +122,7 @@
 		4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C71923C9A600A523FB /* dice-harder.soar */; };
 		4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C81923C9A600A523FB /* dice-hardest.soar */; };
 		4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */ = {isa = PBXBuildFile; fileRef = 4DF397C91923C9A600A523FB /* dice-medium.soar */; };
+		4DFAC8321986A70300B59B26 /* Random.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAC8311986A70300B59B26 /* Random.mm */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
 		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
 		CD86D64E13BB9E450005A182 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64D13BB9E450005A182 /* CoreData.framework */; };
@@ -359,6 +360,8 @@
 		4DF397C71923C9A600A523FB /* dice-harder.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-harder.soar"; sourceTree = "<group>"; };
 		4DF397C81923C9A600A523FB /* dice-hardest.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-hardest.soar"; sourceTree = "<group>"; };
 		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
+		4DFAC8301986A70300B59B26 /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
+		4DFAC8311986A70300B59B26 /* Random.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Random.mm; sourceTree = "<group>"; };
 		6F437F92BD1543BEB6138317 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F85E27C1A244FA6A0B27B06 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		C61DD32A1550659E0049A84C /* Lair_s_Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lair_s_Dice.xcdatamodel; sourceTree = "<group>"; };
@@ -826,6 +829,8 @@
 				4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */,
 				4D1AE1FA1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.h */,
 				4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */,
+				4DFAC8301986A70300B59B26 /* Random.h */,
+				4DFAC8311986A70300B59B26 /* Random.mm */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1141,6 +1146,7 @@
 				4DF396201923C51D00A523FB /* Die.m in Sources */,
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,
+				4DFAC8321986A70300B59B26 /* Random.mm in Sources */,
 				4DF3964C1923C51D00A523FB /* GameKitGameHandler.m in Sources */,
 				4D1AE1F91978237200D6F4F5 /* GameKitAchievementHandler.m in Sources */,
 			);

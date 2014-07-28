@@ -73,10 +73,6 @@
 	if ([username length] == 0)
 		username = @"Player";
 
-	int seed = arc4random_uniform(RAND_MAX);
-	srand(seed);
-	DDLogDebug(@"Seed:%i", seed);
-
     DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
 
 	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] ];

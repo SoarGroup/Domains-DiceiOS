@@ -66,13 +66,14 @@
         playerHasExacted = NO;
         
         self.gameState = aGameState;
+		DiceGame* localGame = aGameState.game;
         
         self.arrayOfDice = [[NSMutableArray alloc] init];
         
             //Set our dice
         for (int i = 0;i < dice;i++)
-            [arrayOfDice addObject:[[Die alloc] init]];
-        
+			[arrayOfDice addObject:[[Die alloc] init:localGame]];
+
         specialRules = NO;
         hasDoneSpecialRules = NO;
         [self.lock unlock];
@@ -157,13 +158,15 @@
     [arrayOfDice removeAllObjects];
     playerHasPassed = NO;
     //Create our new dice
+	DiceGameState* gameStateLocal = self.gameState;
+	DiceGame* localGame = gameStateLocal.game;
+
     for (int i = 0;i < numberOfDice;i++) {
-        Die *newDie = [[Die alloc] init];
+		Die *newDie = [[Die alloc] init:localGame];
 
         [arrayOfDice addObject:newDie];
     }
 
-	DiceGameState* gameStateLocal = self.gameState;
 	if ([[gameStateLocal getPlayerWithID:self.playerID] isKindOfClass:[DiceLocalPlayer class]])
 	{
 		for (int i = 1;i < [arrayOfDice count];i++)
@@ -201,10 +204,13 @@
 		}
 	}
 
+	DiceGameState* localState = gameState;
+	DiceGame* localGame = localState.game;
+
 	for (Die* arrayDie in arrayOfDice)
 	{
 		if (!arrayDie.hasBeenPushed)
-			[arrayDie roll];
+			[arrayDie roll:localGame];
 	}
 
 	// Sort dice

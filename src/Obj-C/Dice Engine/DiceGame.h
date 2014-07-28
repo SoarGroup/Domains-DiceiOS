@@ -17,6 +17,8 @@
 #import "GameRecord.h"
 #import "GameKitListener.h"
 
+#import "Random.h"
+
 @class ApplicationDelegate;
 
 @interface DiceGame : NSObject <NSCoding>
@@ -25,6 +27,8 @@
 	int nextID;
 @public
 	BOOL shouldNotifyOfNewRound;
+
+	int seed;
 }
 
 -(DiceGame*)initWithAppDelegate:(ApplicationDelegate*)appDelegate;
@@ -73,5 +77,7 @@
 @property(readwrite, assign) BOOL newRound;
 
 @property(readwrite, strong) NSLock* gameLock;
+
+@property(readwrite, strong) Random* randomGenerator;
 
 @end

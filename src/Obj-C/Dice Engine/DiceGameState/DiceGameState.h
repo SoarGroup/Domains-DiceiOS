@@ -30,8 +30,6 @@
 	NSArray* playersArrayToDecode;
 
     BOOL inSpecialRules;
-
-	int seed;
 }
 
 // Encoding

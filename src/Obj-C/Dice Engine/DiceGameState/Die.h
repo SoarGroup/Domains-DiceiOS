@@ -10,6 +10,8 @@
 
 #define NUMBER_OF_SIDES 6
 
+@class DiceGame;
+
 @interface Die : NSObject
 
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withPrefix:(NSString*)prefix;
@@ -19,9 +21,9 @@
 @property (readonly) BOOL hasBeenPushed;
 @property (readwrite, assign) BOOL markedToPush;
 
-- (id)init;
+- (id)init:(DiceGame*)game;
 - (id)initWithNumber:(int)dieValue;
-- (void)roll;
+- (void)roll:(DiceGame*)game;
 - (void)push;
 
 - (NSString *)asString;

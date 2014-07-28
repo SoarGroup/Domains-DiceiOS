@@ -93,12 +93,6 @@ const int kAI_8 = 0x47;
 		else if (request)
 		{
 		request:
-			{
-				int seed = arc4random_uniform(RAND_MAX);
-				srand(seed);
-				DDLogDebug(@"Seed:%i", seed);
-			}
-
 			self.theGame = [[DiceGame alloc] init];
 
 			// New Match
@@ -133,11 +127,7 @@ const int kAI_8 = 0x47;
 
 			for (int i = 0;i < totalPlayerCount;i++)
 			{
-#ifdef DEBUG
-				BOOL isAI = (BOOL)(rand() % 2);
-#else
-				BOOL isAI = (BOOL)arc4random_uniform(2);
-#endif
+				BOOL isAI = (BOOL)([self.theGame.randomGenerator randomNumber] % 2);
 
 				if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
 				{

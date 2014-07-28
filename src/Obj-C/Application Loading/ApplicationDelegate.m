@@ -58,10 +58,6 @@
 	[DDLog addLogger:[DDASLLogger sharedInstance]];
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
 
-	int seed = arc4random_uniform(RAND_MAX);
-	srand(seed);
-	DDLogDebug(@"Seed:%i", seed);
-
 	[[NSNotificationCenter defaultCenter]
 		addObserver: self
 		   selector: @selector (storeDidChange:)

@@ -892,9 +892,9 @@
 		diceString = @"";
 
     if (playerIDorMinusOne < 0)
-        return [NSString stringWithFormat:@"Seed: %i, %@ bid %d %ds%@%@%d %ds.", seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
+        return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
 
-	return [NSString stringWithFormat:@"Seed: %i, %@ bid %d %ds%@%@%d %ds, %d unknown.", seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
+	return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds, %d unknown.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods

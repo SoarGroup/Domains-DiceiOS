@@ -8,6 +8,7 @@
 
 #import "Die.h"
 #import <stdlib.h>
+#import "DiceGame.h"
 
 @implementation Die
 
@@ -34,11 +35,11 @@
 	[encoder encodeBool:markedToPush forKey:[NSString stringWithFormat:@"%@Die%i:markedToPush", prefix, count]];
 }
 
-- (id)init
+- (id)init:(DiceGame*)game
 {
     self = [super init];
     if (self) {
-        [self roll];
+		[self roll:game];
         hasBeenPushed = NO;
         markedToPush = NO;
     }
@@ -56,13 +57,9 @@
     return self;
 }
 
-- (void)roll
+- (void)roll:(DiceGame*)game
 {
-#ifdef DEBUG
-	dieValue = (rand() % NUMBER_OF_SIDES + 1);
-#else
-    dieValue = (arc4random_uniform((unsigned)NUMBER_OF_SIDES) + 1);
-#endif
+	dieValue = [game.randomGenerator randomNumber] % NUMBER_OF_SIDES + 1;
 }
 
 - (void)push
