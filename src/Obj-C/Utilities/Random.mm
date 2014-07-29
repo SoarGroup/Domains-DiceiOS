@@ -56,19 +56,32 @@
 	return self;
 }
 
-- (int)randomNumber
+- (uint32_t)randomNumber
 {
 	numbersGenerated++;
 
-	int result = 0;
+	uint32_t result = 0;
 
 	if (integerSeed == NO_SEED)
-		result = true_random();
+	{
+		uint8_t data[4];
+		int err = SecRandomCopyBytes(kSecRandomDefault, 4, data);
+
+		if (err != noErr)
+			result = true_random();
+		else
+		{
+			for (int i = 0;i < 4;++i)
+			{
+				result += data[i];
+
+				if (i != 3)
+					result = result << 8;
+			}
+		}
+	}
 	else
 		result = random();
-
-	if (result < 0)
-		result *= -1;
 
 	return result;
 }

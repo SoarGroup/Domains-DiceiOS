@@ -34,6 +34,7 @@
 		4D4E58551982EA8F00710625 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4E58541982EA8F00710625 /* libPods.a */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
+		4D75EAEF19883FED00B4D91F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D75EAEE19883FED00B4D91F /* Security.framework */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
@@ -161,6 +162,7 @@
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4D75EAEE19883FED00B4D91F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D4E58551982EA8F00710625 /* libPods.a in Frameworks */,
+				4D75EAEF19883FED00B4D91F /* Security.framework in Frameworks */,
 				4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */,
 				4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */,
 				4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */,
@@ -909,6 +912,7 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D75EAEE19883FED00B4D91F /* Security.framework */,
 				4D4E58541982EA8F00710625 /* libPods.a */,
 				4DDDFBB81982B54200CAC998 /* CFNetwork.framework */,
 				4D6B2B36194111C900B4F0AA /* GameKit.framework */,

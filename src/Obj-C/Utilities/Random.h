@@ -35,6 +35,6 @@
 
 - (id)init:(NSUInteger)seed;
 
-- (int)randomNumber;
+- (uint32_t)randomNumber;
 
 @end
