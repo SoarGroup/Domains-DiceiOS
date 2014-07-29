@@ -168,6 +168,9 @@ extern std::map<void*, sml::Agent*> agents;
 
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
+	if (remote.randomGenerator)
+		randomGenerator = remote.randomGenerator;
+
 	id remoteGameView = remote.gameView;
 	if (remoteGameView)
 		gameView = remoteGameView;
