@@ -920,22 +920,20 @@
 	GameKitGameHandler* handler = [appDelegate.listener handlerForGame:localGame];
 	if (newRound)
 		localGame.newRound = YES;
-	
+
+	DiceRemotePlayer* next = nil;
+
 	if (handler && ![[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost])
 		[handler saveMatchData];
 	else if (handler && [[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost] &&
 			 [handler.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID])
 	{
-		DiceRemotePlayer* next = nil;
-
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[self playerStateForPlayerID:[player getID]] hasLost])
 				next = player;
 
 		if (next)
 			[handler advanceToRemotePlayer:next];
-		else
-			[handler saveMatchData];
 	}
 
 	while (!canContinueGame)
@@ -946,12 +944,55 @@
 	didLeave = NO;
 	leavingPlayerID = 0;
 
+	NSMutableArray* winners = [NSMutableArray array];
+	NSMutableArray* loserAIs = [NSMutableArray array];
+
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
 
         if ([player isInSpecialRules] && playersLeft > 2)
             inSpecialRules = YES;
+
+		if (![player hasLost] && handler && [[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost] &&
+			[handler.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID] && !next)
+		{
+			NSNumber* stateID = [winners firstObject];
+
+			if ([[self playerStateForPlayerID:[stateID intValue]] numberOfDice] < player.numberOfDice)
+			{
+				[loserAIs addObjectsFromArray:winners];
+				[winners removeAllObjects];
+				[winners addObject:[NSNumber numberWithInt:player.playerID]];
+			}
+			else if ([[self playerStateForPlayerID:[stateID intValue]] numberOfDice] == player.numberOfDice)
+				[winners addObject:[NSNumber numberWithInt:player.playerID]];
+			else
+				[loserAIs addObject:[NSNumber numberWithInt:player.playerID]];
+		}
     }
+
+	if (winners.count > 1)
+	{
+		int winnerIndex = [localGame.randomGenerator randomNumber] % winners.count;
+
+		for (int i = 0;i < winners.count;++i)
+		{
+			if (i == winnerIndex)
+				continue;
+
+			[loserAIs addObject:[winners objectAtIndex:i]];
+			[winners removeObjectAtIndex:i];
+			i--;
+			winnerIndex--;
+		}
+	}
+
+	for (NSNumber* loser in loserAIs)
+	{
+		PlayerState* state = [self playerStateForPlayerID:[loser intValue]];
+		state.numberOfDice = 0;
+		[self playerLosesGame:state.playerID];
+	}
 
 	self.previousBid = nil;
     if (history)
