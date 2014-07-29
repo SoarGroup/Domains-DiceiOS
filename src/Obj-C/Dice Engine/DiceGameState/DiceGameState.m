@@ -1005,6 +1005,9 @@
 
     [history addObject:[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] ];
 
+	if (loserAIs.count > 0 && handler)
+		[handler endMatchForAllParticipants];
+
 	for (id <NewRoundListener> listener in theNewRoundListeners)
 		[listener roundBeginning];
 
