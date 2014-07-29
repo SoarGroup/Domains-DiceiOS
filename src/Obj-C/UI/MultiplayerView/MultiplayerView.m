@@ -162,7 +162,7 @@
 					UIButton* expandButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 140, 40)];
 					[expandButton setTitle:@"Expand Match" forState:UIControlStateNormal];
 					[expandButton setTitleColor:[UIColor maizeColor] forState:UIControlStateNormal];
-					expandButton.tag = matchNumber;
+					[expandButton.LDContext setObject:match forKey:@"Match"];
 
 					[expandButton addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -301,6 +301,7 @@
 				[playMatch setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 				[playMatch setTag:matchNumber];
 				[playMatch addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+				[playMatch.LDContext setObject:match forKey:@"Match"];
 
 				frame.origin.x += frame.size.width;
 				deleteMatch.frame = frame;
@@ -431,19 +432,26 @@
 
 - (void)playMatchButtonPressed:(id)sender
 {
-	int gameIndex = (int)[(UIButton*)sender tag];
+	GKTurnBasedMatch* match = [((NSObject*)sender).LDContext objectForKey:@"Match"];
 
-	DiceGame* localGame = [self->miniGamesViewArray objectAtIndex:gameIndex];
+	ApplicationDelegate* delegate = self.appDelegate;
 
-	__block MultiplayerView* multiplayerView = self;
-	void (^quitHandler)(void) =^
+	GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
+
+	if (handler)
 	{
-		[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
-	};
+		DiceGame* localGame = handler.localGame;
 
-	PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
+		__block MultiplayerView* multiplayerView = self;
+		void (^quitHandler)(void) =^
+		{
+			[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
+		};
 
-	[self.navigationController pushViewController:bigView animated:YES];
+		PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
+
+		[self.navigationController pushViewController:bigView animated:YES];
+	}
 }
 
 - (void)deleteMatchButtonPressed:(id)sender

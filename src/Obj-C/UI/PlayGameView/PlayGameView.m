@@ -337,7 +337,6 @@ NSString *numberName(int number) {
 
 	DiceGame* localGame = self.game;
 	PlayerState* localState = self.state;
-	PlayerState* lastPlayerState = [[localGame.gameState lastHistoryItem] player];
 
 	if ([localGame.gameState usingSpecialRules]) {
 		title = [NSString stringWithFormat:@"Special Rules!"];
