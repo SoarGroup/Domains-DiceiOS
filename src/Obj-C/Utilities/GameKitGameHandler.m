@@ -174,6 +174,8 @@
 		}
 	}
 
+	DDLogDebug(@"Next Players: %@", nextPlayers);
+
 	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)
 	 {
 		 if (error)
