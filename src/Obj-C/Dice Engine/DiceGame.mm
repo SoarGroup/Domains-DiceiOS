@@ -272,6 +272,19 @@ extern std::map<void*, sml::Agent*> agents;
 	NSString* currentPlayerID = match.currentParticipant.playerID;
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
+	if ([match.currentParticipant.playerID isEqualToString:localPlayerID] &&
+		[[players objectAtIndex:gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class])
+	{
+		DiceRemotePlayer* next = nil;
+
+		for (id<Player> player in players)
+			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[self.gameState playerStateForPlayerID:[player getID]] hasLost])
+				next = player;
+
+		if (next)
+			[handler advanceToRemotePlayer:next];
+	}
+
 	if (newRound && ![currentPlayerID isEqualToString:localPlayerID])
 		return;
 

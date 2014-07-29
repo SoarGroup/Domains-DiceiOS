@@ -807,6 +807,24 @@ NSString *numberName(int number) {
 	DiceGame* localGame = self.game;
 	PlayerState* localState = self.state;
 
+	ApplicationDelegate* delegate = localGame.appDelegate;
+	GameKitGameHandler* handler = [delegate.listener handlerForGame:localGame];
+	GKTurnBasedMatch* match = handler.match;
+	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
+
+	if ([match.currentParticipant.playerID isEqualToString:localPlayerID] &&
+		[[localGame.players objectAtIndex:localGame.gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class])
+	{
+		DiceRemotePlayer* next = nil;
+
+		for (id<Player> player in localGame.players)
+			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[localGame.gameState playerStateForPlayerID:[player getID]] hasLost])
+				next = player;
+
+		if (next)
+			[handler advanceToRemotePlayer:next];
+	}
+
 	if (localGame.newRound && !hasDisplayedRoundOverview)
 		[self roundEnding];
 
