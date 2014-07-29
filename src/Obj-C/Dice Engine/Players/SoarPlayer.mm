@@ -218,13 +218,14 @@ static int agentCount = 0;
 				return nil;
 			}
 
-#ifdef DEBUG
 			agents[(__bridge void*)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
-#endif
 
-			int seed = [aGame.randomGenerator randomNumber];
+			NSUInteger seed = aGame.randomGenerator->integerSeed;
 
-			agents[(__bridge void*)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %i", seed] UTF8String]);
+			if (aGame.randomGenerator->integerSeed == NO_SEED)
+				seed = [aGame.randomGenerator randomNumber];
+
+			agents[(__bridge void*)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %lu", (unsigned long)seed] UTF8String]);
 
 			NSString *path;
 
