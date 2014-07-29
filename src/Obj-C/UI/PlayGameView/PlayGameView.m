@@ -324,14 +324,14 @@ NSString *numberName(int number) {
 
 - (BOOL) roundBeginning
 {
-	hasTouchedBidCounterThisTurn = NO;
-	hasDisplayedRoundOverview = NO;
-
 	if (![NSThread isMainThread])
 	{
 		[self performSelectorOnMainThread:@selector(roundBeginning) withObject:nil waitUntilDone:YES];
 		return NO;
 	}
+
+	hasTouchedBidCounterThisTurn = NO;
+	hasDisplayedRoundOverview = NO;
 
 	NSString *title = nil, *message = nil;
 
