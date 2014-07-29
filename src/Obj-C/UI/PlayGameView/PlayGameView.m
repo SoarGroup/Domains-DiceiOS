@@ -352,13 +352,6 @@ NSString *numberName(int number) {
 		self.hasPromptedEnd = YES;
 		title = [NSString stringWithFormat:@"You Lost the Game"];
 	}
-	else if (localGame.newRound && [lastPlayerState playerID] != [localState playerID])
-	{
-		NSString* name = [[lastPlayerState playerPtr] getDisplayName];
-
-		title = @"Please Wait";
-		message = [NSString stringWithFormat:@"Please wait until %@ has finished looking at the round overview.", name];
-	}
 
 	if (title)
 		[[[UIAlertView alloc] initWithTitle:title
