@@ -886,13 +886,20 @@
 	if (!diceCount)
 		diceString = @"";
 
+	NSUInteger seed = 0;
+
+	if (localGame)
+		seed = localGame.randomGenerator->integerSeed;
+	else
+		return @"End of match";
+
 	if (didLeave)
-		return [NSString stringWithFormat:@"Seed: %lu\n%@ quit", (unsigned long)localGame.randomGenerator->integerSeed, [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
+		return [NSString stringWithFormat:@"Seed: %lu\n%@ quit", (unsigned long)seed, [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
 
     if (playerIDorMinusOne < 0)
-        return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
+        return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
 
-	return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds, %d unknown.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
+	return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds, %d unknown.", (unsigned long)seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods
