@@ -956,7 +956,7 @@ NSString *numberName(int number) {
 		else if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeTimeExpired)
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ timed out", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 		else if ([playerState hasLost])
-			nameLabelText = [[NSMutableAttributedString alloc] initWithString:playerName];
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ has lost", playerName]];
 		else if ([playerState hasWon])
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ won!", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 
