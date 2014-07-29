@@ -237,16 +237,16 @@ NSString *numberName(int number) {
 		{
 			[self.overViews addObject:roundOverView];
 			roundOverView.view.frame = self.view.frame;
-			roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
-												  roundOverView.view.frame.size.height,
-												  roundOverView.view.frame.size.width,
-												  roundOverView.view.frame.size.height);
+			roundOverView.view.frame = CGRectMake(self.view.frame.origin.x,
+												  self.view.frame.size.height,
+												  self.view.frame.size.width,
+												  self.view.frame.size.height);
 
 			[self.view.superview addSubview:roundOverView.view];
 
 			[UIView animateWithDuration:0.35 animations:^{
 				roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
-													  0,
+													  self.view.frame.origin.y,
 													  roundOverView.view.frame.size.width,
 													  roundOverView.view.frame.size.height);
 			}];
@@ -1176,10 +1176,10 @@ NSString *numberName(int number) {
 	{
 		if (newBid.numberOfDice > maxBidCount)
 		{
-			if (previousBid.rankOfDie == 1)
+			if (newBid.rankOfDie == 1)
 				return nil;
 
-			int nextRank = (previousBid.rankOfDie + 1);
+			int nextRank = (newBid.rankOfDie + 1);
 
 			if (nextRank > 6)
 				nextRank = 1;
