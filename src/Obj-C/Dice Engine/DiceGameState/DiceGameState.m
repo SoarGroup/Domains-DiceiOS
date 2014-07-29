@@ -556,21 +556,19 @@
     {
         int targetIndex = [self getIndexOfPlayerWithId:targetID];
         self.currentTurn = targetIndex % [self.playerStates count];
-        [self goToNextPlayerWhoHasntLost];
     }
     else
-    {
         self.currentTurn = (self.currentTurn) % [self.playerStates count];
-    }
 
-    // This is handled in "playerLosesRound" above
-    // [self goToNextPlayerWhoHasntLost];
-    
-    [self createNewRound];
+	[self goToNextPlayerWhoHasntLost];
+	[self createNewRound];
 
 	if (gameWinner)
+	{
 		[gameWinner notifyHasWon];
-    
+		return YES;
+	}
+
     return YES;
 }
 
@@ -615,15 +613,13 @@
         
         *wasTheExactRight = NO;
     }
-    // self.currentTurn = playerID;
-    // Pointless because we'll just create a new round anyways but left there because the java engine does this
-    [self goToNextPlayerWhoHasntLost];
-    [self createNewRound];
+
+	[self createNewRound];
 
 	if (gameWinner)
 		[gameWinner notifyHasWon];
 
-    return YES;
+	return YES;
 }
 
 - (BOOL)handleAccept:(NSInteger)playerID
@@ -891,9 +887,7 @@
 		diceString = @"";
 
 	if (didLeave)
-	{
 		return [NSString stringWithFormat:@"Seed: %lu\n%@ quit", (unsigned long)localGame.randomGenerator->integerSeed, [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
-	}
 
     if (playerIDorMinusOne < 0)
         return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
@@ -927,8 +921,22 @@
 	if (newRound)
 		localGame.newRound = YES;
 	
-	if (handler)
+	if (handler && ![[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost])
 		[handler saveMatchData];
+	else if (handler && [[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost] &&
+			 [handler.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID])
+	{
+		DiceRemotePlayer* next = nil;
+
+		for (id<Player> player in localGame.players)
+			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[self playerStateForPlayerID:[player getID]] hasLost])
+				next = player;
+
+		if (next)
+			[handler advanceToRemotePlayer:next];
+		else
+			[handler saveMatchData];
+	}
 
 	while (!canContinueGame)
 		sleep(1); //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
@@ -976,8 +984,6 @@
 
 	if (player.numberOfDice == 0)
         [self playerLosesGame:playerID];
-
-	[self goToNextPlayerWhoHasntLost];
 }
 
 //Make a player lose the game (set the flags that they've lost the game)
@@ -1056,10 +1062,10 @@
 // Advance until the current turn is of a player who hasn't lost
 - (void)goToNextPlayerWhoHasntLost
 {
-    while ([[self.playerStates objectAtIndex:self.currentTurn] hasLost])
-    {
-        self.currentTurn = (self.currentTurn + 1) % [self.playerStates count];
-    }
+	while ([[self.playerStates objectAtIndex:self.currentTurn] hasLost])
+	{
+		self.currentTurn = (self.currentTurn + 1) % [self.playerStates count];
+	}
 }
 
 // Get a player's PlayerState by their playerID

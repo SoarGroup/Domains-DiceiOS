@@ -131,8 +131,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 		self.randomGenerator = [decoder decodeObjectForKey:@"DiceGame:randomGenerator"];
 
-		if ([decoder containsValueForKey:@"NewRound"])
-			newRound = YES;
+		newRound = [decoder containsValueForKey:@"NewRound"];
 	}
 
 	return self;
@@ -263,23 +262,24 @@ extern std::map<void*, sml::Agent*> agents;
 
 	[self publishState];
 
-	if (newRound)
-		return;
-
-	if (didAdvanceTurns)
-		[self notifyCurrentPlayer];
-
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
 	GKTurnBasedMatch* match = handler.match;
 	NSString* currentPlayerID = match.currentParticipant.playerID;
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
-	if (gameState && gameState->didLeave && [currentPlayerID isEqualToString:localPlayerID])
+	if (newRound && ![currentPlayerID isEqualToString:localPlayerID])
+		return;
+
+	if (gameState && (newRound || (gameState->didLeave && [currentPlayerID isEqualToString:localPlayerID])))
 	{
 		gameState.canContinueGame = NO;
 		[gameState createNewRound];
+		return;
 	}
+
+	if (didAdvanceTurns)
+		[self notifyCurrentPlayer];
 }
 
 - (void) setGameView:(PlayGameView*)aGameView
@@ -445,7 +445,7 @@ extern std::map<void*, sml::Agent*> agents;
             BOOL wonChallenge;
             [gameState handleChallenge:action.playerID againstTarget:action.targetID withFirstPlayerWonOrNot:&wonChallenge];
             break;
-        }   
+        }
         case ACTION_PUSH:
         {
             [gameState handlePush:action.playerID withPush:action.push];
@@ -524,6 +524,20 @@ extern std::map<void*, sml::Agent*> agents;
 			return YES;
 
 	return NO;
+}
+
+-(DiceLocalPlayer*)localPlayer
+{
+	DiceLocalPlayer* localPlayer = nil;
+
+	for (id<Player> player in players)
+		if ([player isKindOfClass:DiceLocalPlayer.class])
+		{
+			localPlayer = player;
+			break;
+		}
+
+	return localPlayer;
 }
 
 @end

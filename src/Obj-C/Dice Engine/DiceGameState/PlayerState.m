@@ -190,15 +190,18 @@
 - (void)isNewRound
 {
     [self.lock lock];
+
+	if ([self hasLost])
+		numberOfDice = 0;
+
     if (numberOfDice == 1 && !hasDoneSpecialRules && [self getNumberOfPlayers] > 2)
     {
         specialRules = YES;
         hasDoneSpecialRules = YES;
     }
     else if (specialRules)
-    {
         specialRules = NO;
-    }
+
         //Remove all the old dice
     [arrayOfDice removeAllObjects];
     playerHasPassed = NO;

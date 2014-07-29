@@ -61,6 +61,8 @@
 -(NSInteger)getNumberOfPlayers;
 
 -(id <Player>)getPlayerAtIndex:(int)index;
+-(DiceLocalPlayer*)localPlayer;
+
 -(void) notifyCurrentPlayer;
 
 -(NSString*)gameNameString;

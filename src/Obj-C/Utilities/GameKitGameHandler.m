@@ -141,16 +141,37 @@
 
 	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:participants];
 
-	for (int i = localGame.gameState.currentTurn;i > 0;i--)
+	for (int i = 0;i < nextPlayers.count;++i)
 	{
-		if ([[localGame.players objectAtIndex:i] isKindOfClass:SoarPlayer.class])
-			continue;
+		GKTurnBasedParticipant* p = [nextPlayers objectAtIndex:i];
+		if (!p.playerID || [p.playerID isEqualToString:[player getGameCenterName]])
+		{
+			[nextPlayers removeObjectAtIndex:i];
+			[nextPlayers insertObject:p atIndex:0];
+			break;
+		}
+	}
 
-		GKTurnBasedParticipant* gktbp = [nextPlayers objectAtIndex:0];
-		[nextPlayers removeObjectAtIndex:0];
+	for (GKTurnBasedParticipant* p in nextPlayers)
+	{
+		NSString* gID = p.playerID;
 
-		if (gktbp.matchOutcome == GKTurnBasedMatchOutcomeNone)
-			[nextPlayers insertObject:gktbp atIndex:[nextPlayers count]];
+		for (PlayerState* state in localGame.gameState.playerStates)
+		{
+			BOOL equal = [[[state playerPtr] getGameCenterName] isEqualToString:gID];
+
+			if (!equal)
+				continue;
+
+			if ([state hasLost])
+				p.matchOutcome = GKTurnBasedMatchOutcomeLost;
+			else if ([state hasWon])
+				p.matchOutcome = GKTurnBasedMatchOutcomeWon;
+			else
+				p.matchOutcome = GKTurnBasedMatchOutcomeNone;
+
+			break;
+		}
 	}
 
 	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)
