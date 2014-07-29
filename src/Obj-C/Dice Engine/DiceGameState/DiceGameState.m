@@ -79,6 +79,9 @@
 
 		theNewRoundListeners = [[NSMutableArray alloc] init];
 
+		didLeave = NO;
+		leavingPlayerID = 0;
+
 		if ([decoder containsValueForKey:@"DiceGameState:GameWinner"])
 			gameWinner = (id<Player>)[decoder decodeObjectForKey:@"DiceGameState:GameWinner"];
 	}
@@ -234,7 +237,8 @@
 		for (HistoryItem* item in array)
 			[item canDecodePlayer];
 
-	BOOL didLeave = NO;
+	didLeave = NO;
+	leavingPlayerID = 0;
 
 	for (GKTurnBasedParticipant* participant in match.participants)
 	{
@@ -258,15 +262,14 @@
 						[self playerLosesGame:state.playerID];
 
 						[self goToNextPlayerWhoHasntLost];
+
+						leavingPlayerID = [player getID];
 						didLeave = YES;
 					}
 				}
 			}
 		}
 	}
-
-	if (didLeave)
-		[self createNewRound];
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
@@ -334,6 +337,8 @@
 {
     self = [super init];
     if (self) {
+		didLeave = NO;
+		leavingPlayerID = 0;
         self.game = aGame;
         self.players = thePlayers;
         self.losers = [[NSMutableArray alloc] init];
@@ -885,6 +890,11 @@
 	if (!diceCount)
 		diceString = @"";
 
+	if (didLeave)
+	{
+		return [NSString stringWithFormat:@"Seed: %lu\n%@ quit", (unsigned long)localGame.randomGenerator->integerSeed, [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
+	}
+
     if (playerIDorMinusOne < 0)
         return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)localGame.randomGenerator->integerSeed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
 
@@ -925,6 +935,8 @@
 
 	localGame.newRound = NO;
 	inSpecialRules = NO;
+	didLeave = NO;
+	leavingPlayerID = 0;
 
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];

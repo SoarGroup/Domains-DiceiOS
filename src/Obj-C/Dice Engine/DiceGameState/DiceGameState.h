@@ -30,6 +30,10 @@
 	NSArray* playersArrayToDecode;
 
     BOOL inSpecialRules;
+
+@public
+	BOOL didLeave;
+	int leavingPlayerID;
 }
 
 // Encoding

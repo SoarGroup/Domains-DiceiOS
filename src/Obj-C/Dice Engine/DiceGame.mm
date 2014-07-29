@@ -268,6 +268,18 @@ extern std::map<void*, sml::Agent*> agents;
 
 	if (didAdvanceTurns)
 		[self notifyCurrentPlayer];
+
+	ApplicationDelegate* delegate = self.appDelegate;
+	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
+	GKTurnBasedMatch* match = handler.match;
+	NSString* currentPlayerID = match.currentParticipant.playerID;
+	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
+
+	if (gameState && gameState->didLeave && [currentPlayerID isEqualToString:localPlayerID])
+	{
+		gameState.canContinueGame = NO;
+		[gameState createNewRound];
+	}
 }
 
 - (void) setGameView:(PlayGameView*)aGameView

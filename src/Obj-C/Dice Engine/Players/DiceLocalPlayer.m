@@ -94,7 +94,7 @@
 {
 	GameKitGameHandler* handlerLocal = self.handler;
 
-	if (handlerLocal)
+	if (handlerLocal && [handlerLocal.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID])
 	{
 		handlerLocal.match.currentParticipant.matchOutcome = GKTurnBasedMatchOutcomeLost;
 
