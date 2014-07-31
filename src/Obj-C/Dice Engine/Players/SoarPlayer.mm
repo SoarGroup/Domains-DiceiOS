@@ -154,7 +154,7 @@ static int agentCount = 0;
 		kernelLock = [[NSLock alloc] init];
 
 		[kernelLock lock];
-#ifdef DEBUG
+//#ifdef DEBUG
 		DiceDatabase* database = [[DiceDatabase alloc] init];
 
 		NSString* remoteIP = [database valueForKey:@"Debug:RemoteIP"];
@@ -167,9 +167,9 @@ static int agentCount = 0;
 		}
 		else
 			kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
-#else
-		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
-#endif
+//#else
+//		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
+//#endif
 
 		if (kernel->HadError())
 		{

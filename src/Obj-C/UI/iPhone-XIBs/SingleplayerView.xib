@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A283o" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F13-iF-WdH">
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F13-iF-WdH">
                     <rect key="frame" x="20" y="49" width="280" height="29"/>
                     <segments>
                         <segment title="1"/>
@@ -29,14 +29,20 @@
                     </segments>
                     <color key="tintColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                 </segmentedControl>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number of AI Opponents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6F-IP-bmP">
-                    <rect key="frame" x="64" y="20" width="192" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of AI Opponents" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6F-IP-bmP">
+                    <rect key="frame" x="35" y="20" width="250" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ToH-hE-e9B"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpH-rQ-vLn">
-                    <rect key="frame" x="139" y="85" width="43" height="36"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpH-rQ-vLn">
+                    <rect key="frame" x="110" y="85" width="100" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="FIB-a4-VPb"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Play!">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -48,6 +54,16 @@
                 </button>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="t6F-IP-bmP" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="7W9-eQ-BAW"/>
+                <constraint firstItem="F13-iF-WdH" firstAttribute="centerX" secondItem="t6F-IP-bmP" secondAttribute="centerX" id="FfF-V8-Mz8"/>
+                <constraint firstItem="t6F-IP-bmP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="35" id="cYJ-k2-BxS"/>
+                <constraint firstItem="mpH-rQ-vLn" firstAttribute="top" secondItem="F13-iF-WdH" secondAttribute="bottom" constant="8" symbolic="YES" id="jwY-50-E06"/>
+                <constraint firstItem="mpH-rQ-vLn" firstAttribute="centerX" secondItem="F13-iF-WdH" secondAttribute="centerX" id="kgI-Pp-W5F"/>
+                <constraint firstItem="F13-iF-WdH" firstAttribute="top" secondItem="t6F-IP-bmP" secondAttribute="bottom" constant="8" symbolic="YES" id="ofD-KK-oed"/>
+                <constraint firstAttribute="trailing" secondItem="F13-iF-WdH" secondAttribute="trailing" constant="20" symbolic="YES" id="tnl-fH-9Rm"/>
+                <constraint firstItem="F13-iF-WdH" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="zAA-q5-cCb"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

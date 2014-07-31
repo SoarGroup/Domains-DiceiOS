@@ -44,11 +44,11 @@ extern std::map<void*, sml::Agent*> agents;
 		shouldNotifyOfNewRound = NO;
 		newRound = NO;
 
-#ifdef DEBUG
+//#ifdef DEBUG
 		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
-#else
-		self.randomGenerator = [[Random alloc] init:NO_SEED];
-#endif
+//#else
+//		self.randomGenerator = [[Random alloc] init:NO_SEED];
+//#endif
 	}
 
     return self;
