@@ -1820,13 +1820,13 @@ NSString *numberName(int number) {
 					case 1:
 						break;
 					case 2:
-						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
 						break;
 					case 3:
-						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateDisabled];
 						break;
 					case 4:
-						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateDisabled];
 						break;
 					default:
 						break;
@@ -1873,7 +1873,7 @@ NSString *numberName(int number) {
 		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
 
 		for (UIButton* button in aliceDice.subviews)
-			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateDisabled];
 
 		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
 
@@ -1902,11 +1902,11 @@ NSString *numberName(int number) {
 				switch (index) {
 					case 0:
 					case 1:
-						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateDisabled];
 						break;
 					case 2:
 					case 3:
-						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateDisabled];
 						break;
 					default:
 						break;
@@ -1954,7 +1954,7 @@ NSString *numberName(int number) {
 		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
 
 		for (UIButton* button in aliceDice.subviews)
-			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateDisabled];
 
 		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
 		((UIView*)[aliceDice.subviews objectAtIndex:3]).hidden = YES;
@@ -2012,15 +2012,15 @@ NSString *numberName(int number) {
 				switch (index) {
 					case 0:
 					case 1:
-						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateDisabled];
 						break;
 					case 2:
-						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateDisabled];
 						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
 						break;
 					case 3:
 					case 4:
-						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateDisabled];
 						if (index == 4)
 							button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
 						break;
