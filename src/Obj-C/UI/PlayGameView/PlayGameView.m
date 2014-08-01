@@ -1867,7 +1867,10 @@ NSString *numberName(int number) {
 		UIView* myDice = [player1View viewWithTag:DiceViewTag];
 
 		for (UIButton* button in myDice.subviews)
+		{
 			[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
+			[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateDisabled];
+		}
 
 		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
 		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
