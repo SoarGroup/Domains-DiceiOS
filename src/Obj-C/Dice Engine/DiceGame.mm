@@ -45,7 +45,7 @@ extern std::map<void*, sml::Agent*> agents;
 		newRound = NO;
 
 #ifdef DEBUG
-		self.randomGenerator = [[Random alloc] init:1193057438];//arc4random_uniform(RAND_MAX)];
+		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
 #else
 		self.randomGenerator = [[Random alloc] init:NO_SEED];
 #endif
