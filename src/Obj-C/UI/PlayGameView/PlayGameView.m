@@ -462,7 +462,9 @@ NSString *numberName(int number) {
 			AICount++;
 	}
 
-	if (AICount > 0 && humanCount == 0)
+	if (tutorial)
+		self.navigationItem.title = @"Tutorial";
+	else if (AICount > 0 && humanCount == 0)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs - Single Player Match", AICount];
 	else if (humanCount > 0 && AICount == 0 && [self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		self.navigationItem.title = [NSString stringWithFormat:@"%i Human Opponents - Multiplayer Match", humanCount];
@@ -470,8 +472,6 @@ NSString *numberName(int number) {
 		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs, %i Human Opponents - Multiplayer Match", AICount, humanCount];
 	else if ([self.nibName rangeOfString:@"iPad"].location == NSNotFound)
 		self.navigationItem.title = [NSString stringWithFormat:@"Multiplayer Match"];
-	else if (tutorial)
-		self.navigationItem.title = @"Tutorial";
 
 	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
 	{
@@ -1461,7 +1461,8 @@ NSString *numberName(int number) {
     [alert show];
 }
 
-- (IBAction)bidPressed:(id)sender {
+- (IBAction)bidPressed:(id)sender
+{
     // Check that the bid is legal
 	PlayerState* stateLocal = self.state;
 	DiceGame* localGame = self.game;
@@ -1783,8 +1784,8 @@ NSString *numberName(int number) {
 		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
 		UILabel* myLabel = (UILabel*)[player1View viewWithTag:PlayerLabelTag];
 
-		[firstDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
-		[secondDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+		[firstDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
+		[secondDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
 		firstDie.frame = CGRectMake(3, 0, 50, 50);
 		secondDie.frame = CGRectMake(56, 0, 50, 50);
 
