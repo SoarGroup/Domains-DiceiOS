@@ -851,12 +851,12 @@
 			break;
 		case 2:
 			// Be a beta tester for Liar’s Dice.
-//#ifdef DEBUG
+#ifdef DEBUG
 			hiddenAchievement.percentComplete = 100.0;
 			return YES;
-//#else
-//			return NO;
-//#endif
+#else
+			return NO;
+#endif
 			break;
 		case 3:
 			// In a match, break the AI.

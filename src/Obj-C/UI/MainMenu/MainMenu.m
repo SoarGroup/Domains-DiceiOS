@@ -88,9 +88,9 @@
 	for (GameKitGameHandler* handler in handlers)
 		[delegate.listener removeGameKitGameHandler:handler];
 
-//#ifdef DEBUG
+#ifdef DEBUG
 	self.removeAllMultiplayerGames.enabled = YES;
-//#endif
+#endif
 }
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
 {
