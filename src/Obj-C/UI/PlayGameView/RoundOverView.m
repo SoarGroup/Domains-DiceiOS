@@ -60,12 +60,39 @@
 					player7View,
 					player8View];
 
+	for (UIView* view in playerViews)
+		[view viewWithTag:ActivitySpinnerTag].hidden = YES;
+
+	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
+	{
+		id last = nil;
+
+		if (localGameView->tutorial)
+			last = player2View;
+		else
+			last = [playerViews objectAtIndex:localGame.players.count];
+
+		[playerScrollView addConstraint:[NSLayoutConstraint constraintWithItem:last
+																	 attribute:NSLayoutAttributeBottom
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:playerScrollView
+																	 attribute:NSLayoutAttributeBottom
+																	multiplier:1.0
+																	  constant:0]];
+
+		if (localGameView->tutorial)
+			playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
+													  256);
+		else
+			playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
+													  [localGame.players count] * 128);
+	}
+
+
 	if (localGameView->tutorial)
 	{
 		for (NSUInteger i = 2;i < [playerViews count];i++)
 			((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
-
-		((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
 
 		for (int i = 0;i < 5;++i)
 		{
@@ -214,11 +241,6 @@
 
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
-
-	((UIView*)[playerScrollView.subviews firstObject]).translatesAutoresizingMaskIntoConstraints = YES;
-
-	playerScrollView.contentSize = CGSizeMake(playerScrollView.frame.size.width,
-											  [localGame.players count] * 128);
 
 	PlayerState* localState = self.player;
 

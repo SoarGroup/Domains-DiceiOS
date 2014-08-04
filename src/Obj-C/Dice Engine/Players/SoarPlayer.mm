@@ -115,7 +115,7 @@ static int agentCount = 0;
 		case 5:
 			return @"Craig";
 		case 6:
-			return @"Dan";
+			return @"Decker";
 		case 7:
 			return @"Erin";
 		case 8:
