@@ -1082,9 +1082,8 @@ NSString *numberName(int number) {
 					}
 				}
 
-				if (die.markedToPush)
+				if (die.markedToPush && ![[playerState playerPtr] isKindOfClass:DiceLocalPlayer.class])
 				{
-					die.markedToPush = NO;
 					[diceToAnimate addObject:dieButton];
 					[diceFramesToAnimate addObject:[NSValue valueWithCGRect:dieFrame]];
 				}
