@@ -101,6 +101,11 @@ static int agentCount = 0;
 
 	if (agentCount > 20)
 		agentCount = 1;
+    
+    //  Alice   Bob Carol   Decker  Erin    Maize   Rosie   Sarah   Thomas  Watson
+    //  1       2   3       4       5       6       7       8       9       10
+    //  Athena  Blue    Carter  Deunan  Ellie   Floyd   Hal     Jane    Kirk    Mr. Anderson
+    //  1       2       3       4       5       6       7       8       9       10
 
     switch (agentCount) {
 		default:
@@ -111,39 +116,39 @@ static int agentCount = 0;
         case 3:
             return @"Carol";
 		case 4:
-			return @"Chuck";
-		case 5:
-			return @"Craig";
-		case 6:
 			return @"Decker";
-		case 7:
+		case 5:
 			return @"Erin";
-		case 8:
-			return @"Watson";
-		case 9:
-			return @"Rosie";
-		case 10:
+        case 6:
 			return @"Maize";
-		case 11:
-			return @"Blue";
-		case 12:
-			return @"James";
-		case 13:
-			return @"Thomas";
-		case 14:
+		case 7:
+			return @"Rosie";
+		case 8:
 			return @"Sarah";
+		case 9:
+			return @"Thomas";
+		case 10:
+			return @"Watson";
+		case 11:
+			return @"Athena";
+		case 12:
+			return @"Blue";
+		case 13:
+			return @"Carter";
+		case 14:
+			return @"Deunan";
 		case 15:
-			return @"Ashley";
+			return @"Ellie";
 		case 16:
-			return @"Steven";
+			return @"Floyd";
 		case 17:
-			return @"Courtney";
-		case 18:
-			return @"John";
-		case 19:
-			return @"Jessica";
-		case 20:
-			return @"Velma";
+			return @"Hal";
+        case 18:
+            return @"Jane";
+        case 19:
+            return @"Kirk";
+        case 20:
+            return @"Mr. Anderson";
     }
 }
 
