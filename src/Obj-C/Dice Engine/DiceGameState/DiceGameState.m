@@ -826,45 +826,16 @@
     id <Player> player = [self getPlayerWithID:playerID];
     NSString *playerName = [player getDisplayName];
     NSArray *lastMove = [self lastMoveForPlayer:playerID];
-    if ([lastMove count] == 0) {
-        // This player hasn't bid yet.
-        // Figure out what playerID goes in this slot.
-		NSDictionary * attributes;
-
-		if (colorThePlayer)
-			attributes = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-		else
-			attributes = [NSDictionary dictionary];
-
-		labelText = [[NSMutableAttributedString alloc] initWithString:playerName attributes:attributes];
-    } else {
-		labelText = [[NSMutableAttributedString alloc] init];
-
-        for (NSInteger i = [lastMove count] - 1; i >= 0; --i) {
-            HistoryItem *item = [lastMove objectAtIndex:i];
-
-			NSDictionary * attributes;
-			NSMutableAttributedString* move = [[NSMutableAttributedString alloc] init];
-
-			NSArray *array = [[item asString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-			array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
-
-			for (int j = 0;j < [array count];j++)
-			{
-				if (colorThePlayer && j == 0)
-				{
-					attributes = [NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-				}
-				else
-					attributes = [NSDictionary dictionary];
-
-				[move appendAttributedString:[[NSAttributedString alloc] initWithString:[array objectAtIndex:j] attributes:attributes] ];
-				[move appendAttributedString:[[NSAttributedString alloc] initWithString:@" "] ];
-			}
-
-            [labelText appendAttributedString:move];
-        }
-    }
+    NSString* move = nil;
+    if ([lastMove count] == 0)
+        move = playerName;
+    else
+		move = [[lastMove objectAtIndex:[lastMove count]-1] asString];
+    
+    labelText = [[NSMutableAttributedString alloc] initWithString:move attributes:nil];
+    
+    if (colorThePlayer)
+        [labelText addAttributes:[NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName] range:NSMakeRange(0, [playerName length])];
 
     return labelText;
 }
