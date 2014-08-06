@@ -199,7 +199,7 @@
 			// Successfully pass while telling the truth
 			NSArray* flatHistory = game.gameState.flatHistory;
 
-			for (int i = 0;i < [flatHistory count];++i)
+            for (int i = (int)[flatHistory count] - 1;i >= 0;i--)
 			{
                 HistoryItem* item = [flatHistory objectAtIndex:i];
 				PlayerState* player = [item player];
@@ -221,7 +221,7 @@
 			// Successfully pass while lying
 			NSArray* flatHistory = game.gameState.flatHistory;
 
-			for (int i = 0;i < [flatHistory count];++i)
+            for (int i = (int)[flatHistory count] - 1;i >= 0;i--)
 			{
 				if (i == 0)
 					continue;
@@ -233,7 +233,8 @@
 				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
 					continue;
 
-				if ([item actionType] == ACTION_CHALLENGE_PASS && [item result] == 1)
+				if (([item actionType] == ACTION_CHALLENGE_PASS || [item actionType] == ACTION_CHALLENGE_BID)
+                    && [item result] == 1)
 					continue;
 
 				if ([previousItem actionType] == ACTION_PASS &&
@@ -250,7 +251,7 @@
 			// Push at least one die while bidding
 			NSArray* flatHistory = game.gameState.flatHistory;
 
-			for (int i = 0;i < [flatHistory count];++i)
+            for (int i = (int)[flatHistory count] - 1;i >= 0;i--)
 			{
 				if (i == 0)
 					continue;
@@ -279,7 +280,7 @@
 			// Push at least one die while passing
 			NSArray* flatHistory = game.gameState.flatHistory;
 
-			for (int i = 0;i < [flatHistory count];++i)
+            for (int i = (int)[flatHistory count] - 1;i >= 0;i--)
 			{
 				if (i == 0)
 					continue;

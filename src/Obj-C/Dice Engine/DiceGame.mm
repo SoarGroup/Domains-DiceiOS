@@ -422,9 +422,6 @@ extern std::map<void*, sml::Agent*> agents;
 -(void)handleAction:(DiceAction*)action
 {
 	[self handleAction:action notify:YES];
-
-	ApplicationDelegate* delegate = self.appDelegate;
-	[delegate.achievements updateAchievements:self];
 }
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
@@ -478,6 +475,8 @@ extern std::map<void*, sml::Agent*> agents;
 	PlayGameView* localGameView = self.gameView;
 	PlayerState* localState = localGameView.state;
 	ApplicationDelegate* delegate = self.appDelegate;
+    
+    [delegate.achievements updateAchievements:self];
 
 	if (gameState.gameWinner || ([localState hasLost] && [delegate.listener handlerForGame:self] != nil))
 		return;
