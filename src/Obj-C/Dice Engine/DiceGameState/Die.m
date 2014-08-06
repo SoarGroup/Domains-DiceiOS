@@ -52,7 +52,11 @@
         //Call our own initialization routine then set our dieValue
     self = [self init];
     if (self)
+    {
         dieValue = dieValueToSet;
+        hasBeenPushed = NO;
+        markedToPush = NO;
+    }
 
     return self;
 }

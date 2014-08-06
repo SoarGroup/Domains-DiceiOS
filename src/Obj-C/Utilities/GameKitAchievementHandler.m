@@ -201,21 +201,14 @@
 
 			for (int i = 0;i < [flatHistory count];++i)
 			{
-				if (i == 0)
-					continue;
-
-				HistoryItem* item = [flatHistory objectAtIndex:i];
-				HistoryItem* previousItem = [flatHistory objectAtIndex:i-1];
-				PlayerState* player = [previousItem player];
+                HistoryItem* item = [flatHistory objectAtIndex:i];
+				PlayerState* player = [item player];
 
 				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
 					continue;
 
-				if ([item actionType] == ACTION_CHALLENGE_PASS && [item result] == 1)
-					continue;
-
-				if ([previousItem actionType] == ACTION_PASS &&
-					[previousItem value] == 1)
+                if ([item actionType] == ACTION_PASS &&
+					[item value] == 1)
 				{
 					basicAchievement.percentComplete = 100.0;
 					return YES;
