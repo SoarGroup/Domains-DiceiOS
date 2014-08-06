@@ -234,7 +234,7 @@ typedef struct {
 	NSString* username = [self.database getPlayerName];
 	
 	if ([username length] == 0)
-		username = @"Player";
+		username = @"You";
     
     NSString *names[] = {username, @"Alice", @"Bob", @"Carol"};
 

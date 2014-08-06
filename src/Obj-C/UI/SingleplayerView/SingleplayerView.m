@@ -71,7 +71,7 @@
 	NSString* username = [database getPlayerName];
 
 	if ([username length] == 0)
-		username = @"Player";
+		username = @"You";
 
     DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
 

@@ -48,7 +48,7 @@
 	//	self.participant.status == GKTurnBasedParticipantStatusUnknown)
 
 	if (self.participant.playerID == nil || !self.displayName)
-		return @"Player";
+		return @"Remote Player";
 
 	return self.displayName;
 }

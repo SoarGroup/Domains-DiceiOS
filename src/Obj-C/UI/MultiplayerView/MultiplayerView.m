@@ -234,7 +234,7 @@
 				if ([game.players count] > 0)
 					currentPlayerName = [[game.players objectAtIndex:game.gameState.currentTurn] getDisplayName];
 
-				if (!currentPlayerName || [currentPlayerName isEqualToString:@"Player"])
+				if (!currentPlayerName || [currentPlayerName isEqualToString:@"Remote Player"])
 					currentPlayerName = @"another player";
 
 				if ([game.players count] > 0 && [[game.players objectAtIndex:game.gameState.currentTurn] isKindOfClass:DiceLocalPlayer.class])

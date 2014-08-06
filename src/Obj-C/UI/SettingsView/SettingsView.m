@@ -77,7 +77,7 @@
 	NSString *playerName = nameTextField.text;
 	
 	if ([playerName length] == 0 || [playerName isEqualToString:@"\n"])
-		playerName = @"Player";
+		playerName = @"You";
 	else if ([playerName length] > 10)
 	{
 		playerName = [playerName substringWithRange:NSMakeRange(0, 10)];
