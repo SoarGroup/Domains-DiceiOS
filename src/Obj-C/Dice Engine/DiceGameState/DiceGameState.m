@@ -953,6 +953,8 @@
 
 	NSMutableArray* winners = [NSMutableArray array];
 	NSMutableArray* loserAIs = [NSMutableArray array];
+    
+    BOOL hasAllHumansLost = YES;
 
     for (PlayerState *player in self.playerStates) {
         [player isNewRound];
@@ -960,22 +962,33 @@
         if ([player isInSpecialRules] && playersLeft > 2)
             inSpecialRules = YES;
 
-		if (![player hasLost] && handler && [[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost] &&
-			[handler.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID] && !next)
-		{
-			NSNumber* stateID = [winners firstObject];
-
-			if ([[self playerStateForPlayerID:[stateID intValue]] numberOfDice] < player.numberOfDice)
-			{
-				[loserAIs addObjectsFromArray:winners];
-				[winners removeAllObjects];
-				[winners addObject:[NSNumber numberWithInt:player.playerID]];
-			}
-			else if ([[self playerStateForPlayerID:[stateID intValue]] numberOfDice] == player.numberOfDice)
-				[winners addObject:[NSNumber numberWithInt:player.playerID]];
-			else
-				[loserAIs addObject:[NSNumber numberWithInt:player.playerID]];
-		}
+        if (![player hasLost] && ([[player playerPtr] isKindOfClass:DiceLocalPlayer.class] ||
+                                  [[player playerPtr] isKindOfClass:DiceRemotePlayer.class]))
+        {
+            hasAllHumansLost = NO;
+        }
+    }
+    
+    if (hasAllHumansLost)
+    {
+        for (PlayerState *player in self.playerStates)
+        {
+            if ([[player playerPtr]isKindOfClass:SoarPlayer.class] &&
+                (winners.count == 0 || [player numberOfDice] > [[winners objectAtIndex:0] numberOfDice]))
+            {
+                [loserAIs addObjectsFromArray:winners];
+                [winners removeAllObjects];
+                [winners addObject:player];
+            }
+            else if ([[player playerPtr] isKindOfClass:SoarPlayer.class] &&
+                     winners.count > 0 &&
+                     [player numberOfDice] == [[winners objectAtIndex:0] numberOfDice])
+            {
+                [winners addObject:player];
+            }
+            else if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                [loserAIs addObject:player];
+        }
     }
 
 	if (winners.count > 1)
@@ -994,9 +1007,8 @@
 		}
 	}
 
-	for (NSNumber* loser in loserAIs)
+	for (PlayerState* state in loserAIs)
 	{
-		PlayerState* state = [self playerStateForPlayerID:[loser intValue]];
 		state.numberOfDice = 0;
 		[self playerLosesGame:state.playerID];
 	}
