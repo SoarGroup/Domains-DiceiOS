@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UILabel* remoteIPLabel;
 @property (strong, nonatomic) IBOutlet UITextField* remoteIPTextField;
 
+@property (strong, nonatomic) IBOutlet UIButton* resetAchievementsButton;
 
 - (IBAction)nameTextFieldTextFinalize:(id)sender;
 - (IBAction)difficultySelectorValueChanged:(id)sender;

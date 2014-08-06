@@ -14,6 +14,7 @@
                 <outlet property="nameTextField" destination="ZsD-QD-Z1q" id="bE8-Yr-VqG"/>
                 <outlet property="remoteIPLabel" destination="Rga-AA-zUQ" id="rvP-Pa-JwA"/>
                 <outlet property="remoteIPTextField" destination="y3c-jq-9Wb" id="AQA-hv-S66"/>
+                <outlet property="resetAchievementsButton" destination="ADI-8m-TSx" id="I6o-Ws-fmb"/>
                 <outlet property="view" destination="iN0-l3-epB" id="grF-84-Z4i"/>
             </connections>
         </placeholder>

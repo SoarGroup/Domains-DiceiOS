@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <objects>
@@ -14,6 +13,7 @@
                 <outlet property="nameTextField" destination="kph-0R-feg" id="8yt-AJ-RYn"/>
                 <outlet property="remoteIPLabel" destination="2iU-C3-pWI" id="wna-RV-tPW"/>
                 <outlet property="remoteIPTextField" destination="GcO-oD-7kQ" id="x0e-f9-ksV"/>
+                <outlet property="resetAchievementsButton" destination="4Mh-2C-0ew" id="zUk-nu-iWO"/>
                 <outlet property="view" destination="1" id="3B6-wB-cFT"/>
             </connections>
         </placeholder>

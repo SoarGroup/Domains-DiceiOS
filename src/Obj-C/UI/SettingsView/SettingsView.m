@@ -25,7 +25,7 @@
 @synthesize nameTextField;
 @synthesize difficultySelector;
 
-@synthesize debugLabel, remoteIPLabel, remoteIPTextField;
+@synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +58,11 @@
 	{
 		self.nameTextField.enabled = NO;
 		self.nameTextField.textColor = [UIColor grayColor];
+        
+        self.resetAchievementsButton.hidden = NO;
 	}
+    else
+        self.resetAchievementsButton.hidden = YES;
 
 	self.remoteIPTextField.text = [database valueForKey:@"Debug:RemoteIP"];
 
