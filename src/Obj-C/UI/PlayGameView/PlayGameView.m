@@ -158,6 +158,7 @@ NSString *numberName(int number) {
 		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
+		hasDisplayedRoundBeginning = NO;
 		canContinueRound = YES;
     }
     return self;
@@ -188,6 +189,7 @@ NSString *numberName(int number) {
 		overViews = [NSMutableArray array];
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
+		hasDisplayedRoundBeginning = NO;
 		canContinueRound = YES;
 
 		tutorial = YES;
@@ -210,6 +212,7 @@ NSString *numberName(int number) {
 	localGame.gameState.canContinueGame = NO;
 	shouldNotifyCurrentPlayer = localGame->shouldNotifyOfNewRound;
 	hasDisplayedRoundOverview = YES;
+	hasDisplayedRoundBeginning = NO;
 
 	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
@@ -338,18 +341,23 @@ NSString *numberName(int number) {
 	DiceGame* localGame = self.game;
 	PlayerState* localState = self.state;
 
-	if ([localGame.gameState usingSpecialRules]) {
-		title = [NSString stringWithFormat:@"Special Rules!"];
-		message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
-	}
-	else if ([localState hasWon])
-		title = [NSString stringWithFormat:@"You Win!"];
-	else if ([localGame.gameState hasAPlayerWonTheGame])
-		title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
-	else if ([localState hasLost] && !self.hasPromptedEnd)
+	if (!hasDisplayedRoundBeginning)
 	{
-		self.hasPromptedEnd = YES;
-		title = [NSString stringWithFormat:@"You Lost the Game"];
+		if ([localGame.gameState usingSpecialRules]) {
+			title = [NSString stringWithFormat:@"Special Rules!"];
+			message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
+		}
+		else if ([localState hasWon])
+			title = [NSString stringWithFormat:@"You Win!"];
+		else if ([localGame.gameState hasAPlayerWonTheGame])
+			title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
+		else if ([localState hasLost] && !self.hasPromptedEnd)
+		{
+			self.hasPromptedEnd = YES;
+			title = [NSString stringWithFormat:@"You Lost the Game"];
+		}
+
+		hasDisplayedRoundBeginning = YES;
 	}
 
 	if (title)
