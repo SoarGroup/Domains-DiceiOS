@@ -86,7 +86,6 @@
 		4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394451923C51C00A523FB /* RulesViewiPad.xib */; };
 		4DF396311923C51D00A523FB /* SettingsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394461923C51C00A523FB /* SettingsViewiPad.xib */; };
 		4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */; };
-		4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394481923C51C00A523FB /* StatsViewiPad.xib */; };
 		4DF396341923C51D00A523FB /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944A1923C51C00A523FB /* AboutView.xib */; };
 		4DF396351923C51D00A523FB /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944B1923C51C00A523FB /* Application.xib */; };
 		4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3944C1923C51C00A523FB /* JoinMatchView.xib */; };
@@ -98,7 +97,6 @@
 		4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394521923C51C00A523FB /* RulesView.xib */; };
 		4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394531923C51C00A523FB /* SettingsView.xib */; };
 		4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394541923C51C00A523FB /* SingleplayerView.xib */; };
-		4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF394551923C51C00A523FB /* StatsView.xib */; };
 		4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394581923C51C00A523FB /* JoinMatchView.m */; };
 		4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945B1923C51C00A523FB /* LoadingGameView.m */; };
 		4DF396421923C51D00A523FB /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3945E1923C51C00A523FB /* MainMenu.m */; };
@@ -107,7 +105,6 @@
 		4DF396461923C51D00A523FB /* RulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946A1923C51C00A523FB /* RulesView.m */; };
 		4DF396471923C51D00A523FB /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3946D1923C51C00A523FB /* SettingsView.m */; };
 		4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394701923C51C00A523FB /* SingleplayerView.m */; };
-		4DF396491923C51D00A523FB /* StatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394731923C51C00A523FB /* StatsView.m */; };
 		4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */; };
 		4DF3964B1923C51D00A523FB /* DiceDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394781923C51C00A523FB /* DiceDatabase.m */; };
 		4DF3964C1923C51D00A523FB /* GameKitGameHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF3947A1923C51C00A523FB /* GameKitGameHandler.m */; };
@@ -304,7 +301,6 @@
 		4DF394451923C51C00A523FB /* RulesViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesViewiPad.xib; sourceTree = "<group>"; };
 		4DF394461923C51C00A523FB /* SettingsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewiPad.xib; sourceTree = "<group>"; };
 		4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerViewiPad.xib; sourceTree = "<group>"; };
-		4DF394481923C51C00A523FB /* StatsViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsViewiPad.xib; sourceTree = "<group>"; };
 		4DF3944A1923C51C00A523FB /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		4DF3944B1923C51C00A523FB /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		4DF3944C1923C51C00A523FB /* JoinMatchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMatchView.xib; sourceTree = "<group>"; };
@@ -316,7 +312,6 @@
 		4DF394521923C51C00A523FB /* RulesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RulesView.xib; sourceTree = "<group>"; };
 		4DF394531923C51C00A523FB /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		4DF394541923C51C00A523FB /* SingleplayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleplayerView.xib; sourceTree = "<group>"; };
-		4DF394551923C51C00A523FB /* StatsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatsView.xib; sourceTree = "<group>"; };
 		4DF394571923C51C00A523FB /* JoinMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinMatchView.h; sourceTree = "<group>"; };
 		4DF394581923C51C00A523FB /* JoinMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinMatchView.m; sourceTree = "<group>"; };
 		4DF3945A1923C51C00A523FB /* LoadingGameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingGameView.h; sourceTree = "<group>"; };
@@ -335,8 +330,6 @@
 		4DF3946D1923C51C00A523FB /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		4DF3946F1923C51C00A523FB /* SingleplayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleplayerView.h; sourceTree = "<group>"; };
 		4DF394701923C51C00A523FB /* SingleplayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleplayerView.m; sourceTree = "<group>"; };
-		4DF394721923C51C00A523FB /* StatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsView.h; sourceTree = "<group>"; };
-		4DF394731923C51C00A523FB /* StatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsView.m; sourceTree = "<group>"; };
 		4DF394741923C51C00A523FB /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		4DF394771923C51C00A523FB /* DiceDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceDatabase.h; sourceTree = "<group>"; };
@@ -669,7 +662,6 @@
 				4DF394681923C51C00A523FB /* RulesView */,
 				4DF3946B1923C51C00A523FB /* SettingsView */,
 				4DF3946E1923C51C00A523FB /* SingleplayerView */,
-				4DF394711923C51C00A523FB /* StatsView */,
 				4DF394741923C51C00A523FB /* UIImage+ImageEffects.h */,
 				4DF394751923C51C00A523FB /* UIImage+ImageEffects.m */,
 			);
@@ -705,7 +697,6 @@
 				4DF394451923C51C00A523FB /* RulesViewiPad.xib */,
 				4DF394461923C51C00A523FB /* SettingsViewiPad.xib */,
 				4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */,
-				4DF394481923C51C00A523FB /* StatsViewiPad.xib */,
 				4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */,
 			);
 			path = "iPad-XIBs";
@@ -727,7 +718,6 @@
 				4DF394521923C51C00A523FB /* RulesView.xib */,
 				4DF394531923C51C00A523FB /* SettingsView.xib */,
 				4DF394541923C51C00A523FB /* SingleplayerView.xib */,
-				4DF394551923C51C00A523FB /* StatsView.xib */,
 				4D48E02B197FFDCB009DA895 /* TutorialView.xib */,
 			);
 			path = "iPhone-XIBs";
@@ -806,15 +796,6 @@
 				4DF394701923C51C00A523FB /* SingleplayerView.m */,
 			);
 			path = SingleplayerView;
-			sourceTree = "<group>";
-		};
-		4DF394711923C51C00A523FB /* StatsView */ = {
-			isa = PBXGroup;
-			children = (
-				4DF394721923C51C00A523FB /* StatsView.h */,
-				4DF394731923C51C00A523FB /* StatsView.m */,
-			);
-			path = StatsView;
 			sourceTree = "<group>";
 		};
 		4DF394761923C51C00A523FB /* Utilities */ = {
@@ -1003,7 +984,6 @@
 			files = (
 				4D17A9F2197DBB1A006C4A64 /* PlayGameView-7iPad.xib in Resources */,
 				4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */,
-				4DF396331923C51D00A523FB /* StatsViewiPad.xib in Resources */,
 				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
 				4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */,
 				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
@@ -1072,7 +1052,6 @@
 				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
 				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
-				4DF3963F1923C51D00A523FB /* StatsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1127,7 +1106,6 @@
 				4D48E036198183F9009DA895 /* HelpView.m in Sources */,
 				4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */,
 				4DF396211923C51D00A523FB /* HistoryItem.m in Sources */,
-				4DF396491923C51D00A523FB /* StatsView.m in Sources */,
 				4DF396451923C51D00A523FB /* RoundOverView.m in Sources */,
 				4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */,
 				4DF396281923C51D00A523FB /* AboutView.m in Sources */,
