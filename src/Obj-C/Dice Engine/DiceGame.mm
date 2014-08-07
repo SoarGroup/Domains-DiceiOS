@@ -215,7 +215,7 @@ extern std::map<void*, sml::Agent*> agents;
 		NSArray* newHistory = remote.gameState.flatHistory;
 
 		if (myHistory && newHistory && [myHistory count] < [newHistory count])
-			DDLogDebug(@"History is less! This should not happen!");
+			DDLogError(@"History is less! This should not happen!");
 
 		if (myHistory && newHistory &&  [newHistory count] >= [myHistory count])
 		{
@@ -223,13 +223,25 @@ extern std::map<void*, sml::Agent*> agents;
 
 			if (![[[newHistory objectAtIndex:([myHistory count]-1)] description] isEqualToString:[[myHistory lastObject] description]])
 			{
-				DDLogDebug(@"History objects are not equivalent! This will go horribly wrong!  Replaying entire history!");
-
+				DDLogError(@"History objects are not equivalent! This will go horribly wrong!  Replaying entire history!");
 				index = 0;
 			}
 
 			for (;index < [newHistory count];++index)
-				DDLogDebug(@"REPLAY HISTORY: %@", [[newHistory objectAtIndex:index] debugDescription]);
+            {
+                HistoryItem* item = [newHistory objectAtIndex:index];
+                DiceAction* action = [[DiceAction alloc] init];
+                
+                action.actionType = item.actionType;
+                PlayerState* player = item.player;
+                action.playerID = player.playerID;
+                action.count = item.bid.numberOfDice;
+                action.face = item.bid.rankOfDie;
+                action.push = item.bid.diceToPush;
+                action.targetID = item.value;
+                
+				DDLogGameHistory(@"%@", action);
+            }
 		}
 
 		if (remote.gameState.currentTurn != self.gameState.currentTurn)
@@ -428,7 +440,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
-    DDLogDebug(@"Handling action: %@", action);
+    DDLogGameHistory(@"%@", action);
     self.deferNotification = NO;
 
 	self.gameState.game = self;

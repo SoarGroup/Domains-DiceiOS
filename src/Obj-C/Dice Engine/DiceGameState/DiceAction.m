@@ -7,6 +7,7 @@
 //
 
 #import "DiceAction.h"
+#import "Die.h"
 
 @implementation DiceAction
 
@@ -122,7 +123,12 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"DiceAction: (ActionType: %@) (PlayerID: %li) (Count: %i) (Face: %i) (Push: %@) (TargetID: %li)", [DiceAction actionTypeToString:actionType], (long)playerID, count, face, push, (long)targetID];
+    NSMutableString* pushString = [[NSMutableString alloc] init];
+    
+    for (Die* die in push)
+        [pushString appendFormat:@" %i", die.dieValue];
+    
+	return [NSString stringWithFormat:@"(ActionType: %@) (PlayerID: %li) (Count: %i) (Face: %i) (Push:%@) (TargetID: %li)", [DiceAction actionTypeToString:actionType], (long)playerID, count, face, pushString, (long)targetID];
 }
 
 @end
