@@ -357,7 +357,7 @@
 			 [match loadMatchDataWithCompletionHandler:^(NSData* matchData, NSError* matchDataError)
 			  {
 				  ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-				  DDLogVerbose(@"Multiplayer Match View: Updated Match Data (Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
+				  DDLogGameKit(@"Updated Match Data (Populate) SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 				  GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
 

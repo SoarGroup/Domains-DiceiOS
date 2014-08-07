@@ -201,12 +201,12 @@ NSString *numberName(int number) {
 
 - (BOOL) roundEnding
 {
-	DDLogVerbose(@"Round Ending!");
+	DDLogInfo(@"Round Ending!");
 
 	if (hasDisplayedRoundOverview)
 		return YES;
 
-	DDLogVerbose(@"Has not displayed overview!");
+	DDLogInfo(@"Has not displayed overview!");
 
 	DiceGame* localGame = self.game;
 	localGame.gameState.canContinueGame = NO;

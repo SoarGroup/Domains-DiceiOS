@@ -163,7 +163,7 @@
 					  {
 						  ApplicationDelegate* delegateLocal = self.delegate;
 
-						  DDLogVerbose(@"Join Match View: Match Data Retrieved SHA1 Hash: %@", [delegateLocal sha1HashFromData:matchdata]);
+						  DDLogGameKit(@"Match Data Retrieved SHA1 Hash: %@", [delegateLocal sha1HashFromData:matchdata]);
 
 						  DiceGame* newGame = [[DiceGame alloc] initWithAppDelegate:delegateLocal];
 						  GameKitGameHandler* handler = [[GameKitGameHandler alloc] initWithDiceGame:newGame withLocalPlayer:nil withRemotePlayers:nil withMatch:match];

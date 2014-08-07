@@ -62,7 +62,7 @@
 - (void) player:(GKPlayer *)player didAcceptInvite:(GKInvite *)invite
 {
 	// TODO: Invites
-	DDLogVerbose(@"Player accepted invite.");
+	DDLogGameKit(@"Player accepted invite.");
 }
 
 - (void) player:(GKPlayer *)player matchEnded:(GKTurnBasedMatch *)match
@@ -79,7 +79,7 @@
 
 - (void) player:(GKPlayer *)player receivedTurnEventForMatch:(GKTurnBasedMatch *)match didBecomeActive:(BOOL)didBecomeActive
 {
-	DDLogVerbose(@"Recieved turn event for match: %@", match);
+	DDLogGameKit(@"Recieved turn event for match: %@", match);
 	ApplicationDelegate* localDelegate = self.delegate;
 
 	GameKitGameHandler* gkHandler = nil;

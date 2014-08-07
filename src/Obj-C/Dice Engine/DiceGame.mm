@@ -167,7 +167,7 @@ extern std::map<void*, sml::Agent*> agents;
 	if (!remote)
 		return;
 
-	DDLogVerbose(@"Recieved update");
+	DDLogGameKit(@"Recieved update");
 
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
@@ -390,11 +390,13 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void) notifyCurrentPlayer
 {
-    if ([self.gameState hasAPlayerWonTheGame]) {
-            DDLogVerbose(@"Game over, no need to notify player");
+    if ([self.gameState hasAPlayerWonTheGame])
+    {
+        DDLogInfo(@"Game over, no need to notify player");
         return;
     }
-    DDLogVerbose(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
+    
+    DDLogInfo(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
 
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];

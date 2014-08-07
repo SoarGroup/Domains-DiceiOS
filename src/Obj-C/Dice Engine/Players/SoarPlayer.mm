@@ -20,23 +20,16 @@
 #include <map>
 #include <unordered_map>
 
-void testWme(sml::WMElement *wme)
+void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m)
 {
-    const char *name = wme->GetIdentifierName();
-    // NSLog(@"Testing wme \"%s\"", name);
-    if (strlen(name) < 2)
-		DDLogCDebug(@"Identifier name too short! \"%s\"", name);
-}
-
-void sdb(char * command, sml::Agent *agent)
-{
-    //printf("%s", agent->ExecuteCommandLine(command));
-}
-
-void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m) {
 	[[NSThread currentThread] setName:@"Soar Agent Thread"];
+    
+    NSString* message = [NSString stringWithUTF8String:m];
+    
+    NSArray* split = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
-    DDLogCVerbose(@"%s> %s", a->GetAgentName(), m);
+    for (NSString* string in split)
+        DDLogCSoar(@"%@", string);
 }
 
 class DiceSMLData {
@@ -65,18 +58,6 @@ typedef enum {
     ne,
     neq
 } Predicate;
-//
-//namespace std {
-//
-//	template <>
-//	struct hash<void*>
-//	{
-//		std::size_t operator()(const void*& k) const
-//		{
-//			return (std::size_t)k;
-//		}
-//	};
-//}
 
 std::unordered_map<void*, sml::Agent*> agents;
 static sml::Kernel* kernel;
@@ -293,7 +274,7 @@ static int agentCount = 0;
 			}
 			[kernelLock unlock];
 
-			DDLogVerbose(@"Path: %@", path);
+			DDLogCSoar(@"Path: %@", path);
 
 			std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine("watch 0") << std::endl;
 
@@ -350,7 +331,7 @@ static int agentCount = 0;
 
 	agents[(__bridge void*)turnLock]->InitSoar();
 
-    DDLogVerbose(@"Agent do turn");
+    DDLogCSoar(@"Agent do turn");
     
     BOOL agentSlept = NO;
     BOOL agentHalted = NO;
@@ -431,7 +412,7 @@ static int agentCount = 0;
 		[localGame notifyCurrentPlayer];
 	}
 
-	DDLogVerbose(@"Halting agent");
+	DDLogCSoar(@"Halting agent");
 	sml::WMElement *halter = NULL;
 	if (!agentHalted)
 	{
@@ -456,7 +437,7 @@ static int agentCount = 0;
 		newData = NULL;
 	}
 
-    DDLogVerbose(@"Agent done");
+    DDLogCSoar(@"Agent done");
 
     if (newData != NULL)
     {
@@ -479,7 +460,7 @@ static int agentCount = 0;
 {
     using namespace sml;
  
-    DDLogVerbose(@"Beginning GameStateToWM");
+    DDLogCSoar(@"Beginning GameStateToWM");
     
     Identifier *idState = NULL;
     Identifier *idPlayers = NULL;
@@ -488,11 +469,8 @@ static int agentCount = 0;
     WMElement *idRounds = NULL;
     
     idState = inputLink->CreateIdWME("state");
-    testWme(idState);
     idPlayers = inputLink->CreateIdWME("players");
-    testWme(idPlayers);
     idAffordances = inputLink->CreateIdWME("affordances");
-    testWme(idAffordances);
 
 	DiceGame* localGame = self.game;
 	PlayerState* localState = self.playerState;
@@ -535,12 +513,10 @@ static int agentCount = 0;
 
         PlayerState *player = [gameState getPlayerState:[playerThing getID]];
         Identifier *playerId = idPlayers->CreateIdWME("player");
-        testWme(playerId);
         playerId->CreateIntWME("id", [player playerID]);
         playerId->CreateStringWME("name", [playerIDString UTF8String]);
         playerId->CreateStringWME("exists", ([player hasLost] ? "false" : "true"));
         Identifier *cup = playerId->CreateIdWME("cup");
-        testWme(cup);
         
         if (localState == player)
         {
@@ -550,7 +526,6 @@ static int agentCount = 0;
                 for (Die* hiddenDie in [player unPushedDice])
                 {
                     Identifier *die = cup->CreateIdWME("die");
-                    testWme(die);
                     die->CreateIntWME("face", [hiddenDie dieValue]);
                 }
             }
@@ -559,7 +534,6 @@ static int agentCount = 0;
                 cup->CreateIntWME("count", 0);
             }
             Identifier *cupTotals = cup->CreateIdWME("totals");
-            testWme(cupTotals);
             
             int ones = 0;
             int twos = 0;
@@ -611,7 +585,6 @@ static int agentCount = 0;
         }
         
         Identifier *pushed = playerId->CreateIdWME("pushed");
-        testWme(pushed);
         NSArray* pushedDice = [player pushedDice];
 
         if ([pushedDice count] > 0)
@@ -622,7 +595,6 @@ static int agentCount = 0;
                 if ([pushedDie isKindOfClass:[Die class]])
                 {
                     Identifier *die = pushed->CreateIdWME("die");
-                    testWme(die);
                     die->CreateIntWME("face", [pushedDie dieValue]);
                 }
             }
@@ -633,7 +605,6 @@ static int agentCount = 0;
         }
         
         Identifier *pushedTotals = pushed->CreateIdWME("totals");
-        testWme(pushedTotals);
         
         int ones = 0;
         int twos = 0;
@@ -697,12 +668,10 @@ static int agentCount = 0;
     }
     
     Identifier *bid = idAffordances->CreateIdWME("action");
-    testWme(bid);
     bid->CreateStringWME("name", "bid");
     bid->CreateStringWME("available", ([localState canBid] ? "true" : "false"));
     
     Identifier *challenge = idAffordances->CreateIdWME("action");
-    testWme(challenge);
     challenge->CreateStringWME("name", "challenge");
     
     BOOL canChallengeBid = [localState canChallengeBid];
@@ -727,22 +696,18 @@ static int agentCount = 0;
     }
     
     Identifier *exact = idAffordances->CreateIdWME("action");
-    testWme(exact);
     exact->CreateStringWME("name", "exact");
     exact->CreateStringWME("available", ([localState canExact] ? "true" : "false"));
     
     Identifier *pass = idAffordances->CreateIdWME("action");
-    testWme(pass);
     pass->CreateStringWME("name", "pass");
     pass->CreateStringWME("available", ([localState canPass] ? "true" : "false"));
     
     Identifier *push = idAffordances->CreateIdWME("action");
-    testWme(push);
     push->CreateStringWME("name", "push");
     push->CreateStringWME("available", ([localState canPush] ? "true" : "false"));
     
     Identifier *accept = idAffordances->CreateIdWME("action");
-    testWme(accept);
     accept->CreateStringWME("name", "accept");
     accept->CreateStringWME("available", ([localState canAccept] ? "true" : "false"));
     
@@ -770,7 +735,6 @@ static int agentCount = 0;
     else
     {
         idHistory = inputLink->CreateIdWME("history");
-        testWme(idHistory);
         Identifier *prev = idHistory->ConvertToIdentifier();
         Identifier *lastBid = NULL;
         
@@ -862,7 +826,6 @@ static int agentCount = 0;
             else
             {
                 prev = prev->CreateIdWME("next");
-                testWme(prev);
             }
         }
         
@@ -882,7 +845,6 @@ static int agentCount = 0;
     else
     {
         idRounds = inputLink->CreateIdWME("rounds");
-        testWme(idRounds);
         Identifier *prev = idRounds->ConvertToIdentifier();
         
         for (int i = 0; i < numRounds; ++i)
@@ -960,18 +922,17 @@ static int agentCount = 0;
             else
             {
                 prev = prev->CreateIdWME("next");
-                testWme(prev);
             }
         }
     }
-        DDLogVerbose(@"Ending GameStateToWM");
+        DDLogCSoar(@"Ending GameStateToWM");
     return new DiceSMLData(idState, idPlayers, idAffordances, idHistory, idRounds);
 }
 
 // Should only be called if turnLock is locked.
 - (void) handleAgentCommandsWithRefresh:(BOOL *)needsRefresh sleep:(BOOL *)sleep;
 {
-    DDLogVerbose(@"Agent handling agent commands");
+    DDLogCSoar(@"Agent handling agent commands");
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
@@ -980,7 +941,7 @@ static int agentCount = 0;
         sml::Identifier *ident = agents[(__bridge void*)turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
-        DDLogVerbose(@"Command from output link, j=%d, command=%@", j, attrName);
+        DDLogCSoar(@"Command from output link, j=%d, command=%@", j, attrName);
         
         NSString *commandStatus = @"";
         if (ident->GetParameterValue("status") != NULL)
@@ -1142,10 +1103,10 @@ static int agentCount = 0;
 
     if (action != nil)
     {
-        DDLogVerbose(@"Agent performing action: %@", action);
+        DDLogCSoar(@"Agent performing action: %@", action);
         if (diceToPush != nil)
         {
-            DDLogVerbose(@"Pushing dice: %@", diceToPush);
+            DDLogCSoar(@"Pushing dice: %@", diceToPush);
             action.push = diceToPush;           
         }
 
@@ -1154,7 +1115,7 @@ static int agentCount = 0;
     }
     else if (diceToPush != nil)
     {
-        DDLogVerbose(@"Agent just pushing, %@", diceToPush);
+        DDLogCSoar(@"Agent just pushing, %@", diceToPush);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
 		[localGame handleAction:new_action notify:YES];

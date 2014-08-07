@@ -35,6 +35,7 @@
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4D75EAEF19883FED00B4D91F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D75EAEE19883FED00B4D91F /* Security.framework */; };
+		4D854A101993EAA00039C742 /* LiarsDiceFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
@@ -160,6 +161,9 @@
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4D75EAEE19883FED00B4D91F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4D854A0D1993E82D0039C742 /* LiarsDiceLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiarsDiceLog.h; sourceTree = "<group>"; };
+		4D854A0E1993EAA00039C742 /* LiarsDiceFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiarsDiceFormatter.h; sourceTree = "<group>"; };
+		4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiarsDiceFormatter.m; sourceTree = "<group>"; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -593,6 +597,9 @@
 			isa = PBXGroup;
 			children = (
 				4DF394161923C51C00A523FB /* main.m */,
+				4D854A0D1993E82D0039C742 /* LiarsDiceLog.h */,
+				4D854A0E1993EAA00039C742 /* LiarsDiceFormatter.h */,
+				4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */,
 				4DF394181923C51C00A523FB /* Application Loading */,
 				4DF3941D1923C51C00A523FB /* Dice Engine */,
 				4DF394391923C51C00A523FB /* UI */,
@@ -1102,6 +1109,7 @@
 				4DF396261923C51D00A523FB /* GameRecord.m in Sources */,
 				4DF396401923C51D00A523FB /* JoinMatchView.m in Sources */,
 				4DF396431923C51D00A523FB /* MultiplayerView.m in Sources */,
+				4D854A101993EAA00039C742 /* LiarsDiceFormatter.m in Sources */,
 				4DF3964D1923C51D00A523FB /* GameKitListener.m in Sources */,
 				4D48E036198183F9009DA895 /* HelpView.m in Sources */,
 				4DF397B51923C5B800A523FB /* DiceRemotePlayer.m in Sources */,

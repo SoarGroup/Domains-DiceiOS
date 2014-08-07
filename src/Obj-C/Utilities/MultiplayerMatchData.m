@@ -35,7 +35,7 @@ const int kAI_8 = 0x47;
 		NSData* data = [NSKeyedArchiver archivedDataWithRootObject:game];
 
 		ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-		DDLogVerbose(@"Multiplayer Match Data: Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
+		DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
 
 		if (!data)
 			return nil;

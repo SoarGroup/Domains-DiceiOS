@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-const int ddLogLevel = LOG_LEVEL_VERBOSE;
+const int ddLogLevel = LOG_LEVEL_ALL;
 
 int main(int argc, char *argv[])
 {

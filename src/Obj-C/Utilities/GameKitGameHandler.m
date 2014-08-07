@@ -42,11 +42,11 @@
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-	DDLogVerbose(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
+	DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
 
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
-		DDLogVerbose(@"Sent match data!");
+		DDLogGameKit(@"Sent match data!");
 
 		if (error)
 			DDLogError(@"Error upon saving match data: %@\n", error.description);
@@ -103,7 +103,7 @@
 			 }
 
 			 ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-			 DDLogVerbose(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
+			 DDLogGameKit(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
 			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
 
@@ -137,7 +137,7 @@
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
-	DDLogVerbose(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
+	DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
 
 	NSMutableArray* nextPlayers = [NSMutableArray arrayWithArray:participants];
 
