@@ -70,7 +70,7 @@
 		if (localGameView->tutorial)
 			last = player2View;
 		else
-			last = [playerViews objectAtIndex:localGame.players.count];
+			last = [playerViews objectAtIndex:localGame.players.count-1];
 
 		[playerScrollView addConstraint:[NSLayoutConstraint constraintWithItem:last
 																	 attribute:NSLayoutAttributeBottom
