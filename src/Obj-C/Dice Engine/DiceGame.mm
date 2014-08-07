@@ -18,6 +18,8 @@
 #import "PlayGameView.h"
 #import "SoarPlayer.h"
 
+#import "DiceReplayPlayer.h"
+
 #include "NSMutableArrayShuffle.h"
 
 extern std::map<void*, sml::Agent*> agents;
@@ -44,8 +46,10 @@ extern std::map<void*, sml::Agent*> agents;
 		shouldNotifyOfNewRound = NO;
 		newRound = NO;
 
+        DDLogGameHistory(@"Start of Match");
 #ifdef DEBUG
 		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
+        //self.randomGenerator = [[Random alloc] init:210137549];
 #else
 		self.randomGenerator = [[Random alloc] init:NO_SEED];
 #endif
@@ -184,7 +188,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 		for (id<Player> p in self.players)
 		{
-			if ([p isKindOfClass:DiceLocalPlayer.class])
+			if ([p isKindOfClass:DiceLocalPlayer.class] || [p isKindOfClass:DiceReplayPlayer.class])
 			{
 				DiceLocalPlayer* player = p;
 				PlayGameView* localView = gameView;
@@ -259,7 +263,7 @@ extern std::map<void*, sml::Agent*> agents;
 		{
 			[player end];
 
-			if ([player isKindOfClass:DiceLocalPlayer.class])
+			if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class])
 				[(DiceLocalPlayer*)player end:YES];
 		}
 
@@ -316,7 +320,7 @@ extern std::map<void*, sml::Agent*> agents;
     gameView = aGameView;
     for (id <Player> player in self.players)
     {
-        if ([player isKindOfClass:[DiceLocalPlayer class]])
+        if ([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class])
 			[((DiceLocalPlayer*)player).gameViews addObject:self.gameView];
 	}
 }
@@ -331,7 +335,8 @@ extern std::map<void*, sml::Agent*> agents;
     assert(!started);
     assert(players != nil);
 	PlayGameView* localView = self.gameView;
-    if ([player isKindOfClass:[DiceLocalPlayer class]] && localView)
+    if (([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class])
+        && localView)
 		[((DiceLocalPlayer*)player).gameViews addObject:localView];
     
     NSMutableArray *mut = [[NSMutableArray alloc] initWithArray:self.players];
@@ -440,6 +445,14 @@ extern std::map<void*, sml::Agent*> agents;
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
+    if ([NSThread isMainThread])
+    {
+        dispatch_async(dispatch_get_global_queue(0,0), ^{
+            [self handleAction:action notify:notify];
+        });
+        return;
+    }
+    
     DDLogGameHistory(@"%@", action);
     self.deferNotification = NO;
 
@@ -465,6 +478,7 @@ extern std::map<void*, sml::Agent*> agents;
         {
             BOOL wasRight;
             [gameState handleExact:action.playerID andWasTheExactRight:&wasRight];
+            notify = NO;
             break;
         }
         case ACTION_CHALLENGE_BID:
@@ -472,6 +486,7 @@ extern std::map<void*, sml::Agent*> agents;
         {
             BOOL wonChallenge;
             [gameState handleChallenge:action.playerID againstTarget:action.targetID withFirstPlayerWonOrNot:&wonChallenge];
+            notify = NO;
             break;
         }
         case ACTION_PUSH:
@@ -561,7 +576,7 @@ extern std::map<void*, sml::Agent*> agents;
 	DiceLocalPlayer* localPlayer = nil;
 
 	for (id<Player> player in players)
-		if ([player isKindOfClass:DiceLocalPlayer.class])
+		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class])
 		{
 			localPlayer = player;
 			break;

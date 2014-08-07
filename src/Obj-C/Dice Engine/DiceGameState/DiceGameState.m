@@ -834,7 +834,7 @@
     
     labelText = [[NSMutableAttributedString alloc] initWithString:move attributes:nil];
     
-    if (colorThePlayer)
+    if (colorThePlayer && [labelText length] >= [playerName length])
         [labelText addAttributes:[NSDictionary dictionaryWithObject:[UIColor greenColor] forKey:NSForegroundColorAttributeName] range:NSMakeRange(0, [playerName length])];
 
     return labelText;

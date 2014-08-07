@@ -45,7 +45,7 @@
 	{
 		integerSeed = intSeed;
 
-		DDLogDebug(@"Seed:%lu", (unsigned long)integerSeed);
+		DDLogGameHistory(@"Match Seed %lu", (unsigned long)integerSeed);
 
 		seed = new std::seed_seq{integerSeed};
 		random = std::minstd_rand0(*seed);

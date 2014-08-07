@@ -60,6 +60,8 @@ typedef enum {
 } Predicate;
 
 std::unordered_map<void*, sml::Agent*> agents;
+NSMutableDictionary* agent_thread_map;
+
 static sml::Kernel* kernel;
 static NSLock* kernelLock;
 
@@ -156,6 +158,8 @@ static int agentCount = 0;
 #else
 		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
 #endif
+        
+        agent_thread_map = [[NSMutableDictionary alloc] init];
 
 		if (kernel->HadError())
 		{
@@ -170,6 +174,17 @@ static int agentCount = 0;
 - (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff
 {
 	return [self initWithGame:aGame connentToRemoteDebugger:connect lock:aLock withGameKitGameHandler:gkgHandler difficulty:diff name:[SoarPlayer makePlayerName]];
+}
+
+- (void)runLoop
+{
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    
+    NSMachPort *dummyPort = [[NSMachPort alloc] init];
+    [runLoop addPort:dummyPort forMode:NSDefaultRunLoopMode];
+    
+    while (1)
+        [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 }
 
 - (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff name:(NSString*)aName;
@@ -203,7 +218,14 @@ static int agentCount = 0;
 				[turnLock unlock];
 				return nil;
 			}
+            
+            NSString* agentName = [NSString stringWithUTF8String:agents[(__bridge_retained void*)turnLock]->GetAgentName()];
 
+            NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(runLoop) object:nil];
+            [thread start];
+            [agent_thread_map setObject:thread forKey:agentName];
+
+            
 			agents[(__bridge void*)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 
 			NSUInteger seed = aGame.randomGenerator->integerSeed;
@@ -211,6 +233,7 @@ static int agentCount = 0;
 			if (aGame.randomGenerator->integerSeed == NO_SEED)
 				seed = [aGame.randomGenerator randomNumber];
 
+            DDLogDebug(@"Agent Seed: %lu", (unsigned long)seed);
 			agents[(__bridge void*)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %lu", (unsigned long)seed] UTF8String]);
 
 			NSString *path;
@@ -291,7 +314,9 @@ static int agentCount = 0;
 
 - (void)itsYourTurn
 {
-    [NSThread detachNewThreadSelector:@selector(doTurn) toTarget:self withObject:nil];
+    NSString* agentName = [NSString stringWithUTF8String:agents[(__bridge_retained void*)turnLock]->GetAgentName()];
+
+    [self performSelector:@selector(doTurn) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:NO];
 }
 
 - (void)showErrorAlert
@@ -404,13 +429,7 @@ static int agentCount = 0;
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
 			startTime = [[NSDate date] timeIntervalSince1970];
         }
-    } while (!agentSlept && !agentHalted);
-
-	if (!didNotify)
-	{
-		DiceGame* localGame = self.game;
-		[localGame notifyCurrentPlayer];
-	}
+    } while (!agentSlept);
 
 	DDLogCSoar(@"Halting agent");
 	sml::WMElement *halter = NULL;
@@ -785,6 +804,7 @@ static int agentCount = 0;
 				case ACTION_QUIT:
 				default:
 				{
+                    action = const_cast<char*>((const char*)"");
 					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
 					break;
 				}
@@ -892,6 +912,8 @@ static int agentCount = 0;
 				case ACTION_QUIT:
 				default:
 				{
+                    action = const_cast<char*>((const char*)"");
+
 					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
 					break;
 				}
@@ -1065,6 +1087,8 @@ static int agentCount = 0;
             else if ([attrName isEqualToString:@"sleep"])
             {
                 *sleep = YES;
+                DiceGame* localGame = self.game;
+                [localGame notifyCurrentPlayer];
 				return;
             }
             else
@@ -1091,16 +1115,6 @@ static int agentCount = 0;
 	GameKitGameHandler* localHandler = self.handler;
 	DiceGame* localGame = self.game;
 
-	BOOL notify = YES;
-
-	if (action.actionType == ACTION_BID)
-		notify = NO;
-
-	if (*sleep)
-		notify = YES;
-
-	didNotify = notify;
-
     if (action != nil)
     {
         DDLogCSoar(@"Agent performing action: %@", action);
@@ -1110,7 +1124,7 @@ static int agentCount = 0;
             action.push = diceToPush;           
         }
 
-		[localGame handleAction:action notify:notify];
+		[localGame handleAction:action notify:NO];
         *needsRefresh = YES;
     }
     else if (diceToPush != nil)

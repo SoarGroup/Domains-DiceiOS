@@ -12,6 +12,7 @@
 #import "DiceGraphics.h"
 #import "UIImage+ImageEffects.h"
 
+#import "DiceReplayPlayer.h"
 #import "SoarPlayer.h"
 
 @implementation RoundOverView
@@ -246,7 +247,8 @@
 
 	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
 
-	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class])
+	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class] &&
+           ![[reorderedPlayers firstObject] isKindOfClass:DiceReplayPlayer.class])
 	{
 		[reorderedPlayers insertObject:[reorderedPlayers lastObject] atIndex:0];
 		[reorderedPlayers removeLastObject];

@@ -17,6 +17,8 @@
 #import "ApplicationDelegate.h"
 #import "SoarPlayer.h"
 
+#import "DiceReplayPlayer.h"
+
 #import "MultiplayerView.h"
 
 @implementation UIViewController (BackButtonHandler)
@@ -522,7 +524,8 @@ NSString *numberName(int number) {
 
 	NSMutableArray* reorderedPlayers = [NSMutableArray arrayWithArray:localGame.players];
 
-	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class])
+	while (![[reorderedPlayers firstObject] isKindOfClass:DiceLocalPlayer.class] &&
+           ![[reorderedPlayers firstObject] isKindOfClass:DiceReplayPlayer.class])
 	{
 		[reorderedPlayers insertObject:[reorderedPlayers lastObject] atIndex:0];
 		[reorderedPlayers removeLastObject];

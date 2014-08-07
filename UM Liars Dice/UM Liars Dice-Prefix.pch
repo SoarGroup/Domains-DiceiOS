@@ -33,6 +33,3 @@
 
 extern const int ddLogLevel;
 #import "LiarsDiceLog.h"
-
-#undef NSLog
-#define NSLog DDLogCDebug;

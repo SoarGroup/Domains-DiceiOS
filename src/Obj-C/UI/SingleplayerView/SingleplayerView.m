@@ -12,6 +12,7 @@
 #import "DiceGame.h"
 #import "LoadingGameView.h"
 #import "SoarPlayer.h"
+#import "DiceReplayPlayer.h"
 
 @interface SingleplayerView ()
 
@@ -76,7 +77,8 @@
     DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
 
 	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] ];
-
+    //[game addPlayer:[[DiceReplayPlayer alloc] initWithReplayFile:@"replay.txt"]];
+    
 	NSLock* lock = [[NSLock alloc] init];
 
 	for (int i = 0;i < opponents;i++)

@@ -128,7 +128,7 @@
     for (Die* die in push)
         [pushString appendFormat:@" %i", die.dieValue];
     
-	return [NSString stringWithFormat:@"(ActionType: %@) (PlayerID: %li) (Count: %i) (Face: %i) (Push:%@) (TargetID: %li)", [DiceAction actionTypeToString:actionType], (long)playerID, count, face, pushString, (long)targetID];
+	return [NSString stringWithFormat:@"(ActionType: %u) (PlayerID: %li) (Count: %i) (Face: %i) (Push:%@) (TargetID: %li)", actionType, (long)playerID, count, face, pushString, (long)targetID];
 }
 
 @end
