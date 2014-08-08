@@ -917,6 +917,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqM-zi-9N1">
                             <rect key="frame" x="200" y="92" width="40" height="38"/>
+                            <accessibility key="accessibilityConfiguration" hint="Tap to decrease" label="Decrease Die Count"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             <state key="normal" title="-">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -930,6 +931,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRR-Ex-7XU">
                             <rect key="frame" x="200" y="0.0" width="40" height="55"/>
+                            <accessibility key="accessibilityConfiguration" hint="Tap to increase" label="Increase Die Count"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="55" id="iDf-ZD-jUi"/>
                                 <constraint firstAttribute="width" constant="40" id="ng8-y8-c8V"/>
@@ -947,6 +949,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCS-kv-LcV">
                             <rect key="frame" x="240" y="0.0" width="40" height="55"/>
+                            <accessibility key="accessibilityConfiguration" hint="Tap to increase" label="Increase Face Value"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                             <state key="normal" title="+">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -973,12 +976,16 @@
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="die-6.png" translatesAutoresizingMaskIntoConstraints="NO" id="IuH-R7-hCR">
                             <rect key="frame" x="247" y="63" width="25" height="21"/>
+                            <accessibility key="accessibilityConfiguration">
+                                <bool key="isElement" value="YES"/>
+                            </accessibility>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="kPf-Gh-3YT"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayp-de-0Fz">
                             <rect key="frame" x="240" y="92" width="40" height="38"/>
+                            <accessibility key="accessibilityConfiguration" hint="Tap to decrease" label="Decrease Face Value"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             <state key="normal" title="-">
                                 <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -992,6 +999,7 @@
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enG-vo-fI1">
                             <rect key="frame" x="0.0" y="4" width="280" height="21"/>
+                            <accessibility key="accessibilityConfiguration" label=""/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="NkX-f0-lcO"/>
                             </constraints>
