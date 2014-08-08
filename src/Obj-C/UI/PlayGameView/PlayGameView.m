@@ -975,17 +975,17 @@ NSString *numberName(int number) {
 		NSString* playerName = [playerPtr getDisplayName];
 
 		if ([playerState playerHasExacted])
-			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has exacted", playerName]]];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ %@ exacted", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]]];
 
 		if ([playerState playerHasPassed])
-			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ has passed", playerName]]];
+			[nameLabelText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@ %@ passed", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]]];
 
 		if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeQuit)
-			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ has quit", playerName]];
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ quit", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 		else if ([playerPtr isKindOfClass:DiceRemotePlayer.class] && ((DiceRemotePlayer*)playerPtr).participant.matchOutcome == GKTurnBasedMatchOutcomeTimeExpired)
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ timed out", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 		else if ([playerState hasLost])
-			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ has lost", playerName]];
+			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ lost", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 		else if ([playerState hasWon])
 			nameLabelText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@ won!", playerName, [playerName isEqualToString:@"You"] ? @"have" : @"has"]];
 
