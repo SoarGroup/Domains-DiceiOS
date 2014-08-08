@@ -483,6 +483,11 @@
             [newItem setLosingPlayer:playerID];
             [history addObject:newItem];
             *didTheChallengerWin = NO;
+            
+            if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                DDLogSoar(@"Soar lost challenge (challenger) (bid)");
+            else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                DDLogSoar(@"Soar won challenge (challengee) (bid)");
         } else {
             [self playerLosesRound:targetID];
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
@@ -494,6 +499,11 @@
             [newItem setLosingPlayer:targetID];
             [history addObject:newItem];
             *didTheChallengerWin = YES;
+            
+            if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                DDLogSoar(@"Soar won challenge (challenger) (bid)");
+            else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                DDLogSoar(@"Soar lost challenge (challengee) (bid)");
         }
     } else if (((item && (item.actionType == ACTION_PASS && playerLocal.playerID == targetID)) ||
                (secondLast && secondLast.actionType == ACTION_PASS && secondPlayerLocal.playerID == targetID)))
@@ -511,6 +521,11 @@
                 [newItem setLosingPlayer:playerID];
                 [history addObject:newItem];
                 *didTheChallengerWin = NO;
+                
+                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar lost challenge (challenger) (pass)");
+                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar won challenge (challengee) (pass)");
             } else {
                 [self playerLosesRound:targetID];
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
@@ -521,6 +536,11 @@
                 [newItem setLosingPlayer:targetID];
                 [history addObject:newItem];
                 *didTheChallengerWin = YES;
+                
+                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar won challenge (challenger) (pass)");
+                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar lost challenge (challengee) (pass)");
             }
         }
         else
@@ -536,6 +556,11 @@
                 [newItem setLosingPlayer:playerID];
                 [history addObject:newItem];
                 *didTheChallengerWin = NO;
+                
+                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar lost challenge (challenger) (pass)");
+                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar won challenge (challengee) (pass)");
             } else {
                 [self playerLosesRound:targetID];
                 HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
@@ -546,6 +571,11 @@
                 [newItem setLosingPlayer:targetID];
                 [history addObject:newItem];
                 *didTheChallengerWin = YES;
+                
+                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar won challenge (challenger) (pass)");
+                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+                    DDLogSoar(@"Soar lost challenge (challengee) (pass)");
             } 
         }
     } else {
@@ -600,6 +630,9 @@
         [history addObject:newItem];
         
         *wasTheExactRight = YES;
+        
+        if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+            DDLogSoar(@"Soar won exact");
     } else {
         DDLogInfo(@"%i: exact was wrong", [player playerID]);
         [self playerLosesRound:playerID];
@@ -612,6 +645,9 @@
         [history addObject:newItem];
         
         *wasTheExactRight = NO;
+        
+        if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+            DDLogSoar(@"Soar lost exact");
     }
 
 	[self createNewRound];
