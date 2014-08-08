@@ -11,8 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayGameView">
             <connections>
                 <outlet property="bidButton" destination="tbm-aT-BRg" id="Oe5-jm-6dk"/>
+                <outlet property="bidCountLabel" destination="hqA-12-kSs" id="n1t-g0-hNa"/>
                 <outlet property="bidCountLabelHint" destination="VNY-cr-opc" id="HGz-WR-YEp"/>
+                <outlet property="bidCountMinusButton" destination="NBN-gx-jAx" id="NEe-ml-Mtk"/>
+                <outlet property="bidCountPlusButton" destination="21E-17-igH" id="X7e-7n-xtK"/>
+                <outlet property="bidFaceLabel" destination="q8q-jb-rmp" id="O9P-Ib-y7E"/>
                 <outlet property="bidFaceLabelHint" destination="Yiz-8r-Qmd" id="Kdk-0Z-mzI"/>
+                <outlet property="bidFaceMinusButton" destination="bXM-fQ-ktP" id="d4n-LA-uc6"/>
+                <outlet property="bidFacePlusButton" destination="WBd-Gx-vzc" id="ibk-vm-SLe"/>
                 <outlet property="exactButton" destination="C9j-og-3qE" id="HIs-ZH-s6t"/>
                 <outlet property="gameStateLabel" destination="kFp-l4-qsR" id="3tj-4f-rL4"/>
                 <outlet property="passButton" destination="eMz-gj-Aln" id="DLz-WO-cbB"/>
@@ -176,6 +182,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountMinusPressed:" destination="-1" eventType="touchUpInside" id="Vcr-Gr-mE4"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="21E-17-igH">
                             <rect key="frame" x="200" y="-1" width="40" height="55"/>
@@ -190,6 +199,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountPlusPressed:" destination="-1" eventType="touchUpInside" id="U5i-ov-3Ar"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBd-Gx-vzc">
                             <rect key="frame" x="240" y="-1" width="40" height="55"/>
@@ -201,6 +213,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFacePlusPressed:" destination="-1" eventType="touchUpInside" id="koO-xG-bcM"/>
+                            </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="die-6.png" translatesAutoresizingMaskIntoConstraints="NO" id="q8q-jb-rmp">
                             <rect key="frame" x="247" y="62" width="25" height="21"/>
@@ -221,6 +236,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFaceMinusPressed:" destination="-1" eventType="touchUpInside" id="TV2-Ha-hTz"/>
+                            </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" preferredMaxLayoutWidth="40" translatesAutoresizingMaskIntoConstraints="NO" id="hqA-12-kSs">
                             <rect key="frame" x="200" y="62" width="40" height="21"/>

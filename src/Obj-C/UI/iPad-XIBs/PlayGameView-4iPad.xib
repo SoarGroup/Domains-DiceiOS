@@ -10,6 +10,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayGameView">
             <connections>
                 <outlet property="bidButton" destination="O7k-Uy-q42" id="9bH-c8-R9d"/>
+                <outlet property="bidCountLabel" destination="wIC-Ta-98x" id="aYZ-uc-lOx"/>
+                <outlet property="bidCountMinusButton" destination="3Qp-FH-msG" id="EPP-gh-fzj"/>
+                <outlet property="bidCountPlusButton" destination="QBv-HM-2ZQ" id="EEc-Du-9mB"/>
+                <outlet property="bidFaceLabel" destination="IY4-ks-tq2" id="SMw-2V-LA7"/>
+                <outlet property="bidFaceMinusButton" destination="ev8-BH-MeD" id="y3K-N5-s8E"/>
+                <outlet property="bidFacePlusButton" destination="uTo-Lk-wuX" id="jpC-jc-Jcf"/>
                 <outlet property="continueRoundButton" destination="ssX-nh-wKm" id="0yh-Zc-0zX"/>
                 <outlet property="exactButton" destination="pk5-Iu-t8q" id="5Fj-ta-942"/>
                 <outlet property="gameStateLabel" destination="bY8-UD-YPS" id="lvs-Xz-4db"/>
@@ -281,6 +287,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountMinusPressed:" destination="-1" eventType="touchUpInside" id="WwI-kR-WQw"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QBv-HM-2ZQ">
                             <rect key="frame" x="184" y="0.0" width="40" height="40"/>
@@ -295,6 +304,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountPlusPressed:" destination="-1" eventType="touchUpInside" id="Bqo-uN-VBS"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTo-Lk-wuX">
                             <rect key="frame" x="232" y="0.0" width="40" height="40"/>
@@ -306,6 +318,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFacePlusPressed:" destination="-1" eventType="touchUpInside" id="Z0F-Ok-WyG"/>
+                            </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="die-6.png" translatesAutoresizingMaskIntoConstraints="NO" id="IY4-ks-tq2">
                             <rect key="frame" x="240" y="48" width="25" height="21"/>
@@ -326,6 +341,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFaceMinusPressed:" destination="-1" eventType="touchUpInside" id="wVb-Lq-4e8"/>
+                            </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" preferredMaxLayoutWidth="40" translatesAutoresizingMaskIntoConstraints="NO" id="wIC-Ta-98x">
                             <rect key="frame" x="184" y="48" width="40" height="21"/>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -10,6 +11,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayGameView">
             <connections>
                 <outlet property="bidButton" destination="O7k-Uy-q42" id="9bH-c8-R9d"/>
+                <outlet property="bidCountLabel" destination="Cfu-cV-ly9" id="rQ9-BS-B4L"/>
+                <outlet property="bidCountMinusButton" destination="LfV-Hu-Jm4" id="rE0-IH-ZX6"/>
+                <outlet property="bidCountPlusButton" destination="bo1-Fq-K4D" id="mxu-sT-1qM"/>
+                <outlet property="bidFaceLabel" destination="8Zh-GN-Hf4" id="kpg-XV-Awg"/>
+                <outlet property="bidFaceMinusButton" destination="Sit-8u-hXZ" id="1kf-kK-SJb"/>
+                <outlet property="bidFacePlusButton" destination="XSy-Wo-78a" id="iVI-hw-2PY"/>
                 <outlet property="continueRoundButton" destination="ssX-nh-wKm" id="0yh-Zc-0zX"/>
                 <outlet property="exactButton" destination="pk5-Iu-t8q" id="5Fj-ta-942"/>
                 <outlet property="gameStateLabel" destination="bY8-UD-YPS" id="lvs-Xz-4db"/>
@@ -523,6 +530,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountMinusPressed:" destination="-1" eventType="touchUpInside" id="mVp-Pv-O78"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bo1-Fq-K4D">
                             <rect key="frame" x="184" y="0.0" width="40" height="40"/>
@@ -537,6 +547,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidCountPlusPressed:" destination="-1" eventType="touchUpInside" id="gi4-Em-qgi"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSy-Wo-78a">
                             <rect key="frame" x="232" y="0.0" width="40" height="40"/>
@@ -548,6 +561,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFacePlusPressed:" destination="-1" eventType="touchUpInside" id="gYF-SQ-JBl"/>
+                            </connections>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="die-6.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Zh-GN-Hf4">
                             <rect key="frame" x="240" y="48" width="25" height="21"/>
@@ -568,6 +584,9 @@
                             <state key="disabled">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="bidFaceMinusPressed:" destination="-1" eventType="touchUpInside" id="iZ9-Zz-NmE"/>
+                            </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="10" preferredMaxLayoutWidth="40" translatesAutoresizingMaskIntoConstraints="NO" id="Cfu-cV-ly9">
                             <rect key="frame" x="184" y="48" width="40" height="21"/>
