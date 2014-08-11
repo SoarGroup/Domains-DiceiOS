@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpView">
@@ -18,7 +19,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUS-Rb-9Zg">
                     <rect key="frame" x="436" y="275" width="153" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="hWN-hD-RB3"/>
+                        <constraint firstAttribute="height" constant="50" id="nOb-TG-HEt"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <state key="normal" title="Tutorial">
@@ -32,8 +33,8 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 2.0 Beta 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBA-mH-54y">
                     <rect key="frame" x="20" y="727" width="140" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="140" id="4Lk-4w-80e"/>
-                        <constraint firstAttribute="height" constant="21" id="7rq-g9-g7w"/>
+                        <constraint firstAttribute="height" constant="21" id="0Qn-Cn-K9c"/>
+                        <constraint firstAttribute="width" constant="140" id="VTJ-1W-nBn"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -45,11 +46,11 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfk-Ey-QXf">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfk-Ey-QXf">
                     <rect key="frame" x="436" y="170" width="153" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="153" id="Jcd-ad-hCR"/>
-                        <constraint firstAttribute="height" constant="50" id="nA9-kw-Vrd"/>
+                        <constraint firstAttribute="width" constant="153" id="2g0-wE-TLS"/>
+                        <constraint firstAttribute="height" constant="50" id="uAI-hW-Gc0"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <state key="normal" title="Rules">
@@ -63,21 +64,28 @@
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
-                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="trailing" secondItem="pfk-Ey-QXf" secondAttribute="trailing" id="2eR-NP-R1W"/>
-                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="V3L-5f-lgU"/>
-                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="top" secondItem="pfk-Ey-QXf" secondAttribute="bottom" constant="55" id="VEc-R3-lR7"/>
-                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="leading" secondItem="pfk-Ey-QXf" secondAttribute="leading" id="dzv-eo-Rxm"/>
-                <constraint firstAttribute="trailing" secondItem="k5t-V3-TH5" secondAttribute="trailing" constant="20" symbolic="YES" id="ijM-7e-7g1"/>
-                <constraint firstItem="eBA-mH-54y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="j0n-Ub-gPr"/>
-                <constraint firstItem="pfk-Ey-QXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="170" id="rPV-oZ-e99"/>
-                <constraint firstItem="eBA-mH-54y" firstAttribute="top" secondItem="k5t-V3-TH5" secondAttribute="top" id="rRg-P3-rnw"/>
-                <constraint firstItem="eBA-mH-54y" firstAttribute="baseline" secondItem="k5t-V3-TH5" secondAttribute="baseline" id="xbB-Y7-CCo"/>
-                <constraint firstAttribute="bottom" secondItem="eBA-mH-54y" secondAttribute="bottom" constant="20" symbolic="YES" id="zv9-4i-9pc"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="leading" secondItem="pfk-Ey-QXf" secondAttribute="leading" id="2RB-Mk-iGo"/>
+                <constraint firstItem="k5t-V3-TH5" firstAttribute="top" secondItem="eBA-mH-54y" secondAttribute="top" id="3Wh-ZX-4uh"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="top" secondItem="pfk-Ey-QXf" secondAttribute="bottom" constant="55" id="Daj-De-Zwv"/>
+                <constraint firstItem="eBA-mH-54y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="KXL-QL-26d"/>
+                <constraint firstAttribute="trailing" secondItem="k5t-V3-TH5" secondAttribute="trailing" constant="20" symbolic="YES" id="Rg4-sB-vNP"/>
+                <constraint firstItem="pfk-Ey-QXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="170" id="Tn5-53-Hik"/>
+                <constraint firstItem="k5t-V3-TH5" firstAttribute="baseline" secondItem="eBA-mH-54y" secondAttribute="baseline" id="UMI-5K-26t"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="atF-Ca-tnM"/>
+                <constraint firstItem="PUS-Rb-9Zg" firstAttribute="trailing" secondItem="pfk-Ey-QXf" secondAttribute="trailing" id="heG-GE-1bp"/>
+                <constraint firstAttribute="bottom" secondItem="eBA-mH-54y" secondAttribute="bottom" constant="20" symbolic="YES" id="v6B-ca-Xhl"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="257" y="301"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination">
+            <size key="portraitSize" width="768" height="1024"/>
+            <size key="landscapeSize" width="1024" height="768"/>
+        </simulatedScreenMetrics>
+    </simulatedMetricsContainer>
 </document>
