@@ -1017,6 +1017,7 @@
 	for (PlayerState* state in loserAIs)
 	{
 		state.numberOfDice = 0;
+		[state.arrayOfDice removeAllObjects];
 		[self playerLosesGame:state.playerID];
 	}
 
