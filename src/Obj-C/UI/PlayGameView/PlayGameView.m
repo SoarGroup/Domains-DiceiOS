@@ -216,7 +216,7 @@ NSString *numberName(int number) {
 	hasDisplayedRoundOverview = YES;
 	hasDisplayedRoundBeginning = NO;
 
-	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
 
     return YES;
 }
