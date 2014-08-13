@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayGameView">
@@ -21,6 +21,7 @@
                 <outlet property="passButton" destination="eMz-gj-Aln" id="DLz-WO-cbB"/>
                 <outlet property="player1View" destination="ScH-9T-4Qc" id="SXR-VA-W8D"/>
                 <outlet property="player2View" destination="gAN-9O-1uO" id="gUu-TT-nsW"/>
+                <outlet property="playerScrollView" destination="iUb-W4-Uh7" id="DaM-rR-K49"/>
                 <outlet property="view" destination="PuY-7B-z8X" id="6zt-fU-yDO"/>
             </connections>
         </placeholder>

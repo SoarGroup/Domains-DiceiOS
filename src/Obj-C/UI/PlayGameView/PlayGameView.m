@@ -1815,6 +1815,12 @@ NSString *numberName(int number) {
 	}
 	else if (step == 2)
 	{
+		currentBidCount = 5;
+		currentBidFace = 5;
+		
+		bidCountLabel.text = @"5";
+		bidFaceLabel.image = [PlayGameView imageForDie:DIE_5];
+		
 		title = @"Bidding";
 		message = @"Now that you have selected 5 Fives, let's bid this.  Highlighted in red is the bid button, tap this to bid 5 Fives.";
 		[views addObject:bidButton];
@@ -1831,8 +1837,12 @@ NSString *numberName(int number) {
 		UILabel* myLabel = (UILabel*)[player1View viewWithTag:PlayerLabelTag];
 
 		[firstDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
+		[firstDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+
         firstDie.accessibilityLabel = @"Alice's Die, Face Value of 3, pushed";
 		[secondDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
+		[secondDie setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
+
         secondDie.accessibilityLabel = @"Alice's Die, Face Value of 3, pushed";
 		firstDie.frame = CGRectMake(3, 0, 50, 50);
 		secondDie.frame = CGRectMake(56, 0, 50, 50);
@@ -1869,14 +1879,13 @@ NSString *numberName(int number) {
 						break;
 					case 2:
 						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_3] forState:UIControlStateNormal];
                         button.accessibilityLabel = @"Alice's Die, Face Value of 3, unpushed";
 						break;
 					case 3:
-						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateDisabled];
-                        button.accessibilityLabel = @"Alice's Die, Face Value of 5, unpushed";
-						break;
 					case 4:
 						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_5] forState:UIControlStateNormal];
                         button.accessibilityLabel = @"Alice's Die, Face Value of 5, unpushed";
 						break;
 					default:
@@ -1921,14 +1930,16 @@ NSString *numberName(int number) {
 		{
 			[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
             button.accessibilityLabel = @"Your Die, Face Value of 4, unpushed";
-			[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateDisabled];
 		}
 
 		UIView* aliceDice = [player2View viewWithTag:DiceViewTag];
 		UILabel* aliceLabel = (UILabel*)[player2View viewWithTag:PlayerLabelTag];
 
 		for (UIButton* button in aliceDice.subviews)
+		{
 			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateDisabled];
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
+		}
 
 		((UIView*)[aliceDice.subviews objectAtIndex:4]).hidden = YES;
 
@@ -1958,11 +1969,13 @@ NSString *numberName(int number) {
 					case 0:
 					case 1:
 						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
                         button.accessibilityLabel = @"Alice's Die, Face Value of 2, unpushed";
 						break;
 					case 2:
 					case 3:
 						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_4] forState:UIControlStateNormal];
                         button.accessibilityLabel = @"Alice's Die, Face Value of 4, unpushed";
 						break;
 					default:
@@ -2022,6 +2035,7 @@ NSString *numberName(int number) {
 		for (UIButton* button in aliceDice.subviews)
         {
 			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateDisabled];
+			[button setImage:[PlayGameView imageForDie:DIE_UNKNOWN] forState:UIControlStateNormal];
             button.accessibilityLabel = @"Alice's Die, Unknown Face Value, unpushed";
         }
 
@@ -2092,16 +2106,22 @@ NSString *numberName(int number) {
 					case 0:
 					case 1:
 						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+
                         button.accessibilityLabel = @"Alice's Die, Face Value of 1, unpushed";
 						break;
 					case 2:
 						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_2] forState:UIControlStateNormal];
+
 						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
                         button.accessibilityLabel = @"Alice's Die, Face Value of 2, unpushed";
 						break;
 					case 3:
 					case 4:
 						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+
                         button.accessibilityLabel = @"Alice's Die, Face Value of 6, unpushed";
                         
 						if (index == 4)
