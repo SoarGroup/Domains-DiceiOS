@@ -802,10 +802,12 @@ static int agentCount = 0;
 					action = const_cast<char*>((const char*)"lost");
 					break;
 				case ACTION_QUIT:
+					action = const_cast<char*>((const char*)"quit");
+					break;
 				default:
 				{
                     action = const_cast<char*>((const char*)"");
-					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
+					DDLogDebug(@"Impossible Situation? SoarPlayer.mm:810");
 					break;
 				}
             }
@@ -910,11 +912,13 @@ static int agentCount = 0;
 					action = const_cast<char*>((const char*)"lost");
 					break;
 				case ACTION_QUIT:
+					action = const_cast<char*>((const char*)"quit");
+					break;
 				default:
 				{
                     action = const_cast<char*>((const char*)"");
 
-					DDLogDebug(@"Impossible Situation? HistoryItem.m:128");
+					DDLogDebug(@"Impossible Situation? SoarPlayer.mm:921");
 					break;
 				}
             }

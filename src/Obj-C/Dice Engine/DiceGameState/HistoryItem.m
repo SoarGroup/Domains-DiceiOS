@@ -149,14 +149,14 @@
 	PlayerState* playerLocal = self.player;
 	DiceGameState* gameStateLocal = self.diceGameState;
 
-    NSString *first = nil;
+    NSString *first = @"";
     NSString *playerName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLocal.playerID]) getDisplayName];
     NSString *second = nil;
     if (self.historyType == actionHistoryItem)
     {
         switch (self.actionType) {
             case ACTION_ACCEPT:
-                first = [NSString stringWithFormat:@"%@ accepted.", playerName];
+                first = [NSString stringWithFormat:@"%@ accepted", playerName];
                 break;
             case ACTION_BID:
 				[self.bid setPlayerName:playerName];
@@ -164,7 +164,7 @@
 				[self.bid setPlayerName:playerLocal.playerName];
                 break;
             case ACTION_PUSH:
-                first = [NSString stringWithFormat:@", pushed."];
+                first = [NSString stringWithFormat:@", pushed"];
                 break;
             case ACTION_CHALLENGE_BID:
 			{
@@ -175,7 +175,7 @@
 				else
 					valueName = [valueName stringByAppendingString:@"'s"];
 
-                first = [NSString stringWithFormat:@"%@ challenged %@ bid.", playerName, valueName];
+                first = [NSString stringWithFormat:@"%@ challenged %@ bid", playerName, valueName];
                 break;
 			}
             case ACTION_CHALLENGE_PASS:
@@ -187,33 +187,36 @@
 				else
 					valueName = [valueName stringByAppendingString:@"'s"];
 
-                first = [NSString stringWithFormat:@"%@ challenged %@ pass.", playerName, valueName];
+                first = [NSString stringWithFormat:@"%@ challenged %@ pass", playerName, valueName];
                 break;
             }
             case ACTION_EXACT:
-                first = [NSString stringWithFormat:@"%@ exacted.", playerName];
+                first = [NSString stringWithFormat:@"%@ exacted", playerName];
                 break;
             case ACTION_PASS:
                 first = [NSString stringWithFormat:@"%@ passed", playerName];
                 break;
             case ACTION_ILLEGAL:
-                first = [NSString stringWithFormat:@"%@ made illegal move.", playerName];
+                first = [NSString stringWithFormat:@"%@ made illegal move", playerName];
                 break;
 			case ACTION_QUIT:
+				first = [NSString stringWithFormat:@"%@ quit", playerName];
+				break;
+			case ACTION_LOST:
+				break;
 			default:
 			{
-                first = @"";
-				DDLogError(@"Impossible Situation? HistoryItem.m:128");
+				DDLogError(@"Impossible Situation? HistoryItem.m:207");
 				break;
 			}
         }
 
         if (playerLosingADie != -1) {
             NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLosingADie]) getDisplayName];
-            second = [NSString stringWithFormat:@"%@ lost a die.", valueName];
+            second = [NSString stringWithFormat:@"%@ lost a die", valueName];
         } else if (playerWinningADie != -1) {
             NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerWinningADie]) getDisplayName];
-            second = [NSString stringWithFormat:@"%@ won a die.", valueName];
+            second = [NSString stringWithFormat:@"%@ won a die", valueName];
         }
         
     }
@@ -233,7 +236,7 @@
 	PlayerState* playerLocal = self.player;
 	DiceGameState* gameStateLocal = self.diceGameState;
 
-    NSString *first = nil;
+    NSString *first = @"";
     NSString *playerName = playerLocal.playerName;
     NSString *second = nil;
     if (self.historyType == actionHistoryItem)
@@ -267,19 +270,22 @@
                 first = [NSString stringWithFormat:@"%@ made an illegal move", playerName];
                 break;
 			case ACTION_QUIT:
+				first = [NSString stringWithFormat:@"%@ quit", playerName];
+				break;
+			case ACTION_LOST:
+				break;
 			default:
 			{
-                first = @"";
-				DDLogError(@"Impossible Situation? HistoryItem.m:128");
+				DDLogError(@"Impossible Situation? HistoryItem.m:274");
 				break;
 			}
         }
         if (playerLosingADie != -1) {
             NSString *valueName = [gameStateLocal getPlayerState:playerLosingADie].playerName;
-            second = [NSString stringWithFormat:@"%@ lost a die.", valueName];
+            second = [NSString stringWithFormat:@"%@ lost a die", valueName];
         } else if (playerWinningADie != -1) {
             NSString *valueName = [gameStateLocal getPlayerState:playerWinningADie].playerName;
-            second = [NSString stringWithFormat:@"%@ won a die.", valueName];
+            second = [NSString stringWithFormat:@"%@ won a die", valueName];
         }
         
     }

@@ -49,7 +49,7 @@ extern std::map<void*, sml::Agent*> agents;
         DDLogGameHistory(@"Start of Match");
 #ifdef DEBUG
 		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
-        //self.randomGenerator = [[Random alloc] init:210137549];
+        //self.randomGenerator = [[Random alloc] init:1254278179];
 #else
 		self.randomGenerator = [[Random alloc] init:NO_SEED];
 #endif

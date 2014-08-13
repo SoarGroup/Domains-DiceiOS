@@ -778,9 +778,19 @@
     if (!history || [history count] == 0) {
         return nil;
     }
-    if ([[history objectAtIndex:([history count] - 1)] isKindOfClass:[HistoryItem class]]) {
-        return (HistoryItem *)[history objectAtIndex:([history count] - 1)];
-    }
+	
+	for (int i = (int)[history count]-1;i >= 0;i--)
+	{
+		HistoryItem* item = [history objectAtIndex:i];
+		if ([item actionType] == ACTION_LOST ||
+			[item actionType] == ACTION_ILLEGAL)
+		{
+			continue;
+		}
+		
+		return item;
+	}
+	
     return nil;
 }
 
