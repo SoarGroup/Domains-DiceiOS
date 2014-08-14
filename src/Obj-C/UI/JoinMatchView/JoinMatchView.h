@@ -27,11 +27,8 @@
 @property (nonatomic, strong) IBOutlet UILabel* numberOfAIPlayers;
 @property (nonatomic, strong) IBOutlet UIStepper* changeNumberOfAIPlayers;
 
-@property (nonatomic, strong) IBOutlet UILabel* minimumNumberOfHumanPlayers;
-@property (nonatomic, strong) IBOutlet UIStepper* changeMinimumNumberOfHumanPlayers;
-
-@property (nonatomic, strong) IBOutlet UILabel* maximumNumberOfHumanPlayers;
-@property (nonatomic, strong) IBOutlet UIStepper* changeMaximumNumberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UILabel* numberOfHumanPlayers;
+@property (nonatomic, strong) IBOutlet UIStepper* changeNumberOfHumanPlayers;
 
 @property (nonatomic, strong) IBOutlet UIButton* joinMatchButton;
 @property (nonatomic, strong) IBOutlet UIButton* inviteFriendsButton;

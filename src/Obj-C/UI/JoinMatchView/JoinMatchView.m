@@ -23,8 +23,8 @@
 
 @implementation JoinMatchView
 
-@synthesize numberOfAIPlayers, maximumNumberOfHumanPlayers, minimumNumberOfHumanPlayers;
-@synthesize changeMinimumNumberOfHumanPlayers, changeNumberOfAIPlayers, changeMaximumNumberOfHumanPlayers;
+@synthesize numberOfAIPlayers, numberOfHumanPlayers;
+@synthesize changeNumberOfAIPlayers, changeNumberOfHumanPlayers;
 @synthesize joinMatchButton, spinner, mainMenu, multiplayerView, delegate, isPopOver, inviteFriendsButton, inviteFriendsController;
 
 
@@ -50,8 +50,7 @@
 		self.delegate = appDelegate;
 		self.isPopOver = popOver;
 
-		self.changeMinimumNumberOfHumanPlayers.minimumValue = 1;
-		self.changeMaximumNumberOfHumanPlayers.minimumValue = 1;
+		self.changeNumberOfHumanPlayers.minimumValue = 1;
 		self.changeNumberOfAIPlayers.minimumValue = 0;
 	}
 
@@ -79,8 +78,7 @@
 
 -(IBAction)joinMatchButtonPressed:(id)sender
 {
-	if (changeMaximumNumberOfHumanPlayers.value == 0 &&
-		changeMinimumNumberOfHumanPlayers.value == 0 &&
+	if (changeNumberOfHumanPlayers.value == 0 &&
 		changeNumberOfAIPlayers.value == 0)
 	{
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Join Match" message:@"I cannot join a match with no opponents!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -88,11 +86,10 @@
 		[alert show];
 	}
 
-	changeMaximumNumberOfHumanPlayers.enabled = NO;
-	changeMinimumNumberOfHumanPlayers.enabled = NO;
+	changeNumberOfHumanPlayers.enabled = NO;
 	changeNumberOfAIPlayers.enabled = NO;
 
-	if (changeMaximumNumberOfHumanPlayers.value == 0)
+	if (changeNumberOfHumanPlayers.value == 0)
 		[SingleplayerView startGameWithOpponents:changeNumberOfAIPlayers.value withNavigationController:self.navigationController withAppDelegate:self.delegate withMainMenu:self.mainMenu];
 	else
 	{
@@ -100,8 +97,8 @@
 		[multiplayerViewLocal.popoverController dismissPopoverAnimated:YES];
 		
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
-		request.minPlayers = changeMinimumNumberOfHumanPlayers.value + 1;
-		request.maxPlayers = changeMaximumNumberOfHumanPlayers.value + 1;
+		request.minPlayers = changeNumberOfHumanPlayers.value + 1;
+		request.maxPlayers = changeNumberOfHumanPlayers.value + 1;
 
 		NSMutableArray* friendsToInvite = [NSMutableArray array];
 
@@ -152,8 +149,7 @@
 				 {
 					 self.spinner.hidden = YES;
 					 self.changeNumberOfAIPlayers.enabled = YES;
-					 self.changeMaximumNumberOfHumanPlayers.enabled = YES;
-					 self.changeMinimumNumberOfHumanPlayers.enabled = YES;
+					 self.changeNumberOfHumanPlayers.enabled = YES;
 
 					 [multiplayerViewLocal populateScrollView:request];
 				 }
@@ -230,28 +226,18 @@
 {
 	if (sender.value <= 0)
 		[sender setValue:0];
-	else if ((changeMaximumNumberOfHumanPlayers.value + changeNumberOfAIPlayers.value) > 7)
+	else if ((changeNumberOfHumanPlayers.value + changeNumberOfAIPlayers.value) > 7)
 	{
 		[sender setValue:(sender.value - 1)];
 
 		[[[UIAlertView alloc] initWithTitle:@"Maximum Players" message:@"Unfortunately, there is a maximum of 7 opponents in multiplayer (AI and Human combined)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 	}
 
-	if (sender == changeMaximumNumberOfHumanPlayers &&
-		changeMaximumNumberOfHumanPlayers.value < changeMinimumNumberOfHumanPlayers.value)
-		changeMinimumNumberOfHumanPlayers.value = changeMaximumNumberOfHumanPlayers.value;
-
-	if (sender == changeMinimumNumberOfHumanPlayers &&
-		changeMinimumNumberOfHumanPlayers.value > changeMaximumNumberOfHumanPlayers.value)
-		changeMaximumNumberOfHumanPlayers.value = changeMinimumNumberOfHumanPlayers.value;
-
-	[maximumNumberOfHumanPlayers setText:[NSString stringWithFormat:@"%i", (int)changeMaximumNumberOfHumanPlayers.value]];
-	[minimumNumberOfHumanPlayers setText:[NSString stringWithFormat:@"%i", (int)changeMinimumNumberOfHumanPlayers.value]];
+	[numberOfHumanPlayers setText:[NSString stringWithFormat:@"%i", (int)changeNumberOfHumanPlayers.value]];
 	[numberOfAIPlayers setText:[NSString stringWithFormat:@"%i", (int)changeNumberOfAIPlayers.value]];
 
-	changeMaximumNumberOfHumanPlayers.maximumValue = 7 - changeNumberOfAIPlayers.value;
-	changeMinimumNumberOfHumanPlayers.maximumValue = changeMaximumNumberOfHumanPlayers.maximumValue;
-	changeNumberOfAIPlayers.maximumValue = 7 - changeMaximumNumberOfHumanPlayers.value;
+	changeNumberOfHumanPlayers.maximumValue = 7 - changeNumberOfAIPlayers.value;
+	changeNumberOfAIPlayers.maximumValue = 7 - changeNumberOfHumanPlayers.value;
 }
 
 -(IBAction)inviteFriendsButtonPressed:(id)sender
@@ -261,7 +247,7 @@
 								  self->friendIDs = view->selectedFriends;
 
 								  self.inviteFriendsController = nil;
-							  } maxSelection:changeMaximumNumberOfHumanPlayers.value];
+							  } maxSelection:changeNumberOfHumanPlayers.value];
 
 	if (friendIDs)
 		ifv->selectedFriends = friendIDs;

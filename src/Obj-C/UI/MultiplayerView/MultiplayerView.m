@@ -352,6 +352,8 @@
 
 - (void)populateScrollView
 {
+	self.joinSpinner.hidden = YES;
+	
 	[self populateScrollView:nil];
 }
 
