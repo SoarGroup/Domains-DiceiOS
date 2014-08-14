@@ -103,6 +103,8 @@
 		
 		[[[UIAlertView alloc] initWithTitle:@"New to Multiplayer?" message:@"It appears you are new to multiplayer.  Would you like to read about how the multiplayer works in Liar's Dice?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Okay", nil] show];
 	}
+	
+	self.joinSpinner.hidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -31,11 +31,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="1198"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Hj-zeF" userLabel="ScrollView">
-                    <rect key="frame" x="20" y="220" width="280" height="964"/>
+                    <rect key="frame" x="20" y="220" width="280" height="334"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsN-Mi-ivr">
                             <rect key="frame" x="0.0" y="0.0" width="280" height="120"/>
@@ -1164,7 +1164,10 @@
                 <constraint firstItem="uRI-uY-tAZ" firstAttribute="leading" secondItem="8qZ-W6-P3A" secondAttribute="leading" id="oJ3-we-xiF"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4">
+                <size key="portraitSize" width="320" height="568"/>
+                <size key="landscapeSize" width="568" height="320"/>
+            </simulatedScreenMetrics>
             <point key="canvasLocation" x="366" y="1983"/>
         </view>
     </objects>
