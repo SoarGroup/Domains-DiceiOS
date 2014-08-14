@@ -25,17 +25,17 @@ When one uses invites to create a match, the invites are sent out to all the inv
 
 When joining random matches, one will always be joined to a match where it is your turn.  This match may or may not be a new match.  If it is a new match, other players will not be allowed to join until you have completed your turn.
 
-You can also have a hybrid match where you have invited players and random players.  In this case the invited players are still invited after you complete your turn but the random players will be unable to join until it is a non-invited player's turn.
+You can also have a hybrid match where you have invited players and random players.
 
 The following is an example of a hybrid match between Alice, Bob, Carol, and Decker:
 
-1. Alice creates a match with 3 opponents, two of which are invited.  These two players are Bob and Carol.
-2. Alice completes her turn.  Once this occurs, Bob and Carol are sent invites saying that Alice has invited them to join a match.
-3. Once Bob and Carol join and have completed their turns, the game is passed to an unknown player.
-4. Decker searches for a match.  Game Center joins him to Alice's match.
+1. Alice creates a match with 3 opponents, two of whom are invited.  These two players are Bob and Carol.
+2. Alice completes her turn.  Once she does, Bob and Carol are sent invitations saying that Alice has invited them to join a match.
+3. Once Bob and Carol join and have completed their turns, the game is passed to the uninvited player.
+4. Decker searches for a match.  Game Center selects Alice's match for him to join.
 5. Decker completes his turn.  The game is passed back to Alice.</string>
                             <attributes>
-                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <font key="NSFont" size="17" name="HelveticaNeue"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                             </attributes>
