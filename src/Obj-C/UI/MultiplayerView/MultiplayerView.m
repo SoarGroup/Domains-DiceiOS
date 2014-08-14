@@ -441,6 +441,46 @@
 		[self.navigationController pushViewController:[[MultiplayerHelpView alloc] init] animated:YES];
 }
 
+- (void)playMatchButtonPressed:(id)sender withWait:(BOOL)waitForHandler
+{
+	if ([NSThread isMainThread])
+	{
+		dispatch_async(dispatch_get_global_queue(0, 0), ^{
+			[self playMatchButtonPressed:sender withWait:waitForHandler];
+		});
+		return;
+	}
+	
+	GKTurnBasedMatch* match = [((NSObject*)sender).LDContext objectForKey:@"Match"];
+	
+	ApplicationDelegate* delegate = self.appDelegate;
+	
+	GameKitGameHandler* handler = [delegate.listener handlerForMatch:match];
+	
+	while (!handler && waitForHandler)
+	{
+		sleep(1);
+		handler = [delegate.listener handlerForMatch:match];
+	}
+	
+	if (handler)
+	{
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			DiceGame* localGame = handler.localGame;
+			
+			__block MultiplayerView* multiplayerView = self;
+			void (^quitHandler)(void) =^
+			{
+				[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
+			};
+			
+			PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
+			
+			[self.navigationController pushViewController:bigView animated:YES];
+		});
+	}
+}
+
 - (void)playMatchButtonPressed:(id)sender
 {
 	GKTurnBasedMatch* match = [((NSObject*)sender).LDContext objectForKey:@"Match"];

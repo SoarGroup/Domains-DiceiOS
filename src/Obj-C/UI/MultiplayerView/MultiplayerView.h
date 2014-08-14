@@ -35,6 +35,7 @@
 @property (nonatomic, strong) UIPopoverController* popoverController;
 
 - (IBAction)joinMatchButtonPressed:(id)sender;
+- (void)playMatchButtonPressed:(id)sender withWait:(BOOL)waitForHandler;
 
 - (void)deleteMatchButtonPressed:(id)sender;
 - (void)populateScrollView;

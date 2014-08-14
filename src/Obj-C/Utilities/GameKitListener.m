@@ -9,6 +9,8 @@
 #import "GameKitListener.h"
 #import "ApplicationDelegate.h"
 #import "MultiplayerView.h"
+#import "PlayGameView.h"
+#import "RoundOverView.h"
 
 @implementation GameKitListener
 
@@ -94,16 +96,47 @@
 		}
 	}
 
-	if ((!gkHandler || ![localDelegate.navigationController.visibleViewController isKindOfClass:MultiplayerView.class]) && didBecomeActive)
+	if (!gkHandler && didBecomeActive)
 	{
 		// New Match, invite
-
-		[localDelegate.mainMenu multiplayerGameButtonPressed:nil];
+		NSArray* views = localDelegate.mainMenu.navigationController.viewControllers;
+		MultiplayerView* mView = nil;
+		
+		for (UIView* view in views)
+		{
+			if ([view isKindOfClass:MultiplayerView.class])
+			{
+				mView = (MultiplayerView*)view;
+				break;
+			}
+		}
+		
+		if (!mView)
+		{
+			[localDelegate.mainMenu multiplayerGameButtonPressed:nil];
+			
+			views = localDelegate.mainMenu.navigationController.viewControllers;
+			
+			for (UIView* view in views)
+			{
+				if ([view isKindOfClass:MultiplayerView.class])
+				{
+					mView = (MultiplayerView*)view;
+					break;
+				}
+			}
+		}
+		else
+			[mView populateScrollView];
+	
+		NSObject* object = [[NSObject alloc] init];
+		[object.LDContext setObject:match forKey:@"Match"];
+		[mView playMatchButtonPressed:object withWait:YES];
 	}
 	else if (gkHandler)
 		[gkHandler updateMatchData];
 	else
-		DDLogDebug(@"No Handler for match!");
+		DDLogError(@"No Handler for match!");
 }
 
 @end
