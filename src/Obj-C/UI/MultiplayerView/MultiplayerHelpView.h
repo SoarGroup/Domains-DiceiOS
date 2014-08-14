@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HelpView : UIViewController
-
-- (IBAction)rulesButtonPressed:(id)sender;
-- (IBAction)tutorialButtonPressed:(id)sender;
-- (IBAction)multiplayerHelpButtonPressed:(id)sender;
+@interface MultiplayerHelpView : UIViewController
 
 @end

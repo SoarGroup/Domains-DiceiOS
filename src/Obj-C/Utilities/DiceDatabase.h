@@ -34,4 +34,7 @@
 - (BOOL)hasSeenTutorial;
 - (void)setHasSeenTutorial;
 
+- (BOOL)hasVisitedMultiplayerBefore;
+- (void)setHasVisitedMultiplayerBefore;
+
 @end

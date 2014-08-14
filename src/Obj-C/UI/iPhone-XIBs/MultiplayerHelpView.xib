@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerHelpView">
+            <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="31C-Mp-Gpw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view autoresizesSubviews="NO" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRB-Sx-bWJ">
+                    <rect key="frame" x="4" y="2" width="317" height="563"/>
+                    <attributedString key="attributedText">
+                        <fragment>
+                            <string key="content">Liar's Dice uses Game Center Turn-based Multiplayer.  In Game Center Turn-based Multiplayer, you can create matches through two separate processes.  You can invite your friends to matches and you can join random matches.
+
+When one uses invites to create a match, the invites are sent out to all the invited players once the user has completed their turn.
+
+When joining random matches, one will always be joined to a match where it is your turn.  This match may or may not be a new match.  If it is a new match, other players will not be allowed to join until you have completed your turn.
+
+You can also have a hybrid match where you have invited players and random players.  In this case the invited players are still invited after you complete your turn but the random players will be unable to join until it is a non-invited player's turn.
+
+The following is an example of a hybrid match between Alice, Bob, Carol, and Decker:
+
+1. Alice creates a match with 3 opponents, two of which are invited.  These two players are Bob and Carol.
+2. Alice completes her turn.  Once this occurs, Bob and Carol are sent invites saying that Alice has invited them to join a match.
+3. Once Bob and Carol join and have completed their turns, the game is passed to an unknown player.
+4. Decker searches for a match.  Game Center joins him to Alice's match.
+5. Decker completes his turn.  The game is passed back to Alice.</string>
+                            <attributes>
+                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+            <constraints>
+                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="2VP-oG-dqy"/>
+                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="R9z-ze-28n"/>
+                <constraint firstAttribute="trailing" secondItem="oRB-Sx-bWJ" secondAttribute="trailing" constant="-1" id="XtA-9V-f0t"/>
+                <constraint firstAttribute="bottom" secondItem="oRB-Sx-bWJ" secondAttribute="bottom" constant="3" id="yGs-zu-Gau"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4">
+                <size key="portraitSize" width="320" height="568"/>
+                <size key="landscapeSize" width="568" height="320"/>
+            </simulatedScreenMetrics>
+        </view>
+    </objects>
+</document>

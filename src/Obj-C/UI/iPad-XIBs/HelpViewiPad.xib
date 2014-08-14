@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpView">
@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUS-Rb-9Zg">
-                    <rect key="frame" x="436" y="275" width="153" height="50"/>
+                    <rect key="frame" x="387" y="275" width="250" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="nOb-TG-HEt"/>
                     </constraints>
@@ -47,9 +47,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfk-Ey-QXf">
-                    <rect key="frame" x="436" y="170" width="153" height="50"/>
+                    <rect key="frame" x="387" y="170" width="250" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="153" id="2g0-wE-TLS"/>
+                        <constraint firstAttribute="width" constant="250" id="2g0-wE-TLS"/>
                         <constraint firstAttribute="height" constant="50" id="uAI-hW-Gc0"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
@@ -61,10 +61,26 @@
                         <action selector="rulesButtonPressed:" destination="-1" eventType="touchUpInside" id="43o-bE-eE6"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHg-62-b2A">
+                    <rect key="frame" x="387" y="380" width="250" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="JNe-vi-NvH"/>
+                        <constraint firstAttribute="height" constant="50" id="P3M-Rx-qeS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <state key="normal" title="Multiplayer Help">
+                        <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="aiOnlyGameButtonPressed:" destination="-1" eventType="touchUpInside" id="oxe-VX-l0V"/>
+                        <action selector="multiplayerHelpButtonPressed:" destination="-1" eventType="touchUpInside" id="FsY-yA-azj"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
                 <constraint firstItem="PUS-Rb-9Zg" firstAttribute="leading" secondItem="pfk-Ey-QXf" secondAttribute="leading" id="2RB-Mk-iGo"/>
+                <constraint firstAttribute="centerX" secondItem="EHg-62-b2A" secondAttribute="centerX" constant="-0.5" id="2di-jF-G8Z"/>
                 <constraint firstItem="k5t-V3-TH5" firstAttribute="top" secondItem="eBA-mH-54y" secondAttribute="top" id="3Wh-ZX-4uh"/>
                 <constraint firstItem="PUS-Rb-9Zg" firstAttribute="top" secondItem="pfk-Ey-QXf" secondAttribute="bottom" constant="55" id="Daj-De-Zwv"/>
                 <constraint firstItem="eBA-mH-54y" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="KXL-QL-26d"/>
@@ -73,6 +89,7 @@
                 <constraint firstItem="k5t-V3-TH5" firstAttribute="baseline" secondItem="eBA-mH-54y" secondAttribute="baseline" id="UMI-5K-26t"/>
                 <constraint firstItem="PUS-Rb-9Zg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="atF-Ca-tnM"/>
                 <constraint firstItem="PUS-Rb-9Zg" firstAttribute="trailing" secondItem="pfk-Ey-QXf" secondAttribute="trailing" id="heG-GE-1bp"/>
+                <constraint firstItem="EHg-62-b2A" firstAttribute="top" secondItem="PUS-Rb-9Zg" secondAttribute="bottom" constant="55" id="n8q-U3-WtY"/>
                 <constraint firstAttribute="bottom" secondItem="eBA-mH-54y" secondAttribute="bottom" constant="20" symbolic="YES" id="v6B-ca-Xhl"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>

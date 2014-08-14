@@ -156,4 +156,15 @@
 	[defaults synchronize];
 }
 
+- (BOOL)hasVisitedMultiplayerBefore
+{
+	return [(NSNumber*)[defaults objectForKey:@"VisitedMultiplayer"] boolValue];
+}
+
+- (void)setHasVisitedMultiplayerBefore
+{
+	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"VisitedMultiplayer"];
+	[defaults synchronize];
+}
+
 @end

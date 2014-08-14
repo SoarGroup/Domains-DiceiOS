@@ -7,6 +7,7 @@
 //
 
 #import "HelpView.h"
+#import "MultiplayerHelpView.h"
 #import "RulesView.h"
 #import "PlayGameView.h"
 
@@ -27,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+	self.title = @"Help";
+	
 	self.navigationController.navigationBarHidden = NO;
 	self.navigationController.navigationBar.translucent = YES;
 }
@@ -45,6 +48,11 @@
 
 	[self.navigationController pushViewController:[[PlayGameView alloc] initTutorialWithQuitHandler:[quitHandler copy]]
 										 animated:YES];
+}
+
+- (IBAction)multiplayerHelpButtonPressed:(id)sender
+{
+	[self.navigationController pushViewController:[[MultiplayerHelpView alloc] init] animated:YES];
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "ApplicationDelegate.h"
 #import <GameKit/GameKit.h>
 #import <objc/runtime.h>
+#import "MultiplayerHelpView.h"
 
 #import "UIImage+ImageEffects.h"
 
@@ -94,6 +95,14 @@
 
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdateNotification:) name:@"UpdateUINotification" object:nil];
+	
+	DiceDatabase* database = [[DiceDatabase alloc] init];
+	if (![database hasVisitedMultiplayerBefore])
+	{
+		[database setHasVisitedMultiplayerBefore];
+		
+		[[[UIAlertView alloc] initWithTitle:@"New to Multiplayer?" message:@"It appears you are new to multiplayer.  Would you like to read about how the multiplayer works in Liar's Dice?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Okay", nil] show];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -426,8 +435,10 @@
 
 - (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex == 1) // Yes
+	if (buttonIndex == 1 && ![[alertView title] isEqualToString:@"New to Multiplayer?"]) // Yes
 		[self deleteMatchButtonPressed:alertView];
+	else if (buttonIndex == 1)
+		[self.navigationController pushViewController:[[MultiplayerHelpView alloc] init] animated:YES];
 }
 
 - (void)playMatchButtonPressed:(id)sender
