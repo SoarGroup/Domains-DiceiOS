@@ -43,7 +43,7 @@
 		return;
 	}
 
-	volatile int* leaderboardsCompleted = malloc(sizeof(unsigned int));
+	volatile int* leaderboardsCompleted = malloc(sizeof(int));
 	*leaderboardsCompleted = 0;
 
 	for (GKLeaderboard* leaderboard in leaderboards)
@@ -56,7 +56,9 @@
 		 }];
 
 	while (*leaderboardsCompleted != 9);
-
+	
+	free((void*)leaderboardsCompleted);
+	
 	NSUInteger winsOverall = 0, lossesOverall = 0; // #1
 	NSUInteger winsHardestAI = 0, lossesHardestAI = 0; // #2
 	NSUInteger winsMultiplayer = 0, lossesMultiplayer = 0; // #3

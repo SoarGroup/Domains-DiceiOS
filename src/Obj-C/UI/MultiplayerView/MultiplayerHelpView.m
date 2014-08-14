@@ -25,6 +25,8 @@
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+	
 	self.title = @"Multiplayer Help";
 	
 	self.navigationController.navigationBarHidden = NO;

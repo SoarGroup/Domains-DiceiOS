@@ -407,6 +407,8 @@ NSString *numberName(int number) {
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+	
 	if (tutorial && step == 0)
 	{
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Welcome to Liar's Dice!"

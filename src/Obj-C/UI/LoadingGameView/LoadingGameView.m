@@ -44,7 +44,10 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -58,7 +61,10 @@
 	self.navigationItem.title = @"Main Menu";
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
 	MainMenu* mainMenu = self.menu;
     void (^quitHandler)(void) =^ {
 		[mainMenu.navigationController popToViewController:mainMenu animated:YES];

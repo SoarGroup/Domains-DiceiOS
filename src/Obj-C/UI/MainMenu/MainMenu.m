@@ -78,6 +78,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = YES;
 	self.navigationController.navigationBar.translucent = NO;
 
@@ -99,6 +100,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+	
 	DiceDatabase* database = [[DiceDatabase alloc] init];
 
 	if (![database hasSeenTutorial])

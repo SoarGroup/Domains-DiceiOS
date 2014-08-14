@@ -109,6 +109,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
+	[super viewDidDisappear:animated];
+	
 	quitHandler(self);
 }
 

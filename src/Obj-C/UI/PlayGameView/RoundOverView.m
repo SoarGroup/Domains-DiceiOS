@@ -350,6 +350,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+	
 	UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
                                     self.gameStateLabel);
 }

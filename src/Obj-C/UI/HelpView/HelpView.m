@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+	
 	self.title = @"Help";
 	
 	self.navigationController.navigationBarHidden = NO;
