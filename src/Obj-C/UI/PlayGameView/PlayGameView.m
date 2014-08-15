@@ -241,19 +241,25 @@ NSString *numberName(int number) {
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		{
 			[self.overViews addObject:roundOverView];
-			roundOverView.view.frame = self.view.frame;
-			roundOverView.view.frame = CGRectMake(self.view.frame.origin.x,
+//			roundOverView.view.frame = self.view.frame;
+			roundOverView.view.frame = CGRectMake(0,
 												  self.view.frame.size.height,
-												  self.view.frame.size.width,
-												  self.view.frame.size.height);
+												  roundOverView.view.frame.size.width,
+												  roundOverView.view.frame.size.height);
 
-			[self.view.superview addSubview:roundOverView.view];
+//			ApplicationDelegate* localDelegate = (ApplicationDelegate*)[[UIApplication sharedApplication] delegate];
+//			MultiplayerView* controller = (MultiplayerView*)localDelegate.navigationController.visibleViewController;
+//			[controller.gamesScrollView addSubview:roundOverView.view];
+//			[controller.gamesScrollView bringSubviewToFront:roundOverView.view];
+			[self.view addSubview:roundOverView.view];
 
 			[UIView animateWithDuration:0.35 animations:^{
-				roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
-													  self.view.frame.origin.y,
-													  roundOverView.view.frame.size.width,
-													  roundOverView.view.frame.size.height);
+				roundOverView.view.frame = CGRectMake(0, 0, roundOverView.view.frame.size.width, roundOverView.view.frame.size.height);
+//				roundOverView.view.frame = CGRectMake(roundOverView.view.frame.origin.x,
+//													  self.view.frame.origin.y,
+//													  roundOverView.view.frame.size.width,
+//													  roundOverView.view.frame.size.height);
+				
 			}];
 		}
 		else
@@ -839,7 +845,10 @@ NSString *numberName(int number) {
 	}
 
 	if (localGame.newRound && !hasDisplayedRoundOverview)
+	{
 		[self roundEnding];
+		return;
+	}
 
 	if ([localGame.gameState.theNewRoundListeners count] == 0)
 		[localGame.gameState addNewRoundListener:self];

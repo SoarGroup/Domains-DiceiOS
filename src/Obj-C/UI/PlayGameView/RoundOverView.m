@@ -44,7 +44,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePlayerNames) name:@"UpdateUINotification" object:nil];
+	
 	PlayGameView* localGameView = self.playGameView;
 
 	UIImage* snapshot = [localGameView.view blurredSnapshot];
@@ -348,6 +350,75 @@
 	}
 }
 
+- (void)updatePlayerNames
+{
+	DiceGame* localGame = self.game;
+	
+	NSString *headerString = [localGame.gameState headerString:-1 singleLine:YES displayDiceCount:NO];
+	PlayerState* playerStateLocal = [localGame.gameState lastHistoryItem].player;
+	NSString *lastMoveString = [localGame.gameState historyText:playerStateLocal.playerID];
+	
+	NSString* finalString2 = [NSString stringWithFormat:@"%@\n%@", headerString, lastMoveString];
+	
+	PlayGameView* localGameView = self.playGameView;
+	self.gameStateLabel.accessibilityLabel = [localGameView accessibleTextForString:finalString2];
+	
+	NSMutableAttributedString* string = [[NSMutableAttributedString alloc] init];
+	for (int i = 0;i < [finalString2 length];++i)
+	{
+		unichar characterOne = [finalString2 characterAtIndex:i], characterTwo = 0;
+		
+		if (i+1 < [finalString2 length])
+			characterTwo = [finalString2 characterAtIndex:i+1];
+		
+		if (isdigit(characterOne) && characterTwo == 's')
+		{
+			int characterDigit = characterOne - '0';
+			
+			NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+			attachment.image = [PlayGameView imageForDie:characterDigit];
+			[attachment setBounds:CGRectMake(0, -5, gameStateLabel.font.lineHeight, gameStateLabel.font.lineHeight)];
+			
+			NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+			
+			[string appendAttributedString:attachmentString];
+			
+			++i;
+		}
+		else
+			[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", [finalString2 characterAtIndex:i]]]];
+	}
+	
+	gameStateLabel.attributedText = string;
+	
+	PlayerState* localState = self.player;
+	NSArray *playerStates = localGame.gameState.playerStates;
+	
+	NSMutableArray* playerStatesReordered = [NSMutableArray arrayWithArray:playerStates];
+	
+	for (NSUInteger i = [playerStatesReordered count]; i > 0; i--) {
+		PlayerState* obj = [playerStatesReordered lastObject];
+		[playerStatesReordered insertObject:obj atIndex:0];
+		[playerStatesReordered removeLastObject];
+		
+		if (obj.playerID == localState.playerID)
+			break;
+	}
+	
+	NSUInteger playerCount = [playerStatesReordered count];
+	for (int z = 0;z < playerCount;++z)
+	{
+		PlayerState* playerState = [playerStatesReordered objectAtIndex:z];
+		
+		UIView* view = [playerViews objectAtIndex:z];
+		
+		// Handle the player's name text
+		
+		UILabel* nameLabel = (UILabel*)[view viewWithTag:PlayerLabelTag];
+		nameLabel.text = [[playerState playerPtr] getDisplayName];
+	}
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
@@ -362,6 +433,8 @@
 }
 
 - (IBAction)donePressed:(id)sender {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[self dismissViewControllerAnimated:YES completion:nil];
 
 	PlayGameView* gameView = self.playGameView;
@@ -372,10 +445,11 @@
 										 self.view.frame.size.height,
 										 self.view.frame.size.width,
 										 self.view.frame.size.height);
-		}];
-
-		[self.view removeFromSuperview];
-		[gameView.overViews removeObject:self];
+		} completion:^(BOOL finished)
+		 {
+			 [self.view removeFromSuperview];
+			 [gameView.overViews removeObject:self];
+		 }];
 	}
 
 	[gameView continueRoundPressed:nil];

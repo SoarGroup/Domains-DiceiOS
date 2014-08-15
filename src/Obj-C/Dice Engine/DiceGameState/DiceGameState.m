@@ -911,12 +911,12 @@
 		return @"End of match";
 
 	if (didLeave)
-		return [NSString stringWithFormat:@"Seed: %lu\n%@ quit", (unsigned long)seed, [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
+		return [NSString stringWithFormat:@"%@ quit", [[self getPlayerWithID:leavingPlayerID] getDisplayName]];
 
     if (playerIDorMinusOne < 0)
-        return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds.", (unsigned long)seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
+        return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie];
 
-	return [NSString stringWithFormat:@"Seed: %lu, %@ bid %d %ds%@%@%d %ds, %d unknown.", (unsigned long)seed, previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
+	return [NSString stringWithFormat:@"%@ bid %d %ds%@%@%d %ds, %d unknown.", previousBidPlayerName, previousBid.numberOfDice, previousBid.rankOfDie, conj, diceString, bidDice, previousBid.rankOfDie, unknownDice];
 }
 
 //Private Methods

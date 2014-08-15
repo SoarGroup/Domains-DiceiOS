@@ -33,6 +33,19 @@
 		4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
 		4D4E58551982EA8F00710625 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4E58541982EA8F00710625 /* libPods.a */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
+		4D71B768199E524C00F8ADED /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B75F199E524C00F8ADED /* 29.png */; };
+		4D71B769199E524C00F8ADED /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B760199E524C00F8ADED /* 40.png */; };
+		4D71B76A199E524C00F8ADED /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B761199E524C00F8ADED /* 58.png */; };
+		4D71B76B199E524C00F8ADED /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B762199E524C00F8ADED /* 76.png */; };
+		4D71B76C199E524C00F8ADED /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B763199E524C00F8ADED /* 80.png */; };
+		4D71B76D199E524C00F8ADED /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B764199E524C00F8ADED /* 120.png */; };
+		4D71B76E199E524C00F8ADED /* 152.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B765199E524C00F8ADED /* 152.png */; };
+		4D71B76F199E524C00F8ADED /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B766199E524C00F8ADED /* iTunesArtwork.png */; };
+		4D71B770199E524C00F8ADED /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B767199E524C00F8ADED /* iTunesArtwork@2x.png */; };
+		4D71B776199E525700F8ADED /* Achievements.numbers in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B772199E525700F8ADED /* Achievements.numbers */; };
+		4D71B777199E525700F8ADED /* Achievements.xlsx in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B773199E525700F8ADED /* Achievements.xlsx */; };
+		4D71B778199E525700F8ADED /* Main Achievement.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B774199E525700F8ADED /* Main Achievement.png */; };
+		4D71B779199E525700F8ADED /* Wolverines.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B775199E525700F8ADED /* Wolverines.png */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4D75EAEF19883FED00B4D91F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D75EAEE19883FED00B4D91F /* Security.framework */; };
 		4D854A101993EAA00039C742 /* LiarsDiceFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */; };
@@ -52,17 +65,6 @@
 		4DF393AA1923C4F400A523FB /* die-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938D1923C4F400A523FB /* die-6.png */; };
 		4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938E1923C4F400A523FB /* die-unknown.png */; };
 		4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */; };
-		4DF393AD1923C4F400A523FB /* Icon-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393911923C4F400A523FB /* Icon-iPad.png */; };
-		4DF393AE1923C4F400A523FB /* Icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393921923C4F400A523FB /* Icon-iPad@2x.png */; };
-		4DF393AF1923C4F400A523FB /* Icon-iPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */; };
-		4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393941923C4F400A523FB /* Icon-Settings.png */; };
-		4DF393B11923C4F400A523FB /* Icon-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393951923C4F400A523FB /* Icon-Settings@2x.png */; };
-		4DF393B21923C4F400A523FB /* Icon-Spotlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393961923C4F400A523FB /* Icon-Spotlight.png */; };
-		4DF393B31923C4F400A523FB /* Icon-Spotlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */; };
-		4DF393B41923C4F400A523FB /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393981923C4F400A523FB /* Icon.png */; };
-		4DF393B51923C4F400A523FB /* icon.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393991923C4F400A523FB /* icon.psd */; };
-		4DF393B61923C4F400A523FB /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939A1923C4F400A523FB /* iTunesArtwork.png */; };
-		4DF393B71923C4F400A523FB /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */; };
 		4DF393B81923C4F400A523FB /* Prototype 1 in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939D1923C4F400A523FB /* Prototype 1 */; };
 		4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939E1923C4F400A523FB /* Prototype 2.psd */; };
 		4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939F1923C4F400A523FB /* Prototype 3.psd */; };
@@ -163,6 +165,19 @@
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		4D71B75F199E524C00F8ADED /* 29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 29.png; sourceTree = "<group>"; };
+		4D71B760199E524C00F8ADED /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
+		4D71B761199E524C00F8ADED /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
+		4D71B762199E524C00F8ADED /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
+		4D71B763199E524C00F8ADED /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80.png; sourceTree = "<group>"; };
+		4D71B764199E524C00F8ADED /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
+		4D71B765199E524C00F8ADED /* 152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 152.png; sourceTree = "<group>"; };
+		4D71B766199E524C00F8ADED /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		4D71B767199E524C00F8ADED /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		4D71B772199E525700F8ADED /* Achievements.numbers */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Achievements.numbers; sourceTree = "<group>"; };
+		4D71B773199E525700F8ADED /* Achievements.xlsx */ = {isa = PBXFileReference; lastKnownFileType = file; path = Achievements.xlsx; sourceTree = "<group>"; };
+		4D71B774199E525700F8ADED /* Main Achievement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Main Achievement.png"; sourceTree = "<group>"; };
+		4D71B775199E525700F8ADED /* Wolverines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wolverines.png; sourceTree = "<group>"; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4D75EAEE19883FED00B4D91F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4D854A0D1993E82D0039C742 /* LiarsDiceLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiarsDiceLog.h; sourceTree = "<group>"; };
@@ -191,17 +206,6 @@
 		4DF3938D1923C4F400A523FB /* die-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-6.png"; sourceTree = "<group>"; };
 		4DF3938E1923C4F400A523FB /* die-unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-unknown.png"; sourceTree = "<group>"; };
 		4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScrollRightArrow.png; sourceTree = "<group>"; };
-		4DF393911923C4F400A523FB /* Icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad.png"; sourceTree = "<group>"; };
-		4DF393921923C4F400A523FB /* Icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPad@2x.png"; sourceTree = "<group>"; };
-		4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-iPhone@2x.png"; sourceTree = "<group>"; };
-		4DF393941923C4F400A523FB /* Icon-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings.png"; sourceTree = "<group>"; };
-		4DF393951923C4F400A523FB /* Icon-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Settings@2x.png"; sourceTree = "<group>"; };
-		4DF393961923C4F400A523FB /* Icon-Spotlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight.png"; sourceTree = "<group>"; };
-		4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Spotlight@2x.png"; sourceTree = "<group>"; };
-		4DF393981923C4F400A523FB /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		4DF393991923C4F400A523FB /* icon.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.psd; sourceTree = "<group>"; };
-		4DF3939A1923C4F400A523FB /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
-		4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		4DF3939D1923C4F400A523FB /* Prototype 1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 1"; sourceTree = "<group>"; };
 		4DF3939E1923C4F400A523FB /* Prototype 2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 2.psd"; sourceTree = "<group>"; };
 		4DF3939F1923C4F400A523FB /* Prototype 3.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 3.psd"; sourceTree = "<group>"; };
@@ -425,9 +429,21 @@
 			path = HelpView;
 			sourceTree = "<group>";
 		};
+		4D71B771199E525700F8ADED /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				4D71B772199E525700F8ADED /* Achievements.numbers */,
+				4D71B773199E525700F8ADED /* Achievements.xlsx */,
+				4D71B774199E525700F8ADED /* Main Achievement.png */,
+				4D71B775199E525700F8ADED /* Wolverines.png */,
+			);
+			path = Achievements;
+			sourceTree = "<group>";
+		};
 		4DF393841923C4F400A523FB /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4D71B771199E525700F8ADED /* Achievements */,
 				4DF393851923C4F400A523FB /* Graphics */,
 				4DF393901923C4F400A523FB /* icons */,
 				4DF3939C1923C4F400A523FB /* Prototype iPad Interfaces */,
@@ -456,17 +472,15 @@
 		4DF393901923C4F400A523FB /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				4DF393911923C4F400A523FB /* Icon-iPad.png */,
-				4DF393921923C4F400A523FB /* Icon-iPad@2x.png */,
-				4DF393931923C4F400A523FB /* Icon-iPhone@2x.png */,
-				4DF393941923C4F400A523FB /* Icon-Settings.png */,
-				4DF393951923C4F400A523FB /* Icon-Settings@2x.png */,
-				4DF393961923C4F400A523FB /* Icon-Spotlight.png */,
-				4DF393971923C4F400A523FB /* Icon-Spotlight@2x.png */,
-				4DF393981923C4F400A523FB /* Icon.png */,
-				4DF393991923C4F400A523FB /* icon.psd */,
-				4DF3939A1923C4F400A523FB /* iTunesArtwork.png */,
-				4DF3939B1923C4F400A523FB /* iTunesArtwork@2x.png */,
+				4D71B75F199E524C00F8ADED /* 29.png */,
+				4D71B760199E524C00F8ADED /* 40.png */,
+				4D71B761199E524C00F8ADED /* 58.png */,
+				4D71B762199E524C00F8ADED /* 76.png */,
+				4D71B763199E524C00F8ADED /* 80.png */,
+				4D71B764199E524C00F8ADED /* 120.png */,
+				4D71B765199E524C00F8ADED /* 152.png */,
+				4D71B766199E524C00F8ADED /* iTunesArtwork.png */,
+				4D71B767199E524C00F8ADED /* iTunesArtwork@2x.png */,
 			);
 			path = icons;
 			sourceTree = "<group>";
@@ -1005,19 +1019,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D71B778199E525700F8ADED /* Main Achievement.png in Resources */,
+				4D71B76B199E524C00F8ADED /* 76.png in Resources */,
 				4D17A9F2197DBB1A006C4A64 /* PlayGameView-7iPad.xib in Resources */,
+				4D71B777199E525700F8ADED /* Achievements.xlsx in Resources */,
 				4DF396301923C51D00A523FB /* RulesViewiPad.xib in Resources */,
 				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
 				4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */,
+				4D71B776199E525700F8ADED /* Achievements.numbers in Resources */,
 				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
 				4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */,
 				4D854A151993FF320039C742 /* replay.txt in Resources */,
 				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
+				4D71B76F199E524C00F8ADED /* iTunesArtwork.png in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
-				4DF393AD1923C4F400A523FB /* Icon-iPad.png in Resources */,
 				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
-				4DF393B31923C4F400A523FB /* Icon-Spotlight@2x.png in Resources */,
-				4DF393B61923C4F400A523FB /* iTunesArtwork.png in Resources */,
 				4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */,
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
@@ -1025,16 +1041,17 @@
 				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
 				4D17A9F0197DBAF4006C4A64 /* PlayGameView-6iPad.xib in Resources */,
 				4D48E03219818381009DA895 /* HelpView.xib in Resources */,
+				4D71B76E199E524C00F8ADED /* 152.png in Resources */,
 				4DF3963A1923C51D00A523FB /* PlayGameView.xib in Resources */,
 				4DF397DD1923C9A600A523FB /* dice-hard.soar in Resources */,
 				4D17A9EC197DBA38006C4A64 /* PlayGameView-4iPad.xib in Resources */,
 				4DF396381923C51D00A523FB /* MainMenu.xib in Resources */,
-				4DF393B21923C4F400A523FB /* Icon-Spotlight.png in Resources */,
 				4DF393A51923C4F400A523FB /* die-1.png in Resources */,
 				4DF393A31923C4F400A523FB /* Center-Push.png in Resources */,
 				4DF3962B1923C51D00A523FB /* LoadingGameViewiPad.xib in Resources */,
 				4DF3962D1923C51D00A523FB /* MultiplayerViewiPad.xib in Resources */,
 				4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */,
+				4D71B769199E524C00F8ADED /* 40.png in Resources */,
 				4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */,
 				4DF396291923C51D00A523FB /* AboutViewiPad.xib in Resources */,
 				4DF396371923C51D00A523FB /* LoadingGameView.xib in Resources */,
@@ -1046,36 +1063,35 @@
 				4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */,
 				4DF393A61923C4F400A523FB /* die-2.png in Resources */,
 				4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */,
-				4DF393B51923C4F400A523FB /* icon.psd in Resources */,
+				4D71B76A199E524C00F8ADED /* 58.png in Resources */,
 				4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */,
 				4D17A9EA197DB935006C4A64 /* PlayGameView-3iPad.xib in Resources */,
-				4DF393B41923C4F400A523FB /* Icon.png in Resources */,
-				4DF393B71923C4F400A523FB /* iTunesArtwork@2x.png in Resources */,
 				4DF396311923C51D00A523FB /* SettingsViewiPad.xib in Resources */,
 				4D0161E019254154000827C6 /* default in Resources */,
 				4D17A9EE197DBA8B006C4A64 /* PlayGameView-5iPad.xib in Resources */,
 				4DF397E01923C9A600A523FB /* dice-medium.soar in Resources */,
-				4DF393B11923C4F400A523FB /* Icon-Settings@2x.png in Resources */,
 				4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */,
 				4DF397DC1923C9A600A523FB /* dice-easy.soar in Resources */,
 				4DF3962A1923C51D00A523FB /* ApplicationiPad.xib in Resources */,
+				4D71B770199E524C00F8ADED /* iTunesArtwork@2x.png in Resources */,
 				4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */,
 				4DF393A71923C4F400A523FB /* die-3.png in Resources */,
+				4D71B76C199E524C00F8ADED /* 80.png in Resources */,
 				4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */,
 				4DF393AA1923C4F400A523FB /* die-6.png in Resources */,
 				4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */,
-				4DF393AF1923C4F400A523FB /* Icon-iPhone@2x.png in Resources */,
 				4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */,
 				4D17A9F4197DBB5D006C4A64 /* PlayGameView-8iPad.xib in Resources */,
 				4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */,
+				4D71B768199E524C00F8ADED /* 29.png in Resources */,
 				4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */,
 				4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */,
-				4DF393AE1923C4F400A523FB /* Icon-iPad@2x.png in Resources */,
-				4DF393B01923C4F400A523FB /* Icon-Settings.png in Resources */,
+				4D71B779199E525700F8ADED /* Wolverines.png in Resources */,
 				4DF396351923C51D00A523FB /* Application.xib in Resources */,
 				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
 				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
+				4D71B76D199E524C00F8ADED /* 120.png in Resources */,
 				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
