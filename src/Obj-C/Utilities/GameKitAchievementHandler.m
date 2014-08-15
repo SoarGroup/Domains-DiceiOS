@@ -128,7 +128,12 @@
 			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
 			[updatedAchievements addObject:achievement];
 		}
-		else if (game)
+		else if ([achievement.identifier isEqualToString:@"Hidden4"] && (unsigned int)game == 0xDEADBEEF)
+		{
+			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
+			[updatedAchievements addObject:achievement];
+		}
+		else if (game && (unsigned int)game != 0xDEADBEEF)
 		{
 			BOOL updated = NO;
 			if ([achievement.identifier rangeOfString:@"BasicThings"].location != NSNotFound)
@@ -820,6 +825,9 @@
 	switch (achievementID)
 	{
 		case 1:
+			if (!game || (unsigned int)game == 0xDEADBEEF)
+				break;
+			
 			// Win a match that has at least one developer playing in it.
 			if (game.gameState.gameWinner &&
 				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
@@ -862,9 +870,8 @@
 			break;
 		case 4:
 			// Play the Michigan Fight Song.
-			// Conditions not yet there
-			hiddenAchievement.percentComplete = 0.0;
-			return NO;
+			hiddenAchievement.percentComplete = 100.0;
+			return YES;
 		default:
 			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;

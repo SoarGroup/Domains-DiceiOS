@@ -25,6 +25,9 @@
 
 #import <GameKit/GameKit.h>
 
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
+
 @implementation MainMenu
 
 @synthesize appDelegate;
@@ -37,6 +40,7 @@
 @synthesize aboutButton;
 @synthesize removeAllMultiplayerGames;
 @synthesize multiplayerController;
+@synthesize versionLabel, player;
 
 - (id)initWithAppDelegate:(id)anAppDelegate
 {
@@ -66,6 +70,43 @@
 
 #pragma mark - View lifecycle
 
+- (void)wolverinesAchievement
+{
+	ApplicationDelegate* delegate = self.appDelegate;
+	GameKitAchievementHandler* handler = delegate.achievements;
+	
+	NSMutableArray* updatedAchievements = [NSMutableArray array];
+	
+	for (GKAchievement* achievement in handler.achievements)
+	{
+		achievement.showsCompletionBanner = YES;
+		
+		if ([achievement.identifier isEqualToString:@"Hidden4"])
+		{
+			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
+			[updatedAchievements addObject:achievement];
+			
+			NSString *soundFilePath = [NSString stringWithFormat:@"%@/FightSong.m4a",
+									   [[NSBundle mainBundle] resourcePath]];
+			NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+			
+			self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
+																		   error:nil];
+			player.numberOfLoops = 1; //Once
+			
+			if (![player play])
+				DDLogError(@"Failed to play fight song");
+			
+			[GKAchievement reportAchievements:updatedAchievements withCompletionHandler:^(NSError* error)
+			 {
+				 if (error)
+					 DDLogError(@"Error: %@", error.description);
+			 }];
+			return;
+		}
+	}
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,6 +115,10 @@
 	self.navigationController.navigationBarHidden = YES;
 	self.navigationItem.title = @"Main Menu";
 	self.navigationController.delegate = self;
+
+	versionLabel.userInteractionEnabled = YES;
+	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(wolverinesAchievement)];
+	[versionLabel addGestureRecognizer:tapGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated

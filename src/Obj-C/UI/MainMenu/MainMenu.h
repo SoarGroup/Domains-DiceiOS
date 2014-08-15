@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <GameKit/GameKit.h>
 
+#import <AVFoundation/AVFoundation.h>
+
 @class ApplicationDelegate;
 
 @interface MainMenu : UIViewController <UIAlertViewDelegate, UINavigationControllerDelegate, GKGameCenterControllerDelegate>
@@ -36,6 +38,10 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *removeAllMultiplayerGames;
 
+@property (strong, nonatomic) IBOutlet UILabel* versionLabel;
+
 @property (strong, nonatomic) UIViewController* multiplayerController;
+
+@property (strong, nonatomic) AVAudioPlayer* player;
 
 @end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <objects>
@@ -14,6 +14,7 @@
                 <outlet property="removeAllMultiplayerGames" destination="rAJ-2H-cg3" id="0TE-u0-p2k"/>
                 <outlet property="settingsButton" destination="rhh-GJ-2Zy" id="OFk-5a-WGr"/>
                 <outlet property="statsButton" destination="e5p-jc-GAn" id="ymE-yz-aeF"/>
+                <outlet property="versionLabel" destination="eBA-mH-54y" id="rgH-h4-Ol3"/>
                 <outlet property="view" destination="iN0-l3-epB" id="grF-84-Z4i"/>
             </connections>
         </placeholder>
