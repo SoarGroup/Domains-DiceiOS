@@ -19,6 +19,7 @@
 		4D17A9F4197DBB5D006C4A64 /* PlayGameView-8iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D17A9F3197DBB5D006C4A64 /* PlayGameView-8iPad.xib */; };
 		4D1AE1F91978237200D6F4F5 /* GameKitAchievementHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */; };
 		4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */; };
+		4D234580199E797D0014F00D /* FightSong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4D23457F199E797D0014F00D /* FightSong.mp3 */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */; };
 		4D48E027197F06AB009DA895 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E025197F06AB009DA895 /* README.md */; };
@@ -48,7 +49,6 @@
 		4D71B779199E525700F8ADED /* Wolverines.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B775199E525700F8ADED /* Wolverines.png */; };
 		4D71B77B199E76F900F8ADED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D71B77A199E76F900F8ADED /* AVFoundation.framework */; };
 		4D71B77D199E76FF00F8ADED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D71B77C199E76FF00F8ADED /* AudioToolbox.framework */; };
-		4D71B780199E775E00F8ADED /* FightSong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B77F199E775E00F8ADED /* FightSong.m4a */; };
 		4D7501CC17F0EE3200D5DF3A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */; };
 		4D75EAEF19883FED00B4D91F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D75EAEE19883FED00B4D91F /* Security.framework */; };
 		4D854A101993EAA00039C742 /* LiarsDiceFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */; };
@@ -154,6 +154,7 @@
 		4D1AE1F81978237200D6F4F5 /* GameKitAchievementHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitAchievementHandler.m; sourceTree = "<group>"; };
 		4D1AE1FA1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitLeaderboardHandler.h; sourceTree = "<group>"; };
 		4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitLeaderboardHandler.m; sourceTree = "<group>"; };
+		4D23457F199E797D0014F00D /* FightSong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FightSong.mp3; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PlayGameView-2iPad.xib"; sourceTree = "<group>"; };
 		4D48E025197F06AB009DA895 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -183,7 +184,6 @@
 		4D71B775199E525700F8ADED /* Wolverines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wolverines.png; sourceTree = "<group>"; };
 		4D71B77A199E76F900F8ADED /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4D71B77C199E76FF00F8ADED /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		4D71B77F199E775E00F8ADED /* FightSong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = FightSong.m4a; sourceTree = "<group>"; };
 		4D7501CB17F0EE3200D5DF3A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4D75EAEE19883FED00B4D91F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4D854A0D1993E82D0039C742 /* LiarsDiceLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiarsDiceLog.h; sourceTree = "<group>"; };
@@ -451,7 +451,7 @@
 		4D71B77E199E775E00F8ADED /* Songs */ = {
 			isa = PBXGroup;
 			children = (
-				4D71B77F199E775E00F8ADED /* FightSong.m4a */,
+				4D23457F199E797D0014F00D /* FightSong.mp3 */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -1094,6 +1094,7 @@
 				4DF3962A1923C51D00A523FB /* ApplicationiPad.xib in Resources */,
 				4D71B770199E524C00F8ADED /* iTunesArtwork@2x.png in Resources */,
 				4DF397DF1923C9A600A523FB /* dice-hardest.soar in Resources */,
+				4D234580199E797D0014F00D /* FightSong.mp3 in Resources */,
 				4DF393A71923C4F400A523FB /* die-3.png in Resources */,
 				4D71B76C199E524C00F8ADED /* 80.png in Resources */,
 				4DF3963D1923C51D00A523FB /* SettingsView.xib in Resources */,
@@ -1112,7 +1113,6 @@
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
 				4D71B76D199E524C00F8ADED /* 120.png in Resources */,
 				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
-				4D71B780199E775E00F8ADED /* FightSong.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

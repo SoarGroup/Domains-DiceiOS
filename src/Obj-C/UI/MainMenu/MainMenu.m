@@ -86,7 +86,7 @@
 			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
 			[updatedAchievements addObject:achievement];
 			
-			NSString *soundFilePath = [NSString stringWithFormat:@"%@/FightSong.m4a",
+			NSString *soundFilePath = [NSString stringWithFormat:@"%@/FightSong.mp3",
 									   [[NSBundle mainBundle] resourcePath]];
 			NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
 			
