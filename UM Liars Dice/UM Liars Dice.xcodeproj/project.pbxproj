@@ -40,6 +40,8 @@
 		4D854A151993FF320039C742 /* replay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D854A141993FF320039C742 /* replay.txt */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
+		4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */; };
+		4DDCDD84199D0ADA00147BE7 /* MultiplayerHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDCDD83199D0ADA00147BE7 /* MultiplayerHelpView.m */; };
 		4DF393A31923C4F400A523FB /* Center-Push.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393861923C4F400A523FB /* Center-Push.png */; };
 		4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393871923C4F400A523FB /* Center-Push@2x.png */; };
 		4DF393A51923C4F400A523FB /* die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393881923C4F400A523FB /* die-1.png */; };
@@ -174,6 +176,9 @@
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MultiplayerHelpView.xib; sourceTree = "<group>"; };
+		4DDCDD82199D0ADA00147BE7 /* MultiplayerHelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiplayerHelpView.h; sourceTree = "<group>"; };
+		4DDCDD83199D0ADA00147BE7 /* MultiplayerHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiplayerHelpView.m; sourceTree = "<group>"; };
 		4DDDFBB81982B54200CAC998 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4DE8FF531964648F003C583B /* NSMutableArrayShuffle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSMutableArrayShuffle.h; sourceTree = "<group>"; };
 		4DF393861923C4F400A523FB /* Center-Push.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Center-Push.png"; sourceTree = "<group>"; };
@@ -731,6 +736,7 @@
 				4DF394531923C51C00A523FB /* SettingsView.xib */,
 				4DF394541923C51C00A523FB /* SingleplayerView.xib */,
 				4D48E02B197FFDCB009DA895 /* TutorialView.xib */,
+				4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */,
 			);
 			path = "iPhone-XIBs";
 			sourceTree = "<group>";
@@ -767,6 +773,8 @@
 			children = (
 				4DF394601923C51C00A523FB /* MultiplayerView.h */,
 				4DF394611923C51C00A523FB /* MultiplayerView.m */,
+				4DDCDD82199D0ADA00147BE7 /* MultiplayerHelpView.h */,
+				4DDCDD83199D0ADA00147BE7 /* MultiplayerHelpView.m */,
 			);
 			path = MultiplayerView;
 			sourceTree = "<group>";
@@ -1002,6 +1010,7 @@
 				4DF396361923C51D00A523FB /* JoinMatchView.xib in Resources */,
 				4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */,
 				4DF397DB1923C9A600A523FB /* dice-agent-p in Resources */,
+				4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */,
 				4D854A151993FF320039C742 /* replay.txt in Resources */,
 				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
@@ -1136,6 +1145,7 @@
 				4D48E028197F06AB009DA895 /* LICENSE.md in Sources */,
 				4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */,
 				4DF3961C1923C51D00A523FB /* DiceGame.mm in Sources */,
+				4DDCDD84199D0ADA00147BE7 /* MultiplayerHelpView.m in Sources */,
 				4DF3961D1923C51D00A523FB /* Bid.m in Sources */,
 				4DF3961E1923C51D00A523FB /* DiceAction.m in Sources */,
 				4DF397B61923C5B800A523FB /* SoarPlayer.mm in Sources */,

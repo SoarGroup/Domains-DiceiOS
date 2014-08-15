@@ -3,19 +3,19 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Icon-Settings-1.png",
+      "filename" : "29-1.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Icon-Settings@2x.png",
+      "filename" : "58-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Icon-Spotlight@2x-1.png",
+      "filename" : "80.png",
       "scale" : "2x"
     },
     {
@@ -31,31 +31,31 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Icon-iPhone@2x.png",
+      "filename" : "120-2.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "Icon-Settings.png",
+      "filename" : "29.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "Icon-Settings@2x-1.png",
+      "filename" : "58.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "Icon-Spotlight.png",
+      "filename" : "40.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "Icon-Spotlight@2x.png",
+      "filename" : "80-1.png",
       "scale" : "2x"
     },
     {
@@ -81,13 +81,13 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "liars-2 copy 2.png",
+      "filename" : "76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "test.png",
+      "filename" : "152.png",
       "scale" : "2x"
     }
   ],
