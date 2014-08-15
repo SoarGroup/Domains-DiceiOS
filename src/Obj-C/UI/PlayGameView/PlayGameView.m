@@ -832,7 +832,8 @@ NSString *numberName(int number) {
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
 	if ([match.currentParticipant.playerID isEqualToString:localPlayerID] &&
-		[[localGame.players objectAtIndex:localGame.gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class])
+		[[localGame.players objectAtIndex:localGame.gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class] &&
+		[localState hasLost])
 	{
 		DiceRemotePlayer* next = nil;
 

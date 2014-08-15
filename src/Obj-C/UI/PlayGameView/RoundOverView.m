@@ -352,6 +352,9 @@
 
 - (void)updatePlayerNames
 {
+	if (![[gameStateLabel.attributedText string] containsString:@"Remote Player"])
+		return;
+	
 	DiceGame* localGame = self.game;
 	
 	NSString *headerString = [localGame.gameState headerString:-1 singleLine:YES displayDiceCount:NO];
