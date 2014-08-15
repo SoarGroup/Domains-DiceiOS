@@ -209,37 +209,9 @@
 	[self.navigationController pushViewController:[[AboutView alloc] init]  animated:YES];
 }
 
-- (IBAction)removeAllMultiplayerGamesPressed:(id)sender
+- (IBAction)poweredBySoarPressed:(id)sender
 {
-	ApplicationDelegate* delegate = appDelegate;
-	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
-	 {
-		 static NSUInteger matchCount = 0;
-
-		 if ([matches count] > matchCount)
-			 matchCount = [matches count];
-
-		 if ([matches count] == 0)
-		 {
-			 dispatch_async(dispatch_get_main_queue(), ^{
-				 [delegate.listener.handlers removeAllObjects];
-
-				 [[[UIAlertView alloc] initWithTitle:@"Removed All GK Matches" message:[NSString stringWithFormat:@"Removed: %lu matches", (unsigned long)matchCount] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
-
-				 matchCount = 0;
-			 });
-
-			 return;
-		 }
-
-		 [[matches objectAtIndex:0] removeWithCompletionHandler:^(NSError* matchError)
-		  {
-			  if (matchError)
-				  DDLogError(@"Error Removing Invalid Match: %@", error.description);
-
-			  [self removeAllMultiplayerGamesPressed:nil];
-		  }];
-	 }];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://soar.eecs.umich.edu/"]];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

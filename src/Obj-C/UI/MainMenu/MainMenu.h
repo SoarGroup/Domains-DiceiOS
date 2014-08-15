@@ -25,7 +25,7 @@
 - (IBAction)settingsButtonPressed:(id)sender;
 - (IBAction)aboutButtonPressed:(id)sender;
 
-- (IBAction)removeAllMultiplayerGamesPressed:(id)sender;
+- (IBAction)poweredBySoarPressed:(id)sender;
 
 @property (nonatomic, strong) IBOutlet UIButton *aiOnlyGameButton;
 @property (nonatomic, strong) IBOutlet UIButton *multiplayerGameButton;
