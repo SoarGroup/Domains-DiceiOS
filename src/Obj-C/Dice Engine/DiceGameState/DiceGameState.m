@@ -876,7 +876,32 @@
     if ([lastMove count] == 0)
         move = playerName;
     else
-		move = [[lastMove objectAtIndex:[lastMove count]-1] asString];
+	{
+		HistoryItem* lastMoveItem = [lastMove objectAtIndex:[lastMove count]-1];
+
+		if ([lastMoveItem actionType] == ACTION_LOST ||
+			[lastMoveItem actionType] == ACTION_ILLEGAL)
+		{
+			for (int i = (int)[history count]-1;i >= 0;i--)
+			{
+				HistoryItem* item = [history objectAtIndex:i];
+				if ([item actionType] == ACTION_LOST ||
+					[item actionType] == ACTION_ILLEGAL)
+				{
+					continue;
+				}
+				
+				PlayerState* localPlayer = [item player];
+				if ([localPlayer playerID] != playerID)
+					continue;
+				
+				lastMoveItem = item;
+				break;
+			}
+		}
+
+		move = [lastMoveItem asString];
+	}
     
     labelText = [[NSMutableAttributedString alloc] initWithString:move attributes:nil];
     
