@@ -94,8 +94,6 @@
     [[GKLocalPlayer localPlayer] registerListener:self.listener];
     
     [self authenticateLocalPlayer];
-    
-    [[[UIAlertView alloc] initWithTitle:@"Liar's Dice Beta" message:@"Liar's Dice is a BETA currently.  It is feature complete but potentially buggy!  If you find any issues/bugs or want any features please email alexlt@umich.edu with requests or go to github.com/SoarGroup/Domains-DiceiOS and submit an issue." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
