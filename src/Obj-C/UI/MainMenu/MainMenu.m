@@ -133,10 +133,9 @@
 	for (GameKitGameHandler* handler in handlers)
 		[delegate.listener removeGameKitGameHandler:handler];
 
-#ifdef DEBUG
 	self.removeAllMultiplayerGames.enabled = YES;
-#endif
 }
+
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
 {
 	[self.navigationController pushViewController:[[SingleplayerView alloc] initWithAppDelegate:self.appDelegate andWithMainMenu:self] animated:YES];

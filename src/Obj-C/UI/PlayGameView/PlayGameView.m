@@ -2153,6 +2153,40 @@ NSString *numberName(int number) {
 
 				index++;
 			}
+			
+			index = 0;
+			for (UIButton* button in myDice.subviews)
+			{
+				switch (index) {
+					case 0:
+					case 1:
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_1] forState:UIControlStateNormal];
+						
+						button.accessibilityLabel = @"Your Die, Face Value of 1, pushed";
+						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
+						break;
+					case 2:
+					case 3:
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+						
+						button.accessibilityLabel = @"Your Die, Face Value of 6, pushed";
+						button.frame = CGRectMake(button.frame.origin.x, 0, button.frame.size.width, button.frame.size.height);
+						break;
+					case 4:
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateDisabled];
+						[button setImage:[PlayGameView imageForDie:DIE_6] forState:UIControlStateNormal];
+						
+						button.accessibilityLabel = @"Your Die, Face Value of 6, unpushed";
+						button.frame = CGRectMake(button.frame.origin.x, 15, button.frame.size.width, button.frame.size.height);
+						break;
+					default:
+						break;
+				}
+				
+				index++;
+			}
 
 			aliceLabel.text = @"Alice challenged your bid.";
 			gameStateLabel.attributedText = [PlayGameView formatTextString:@"You bid 7 6s.\nThere were 7 6s.\nAlice challenged your bid.\nAlice lost a die."];

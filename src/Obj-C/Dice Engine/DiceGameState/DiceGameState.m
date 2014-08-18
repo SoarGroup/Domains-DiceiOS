@@ -1002,9 +1002,6 @@
 	didLeave = NO;
 	leavingPlayerID = 0;
 
-	NSMutableArray* winners = [NSMutableArray array];
-	NSMutableArray* loserAIs = [NSMutableArray array];
-    
     BOOL hasAllHumansLost = YES;
 
     for (PlayerState *player in self.playerStates) {
@@ -1022,47 +1019,43 @@
     
     if (hasAllHumansLost)
     {
-        for (PlayerState *player in self.playerStates)
-        {
-            if ([[player playerPtr]isKindOfClass:SoarPlayer.class] &&
-                (winners.count == 0 || [player numberOfDice] > [[winners objectAtIndex:0] numberOfDice]))
-            {
-                [loserAIs addObjectsFromArray:winners];
-                [winners removeAllObjects];
-                [winners addObject:player];
-            }
-            else if ([[player playerPtr] isKindOfClass:SoarPlayer.class] &&
-                     winners.count > 0 &&
-                     [player numberOfDice] == [[winners objectAtIndex:0] numberOfDice])
-            {
-                [winners addObject:player];
-            }
-            else if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
-                [loserAIs addObject:player];
-        }
-    }
-
-	if (winners.count > 1)
-	{
-		int winnerIndex = [localGame.randomGenerator randomNumber] % winners.count;
-
-		for (int i = 0;i < winners.count;++i)
+		NSMutableArray* array = [NSMutableArray array];
+		
+		for (PlayerState* player in self.playerStates)
 		{
-			if (i == winnerIndex)
-				continue;
-
-			[loserAIs addObject:[winners objectAtIndex:i]];
-			[winners removeObjectAtIndex:i];
-			i--;
-			winnerIndex--;
+			if (![player hasLost])
+			{
+				for (int i = 0;i < pow([player numberOfDice], 2);++i)
+					[array addObject:[NSNumber numberWithInt:player.playerID]];
+			}
 		}
-	}
-
-	for (PlayerState* state in loserAIs)
-	{
-		state.numberOfDice = 0;
-		[state.arrayOfDice removeAllObjects];
-		[self playerLosesGame:state.playerID];
+		
+		NSUInteger winningIndex = [localGame.randomGenerator randomNumber] % array.count;
+		
+		int playerIndex = [[array objectAtIndex:winningIndex] intValue];
+		
+		PlayerState* winnerState = [self playerStateForPlayerID:playerIndex];
+		int diceLost = [localGame.randomGenerator randomNumber] % winnerState.arrayOfDice.count;
+		
+		while (diceLost > 0)
+		{
+			[winnerState.arrayOfDice removeLastObject];
+			winnerState.numberOfDice--;
+			diceLost--;
+		}
+		
+		[winnerState isNewRound];
+		
+		for (PlayerState* state in self.playerStates)
+		{
+			if (![state hasLost] &&
+				state.playerID != playerIndex)
+			{
+				state.numberOfDice = 0;
+				[state.arrayOfDice removeAllObjects];
+				[self playerLosesGame:state.playerID];
+			}
+		}
 	}
 
 	self.previousBid = nil;
@@ -1075,8 +1068,8 @@
         history = [[NSMutableArray alloc] init];
 
     [history addObject:[[HistoryItem alloc] initWithMetaInformation:[NSString stringWithFormat:@"New Round"]] ];
-
-	if (loserAIs.count > 0 && handler)
+	
+	if (hasAllHumansLost)
 		[handler endMatchForAllParticipants];
 
 	for (id <NewRoundListener> listener in theNewRoundListeners)
