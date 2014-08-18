@@ -128,12 +128,7 @@
 			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
 			[updatedAchievements addObject:achievement];
 		}
-		else if ([achievement.identifier isEqualToString:@"Hidden4"] && (unsigned int)game == 0xDEADBEEF)
-		{
-			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
-			[updatedAchievements addObject:achievement];
-		}
-		else if (game && (unsigned int)game != 0xDEADBEEF)
+		else if (game && ![achievement.identifier isEqualToString:@"Hidden4"])
 		{
 			BOOL updated = NO;
 			if ([achievement.identifier rangeOfString:@"BasicThings"].location != NSNotFound)
@@ -225,29 +220,42 @@
 		{
 			// Successfully pass while lying
 			NSArray* flatHistory = game.gameState.flatHistory;
-
-            for (int i = (int)[flatHistory count] - 1;i >= 0;i--)
+			HistoryItem* passItem = nil;
+			
+			for (int i = 0;i < [flatHistory count];++i)
 			{
-				if (i == 0)
-					continue;
-
 				HistoryItem* item = [flatHistory objectAtIndex:i];
-				HistoryItem* previousItem = [flatHistory objectAtIndex:i-1];
-				PlayerState* player = [previousItem player];
-
-				if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+				
+				// Ignore passes because it might be a push pass
+				// Ignore illegals and accepts because they have no relevance to us
+				if ([item actionType] == ACTION_PUSH ||
+					[item actionType] == ACTION_ILLEGAL ||
+					[item actionType] == ACTION_ACCEPT)
 					continue;
-
-				if (([item actionType] == ACTION_CHALLENGE_PASS || [item actionType] == ACTION_CHALLENGE_BID)
-                    && [item result] == 1)
-					continue;
-
-				if ([previousItem actionType] == ACTION_PASS &&
-					[previousItem value] == 0)
+				
+				// Is this item an untruthful pass?
+				if ([item actionType] == ACTION_PASS &&
+					[item value] == 0)
 				{
+					passItem = nil;
+					
+					PlayerState* player = [item player];
+					
+					// Make sure it's the local player who gets the achievement
+					if (![[player playerPtr] isKindOfClass:DiceLocalPlayer.class])
+						continue;
+					
+					// Set our item
+					passItem = item;
+				}
+				else if (passItem && [item actionType] != ACTION_CHALLENGE_PASS)
+				{
+					// If it's not challenging the pass then it's a successful untruthful pass
 					basicAchievement.percentComplete = 100.0;
 					return YES;
 				}
+				else // Handle edge case of non-pass inbetween
+					passItem = nil;
 			}
 			break;
 		}
@@ -564,6 +572,8 @@
 
 				if ([item result] == 0)
 					challengeCount++;
+				else
+					return NO;
 
 				if (challengeCount >= 3)
 				{
@@ -622,7 +632,8 @@
 				for (HistoryItem* item in game.gameState.flatHistory)
 				{
 					if ([item actionType] != ACTION_CHALLENGE_BID &&
-						[item actionType] != ACTION_CHALLENGE_PASS)
+						[item actionType] != ACTION_CHALLENGE_PASS &&
+						[item actionType] != ACTION_EXACT)
 						continue;
 
 					id<Player> player = [game.players objectAtIndex:[item value]];
@@ -630,7 +641,13 @@
 					if (![player isKindOfClass:DiceLocalPlayer.class])
 						continue;
 
-					if ([item result] == 1)
+					if (([item actionType] == ACTION_CHALLENGE_BID ||
+						 [item actionType] == ACTION_CHALLENGE_PASS) &&
+						 [item result] == 1)
+						return NO;
+					
+					if ([item actionType] == ACTION_EXACT &&
+						[item value] == 0)
 						return NO;
 				}
 
@@ -702,6 +719,8 @@
 
 				if ([item result] == 0)
 					challengeCount++;
+				else
+					challengeCount = 0;
 
 				if (challengeCount >= 10)
 				{
@@ -790,7 +809,8 @@
 		case 6:
 			// In a match with at least four starting players, never bid ones in the match and still win the match.
 			if (game.gameState.gameWinner &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class] &&
+				[game.players count] >= 4)
 			{
 				for (HistoryItem* item in game.gameState.flatHistory)
 				{
@@ -852,14 +872,25 @@
 			}
 			break;
 		case 2:
+		{
 			// Be a beta tester for Liar’s Dice.
-#ifdef DEBUG
-			hiddenAchievement.percentComplete = 100.0;
-			return YES;
-#else
-			return NO;
-#endif
+			id<Player> localPlayer = nil;
+			
+			for (id<Player> player in game.players)
+				if ([player isKindOfClass:DiceLocalPlayer.class])
+				{
+					localPlayer = player;
+					break;
+				}
+			
+			if ([[localPlayer getGameCenterName] isEqualToString:@"G:1178810147"] ||
+				[[localPlayer getGameCenterName] isEqualToString:@"G:1840153818"])
+			{
+				hiddenAchievement.percentComplete = 100.0;
+				return YES;
+			}
 			break;
+		}
 		case 3:
 			// In a match, break the AI.
 			if (game == nil)
