@@ -11,6 +11,7 @@
 #import "HistoryItem.h"
 #import "SoarPlayer.h"
 #import "PlayGameView.h"
+#import "ApplicationDelegate.h"
 
 @implementation GameKitAchievementHandler
 
@@ -151,6 +152,27 @@
 			 if (error)
 				 DDLogError(@"Error: %@", error.description);
 		 }];
+	
+	if (game.gameState.gameWinner)
+	{
+		int matchesWon = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Achievement-Win1000Matches"] intValue];
+		
+		if (matchesWon > 1000)
+			return;
+		
+		if ([game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			matchesWon++;
+		
+		ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
+		
+		if (matchesWon == 1000)
+		{
+			[delegate.mainMenu wolverinesAchievement];
+			matchesWon++;
+		}
+		
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:matchesWon] forKey:@"Achievement-Win1000Matches"];
+	}
 }
 
 +(BOOL)handleBasicAchievement:(GKAchievement*)basicAchievement game:(DiceGame*)game

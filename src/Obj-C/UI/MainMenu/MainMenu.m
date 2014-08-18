@@ -92,7 +92,7 @@
 			
 			self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
 																		   error:nil];
-			player.numberOfLoops = 1; //Once
+			player.numberOfLoops = 0; //Once
 			
 			if (![player play])
 				DDLogError(@"Failed to play fight song");

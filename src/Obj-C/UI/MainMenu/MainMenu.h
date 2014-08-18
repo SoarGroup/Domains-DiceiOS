@@ -28,6 +28,7 @@
 - (IBAction)aboutButtonPressed:(id)sender;
 
 - (IBAction)poweredBySoarPressed:(id)sender;
+- (void)wolverinesAchievement;
 
 @property (nonatomic, strong) IBOutlet UIButton *aiOnlyGameButton;
 @property (nonatomic, strong) IBOutlet UIButton *multiplayerGameButton;
