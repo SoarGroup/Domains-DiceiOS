@@ -408,7 +408,10 @@ NSString *numberName(int number) {
 	[super viewWillDisappear:animated];
 
 	DiceGame* localGame = self.game;
+	
+	[[localGame gameLock] lock];
 	[localGame.gameState.theNewRoundListeners removeObject:self];
+	[[localGame gameLock] unlock];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -624,8 +627,10 @@ NSString *numberName(int number) {
 	DiceGame* localGame = self.game;
 	if (![localGame.gameState.theNewRoundListeners containsObject:self])
 	{
+		[[localGame gameLock] lock];
 		[localGame.gameState.theNewRoundListeners removeAllObjects];
 		[localGame.gameState.theNewRoundListeners addObject:self];
+		[[localGame gameLock] unlock];
 	}
 
     self.state = newState;

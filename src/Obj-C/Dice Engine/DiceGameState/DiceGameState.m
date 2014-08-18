@@ -375,7 +375,11 @@
 }
 
 - (void)addNewRoundListener:(id <NewRoundListener>)listener {
+	DiceGame* localGame = self.game;
+	
+	[[localGame gameLock] lock];
     [theNewRoundListeners addObject:listener];
+	[[localGame gameLock] unlock];
 }
 
 // Handle bids
@@ -960,11 +964,13 @@
 	}
 
 	DDLogInfo(@"Created New Round");
+	DiceGame* localGame = self.game;
+
+	[[localGame gameLock] lock];
 
     for (id <NewRoundListener> listener in theNewRoundListeners)
 		[listener roundEnding];
 
-	DiceGame* localGame = self.game;
 	ApplicationDelegate* appDelegate = localGame.appDelegate;
 	GameKitGameHandler* handler = [appDelegate.listener handlerForGame:localGame];
 	if (newRound)
@@ -984,9 +990,13 @@
 		if (next)
 			[handler advanceToRemotePlayer:next];
 	}
+	
+	[[localGame gameLock] unlock];
 
 	while (!canContinueGame)
 		sleep(1); //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+
+	[[localGame gameLock] lock];
 
 	localGame.newRound = NO;
 	inSpecialRules = NO;
@@ -1074,6 +1084,8 @@
 		[listener roundBeginning];
 
     [localGame notifyCurrentPlayer];
+	
+	[[localGame gameLock] unlock];
 }
 
 //Make a player lose the round (set the flags that they've lost)
