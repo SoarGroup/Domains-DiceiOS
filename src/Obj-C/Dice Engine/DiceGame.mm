@@ -172,6 +172,9 @@ extern std::map<void*, sml::Agent*> agents;
 		return;
 
 	DDLogGameKit(@"Recieved update");
+	
+	if (remote->gameLock)
+		gameLock = remote->gameLock;
 
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 
@@ -275,8 +278,14 @@ extern std::map<void*, sml::Agent*> agents;
 		[self.gameState addNewRoundListener:localView];
 
 	if (!remote->newRound && newRound)
+	{
+		[gameLock lock];
+		
 		for (id <NewRoundListener> listener in self.gameState.theNewRoundListeners)
 			[listener roundBeginning];
+		
+		[gameLock unlock];
+	}
 
 	newRound = remote->newRound;
 

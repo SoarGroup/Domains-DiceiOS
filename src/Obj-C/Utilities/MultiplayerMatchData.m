@@ -146,6 +146,8 @@ const int kAI_8 = 0x47;
 						[theGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];
 				}
 			}
+			
+			theGame.gameLock = lock;
 
 			theGame.gameState.currentTurn = 0;
 		}

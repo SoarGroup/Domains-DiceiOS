@@ -85,6 +85,7 @@
 		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
 
 	[game shufflePlayers];
+	game.gameLock = lock;
 
     UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
     [controller pushViewController:gameView animated:YES];

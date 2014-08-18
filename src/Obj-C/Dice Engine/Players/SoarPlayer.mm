@@ -1128,7 +1128,9 @@ static int agentCount = 0;
             action.push = diceToPush;           
         }
 
+		[turnLock unlock];
 		[localGame handleAction:action notify:NO];
+		[turnLock lock];
         *needsRefresh = YES;
     }
     else if (diceToPush != nil)
@@ -1136,7 +1138,9 @@ static int agentCount = 0;
         DDLogCSoar(@"Agent just pushing, %@", diceToPush);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
+		[turnLock unlock];
 		[localGame handleAction:new_action notify:YES];
+		[turnLock lock];
     }
 
 	if (localHandler)

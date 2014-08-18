@@ -58,7 +58,7 @@
 @property (readwrite, assign) int currentTurn;
 @property (readwrite, assign) NSInteger playersLeft;
 @property (readwrite, strong) Bid *previousBid;
-@property (readwrite, strong) NSMutableArray *theNewRoundListeners;
+@property (readwrite, strong, atomic) NSMutableArray *theNewRoundListeners;
 @property (readwrite, weak) DiceGame *game;
 @property (readwrite, atomic, assign) BOOL canContinueGame;
 
