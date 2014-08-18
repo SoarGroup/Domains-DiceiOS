@@ -901,65 +901,68 @@ NSString *numberName(int number) {
 	hasTouchedBidCounterThisTurn = NO;
 
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
-	if (previousBid == nil)
+	if (localGame.gameState.currentTurn == localState.playerID)
 	{
-		currentBidCount = 1;
-		internalCurrentBidCount = 1;
-		currentBidFace = 2;
-	}
-	else if ([[localState arrayOfDice] count] > 1 && [localGame.gameState usingSpecialRules])
-	{
-		currentBidCount = previousBid.numberOfDice + 1;
-		internalCurrentBidCount = currentBidCount;
-		currentBidFace = previousBid.rankOfDie;
-		self.bidFacePlusButton.enabled = NO;
-		self.bidFaceMinusButton.enabled = NO;
-	}
-	else
-	{
-		Bid* previousBidToUse = previousBid;
-
-		NSArray* lastPlayerMoves = [localGame.gameState lastMoveForPlayer:localState.playerID];
-		if ([lastPlayerMoves count] > 0)
+		if (previousBid == nil)
 		{
-			for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
-			{
-				HistoryItem* item = [lastPlayerMoves objectAtIndex:i];
-
-				if ([item actionType] == ACTION_BID)
-				{
-					previousBidToUse = [item bid];
-					break;
-				}
-			}
+			currentBidCount = 1;
+			internalCurrentBidCount = 1;
+			currentBidFace = 2;
 		}
-
-		Bid* nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBidToUse.rankOfDie];
-
-		if (!nextLegalBid)
-			nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBid.rankOfDie];
-
-		if (!nextLegalBid)
+		else if ([[localState arrayOfDice] count] > 1 && [localGame.gameState usingSpecialRules])
 		{
+			currentBidCount = previousBid.numberOfDice + 1;
+			internalCurrentBidCount = currentBidCount;
 			currentBidFace = previousBid.rankOfDie;
 			self.bidFacePlusButton.enabled = NO;
 			self.bidFaceMinusButton.enabled = NO;
-
-			currentBidCount = previousBid.numberOfDice;
-			internalCurrentBidCount = currentBidCount;
-			self.bidCountMinusButton.enabled = NO;
-			self.bidCountPlusButton.enabled = NO;
 		}
 		else
 		{
-			currentBidFace = [nextLegalBid rankOfDie];
-			currentBidCount = [nextLegalBid numberOfDice];
-			internalCurrentBidCount = currentBidCount;
+			Bid* previousBidToUse = previousBid;
+			
+			NSArray* lastPlayerMoves = [localGame.gameState lastMoveForPlayer:localState.playerID];
+			if ([lastPlayerMoves count] > 0)
+			{
+				for (int i = (int)[lastPlayerMoves count] - 1;i >= 0;i--)
+				{
+					HistoryItem* item = [lastPlayerMoves objectAtIndex:i];
+					
+					if ([item actionType] == ACTION_BID)
+					{
+						previousBidToUse = [item bid];
+						break;
+					}
+				}
+			}
+			
+			Bid* nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBidToUse.rankOfDie];
+			
+			if (!nextLegalBid)
+				nextLegalBid = [self minimumLegalBid:previousBid withCurrentFace:previousBid.rankOfDie];
+			
+			if (!nextLegalBid)
+			{
+				currentBidFace = previousBid.rankOfDie;
+				self.bidFacePlusButton.enabled = NO;
+				self.bidFaceMinusButton.enabled = NO;
+				
+				currentBidCount = previousBid.numberOfDice;
+				internalCurrentBidCount = currentBidCount;
+				self.bidCountMinusButton.enabled = NO;
+				self.bidCountPlusButton.enabled = NO;
+			}
+			else
+			{
+				currentBidFace = [nextLegalBid rankOfDie];
+				currentBidCount = [nextLegalBid numberOfDice];
+				internalCurrentBidCount = currentBidCount;
+			}
 		}
+		
+		// Update the bid "scroller" labels, the die image and number for the bid chooser
+		[self updateCurrentBidLabels];
 	}
-
-	// Update the bid "scroller" labels, the die image and number for the bid chooser
-    [self updateCurrentBidLabels];
 
     // Update the contents of the gameStateView
 	NSArray *playerStates = localGame.gameState.playerStates;
