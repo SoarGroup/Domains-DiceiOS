@@ -425,10 +425,7 @@ static int agentCount = 0;
         } while (!agentHalted && (agents[(__bridge void*)turnLock]->GetNumberCommands() == 0));
         
         if (agents[(__bridge void*)turnLock]->GetNumberCommands() != 0)
-        {
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
-			startTime = [[NSDate date] timeIntervalSince1970];
-        }
     } while (!agentSlept);
 
 	DDLogCSoar(@"Halting agent");

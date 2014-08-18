@@ -932,11 +932,7 @@
 	if (!diceCount)
 		diceString = @"";
 
-	NSUInteger seed = 0;
-
-	if (localGame)
-		seed = localGame.randomGenerator->integerSeed;
-	else
+	if (!localGame)
 		return @"End of match";
 
 	if (didLeave)
@@ -996,6 +992,9 @@
 	while (!canContinueGame)
 		sleep(1); //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
+	if (gameWinner)
+		return;
+	
 	[[localGame gameLock] lock];
 
 	localGame.newRound = NO;
@@ -1082,10 +1081,10 @@
 
 	for (id <NewRoundListener> listener in theNewRoundListeners)
 		[listener roundBeginning];
-
-    [localGame notifyCurrentPlayer];
 	
 	[[localGame gameLock] unlock];
+
+    [localGame notifyCurrentPlayer];
 }
 
 //Make a player lose the round (set the flags that they've lost)
