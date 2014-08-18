@@ -8,6 +8,7 @@
 
 #import "SettingsView.h"
 #import "DiceDatabase.h"
+#import "ApplicationDelegate.h"
 
 #import <GameKit/GameKit.h>
 
@@ -139,10 +140,10 @@
 			 if (error)
 				 DDLogError(@"Error: %@", error.description);
 		 }];
-	}
-	else
-	{
-
+		
+		ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
+		
+		delegate.achievements = [[GameKitAchievementHandler alloc] init];
 	}
 }
 
