@@ -13,7 +13,7 @@
 @synthesize gameTime, numPlayers, firstPlace, secondPlace, thirdPlace, fourthPlace;
 
 - (id)initWithGameTime:(GameTime)aGameTime
-			NumPlayers:(int)aNumPlayers
+			NumPlayers:(NSUInteger)aNumPlayers
 			firstPlace:(int)aFirstPlace
 		   secondPlace:(int)aSecondPlace
 			thirdPlace:(int)aThirdPlace
@@ -42,7 +42,7 @@
 	{
 		self.gameTime = [GameRecord DictionaryToGameTime:[dictionary objectForKey:@"GameTime"]];
 
-		self.numPlayers = [(NSNumber*)[dictionary objectForKey:@"NumberOfPlayers"] intValue];
+		self.numPlayers = [(NSNumber*)[dictionary objectForKey:@"NumberOfPlayers"] unsignedIntegerValue];
 
 		self.firstPlace = [(NSNumber*)[dictionary objectForKey:@"FirstPlace"] intValue];
 		self.secondPlace = [(NSNumber*)[dictionary objectForKey:@"SecondPlace"] intValue];
@@ -87,7 +87,7 @@
 
 	[dictionary setObject:[GameRecord GameTimeToDictionary:self.gameTime] forKey:@"GameTime"];
 
-	[dictionary setObject:[NSNumber numberWithInt:self.numPlayers] forKey:@"NumberOfPlayers"];
+	[dictionary setObject:[NSNumber numberWithUnsignedInteger:self.numPlayers] forKey:@"NumberOfPlayers"];
 	[dictionary setObject:[NSNumber numberWithInt:self.firstPlace] forKey:@"FirstPlace"];
 	[dictionary setObject:[NSNumber numberWithInt:self.secondPlace] forKey:@"SecondPlace"];
 	[dictionary setObject:[NSNumber numberWithInt:self.thirdPlace] forKey:@"ThirdPlace"];

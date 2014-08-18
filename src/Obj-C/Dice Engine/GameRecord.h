@@ -17,16 +17,9 @@ typedef struct GameTime {
     int second;
 } GameTime;
 
-@interface GameRecord : NSObject {
-    GameTime time;
-    int numPlayers;
-    int firstPlace;
-    int secondPlace;
-    int thirdPlace;
-    int fourthPlace;
-}
+@interface GameRecord : NSObject
 
-@property (readwrite, assign) int numPlayers;
+@property (readwrite, assign) NSUInteger numPlayers;
 @property (readwrite, assign) int firstPlace;
 @property (readwrite, assign) int secondPlace;
 @property (readwrite, assign) int thirdPlace;
@@ -34,7 +27,7 @@ typedef struct GameTime {
 @property (readwrite, assign) GameTime gameTime;
 
 - (id) initWithGameTime:(GameTime)gameTime
-             NumPlayers:(int)numPlayers
+             NumPlayers:(NSUInteger)numPlayers
              firstPlace:(int)firstPlace
             secondPlace:(int)secondPlace
              thirdPlace:(int)thirdPlace

@@ -708,10 +708,8 @@ static int agentCount = 0;
         NSInteger target = [gameState lastPassPlayerID];
         challenge->CreateSharedIdWME("target", static_cast<Identifier *>(playerMap[target]));
         target = [gameState secondLastPassPlayerID];
-        if (target != -1)
-        {
+        if (target != -1 && target != self.playerID)
             challenge->CreateSharedIdWME("target", static_cast<Identifier *>(playerMap[target]));
-        }
     }
     
     Identifier *exact = idAffordances->CreateIdWME("action");

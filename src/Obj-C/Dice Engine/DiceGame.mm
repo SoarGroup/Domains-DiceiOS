@@ -525,7 +525,7 @@ extern std::map<void*, sml::Agent*> agents;
 
 - (void) end
 {
-    int numPlayers = (int)self.players.count; // Safe conversion due to player count being non-zero and never greater than 2 million something
+    NSUInteger numPlayers = self.players.count; // Safe conversion due to player count being non-zero and never greater than 2 million something
     NSMutableArray *losers = self.gameState.losers;
 
     int places[] = {-1, -1, -1, -1, -1, -1, -1, -1};
