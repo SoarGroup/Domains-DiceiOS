@@ -13,6 +13,7 @@
 #import "GameKitListener.h"
 #import "GameKitAchievementHandler.h"
 #import "GameKitLeaderboardHandler.h"
+#import "DDFileLogger.h"
 
 @interface ApplicationDelegate : NSObject <UIApplicationDelegate>
 {
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) GameKitAchievementHandler* achievements;
 @property (nonatomic, strong) GameKitLeaderboardHandler* leaderboards;
 @property (nonatomic, strong) UIViewController* gameCenterLoginViewController;
+@property (nonatomic, strong) DDFileLogger* filelogger;
 
 - (void)addInstance:(DiceDatabase*)database;
 - (void)removeInstance:(DiceDatabase*)database;

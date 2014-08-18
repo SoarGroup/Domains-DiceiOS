@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import "objc/runtime.h"
 
+#import <UIKit/UIKit.h>
+
 @interface NSObject (LDContext)
 - (NSMutableDictionary *)LDContext;
 @end
@@ -33,3 +35,39 @@
 
 extern const int ddLogLevel;
 #import "LiarsDiceLog.h"
+
+@interface UIApplication (HelperMethods)
+
++ (NSString *) appVersion;
++ (NSString *) build;
++ (NSString *) versionBuild;
+
+@end
+
+@implementation UIApplication (HelperMethods)
+
++ (NSString *) appVersion
+{
+	return [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+}
+
++ (NSString *) build
+{
+	return [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+}
+
++ (NSString *) versionBuild
+{
+	NSString * version = [self appVersion];
+	NSString * build = [self build];
+	
+	NSString * versionBuild = [NSString stringWithFormat: @"v%@", version];
+	
+	if (![version isEqualToString: build]) {
+		versionBuild = [NSString stringWithFormat: @"%@(%@)", versionBuild, build];
+	}
+	
+	return versionBuild;
+}
+
+@end

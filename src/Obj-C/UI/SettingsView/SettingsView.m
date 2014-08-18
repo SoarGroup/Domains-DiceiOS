@@ -11,8 +11,11 @@
 #import "ApplicationDelegate.h"
 
 #import <GameKit/GameKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 #import "PlayGameView.h"
+#import "DDFileLogger.h"
 
 @interface SettingsView ()
 
@@ -150,6 +153,51 @@
 - (IBAction)resetAchievements:(id)sender
 {
 	[[[UIAlertView alloc] initWithTitle:@"Reset Achievements?" message:@"Are you sure you want to reset your current progress on your achievements?  This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+}
+
+- (NSMutableArray*)errorLogData
+{
+	ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
+	
+	NSUInteger maximumLogFilesToReturn = MIN(delegate.filelogger.logFileManager.maximumNumberOfLogFiles, 10);
+	NSMutableArray *errorLogFiles = [NSMutableArray arrayWithCapacity:maximumLogFilesToReturn];
+	DDFileLogger *logger = delegate.filelogger;
+	NSArray *sortedLogFileInfos = [logger.logFileManager sortedLogFileInfos];
+	for (int i = 0; i < MIN(sortedLogFileInfos.count, maximumLogFilesToReturn); i++) {
+		DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
+		NSData *fileData = [NSData dataWithContentsOfFile:logFileInfo.filePath];
+		[errorLogFiles addObject:fileData];
+		[errorLogFiles addObject:[@"----- Log File Separation -----" dataUsingEncoding:NSUTF8StringEncoding]];
+	}
+	return errorLogFiles;
+}
+
+- (IBAction)sendLogFiles:(id)sender
+{
+	if ([MFMailComposeViewController canSendMail])
+	{
+		MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+		mailViewController.mailComposeDelegate = self;
+		NSMutableData *errorLogData = [NSMutableData data];
+		for (NSData *errorLogFileData in [self errorLogData]) {
+			[errorLogData appendData:errorLogFileData];
+		}
+		[mailViewController addAttachmentData:errorLogData mimeType:@"text/plain" fileName:@"errorLog.txt"];
+		[mailViewController setSubject:[NSString stringWithFormat:@"Michigan Liar's Dice - %@ - Error Logs", [UIApplication versionBuild]]];
+		[mailViewController setToRecipients:[NSArray arrayWithObject:@"liarsdice@umich.edu"]];
+		
+		[self presentViewController:mailViewController animated:YES completion:^{}];
+	}
+	else
+	{
+		NSString *message = @"Sorry, your issue can't be reported right now. This is most likely because no mail accounts are set up on your mobile device.";
+		[[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles: nil] show];
+	}
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+	[controller dismissViewControllerAnimated:YES completion:^{}];
 }
 
 @end

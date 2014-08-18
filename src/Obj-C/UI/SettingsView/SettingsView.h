@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface SettingsView : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
+@interface SettingsView : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *difficultyLabel;
@@ -30,5 +31,6 @@
 - (IBAction)remoteIPTextFieldTextFinalize:(id)sender;
 
 - (IBAction)resetAchievements:(id)sender;
+- (IBAction)sendLogFiles:(id)sender;
 
 @end

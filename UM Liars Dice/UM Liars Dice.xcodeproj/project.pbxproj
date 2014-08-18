@@ -27,6 +27,7 @@
 		4D48E036198183F9009DA895 /* HelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E035198183F9009DA895 /* HelpView.m */; };
 		4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E037198184E3009DA895 /* HelpViewiPad.xib */; };
 		4D4BB1CE19A2691000723FC6 /* FightSong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D4BB1CD19A2691000723FC6 /* FightSong.m4a */; };
+		4D4BB1D119A285FC00723FC6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4BB1D019A285FC00723FC6 /* MessageUI.framework */; };
 		4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
 		4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
@@ -161,6 +162,7 @@
 		4D48E035198183F9009DA895 /* HelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpView.m; sourceTree = "<group>"; };
 		4D48E037198184E3009DA895 /* HelpViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewiPad.xib; sourceTree = "<group>"; };
 		4D4BB1CD19A2691000723FC6 /* FightSong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = FightSong.m4a; sourceTree = "<group>"; };
+		4D4BB1D019A285FC00723FC6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4D4E58541982EA8F00710625 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D4BB1D119A285FC00723FC6 /* MessageUI.framework in Frameworks */,
 				4D71B77D199E76FF00F8ADED /* AudioToolbox.framework in Frameworks */,
 				4D71B77B199E76F900F8ADED /* AVFoundation.framework in Frameworks */,
 				4D4E58551982EA8F00710625 /* libPods.a in Frameworks */,
@@ -941,6 +944,7 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D4BB1D019A285FC00723FC6 /* MessageUI.framework */,
 				4D71B77C199E76FF00F8ADED /* AudioToolbox.framework */,
 				4D71B77A199E76F900F8ADED /* AVFoundation.framework */,
 				4D75EAEE19883FED00B4D91F /* Security.framework */,

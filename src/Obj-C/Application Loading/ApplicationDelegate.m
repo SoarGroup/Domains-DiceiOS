@@ -25,6 +25,7 @@
 #import "DDNSLoggerLogger.h"
 #import "DDASLLogger.h"
 #import "DDTTYLogger.h"
+#import "DDFileLogger.h"
 #import "LiarsDiceFormatter.h"
 
 @implementation ApplicationDelegate
@@ -32,7 +33,7 @@
 
 @synthesize databaseArrayLock;
 
-@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController, achievements, leaderboards;
+@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController, achievements, leaderboards, filelogger;
 
 - (id)init
 {
@@ -56,8 +57,9 @@
 -(void) applicationDidFinishLaunching:(UIApplication *)application
 {
     LiarsDiceFormatter* format = [[LiarsDiceFormatter alloc] init];
-    
-    id <DDLogger> logger = [DDNSLoggerLogger sharedInstance];
+	
+#ifdef DEBUG
+	id <DDLogger> logger = [DDNSLoggerLogger sharedInstance];
     [logger setLogFormatter:format];
     [DDLog addLogger:logger];
     
@@ -68,7 +70,12 @@
     logger = [DDTTYLogger sharedInstance];
     [logger setLogFormatter:format];
     [DDLog addLogger:logger];
-    
+#endif
+	
+	filelogger = [[DDFileLogger alloc] init];
+	[filelogger setLogFormatter:format];
+	[DDLog addLogger:filelogger];
+	
     [[NSNotificationCenter defaultCenter]
      addObserver: self
 		   selector: @selector (storeDidChange:)
