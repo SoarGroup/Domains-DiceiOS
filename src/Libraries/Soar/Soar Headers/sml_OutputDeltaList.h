@@ -101,7 +101,7 @@ public:
 		{
 			int size = (int)m_DeltaList.size() ;
 			for (int i = 0 ; i < size ; i++)
-				delete m_DeltaList[i];
+				delete m_DeltaList[i] ;
 		}
 
 		m_DeltaList.clear() ;
@@ -121,7 +121,7 @@ public:
 	}
 
 	int GetSize()				{ return (int)m_DeltaList.size() ; }
-	WMDelta* GetDeltaWME(int i)	{ return m_DeltaList[i]; }
+	WMDelta* GetDeltaWME(int i)	{ return m_DeltaList[i] ; }
 };
 
 }//closes namespace

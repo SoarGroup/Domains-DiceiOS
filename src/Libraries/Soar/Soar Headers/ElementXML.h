@@ -256,10 +256,10 @@ namespace soarxml
 		*************************************************************/
 		bool SetTagName(char* tagName, bool copyName = true) 
 		{
-//		#ifdef DEBUG
+		#ifdef DEBUG
 			if (!IsValidID(tagName))
 				return false ;
-//		#endif
+		#endif
 
 			return ::soarxml_SetTagName(m_hXML, tagName, copyName) ;
 		}
@@ -825,11 +825,11 @@ namespace soarxml
 		*************************************************************/
 		bool SetTagNameFast(char const* tagName) 
 		{
-//		#ifdef DEBUG
+		#ifdef DEBUG
 			if (!IsValidID(tagName))
 				return false ;
-//		#endif
-//
+		#endif
+
 			return ::soarxml_SetTagNameFast(m_hXML, tagName) ;
 		}
 

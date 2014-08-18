@@ -344,7 +344,8 @@
         // Get the previous bid for the next check
 	DiceGameState* gameStateLocal = self.gameState;
 
-	if (hasLost || gameStateLocal.gameWinner) return NO;
+	if (hasLost || gameStateLocal.gameWinner)
+		return nil;
 
     Bid *previousBid = gameStateLocal.previousBid;
         // Make sure the current player is us, the previous bid exists, and the previous bid's playerID is not us

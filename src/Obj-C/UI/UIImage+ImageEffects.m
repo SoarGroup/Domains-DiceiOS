@@ -104,28 +104,28 @@
 
 - (UIImage *)applyLightEffect
 {
-    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];
-    return [self applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+    UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:(float)0.3];
+    return [self applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:(float)1.8 maskImage:nil];
 }
 
 
 - (UIImage *)applyExtraLightEffect
 {
-    UIColor *tintColor = [UIColor colorWithWhite:0.97 alpha:0.82];
-    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+    UIColor *tintColor = [UIColor colorWithWhite:(float)0.97 alpha:(float)0.82];
+    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:(float)1.8 maskImage:nil];
 }
 
 
 - (UIImage *)applyDarkEffect
 {
-    UIColor *tintColor = [UIColor colorWithWhite:0.11 alpha:0.73];
-    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+    UIColor *tintColor = [UIColor colorWithWhite:(float)0.11 alpha:(float)0.73];
+    return [self applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:(float)1.8 maskImage:nil];
 }
 
 
 - (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor
 {
-    const CGFloat EffectColorAlpha = 0.6;
+    const CGFloat EffectColorAlpha = (float)0.6;
     UIColor *effectColor = tintColor;
     unsigned long componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
     if (componentCount == 2) {
@@ -200,7 +200,7 @@
             // ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
             // 
             CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];
-            unsigned int radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
+            unsigned int radius = (int)floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
             if (radius % 2 != 1) {
                 radius += 1; // force radius to be odd so that the three box-blur methodology works.
             }
@@ -212,16 +212,16 @@
         if (hasSaturationChange) {
             CGFloat s = saturationDeltaFactor;
             CGFloat floatingPointSaturationMatrix[] = {
-                0.0722 + 0.9278 * s,  0.0722 - 0.0722 * s,  0.0722 - 0.0722 * s,  0,
-                0.7152 - 0.7152 * s,  0.7152 + 0.2848 * s,  0.7152 - 0.7152 * s,  0,
-                0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,
+                (float)0.0722 + (float)0.9278 * s,  (float)0.0722 - (float)0.0722 * s,  (float)0.0722 - (float)0.0722 * s,  0,
+                (float)0.7152 - (float)0.7152 * s,  (float)0.7152 + (float)0.2848 * s,  (float)0.7152 - (float)0.7152 * s,  0,
+                (float)0.2126 - (float)0.2126 * s,  (float)0.2126 - (float)0.2126 * s,  (float)0.2126 + (float)0.7873 * s,  0,
                                   0,                    0,                    0,  1,
             };
             const int32_t divisor = 256;
             NSUInteger matrixSize = sizeof(floatingPointSaturationMatrix)/sizeof(floatingPointSaturationMatrix[0]);
             int16_t saturationMatrix[matrixSize];
             for (NSUInteger i = 0; i < matrixSize; ++i) {
-                saturationMatrix[i] = (int16_t)roundf(floatingPointSaturationMatrix[i] * divisor);
+                saturationMatrix[i] = (int16_t)roundf((float)floatingPointSaturationMatrix[i] * divisor);
             }
             if (hasBlur) {
                 vImageMatrixMultiply_ARGB8888(&effectOutBuffer, &effectInBuffer, saturationMatrix, divisor, NULL, NULL, kvImageNoFlags);
@@ -327,8 +327,8 @@
 	UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
 
 	// Now apply the blur effect using Apple's UIImageEffect category
-	UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3];
-	UIImage *blurredSnapshotImage = [snapshotImage applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8 maskImage:nil];
+	UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:(float)0.3];
+	UIImage *blurredSnapshotImage = [snapshotImage applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:(float)1.8 maskImage:nil];
 
 	// Or apply any other effects available in "UIImage+ImageEffects.h"
 	// UIImage *blurredSnapshotImage = [snapshotImage applyDarkEffect];
@@ -346,12 +346,12 @@
 
 + (UIColor*)maizeColor
 {
-	return [UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0];
+	return [UIColor colorWithRed:(float)(247.0/255.0) green:(float)(192.0/255.0) blue:(float)(28.0/255.0) alpha:1.0];
 }
 
 + (UIColor*)umichBlueColor
 {
-	return [UIColor colorWithRed:0.0 green:255.0/255.0 blue:55.0/255.0 alpha:1.0];
+	return [UIColor colorWithRed:0.0 green:1.0 blue:(float)(55.0/255.0) alpha:1.0];
 }
 
 @end

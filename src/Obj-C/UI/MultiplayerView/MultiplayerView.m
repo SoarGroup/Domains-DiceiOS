@@ -311,7 +311,7 @@
 				if (match.status == GKTurnBasedMatchStatusEnded)
 					playMatch.titleLabel.text = @"View Match";
 
-				[playMatch setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+				[playMatch setTitleColor:[UIColor colorWithRed:(float)(247.0/255.0) green:(float)(192.0/255.0) blue:(float)(28.0/255.0) alpha:1.0] forState:UIControlStateNormal];
 				[playMatch setTag:matchNumber];
 				[playMatch addTarget:self action:@selector(playMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 				[playMatch.LDContext setObject:match forKey:@"Match"];
@@ -320,7 +320,7 @@
 				deleteMatch.frame = frame;
 				frame.size.width += 20;
 				[deleteMatch setTitle:@"Remove Match" forState:UIControlStateNormal];
-				[deleteMatch setTitleColor:[UIColor colorWithRed:247.0/255.0 green:192.0/255.0 blue:28.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+				[deleteMatch setTitleColor:[UIColor colorWithRed:(float)(247.0/255.0) green:(float)(192.0/255.0) blue:(float)(28.0/255.0) alpha:1.0] forState:UIControlStateNormal];
 				[deleteMatch.LDContext setObject:match forKey:@"Match"];
 				[deleteMatch addTarget:self action:@selector(deleteMatchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 

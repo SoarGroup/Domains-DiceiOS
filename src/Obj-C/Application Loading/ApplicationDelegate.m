@@ -125,7 +125,7 @@
         else
         {
             self.mainMenu.multiplayerEnabled = NO;
-            self.achievements = NO;
+            self.achievements = nil;
             
             BOOL playingMatchWithMultiplayer = NO;
             

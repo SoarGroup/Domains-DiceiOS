@@ -1101,11 +1101,6 @@ static int agentCount = 0;
             {
                 ident->AddStatusComplete();
             }
-            else if (NO /* errors > 0 */)
-            {
-                j--;
-                continue;
-            }
         }
         else
         {}

@@ -228,11 +228,11 @@
 			score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard.identifier forPlayer:[GKLocalPlayer localPlayer].playerID];
 
 		if ([leaderboard.identifier isEqualToString:@"winlossratio_overall"])
-			score.value = winloss_overall;
+			score.value = (int64_t)winloss_overall;
 		else if ([leaderboard.identifier isEqualToString:@"winlossratio_hardestai"])
-			score.value = winloss_hardestai;
+			score.value = (int64_t)winloss_hardestai;
 		else if ([leaderboard.identifier isEqualToString:@"winlossratio_multiplayer"])
-			score.value = winsloss_multiplayer;
+			score.value = (int64_t)winsloss_multiplayer;
 		else if ([leaderboard.identifier isEqualToString:@"sheernumbers_overallwins"])
 			score.value = winsOverall;
 		else if ([leaderboard.identifier isEqualToString:@"sheernumbers_multiplayerwins"])
@@ -240,11 +240,11 @@
 		else if ([leaderboard.identifier isEqualToString:@"sheernumbers_hardestaionlywins"])
 			score.value = winsHardestAI;
 		else if ([leaderboard.identifier isEqualToString:@"miscllaneousratios_successfulchallenges"])
-			score.value = successful_challenges;
+			score.value = (int64_t)successful_challenges;
 		else if ([leaderboard.identifier isEqualToString:@"miscllaneousratios_successfulexacts"])
-			score.value = successful_exacts;
+			score.value = (int64_t)successful_exacts;
 		else if ([leaderboard.identifier isEqualToString:@"miscellaneousratios_sucessfulsurvivalofchallenges"])
-			score.value = survival_challenges;
+			score.value = (int64_t)survival_challenges;
 
 		[scores addObject:score];
 	}

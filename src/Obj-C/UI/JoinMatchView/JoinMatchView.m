@@ -92,15 +92,15 @@
 	changeNumberOfAIPlayers.enabled = NO;
 
 	if (changeNumberOfHumanPlayers.value == 0)
-		[SingleplayerView startGameWithOpponents:changeNumberOfAIPlayers.value withNavigationController:self.navigationController withAppDelegate:self.delegate withMainMenu:self.mainMenu];
+		[SingleplayerView startGameWithOpponents:(int)changeNumberOfAIPlayers.value withNavigationController:self.navigationController withAppDelegate:self.delegate withMainMenu:self.mainMenu];
 	else
 	{
 		MultiplayerView* multiplayerViewLocal = self.multiplayerView;
 		[multiplayerViewLocal.popoverController dismissPopoverAnimated:YES];
 		
 		GKMatchRequest *request = [[GKMatchRequest alloc] init];
-		request.minPlayers = changeNumberOfHumanPlayers.value + 1;
-		request.maxPlayers = changeNumberOfHumanPlayers.value + 1;
+		request.minPlayers = (int)changeNumberOfHumanPlayers.value + 1;
+		request.maxPlayers = (int)changeNumberOfHumanPlayers.value + 1;
 
 		NSMutableArray* friendsToInvite = [NSMutableArray array];
 
@@ -249,7 +249,7 @@
 								  self->friendIDs = view->selectedFriends;
 
 								  self.inviteFriendsController = nil;
-							  } maxSelection:changeNumberOfHumanPlayers.value];
+							  } maxSelection:(int)changeNumberOfHumanPlayers.value];
 
 	if (friendIDs)
 		ifv->selectedFriends = friendIDs;

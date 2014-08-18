@@ -1274,7 +1274,7 @@ NSString *numberName(int number) {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
 	{
 		internalCurrentBidCount *= 2.0;
-		currentBidCount = internalCurrentBidCount;
+		currentBidCount = (int)internalCurrentBidCount;
 	}
 
 	++currentBidFace;
@@ -1285,7 +1285,7 @@ NSString *numberName(int number) {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
 	{
 		internalCurrentBidCount /= 2.0;
-		currentBidCount = ceil(internalCurrentBidCount);
+		currentBidCount = (int)ceil(internalCurrentBidCount);
 	}
 	else if (!hasTouchedBidCounterThisTurn)
 	{
@@ -1302,7 +1302,7 @@ NSString *numberName(int number) {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
 	{
 		internalCurrentBidCount *= 2.0;
-		currentBidCount = internalCurrentBidCount;
+		currentBidCount = (int)internalCurrentBidCount;
 	}
 
 	--currentBidFace;
@@ -1313,7 +1313,7 @@ NSString *numberName(int number) {
 	if (hasTouchedBidCounterThisTurn && currentBidFace == 1)
 	{
 		internalCurrentBidCount /= 2.0;
-		currentBidCount = ceil(internalCurrentBidCount);
+		currentBidCount = (int)ceil(internalCurrentBidCount);
 	}
 	else if (!hasTouchedBidCounterThisTurn)
 	{

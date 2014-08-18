@@ -38,7 +38,7 @@ protected:
 	FILE*		m_pInputFile ;
 
 	// The current string of characters that we're reading
-	char	m_CurrentLine[kBufferSize;
+	char	m_CurrentLine[kBufferSize] ;
 
 	// Location in the current line buffer
 	size_t		m_Pos ;
@@ -59,7 +59,7 @@ protected:
 	*************************************************************************/
 	virtual char GetCurrentChar()
 	{
-		return m_CurrentLine[m_Pos;
+		return m_CurrentLine[m_Pos] ;
 	}
 	
 	// To support reading a stream of XML documents from a single string/file

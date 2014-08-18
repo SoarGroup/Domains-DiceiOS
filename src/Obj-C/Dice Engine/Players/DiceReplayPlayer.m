@@ -146,7 +146,7 @@
     if (actions.count == 0)
         return;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         PlayerState* state = self->playerState;
         DiceGameState* gameState = state.gameState;
         DiceGame* localGame = gameState.game;

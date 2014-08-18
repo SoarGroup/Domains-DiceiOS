@@ -71,7 +71,7 @@ protected:
 	*************************************************************************/
 	virtual inline char GetCurrentChar()
 	{
-		return m_pInputLine[m_Pos;
+		return m_pInputLine[m_Pos] ;
 	}
 	
 	// To support reading a stream of XML documents from a single string/file

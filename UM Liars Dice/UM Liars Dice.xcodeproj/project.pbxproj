@@ -21,8 +21,6 @@
 		4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */; };
 		4D3045C2192440900081FEC8 /* PlayGameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3045C1192440900081FEC8 /* PlayGameView.m */; };
 		4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */; };
-		4D48E027197F06AB009DA895 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E025197F06AB009DA895 /* README.md */; };
-		4D48E028197F06AB009DA895 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E026197F06AB009DA895 /* LICENSE.md */; };
 		4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02B197FFDCB009DA895 /* TutorialView.xib */; };
 		4D48E03019802E17009DA895 /* TutorialView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */; };
 		4D48E03219818381009DA895 /* HelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E03119818381009DA895 /* HelpView.xib */; };
@@ -156,8 +154,6 @@
 		4D1AE1FB1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitLeaderboardHandler.m; sourceTree = "<group>"; };
 		4D3045C1192440900081FEC8 /* PlayGameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayGameView.m; sourceTree = "<group>"; };
 		4D3B4E66197D8AC40018F5C7 /* PlayGameView-2iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "PlayGameView-2iPad.xib"; sourceTree = "<group>"; };
-		4D48E025197F06AB009DA895 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		4D48E026197F06AB009DA895 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = ../LICENSE.md; sourceTree = "<group>"; };
 		4D48E02B197FFDCB009DA895 /* TutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		4D48E02F19802E17009DA895 /* TutorialView-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TutorialView-iPad.xib"; sourceTree = "<group>"; };
 		4D48E03119818381009DA895 /* HelpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpView.xib; sourceTree = "<group>"; };
@@ -931,8 +927,6 @@
 		CD86D63813BB9E450005A182 = {
 			isa = PBXGroup;
 			children = (
-				4D48E025197F06AB009DA895 /* README.md */,
-				4D48E026197F06AB009DA895 /* LICENSE.md */,
 				4DB7B1DB17EB45C000CA94CE /* Images.xcassets */,
 				4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */,
 				C6951844155045D900BD15DA /* Supporting Files */,
@@ -1178,7 +1172,6 @@
 				4DF3961F1923C51D00A523FB /* DiceGameState.m in Sources */,
 				4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */,
 				4DF396471923C51D00A523FB /* SettingsView.m in Sources */,
-				4D48E028197F06AB009DA895 /* LICENSE.md in Sources */,
 				4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */,
 				4DF3961C1923C51D00A523FB /* DiceGame.mm in Sources */,
 				4DDCDD84199D0ADA00147BE7 /* MultiplayerHelpView.m in Sources */,
@@ -1188,7 +1181,6 @@
 				4DF396421923C51D00A523FB /* MainMenu.m in Sources */,
 				4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */,
 				4DF396461923C51D00A523FB /* RulesView.m in Sources */,
-				4D48E027197F06AB009DA895 /* README.md in Sources */,
 				4DF396201923C51D00A523FB /* Die.m in Sources */,
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,
@@ -1204,9 +1196,10 @@
 		C6951842155043DB00BD15DA /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1218,34 +1211,38 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_PEDANTIC = YES;
 				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LLVM_LTO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wextra",
 				);
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1295,7 +1292,6 @@
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
-				LLVM_LTO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
@@ -1317,9 +1313,10 @@
 		CD86D66C13BB9E460005A182 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1331,35 +1328,38 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_PEDANTIC = YES;
 				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LLVM_LTO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wextra",
 				);
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1368,9 +1368,10 @@
 		CD86D66D13BB9E460005A182 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1382,34 +1383,38 @@
 				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Turner (3JLQP7L9LZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
 				GCC_WARN_PEDANTIC = YES;
 				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LLVM_LTO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wextra",
 				);
 				PROVISIONING_PROFILE = "4BD48551-B6C7-46B4-BC86-9380B9EF45FF";
-				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1460,7 +1465,6 @@
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
-				LLVM_LTO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
@@ -1519,7 +1523,6 @@
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";
-				LLVM_LTO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DIPHONE_SDK",
