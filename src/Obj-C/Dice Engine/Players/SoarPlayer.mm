@@ -59,7 +59,7 @@ typedef enum {
     neq
 } Predicate;
 
-std::unordered_map<void*, sml::Agent*> agents;
+std::unordered_map<unsigned long, sml::Agent*> agents;
 NSMutableDictionary* agent_thread_map;
 
 static sml::Kernel* kernel;
@@ -77,6 +77,16 @@ static int agentCount = 0;
 @implementation SoarPlayer
 
 @synthesize name, playerState, playerID, game, turnLock, handler, participant, difficulty;
+
++ (std::unordered_map<unsigned long, sml::Agent*>&) agents
+{
+	return agents;
+}
+
++ (sml::Kernel*) kernel
+{
+	return kernel;
+}
 
 + (NSString*) makePlayerName
 {
@@ -183,8 +193,10 @@ static int agentCount = 0;
     NSMachPort *dummyPort = [[NSMachPort alloc] init];
     [runLoop addPort:dummyPort forMode:NSDefaultRunLoopMode];
     
-    while (1)
+    while (![[NSThread currentThread] isCancelled])
         [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+	
+	[NSThread exit];
 }
 
 - (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff name:(NSString*)aName;
@@ -206,27 +218,27 @@ static int agentCount = 0;
 		if (!self.name)
 			name = [SoarPlayer makePlayerName];
 
-		if (agents.find((__bridge void*) aLock) == agents.end())
+		if (agents.find((unsigned long)aLock) == agents.end())
 		{
 			[kernelLock lock];
 			// No Agent created yet for this lock
-			agents[(__bridge_retained void*)aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p-%f", aLock, [[NSDate date] timeIntervalSince1970]] UTF8String]);
+			agents[(unsigned long)aLock] = kernel->CreateAgent([[NSString stringWithFormat:@"Soar-%p-%f", aLock, [[NSDate date] timeIntervalSince1970]] UTF8String]);
 
-			if (agents[(__bridge void*)aLock] == NULL)
+			if (agents[(unsigned long)aLock] == NULL)
 			{
 				DDLogError(@"Kernel (Agent Creation): %s", kernel->GetLastErrorDescription());
 				[turnLock unlock];
 				return nil;
 			}
             
-            NSString* agentName = [NSString stringWithUTF8String:agents[(__bridge_retained void*)turnLock]->GetAgentName()];
+            NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)aLock]->GetAgentName()];
 
             NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(runLoop) object:nil];
             [thread start];
             [agent_thread_map setObject:thread forKey:agentName];
 
             
-			agents[(__bridge void*)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
+			agents[(unsigned long)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 
 			NSUInteger seed = aGame.randomGenerator->integerSeed;
 
@@ -234,7 +246,7 @@ static int agentCount = 0;
 				seed = [aGame.randomGenerator randomNumber];
 
             DDLogDebug(@"Agent Seed: %lu", (unsigned long)seed);
-			agents[(__bridge void*)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %lu", (unsigned long)seed] UTF8String]);
+			agents[(unsigned long)aLock]->ExecuteCommandLine([[NSString stringWithFormat:@"srand %lu", (unsigned long)seed] UTF8String]);
 
 			NSString *path;
 
@@ -283,25 +295,25 @@ static int agentCount = 0;
 			{
 				path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
 
-				std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 			}
 			else
 			{
 				path = [NSString stringWithFormat:@"source \"/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/src/Soar Agent/%@.soar\"", ruleFile];
 
-				std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 
 				path = [NSString stringWithFormat:@"source \"/LiarsDice/%@.soar\"", ruleFile];
 
-				std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
 			}
 			[kernelLock unlock];
 
 			DDLogCSoar(@"Path: %@", path);
 
-			std::cout << agents[(__bridge void*)aLock]->ExecuteCommandLine("watch 0") << std::endl;
+			std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine("watch 0") << std::endl;
 
-			agents[(__bridge void*)aLock]->InitSoar();
+			agents[(unsigned long)aLock]->InitSoar();
 		}
 
 		[turnLock unlock];
@@ -314,7 +326,7 @@ static int agentCount = 0;
 
 - (void)itsYourTurn
 {
-    NSString* agentName = [NSString stringWithUTF8String:agents[(__bridge_retained void*)turnLock]->GetAgentName()];
+    NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)turnLock]->GetAgentName()];
 
     [self performSelector:@selector(doTurn) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:NO];
 }
@@ -332,6 +344,23 @@ static int agentCount = 0;
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* delegate = localGame.appDelegate;
 	[delegate.achievements updateAchievements:nil];
+}
+
+- (void) cancelThread
+{
+	NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)turnLock]->GetAgentName()];
+	
+	NSThread* thread = [agent_thread_map objectForKey:agentName];
+	[thread cancel];
+	
+	[turnLock lock];
+	DDLogSoar(@"Canceled Soar Thread");
+	[turnLock unlock];
+}
+
+- (void)_stop
+{
+	CFRunLoopStop(CFRunLoopGetCurrent());
 }
 
 - (void) restartSoar
@@ -352,9 +381,12 @@ static int agentCount = 0;
 {
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
+	if ([[NSThread currentThread] isCancelled])
+		return;
+	
     [turnLock lock];
 
-	agents[(__bridge void*)turnLock]->InitSoar();
+	agents[(unsigned long)turnLock]->InitSoar();
 
     DDLogCSoar(@"Agent do turn");
     
@@ -379,7 +411,7 @@ static int agentCount = 0;
                 newData = NULL;
             }
             
-            newData = [self GameStateToWM:agents[(__bridge void*)turnLock]->GetInputLink()];
+            newData = [self GameStateToWM:agents[(unsigned long)turnLock]->GetInputLink()];
 
             needsRefresh = NO;
         }
@@ -388,9 +420,9 @@ static int agentCount = 0;
 
         do {
 			if (!agentInterrupted)
-				agents[(__bridge void*)turnLock]->RunSelfTilOutput();
+				agents[(unsigned long)turnLock]->RunSelfTilOutput();
             
-            sml::smlRunState agentState = agents[(__bridge void*)turnLock]->GetRunState();
+            sml::smlRunState agentState = agents[(unsigned long)turnLock]->GetRunState();
             agentHalted = agentState == sml::sml_RUNSTATE_HALTED;
 
 			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
@@ -406,7 +438,7 @@ static int agentCount = 0;
 
 			if (agentInterrupted)
 			{
-				const char* printResult = agents[(__bridge void*)turnLock]->ExecuteCommandLine("p -sS");
+				const char* printResult = agents[(unsigned long)turnLock]->ExecuteCommandLine("p -sS");
 
 				NSString* printString = [NSString stringWithUTF8String:printResult];
 				NSInteger lines = [[printString componentsSeparatedByCharactersInSet:
@@ -422,18 +454,30 @@ static int agentCount = 0;
 					return [self restartSoar];
 				}
 			}
-        } while (!agentHalted && (agents[(__bridge void*)turnLock]->GetNumberCommands() == 0));
+			
+			if ([[NSThread currentThread] isCancelled])
+			{
+				[turnLock unlock];
+				return;
+			}
+        } while (!agentHalted && (agents[(unsigned long)turnLock]->GetNumberCommands() == 0));
         
-        if (agents[(__bridge void*)turnLock]->GetNumberCommands() != 0)
+        if (agents[(unsigned long)turnLock]->GetNumberCommands() != 0)
             [self handleAgentCommandsWithRefresh:&needsRefresh sleep:&agentSlept];
+		
+		if ([[NSThread currentThread] isCancelled])
+		{
+			[turnLock unlock];
+			return;
+		}
     } while (!agentSlept);
 
 	DDLogCSoar(@"Halting agent");
 	sml::WMElement *halter = NULL;
 	if (!agentHalted)
 	{
-		halter = agents[(__bridge void*)turnLock]->GetInputLink()->CreateStringWME("halt", "now");
-		agents[(__bridge void*)turnLock]->RunSelfTilOutput();
+		halter = agents[(unsigned long)turnLock]->GetInputLink()->CreateStringWME("halt", "now");
+		agents[(unsigned long)turnLock]->RunSelfTilOutput();
 	}
 
 	// reinitialize agent
@@ -957,9 +1001,9 @@ static int agentCount = 0;
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
-    for (int j = 0; j < agents[(__bridge void*)turnLock]->GetNumberCommands(); j++)
+    for (int j = 0; j < agents[(unsigned long)turnLock]->GetNumberCommands(); j++)
     {
-        sml::Identifier *ident = agents[(__bridge void*)turnLock]->GetCommand(j);
+        sml::Identifier *ident = agents[(unsigned long)turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
         DDLogCSoar(@"Command from output link, j=%d, command=%@", j, attrName);

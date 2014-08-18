@@ -72,6 +72,8 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wselector"
 		[NSThread detachNewThreadSelector:@selector(end) toTarget:self->game withObject:nil];
+		
+		[self->game performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
 #pragma clang diagnostic pop
 	};
 

@@ -18,6 +18,7 @@
 #import "sml_ClientIdentifier.h"
 #import "ElementXML.h"
 #import "DiceAction.h"
+#import <unordered_map>
 
 #import "Player.h"
 #import "GameKitGameHandler.h"
@@ -35,9 +36,16 @@
 	int outputCallBackID;
 
 	BOOL didNotify;
+	BOOL exitThread;
 }
 
 + (void)initialize;
+#ifdef __cplusplus
++ (std::unordered_map<unsigned long, sml::Agent*>&) agents;
++ (sml::Kernel*) kernel;
+#endif
+
+- (void) cancelThread;
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff;
 

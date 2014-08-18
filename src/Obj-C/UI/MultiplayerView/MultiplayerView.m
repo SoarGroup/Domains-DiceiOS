@@ -478,6 +478,11 @@
 			void (^quitHandler)(void) =^
 			{
 				[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
+				
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
+				[localGame performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
+#pragma clang diagnostic pop
 			};
 			
 			PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
@@ -503,6 +508,8 @@
 		void (^quitHandler)(void) =^
 		{
 			[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
+			
+			[localGame performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
 		};
 
 		PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
@@ -571,6 +578,8 @@
 			 {
 				 [((UIView*)[self->playGameViews objectAtIndex:handlerIndex]) removeFromSuperview];
 				 [self->playGameViews removeObjectAtIndex:handlerIndex];
+				 
+				 [[self->miniGamesViewArray objectAtIndex:handlerIndex] performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
 
 				 [self->miniGamesViewArray removeObjectAtIndex:handlerIndex];
 

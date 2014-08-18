@@ -25,11 +25,15 @@
 {
     GameTime time;
 	int nextID;
+	
+	BOOL transfered;
 @public
 	BOOL shouldNotifyOfNewRound;
 
 	int seed;
 }
+
+- (void)endGamePermanently;
 
 -(DiceGame*)initWithAppDelegate:(ApplicationDelegate*)appDelegate;
 

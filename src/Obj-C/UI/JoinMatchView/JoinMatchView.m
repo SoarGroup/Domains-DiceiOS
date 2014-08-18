@@ -70,6 +70,7 @@
 	}
 
 	self.navigationController.navigationBar.translucent = NO;
+	self.title = @"New Match";
 }
 
 - (void)didReceiveMemoryWarning

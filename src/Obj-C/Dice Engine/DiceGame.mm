@@ -22,8 +22,6 @@
 
 #include "NSMutableArrayShuffle.h"
 
-extern std::map<void*, sml::Agent*> agents;
-
 @implementation DiceGame
 
 @synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock, randomGenerator;
@@ -53,22 +51,29 @@ extern std::map<void*, sml::Agent*> agents;
 #else
 		self.randomGenerator = [[Random alloc] init:NO_SEED];
 #endif
+		
+		transfered = NO;
 	}
 
     return self;
 }
 
-- (void) dealloc
+- (void)endGamePermanently
 {
-	if (self.gameLock)
+	for (id<Player> p in players)
+		if ([p isKindOfClass:SoarPlayer.class])
+			[((SoarPlayer*)p) cancelThread];
+	
+	if (gameLock && !transfered)
 	{
-		auto it = agents.find((__bridge void*)self.gameLock);
+		auto agents = [SoarPlayer agents];
+		
+		auto it = agents.find((unsigned long)gameLock);
+		
 		if (it != agents.end())
 		{
-			NSLock* lock = (__bridge_transfer NSLock*)it->first;
-
+			[SoarPlayer kernel]->DestroyAgent(it->second);
 			agents.erase(it);
-			DDLogDebug(@"Releasing Lock: %p", lock);
 		}
 	}
 }
@@ -140,6 +145,7 @@ extern std::map<void*, sml::Agent*> agents;
 		self.randomGenerator = [decoder decodeObjectForKey:@"DiceGame:randomGenerator"];
 
 		newRound = [decoder containsValueForKey:@"NewRound"];
+		transfered = NO;
 	}
 
 	return self;
@@ -161,6 +167,7 @@ extern std::map<void*, sml::Agent*> agents;
 	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
 
 	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
+	transfered = NO;
 
 	if (newRound)
 		[encoder encodeBool:YES forKey:@"NewRound"];
@@ -174,7 +181,10 @@ extern std::map<void*, sml::Agent*> agents;
 	DDLogGameKit(@"Recieved update");
 	
 	if (remote->gameLock)
+	{
 		gameLock = remote->gameLock;
+		remote->transfered = YES;
+	}
 
 	shouldNotifyOfNewRound = remote->shouldNotifyOfNewRound;
 

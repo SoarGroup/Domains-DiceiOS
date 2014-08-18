@@ -989,7 +989,7 @@
 	
 	[[localGame gameLock] unlock];
 
-	while (!canContinueGame)
+	while (!canContinueGame && ![[NSThread currentThread] isCancelled])
 		sleep(1); //[[NSRunLoop mainRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
 	if (gameWinner)
