@@ -140,7 +140,7 @@ const int kAI_8 = 0x47;
 					GKTurnBasedParticipant* participant = [match.participants objectAtIndex:currentHumanCount];
 					currentHumanCount++;
 
-					if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant playerID]])
+					if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:[participant player].playerID])
 						[theGame addPlayer:[[DiceLocalPlayer alloc] initWithName:[[GKLocalPlayer localPlayer] alias] withHandler:handler withParticipant:participant]];
 					else
 						[theGame addPlayer:[[DiceRemotePlayer alloc] initWithGameKitParticipant:participant withGameKitGameHandler:handler]];

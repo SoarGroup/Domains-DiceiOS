@@ -108,8 +108,8 @@
 
 			for (GKTurnBasedParticipant* p in participants)
 			{
-				if (p.playerID != nil &&
-					[p.playerID isEqualToString:player])
+				if (p.player.playerID != nil &&
+					[p.player.playerID isEqualToString:player])
 				{
 					// Found the player
 					participant = p;
@@ -119,7 +119,7 @@
 
 			[participants removeObject:participant];
 
-			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:participant.playerID])
+			if ([[[GKLocalPlayer localPlayer] playerID] isEqualToString:participant.player.playerID])
 			{
 				assert(!foundLocalPlayer);
 
@@ -173,7 +173,7 @@
 				GKTurnBasedParticipant* localParticipant = nil;
 
 				for (GKTurnBasedParticipant* p in participants)
-					if ([p.playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
+					if ([p.player.playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
 					{
 						localParticipant = p;
 						break;
@@ -249,7 +249,7 @@
 			for (id<Player> player in players)
 			{
 				if ([player isKindOfClass:DiceRemotePlayer.class] &&
-					[[(DiceRemotePlayer*)player participant].playerID isEqualToString:participant.playerID])
+					[[(DiceRemotePlayer*)player participant].player.playerID isEqualToString:participant.player.playerID])
 				{
 					// Found the player who has lost, check to make sure they have
 					PlayerState* state = [self playerStateForPlayerID:[player getID]];
@@ -977,7 +977,7 @@
 	if (handler && ![[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost])
 		[handler saveMatchData];
 	else if (handler && [[self playerStateForPlayerID:[[localGame localPlayer] getID]] hasLost] &&
-			 [handler.match.currentParticipant.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID])
+			 [handler.match.currentParticipant.player.playerID isEqualToString:[GKLocalPlayer localPlayer].playerID])
 	{
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceRemotePlayer.class] && ![[self playerStateForPlayerID:[player getID]] hasLost])

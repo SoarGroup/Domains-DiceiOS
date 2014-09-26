@@ -216,7 +216,7 @@ NSString *numberName(int number) {
 	hasDisplayedRoundOverview = YES;
 	hasDisplayedRoundBeginning = NO;
 
-	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
+	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:NO];
 
     return YES;
 }
@@ -836,7 +836,7 @@ NSString *numberName(int number) {
 	GKTurnBasedMatch* match = handler.match;
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
-	if ([match.currentParticipant.playerID isEqualToString:localPlayerID] &&
+	if ([match.currentParticipant.player.playerID isEqualToString:localPlayerID] &&
 		[[localGame.players objectAtIndex:localGame.gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class] &&
 		[localState hasLost])
 	{

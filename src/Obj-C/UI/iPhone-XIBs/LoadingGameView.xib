@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A283o" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6239"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingGameView">
@@ -18,6 +18,9 @@
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting game, please wait..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icE-YC-m3i">
                     <rect key="frame" x="51" y="175" width="218" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="eno-lj-Aas"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -28,13 +31,17 @@
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="1eb-Ho-a5o" secondAttribute="centerX" constant="-0.5" id="1XR-MZ-gvR"/>
-                <constraint firstAttribute="centerY" secondItem="1eb-Ho-a5o" secondAttribute="centerY" constant="0.5" id="cRk-iO-Lu0"/>
-                <constraint firstItem="1eb-Ho-a5o" firstAttribute="centerX" secondItem="icE-YC-m3i" secondAttribute="centerX" id="o7r-Dl-Udf"/>
-                <constraint firstItem="1eb-Ho-a5o" firstAttribute="top" secondItem="icE-YC-m3i" secondAttribute="bottom" constant="69" id="wd6-Pc-eyc"/>
+                <constraint firstItem="icE-YC-m3i" firstAttribute="top" secondItem="1" secondAttribute="top" constant="175" id="HBq-6m-Awu"/>
+                <constraint firstItem="1eb-Ho-a5o" firstAttribute="top" secondItem="icE-YC-m3i" secondAttribute="bottom" constant="69" id="V2X-Cp-DCh"/>
+                <constraint firstItem="1eb-Ho-a5o" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="eg6-P2-REt"/>
+                <constraint firstItem="1eb-Ho-a5o" firstAttribute="centerX" secondItem="icE-YC-m3i" secondAttribute="centerX" id="etn-0K-oVE"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

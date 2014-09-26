@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6239"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpView">
@@ -18,7 +17,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-s6-VuV">
                     <rect key="frame" x="52" y="114" width="216" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="NLv-DN-yhQ"/>
+                        <constraint firstAttribute="height" constant="50" id="jZe-ZG-8g1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <state key="normal" title="Rules">
@@ -31,7 +30,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h10-W1-6Nv">
                     <rect key="frame" x="20" y="184" width="280" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="rzs-CN-JFc"/>
+                        <constraint firstAttribute="height" constant="50" id="c5T-w0-hh6"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <state key="normal" title="Tutorial">
@@ -47,7 +46,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPh-hY-wiC">
                     <rect key="frame" x="20" y="254" width="280" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="2dY-5V-UaD"/>
+                        <constraint firstAttribute="height" constant="50" id="2RU-zv-caQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <state key="normal" title="Multiplayer Help">
@@ -63,16 +62,15 @@
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
-                <constraint firstItem="LPh-hY-wiC" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="6zX-qv-V93"/>
-                <constraint firstItem="h10-W1-6Nv" firstAttribute="top" secondItem="ulc-s6-VuV" secondAttribute="bottom" constant="20" id="DOM-Q6-WCR"/>
-                <constraint firstItem="LPh-hY-wiC" firstAttribute="height" secondItem="h10-W1-6Nv" secondAttribute="height" id="IEQ-az-z7d"/>
-                <constraint firstItem="ulc-s6-VuV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="114" id="Iqr-Hb-xES"/>
-                <constraint firstItem="LPh-hY-wiC" firstAttribute="width" secondItem="h10-W1-6Nv" secondAttribute="width" id="ObY-hN-1WH"/>
-                <constraint firstItem="ulc-s6-VuV" firstAttribute="centerX" secondItem="h10-W1-6Nv" secondAttribute="centerX" id="dPf-3E-q7E"/>
-                <constraint firstItem="LPh-hY-wiC" firstAttribute="top" secondItem="h10-W1-6Nv" secondAttribute="bottom" constant="20" id="gNO-lx-rUV"/>
-                <constraint firstItem="h10-W1-6Nv" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="nbw-gt-VRC"/>
-                <constraint firstItem="ulc-s6-VuV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="52" id="qee-cS-C46"/>
-                <constraint firstAttribute="trailing" secondItem="h10-W1-6Nv" secondAttribute="trailing" constant="20" symbolic="YES" id="zuw-xo-4ap"/>
+                <constraint firstItem="LPh-hY-wiC" firstAttribute="trailing" secondItem="h10-W1-6Nv" secondAttribute="trailing" id="49S-or-ZXI"/>
+                <constraint firstItem="ulc-s6-VuV" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="BLG-KM-JR3"/>
+                <constraint firstItem="LPh-hY-wiC" firstAttribute="top" secondItem="h10-W1-6Nv" secondAttribute="bottom" constant="20" id="IIa-XC-RaB"/>
+                <constraint firstItem="ulc-s6-VuV" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="52" id="jGb-br-YYT"/>
+                <constraint firstItem="h10-W1-6Nv" firstAttribute="top" secondItem="ulc-s6-VuV" secondAttribute="bottom" constant="20" id="nE0-Ex-BO4"/>
+                <constraint firstItem="ulc-s6-VuV" firstAttribute="top" secondItem="1" secondAttribute="top" constant="114" id="og7-iQ-xZU"/>
+                <constraint firstItem="h10-W1-6Nv" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="sJv-Tv-20R"/>
+                <constraint firstItem="h10-W1-6Nv" firstAttribute="leading" secondItem="LPh-hY-wiC" secondAttribute="leading" id="uGE-T2-8VT"/>
+                <constraint firstItem="ulc-s6-VuV" firstAttribute="centerX" secondItem="h10-W1-6Nv" secondAttribute="centerX" id="zyd-HO-r2E"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -82,9 +80,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>

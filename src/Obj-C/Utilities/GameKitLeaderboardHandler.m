@@ -225,7 +225,7 @@
 		GKScore* score = [leaderboard localPlayerScore];
 
 		if (!score)
-			score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard.identifier forPlayer:[GKLocalPlayer localPlayer].playerID];
+			score = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard.identifier player:[GKLocalPlayer localPlayer]];
 
 		if ([leaderboard.identifier isEqualToString:@"winlossratio_overall"])
 			score.value = (int64_t)winloss_overall;

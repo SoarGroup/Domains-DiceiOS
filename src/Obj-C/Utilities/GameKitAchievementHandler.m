@@ -15,7 +15,7 @@
 
 @implementation GameKitAchievementHandler
 
-@synthesize achievements;
+@synthesize achievements,friends;
 
 -(id)init
 {
@@ -30,6 +30,14 @@
 			 else
 				 DDLogError(@"Error: %@", error.description);
 		 }];
+		
+		[[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray* newFriends, NSError* error)
+		{
+			if (!error)
+				self.friends = newFriends;
+			else
+				DDLogError(@"Error: %@", error.description);
+		}];
 	}
 
 	return self;
@@ -126,20 +134,20 @@
 
 		if ([achievement.identifier isEqualToString:@"Hidden3"] && !game)
 		{
-			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
+			[self handleHiddenAchievement:achievement game:nil];
 			[updatedAchievements addObject:achievement];
 		}
 		else if (game && ![achievement.identifier isEqualToString:@"Hidden4"])
 		{
 			BOOL updated = NO;
 			if ([achievement.identifier rangeOfString:@"BasicThings"].location != NSNotFound)
-				updated = [GameKitAchievementHandler handleBasicAchievement:achievement game:game];
+				updated = [self handleBasicAchievement:achievement game:game];
 			else if ([achievement.identifier rangeOfString:@"ToStriveFor"].location != NSNotFound)
-				updated = [GameKitAchievementHandler handleStriveAchievement:achievement game:game];
+				updated = [self handleStriveAchievement:achievement game:game];
 			else if ([achievement.identifier rangeOfString:@"Hardest"].location != NSNotFound)
-				updated = [GameKitAchievementHandler handleHardAchievement:achievement game:game];
+				updated = [self handleHardAchievement:achievement game:game];
 			else if ([achievement.identifier rangeOfString:@"Hidden"].location != NSNotFound)
-				updated = [GameKitAchievementHandler handleHiddenAchievement:achievement game:game];
+				updated = [self handleHiddenAchievement:achievement game:game];
 
 			if (updated)
 				[updatedAchievements addObject:achievement];
@@ -175,7 +183,7 @@
 	}
 }
 
-+(BOOL)handleBasicAchievement:(GKAchievement*)basicAchievement game:(DiceGame*)game
+-(BOOL)handleBasicAchievement:(GKAchievement*)basicAchievement game:(DiceGame*)game
 {
 	int achievementID = [[basicAchievement.identifier substringFromIndex:11] intValue];
 
@@ -461,8 +469,8 @@
 
 					BOOL isFriend = NO;
 
-					for (NSString* string in [GKLocalPlayer localPlayer].friends)
-						if ([string isEqualToString:remote.participant.playerID])
+					for (NSString* string in self.friends)
+						if ([string isEqualToString:remote.participant.player.playerID])
 						{
 							isFriend = YES;
 							break;
@@ -487,8 +495,8 @@
 				{
 					BOOL isFriend = NO;
 
-					for (NSString* string in [GKLocalPlayer localPlayer].friends)
-						if ([string isEqualToString:((DiceRemotePlayer*)player).participant.playerID])
+					for (NSString* string in self.friends)
+						if ([string isEqualToString:((DiceRemotePlayer*)player).participant.player.playerID])
 						{
 							isFriend = YES;
 							break;
@@ -561,7 +569,7 @@
 	return NO;
 }
 
-+(BOOL)handleStriveAchievement:(GKAchievement*)striveAchievement game:(DiceGame*)game
+-(BOOL)handleStriveAchievement:(GKAchievement*)striveAchievement game:(DiceGame*)game
 {
 	int achievementID = [[striveAchievement.identifier substringFromIndex:11] intValue];
 
@@ -708,7 +716,7 @@
 	return NO;
 }
 
-+(BOOL)handleHardAchievement:(GKAchievement*)hardAchievement game:(DiceGame*)game
+-(BOOL)handleHardAchievement:(GKAchievement*)hardAchievement game:(DiceGame*)game
 {
 	int achievementID = [[hardAchievement.identifier substringFromIndex:7] intValue];
 
@@ -860,7 +868,7 @@
 	return NO;
 }
 
-+(BOOL)handleHiddenAchievement:(GKAchievement*)hiddenAchievement game:(DiceGame*)game
+-(BOOL)handleHiddenAchievement:(GKAchievement*)hiddenAchievement game:(DiceGame*)game
 {
 	int achievementID = [[hiddenAchievement.identifier substringFromIndex:6] intValue];
 
@@ -923,8 +931,7 @@
 			break;
 		case 4:
 			// Play the Michigan Fight Song.
-			hiddenAchievement.percentComplete = 100.0;
-			return YES;
+			return NO;
 		default:
 			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;

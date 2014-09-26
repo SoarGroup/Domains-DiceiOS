@@ -36,7 +36,7 @@
 
 - (void) saveMatchData
 {
-	if (matchHasEnded || ![[[match currentParticipant] playerID] isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
+	if (matchHasEnded || ![[[match currentParticipant] player].playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
 		return;
 
 	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
@@ -77,8 +77,8 @@
 			 for (int i = 0;i < [self->match.participants count];++i)
 			 {
 				 GKTurnBasedParticipant* p = [self->match.participants objectAtIndex:i];
-				 NSString* oldPlayerID = ((GKTurnBasedParticipant*)[self->participants objectAtIndex:i]).playerID;
-				 NSString* newPlayerID = p.playerID;
+				 NSString* oldPlayerID = ((GKTurnBasedParticipant*)[self->participants objectAtIndex:i]).player.playerID;
+				 NSString* newPlayerID = p.player.playerID;
 
 				 if ((oldPlayerID == nil && newPlayerID != nil) ||
 					 ![oldPlayerID isEqualToString:newPlayerID])
@@ -144,7 +144,7 @@
 	for (int i = 0;i < nextPlayers.count;++i)
 	{
 		GKTurnBasedParticipant* p = [nextPlayers objectAtIndex:i];
-		if (!p.playerID || [p.playerID isEqualToString:[player getGameCenterName]])
+		if (!p.player.playerID || [p.player.playerID isEqualToString:[player getGameCenterName]])
 		{
 			[nextPlayers removeObjectAtIndex:i];
 			[nextPlayers insertObject:p atIndex:0];
@@ -154,7 +154,7 @@
 
 	for (GKTurnBasedParticipant* p in nextPlayers)
 	{
-		NSString* gID = p.playerID;
+		NSString* gID = p.player.playerID;
 
 		for (PlayerState* state in localGame.gameState.playerStates)
 		{
@@ -187,7 +187,7 @@
 {
 	for (GKTurnBasedParticipant* participant in [match participants])
 	{
-		if ([participant playerID] == [[GKLocalPlayer localPlayer] playerID])
+		if ([participant player].playerID == [[GKLocalPlayer localPlayer] playerID])
 			return participant;
 	}
 
@@ -232,7 +232,7 @@
 				 }];
 		};
 
-		if ([[match currentParticipant].playerID isEqual:[GKLocalPlayer localPlayer].playerID])
+		if ([[match currentParticipant].player.playerID isEqual:[GKLocalPlayer localPlayer].playerID])
 			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:completionHandler];
 		else
 			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:completionHandler];
@@ -250,7 +250,7 @@
 
 		for (PlayerState* other in [[localGame gameState] playerStates])
 		{
-			if ([[[localGame.players objectAtIndex:other.playerID] getGameCenterName] isEqualToString:[gktbp playerID]])
+			if ([[[localGame.players objectAtIndex:other.playerID] getGameCenterName] isEqualToString:[gktbp player].playerID])
 			{
 				state = other;
 				break;

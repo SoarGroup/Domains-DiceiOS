@@ -304,10 +304,10 @@
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
 	GKTurnBasedMatch* match = handler.match;
-	NSString* currentPlayerID = match.currentParticipant.playerID;
+	NSString* currentPlayerID = match.currentParticipant.player.playerID;
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
-	if ([match.currentParticipant.playerID isEqualToString:localPlayerID] &&
+	if ([match.currentParticipant.player.playerID isEqualToString:localPlayerID] &&
 		[[players objectAtIndex:gameState.currentTurn] isKindOfClass:DiceRemotePlayer.class])
 	{
 		DiceRemotePlayer* next = nil;
@@ -437,7 +437,7 @@
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
 	GKTurnBasedMatch* match = handler.match;
-	NSString* currentPlayerID = match.currentParticipant.playerID;
+	NSString* currentPlayerID = match.currentParticipant.player.playerID;
 	NSString* localPlayerID = [GKLocalPlayer localPlayer].playerID;
 
 	if (!handler || [currentPlayerID isEqualToString:localPlayerID])

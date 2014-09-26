@@ -26,7 +26,6 @@
 		4D48E03219818381009DA895 /* HelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E03119818381009DA895 /* HelpView.xib */; };
 		4D48E036198183F9009DA895 /* HelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D48E035198183F9009DA895 /* HelpView.m */; };
 		4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D48E037198184E3009DA895 /* HelpViewiPad.xib */; };
-		4D4BB1CE19A2691000723FC6 /* FightSong.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D4BB1CD19A2691000723FC6 /* FightSong.m4a */; };
 		4D4BB1D119A285FC00723FC6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4BB1D019A285FC00723FC6 /* MessageUI.framework */; };
 		4D4E584D1982E8EA00710625 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64913BB9E450005A182 /* Foundation.framework */; };
 		4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
@@ -161,7 +160,6 @@
 		4D48E034198183F9009DA895 /* HelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpView.h; sourceTree = "<group>"; };
 		4D48E035198183F9009DA895 /* HelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpView.m; sourceTree = "<group>"; };
 		4D48E037198184E3009DA895 /* HelpViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewiPad.xib; sourceTree = "<group>"; };
-		4D4BB1CD19A2691000723FC6 /* FightSong.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = FightSong.m4a; sourceTree = "<group>"; };
 		4D4BB1D019A285FC00723FC6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4D4E58541982EA8F00710625 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
@@ -450,7 +448,6 @@
 		4D71B77E199E775E00F8ADED /* Songs */ = {
 			isa = PBXGroup;
 			children = (
-				4D4BB1CD19A2691000723FC6 /* FightSong.m4a */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -993,7 +990,7 @@
 		CD86D63A13BB9E450005A182 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				TargetAttributes = {
 					CD86D64213BB9E450005A182 = {
 						DevelopmentTeam = PG6DD9A3H4;
@@ -1110,7 +1107,6 @@
 				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
 				4D71B76D199E524C00F8ADED /* 120.png in Resources */,
 				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
-				4D4BB1CE19A2691000723FC6 /* FightSong.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,7 +1288,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1359,6 +1355,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wextra",
@@ -1465,7 +1462,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1523,7 +1520,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";

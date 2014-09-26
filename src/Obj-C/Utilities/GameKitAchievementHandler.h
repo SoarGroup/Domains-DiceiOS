@@ -14,6 +14,7 @@
 @interface GameKitAchievementHandler : NSObject
 
 @property (nonatomic, strong) NSArray* achievements;
+@property (nonatomic, strong) NSArray* friends;
 
 -(id)init;
 
@@ -23,9 +24,9 @@
 -(void)resetAchievements;
 -(void)updateAchievements:(DiceGame*)game;
 
-+(BOOL)handleBasicAchievement:(GKAchievement*)basicAchievement game:(DiceGame*)game;
-+(BOOL)handleStriveAchievement:(GKAchievement*)striveAchievement game:(DiceGame*)game;
-+(BOOL)handleHardAchievement:(GKAchievement*)hardAchievement game:(DiceGame*)game;
-+(BOOL)handleHiddenAchievement:(GKAchievement*)hiddenAchievement game:(DiceGame*)game;
+-(BOOL)handleBasicAchievement:(GKAchievement*)basicAchievement game:(DiceGame*)game;
+-(BOOL)handleStriveAchievement:(GKAchievement*)striveAchievement game:(DiceGame*)game;
+-(BOOL)handleHardAchievement:(GKAchievement*)hardAchievement game:(DiceGame*)game;
+-(BOOL)handleHiddenAchievement:(GKAchievement*)hiddenAchievement game:(DiceGame*)game;
 
 @end

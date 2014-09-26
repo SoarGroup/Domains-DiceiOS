@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="14A314h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6239"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MultiplayerHelpView">
@@ -46,18 +45,15 @@ The following is an example of a hybrid match between Alice, Bob, Carol, and Dec
             </subviews>
             <color key="backgroundColor" cyan="1" magenta="0.59999999999999998" yellow="0.0" black="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
             <constraints>
-                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="2VP-oG-dqy"/>
-                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="R9z-ze-28n"/>
-                <constraint firstAttribute="trailing" secondItem="oRB-Sx-bWJ" secondAttribute="trailing" constant="-1" id="XtA-9V-f0t"/>
-                <constraint firstAttribute="bottom" secondItem="oRB-Sx-bWJ" secondAttribute="bottom" constant="3" id="yGs-zu-Gau"/>
+                <constraint firstAttribute="trailing" secondItem="oRB-Sx-bWJ" secondAttribute="trailing" constant="-1" id="5Qi-C3-Yyo"/>
+                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="6lw-tX-SRt"/>
+                <constraint firstAttribute="bottom" secondItem="oRB-Sx-bWJ" secondAttribute="bottom" constant="3" id="DzD-Dn-9xL"/>
+                <constraint firstItem="oRB-Sx-bWJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="dkl-74-eFW"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4">
-                <size key="portraitSize" width="320" height="568"/>
-                <size key="landscapeSize" width="568" height="320"/>
-            </simulatedScreenMetrics>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
 </document>

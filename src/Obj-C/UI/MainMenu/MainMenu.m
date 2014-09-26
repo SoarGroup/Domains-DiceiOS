@@ -71,41 +71,7 @@
 #pragma mark - View lifecycle
 
 - (void)wolverinesAchievement
-{
-	ApplicationDelegate* delegate = self.appDelegate;
-	GameKitAchievementHandler* handler = delegate.achievements;
-	
-	NSMutableArray* updatedAchievements = [NSMutableArray array];
-	
-	for (GKAchievement* achievement in handler.achievements)
-	{
-		achievement.showsCompletionBanner = YES;
-		
-		if ([achievement.identifier isEqualToString:@"Hidden4"])
-		{
-			[GameKitAchievementHandler handleHiddenAchievement:achievement game:nil];
-			[updatedAchievements addObject:achievement];
-			
-			NSString *soundFilePath = [NSString stringWithFormat:@"%@/FightSong.m4a",
-									   [[NSBundle mainBundle] resourcePath]];
-			NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-			
-			self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL
-																		   error:nil];
-			player.numberOfLoops = 0; //Once
-			
-			if (![player play])
-				DDLogError(@"Failed to play fight song");
-			
-			[GKAchievement reportAchievements:updatedAchievements withCompletionHandler:^(NSError* error)
-			 {
-				 if (error)
-					 DDLogError(@"Error: %@", error.description);
-			 }];
-			return;
-		}
-	}
-}
+{}
 
 - (void)viewDidLoad
 {

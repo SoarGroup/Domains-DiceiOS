@@ -63,7 +63,7 @@
 	
 	if (self.inviteFriendsButton)
 	{
-		[[GKLocalPlayer localPlayer] loadFriendsWithCompletionHandler:^(NSArray* friends, NSError* error)
+		[[GKLocalPlayer localPlayer] loadFriendPlayersWithCompletionHandler:^(NSArray* friends, NSError* error)
 		{
 			self.inviteFriendsButton.hidden = [friends count] == 0;
 		}];
@@ -108,7 +108,7 @@
 		for (GKPlayer* player in friendIDs)
 			[friendsToInvite addObject:player.playerID];
 
-		request.playersToInvite = friendsToInvite;
+		request.recipients = friendsToInvite;
 
 		int group = 0;
 

@@ -29,20 +29,14 @@
 		GKLocalPlayer* lp = [GKLocalPlayer localPlayer];
 		if (lp.authenticated)
 		{
-			[lp loadFriendsWithCompletionHandler:^(NSArray* lpfriends, NSError* error)
+			[lp loadFriendPlayersWithCompletionHandler:^(NSArray* players, NSError* error)
 			 {
-				 if (lpfriends != nil)
-					 [GKPlayer loadPlayersForIdentifiers:lpfriends withCompletionHandler:^(NSArray* players, NSError* lpfierror)
-					  {
-						  if (players != nil)
-						  {
-							  self->internalFriends = [[NSMutableArray alloc] initWithArray:players];
-							  [self->displayedFriends addObjectsFromArray:self->internalFriends];
-							  [self->friendsTable reloadData];
-						  }
-						  else
-							  DDLogError(@"Error: %@", lpfierror.description);
-					  }];
+				 if (players != nil)
+				 {
+					 self->internalFriends = [[NSMutableArray alloc] initWithArray:players];
+					 [self->displayedFriends addObjectsFromArray:self->internalFriends];
+					 [self->friendsTable reloadData];
+				 }
 				 else
 					 DDLogError(@"Error: %@", error.description);
 			 }];
