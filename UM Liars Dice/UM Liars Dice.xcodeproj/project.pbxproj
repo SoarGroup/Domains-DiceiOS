@@ -66,12 +66,6 @@
 		4DF393AA1923C4F400A523FB /* die-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938D1923C4F400A523FB /* die-6.png */; };
 		4DF393AB1923C4F400A523FB /* die-unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938E1923C4F400A523FB /* die-unknown.png */; };
 		4DF393AC1923C4F400A523FB /* ScrollRightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */; };
-		4DF393B81923C4F400A523FB /* Prototype 1 in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939D1923C4F400A523FB /* Prototype 1 */; };
-		4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939E1923C4F400A523FB /* Prototype 2.psd */; };
-		4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF3939F1923C4F400A523FB /* Prototype 3.psd */; };
-		4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A01923C4F400A523FB /* Prototype 4.psd */; };
-		4DF393BC1923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */; };
-		4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */; };
 		4DF396141923C51D00A523FB /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393C01923C51C00A523FB /* about.html */; };
 		4DF396151923C51D00A523FB /* rules.html in Resources */ = {isa = PBXBuildFile; fileRef = 4DF393C11923C51C00A523FB /* rules.html */; };
 		4DF396191923C51D00A523FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF394161923C51C00A523FB /* main.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -208,12 +202,6 @@
 		4DF3938D1923C4F400A523FB /* die-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-6.png"; sourceTree = "<group>"; };
 		4DF3938E1923C4F400A523FB /* die-unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "die-unknown.png"; sourceTree = "<group>"; };
 		4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ScrollRightArrow.png; sourceTree = "<group>"; };
-		4DF3939D1923C4F400A523FB /* Prototype 1 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 1"; sourceTree = "<group>"; };
-		4DF3939E1923C4F400A523FB /* Prototype 2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 2.psd"; sourceTree = "<group>"; };
-		4DF3939F1923C4F400A523FB /* Prototype 3.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 3.psd"; sourceTree = "<group>"; };
-		4DF393A01923C4F400A523FB /* Prototype 4.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype 4.psd"; sourceTree = "<group>"; };
-		4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Prototype iPhone Interface Multiplayer Selection"; sourceTree = "<group>"; };
-		4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2014.05.05 16.02.56.png"; sourceTree = "<group>"; };
 		4DF393C01923C51C00A523FB /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		4DF393C11923C51C00A523FB /* rules.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = rules.html; sourceTree = "<group>"; };
 		4DF393CB1923C51C00A523FB /* ElementXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElementXML.h; sourceTree = "<group>"; };
@@ -501,12 +489,6 @@
 		4DF3939C1923C4F400A523FB /* Prototype iPad Interfaces */ = {
 			isa = PBXGroup;
 			children = (
-				4DF3939D1923C4F400A523FB /* Prototype 1 */,
-				4DF3939E1923C4F400A523FB /* Prototype 2.psd */,
-				4DF3939F1923C4F400A523FB /* Prototype 3.psd */,
-				4DF393A01923C4F400A523FB /* Prototype 4.psd */,
-				4DF393A11923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection */,
-				4DF393A21923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png */,
 			);
 			path = "Prototype iPad Interfaces";
 			sourceTree = "<group>";
@@ -1048,7 +1030,6 @@
 				4D71B76F199E524C00F8ADED /* iTunesArtwork.png in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
 				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
-				4DF393BA1923C4F400A523FB /* Prototype 3.psd in Resources */,
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
 				4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */,
@@ -1073,8 +1054,6 @@
 				4DF393A81923C4F400A523FB /* die-4.png in Resources */,
 				4DF396151923C51D00A523FB /* rules.html in Resources */,
 				4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */,
-				4DF393BC1923C4F400A523FB /* Prototype iPhone Interface Multiplayer Selection in Resources */,
-				4DF393BD1923C4F400A523FB /* Screenshot 2014.05.05 16.02.56.png in Resources */,
 				4DF393A61923C4F400A523FB /* die-2.png in Resources */,
 				4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */,
 				4D71B76A199E524C00F8ADED /* 58.png in Resources */,
@@ -1096,15 +1075,12 @@
 				4DF393A41923C4F400A523FB /* Center-Push@2x.png in Resources */,
 				4DF397DA1923C9A600A523FB /* dice-agent-new.soar in Resources */,
 				4D17A9F4197DBB5D006C4A64 /* PlayGameView-8iPad.xib in Resources */,
-				4DF393B91923C4F400A523FB /* Prototype 2.psd in Resources */,
 				4D71B768199E524C00F8ADED /* 29.png in Resources */,
 				4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */,
 				4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */,
 				4D71B779199E525700F8ADED /* Wolverines.png in Resources */,
 				4DF396351923C51D00A523FB /* Application.xib in Resources */,
 				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
-				4DF393BB1923C4F400A523FB /* Prototype 4.psd in Resources */,
-				4DF393B81923C4F400A523FB /* Prototype 1 in Resources */,
 				4D71B76D199E524C00F8ADED /* 120.png in Resources */,
 				4D48E02C197FFDCB009DA895 /* TutorialView.xib in Resources */,
 			);
