@@ -15,6 +15,7 @@
 #import "DiceTypes.h"
 #import "DiceGame.h"
 #import "SoarPlayer.h"
+#import "DiceReplayPlayer.h"
 
 #import "ApplicationDelegate.h"
 #import "GameKitListener.h"
@@ -1011,7 +1012,8 @@
             inSpecialRules = YES;
 
         if (![player hasLost] && ([[player playerPtr] isKindOfClass:DiceLocalPlayer.class] ||
-                                  [[player playerPtr] isKindOfClass:DiceRemotePlayer.class]))
+                                  [[player playerPtr] isKindOfClass:DiceRemotePlayer.class] ||
+								  [[player playerPtr] isKindOfClass:DiceReplayPlayer.class]))
         {
             hasAllHumansLost = NO;
         }

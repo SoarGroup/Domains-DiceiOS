@@ -24,7 +24,8 @@
 - (void)shuffle:(DiceGame*)game
 {
 	NSUInteger count = [self count];
-	for (NSUInteger i = 0; i < count; ++i) {
+	for (NSUInteger i = 0; i < count; ++i)
+	{
 		NSInteger remainingCount = count - i;
 		NSInteger exchangeIndex = i + [game.randomGenerator randomNumber] % remainingCount;
 

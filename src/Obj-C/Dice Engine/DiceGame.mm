@@ -45,12 +45,12 @@
 		newRound = NO;
 
         DDLogGameHistory(@"Start of Match");
-#ifdef DEBUG
+//#ifdef DEBUG
 		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
-        //self.randomGenerator = [[Random alloc] init:1254278179];
-#else
-		self.randomGenerator = [[Random alloc] init:NO_SEED];
-#endif
+        //self.randomGenerator = [[Random alloc] init:NO_SEED];
+//#else
+//		self.randomGenerator = [[Random alloc] init:NO_SEED];
+//#endif
 		
 		transfered = NO;
 	}
