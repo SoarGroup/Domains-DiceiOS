@@ -493,6 +493,9 @@
 
 				for (id<Player> player in game.players)
 				{
+					if (![player isKindOfClass:DiceRemotePlayer.class])
+						continue;
+					
 					BOOL isFriend = NO;
 
 					for (NSString* string in self.friends)
@@ -502,8 +505,7 @@
 							break;
 						}
 
-					if ([player isKindOfClass:DiceRemotePlayer.class] &&
-						isFriend)
+					if (isFriend)
 					{
 						hasFriend = YES;
 						break;
