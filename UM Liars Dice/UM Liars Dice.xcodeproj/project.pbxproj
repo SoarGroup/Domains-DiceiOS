@@ -1212,7 +1212,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -1264,7 +1263,6 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1329,7 +1327,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
@@ -1385,7 +1382,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LLVM_VECTORIZE_LOOPS = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -1438,7 +1434,6 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1496,7 +1491,6 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";
