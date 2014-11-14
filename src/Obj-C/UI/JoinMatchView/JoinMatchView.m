@@ -106,7 +106,7 @@
 		NSMutableArray* friendsToInvite = [NSMutableArray array];
 
 		for (GKPlayer* player in friendIDs)
-			[friendsToInvite addObject:player.playerID];
+			[friendsToInvite addObject:player];
 
 		request.recipients = friendsToInvite;
 
