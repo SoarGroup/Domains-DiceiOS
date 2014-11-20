@@ -47,7 +47,7 @@
         DDLogGameHistory(@"Start of Match");
 
 		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
-        //self.randomGenerator = [[Random alloc] init:18446744073609551617];
+        //self.randomGenerator = [[Random alloc] init:1323730008];
 		//self.randomGenerator = [[Random alloc] init:NO_SEED];
 		
 		transfered = NO;

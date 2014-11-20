@@ -381,7 +381,8 @@ static int agentCount = 0;
 {
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
-	if ([[NSThread currentThread] isCancelled])
+	DiceGame* localGame = self.game;
+	if ([[NSThread currentThread] isCancelled] || localGame.gameState.currentTurn != self.playerID)
 		return;
 	
     [turnLock lock];
