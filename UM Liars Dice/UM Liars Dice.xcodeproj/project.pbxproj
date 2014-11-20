@@ -1263,6 +1263,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1434,6 +1435,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator/";
@@ -1491,6 +1493,7 @@
 					"$(SRCROOT)/../**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/UM Liars Dice-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LIBRARY_SEARCH_PATHS = "/Users/bluechill/Developer/SoarGroupProjects/SoarDice-iOS/Pods/build/Debug-iphoneos";
 				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/../src/Libraries/Soar/Device-Opt/";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/../src/Libraries/Soar/Simulator-Opt/";
