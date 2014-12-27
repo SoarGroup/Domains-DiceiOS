@@ -408,7 +408,7 @@ NSString *numberName(int number) {
 	[super viewWillDisappear:animated];
 
 	DiceGame* localGame = self.game;
-	
+		
 	[[localGame gameLock] lock];
 	[localGame.gameState.theNewRoundListeners removeObject:self];
 	[[localGame gameLock] unlock];

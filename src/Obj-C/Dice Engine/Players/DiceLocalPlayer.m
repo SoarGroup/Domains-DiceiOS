@@ -141,4 +141,16 @@
 	self.handler = nil;
 }
 
+- (NSDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+	[dictionary setValue:[NSNumber numberWithInteger:playerID] forKey:@"playerID"];
+	[dictionary setValue:[NSNumber numberWithBool:YES] forKey:@"localPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"soarPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"remotePlayer"];
+	
+	return dictionary;
+}
+
 @end

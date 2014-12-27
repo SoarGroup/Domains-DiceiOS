@@ -133,4 +133,16 @@
 	 }];
 }
 
+- (NSDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+	[dictionary setValue:[NSNumber numberWithInteger:playerID] forKey:@"playerID"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"localPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"soarPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:YES] forKey:@"remotePlayer"];
+	
+	return dictionary;
+}
+
 @end

@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
+#import "MainMenu.h"
+
 @interface SettingsView : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
+
+- (id)init:(MainMenu*)menu;
+
+@property (strong, nonatomic) MainMenu *mainMenu;
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *difficultyLabel;
@@ -23,6 +29,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton* resetAchievementsButton;
 
+@property (strong, nonatomic) IBOutlet UIButton* clearLogFiles;
+@property (strong, nonatomic) IBOutlet UIButton* debugReplayFile;
+
 - (IBAction)nameTextFieldTextFinalize:(id)sender;
 - (IBAction)difficultySelectorValueChanged:(id)sender;
 
@@ -32,5 +41,7 @@
 
 - (IBAction)resetAchievements:(id)sender;
 - (IBAction)sendLogFiles:(id)sender;
+- (IBAction)clearLogFiles:(id)sender;
+- (IBAction)debugReplayFile:(id)sender;
 
 @end

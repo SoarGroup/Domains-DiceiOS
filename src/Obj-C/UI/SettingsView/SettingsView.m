@@ -16,6 +16,9 @@
 
 #import "PlayGameView.h"
 #import "DDFileLogger.h"
+#import "DiceReplayPlayer.h"
+#import "SoarPlayer.h"
+#import "LoadingGameView.h"
 
 @interface SettingsView ()
 
@@ -29,7 +32,19 @@
 @synthesize nameTextField;
 @synthesize difficultySelector;
 
-@synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton;
+@synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton, clearLogFiles, debugReplayFile, mainMenu;
+
+- (id)init:(MainMenu*)menu
+{
+	self = [super init];
+	
+	if (self)
+	{
+		self.mainMenu = menu;
+	}
+	
+	return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -74,6 +89,8 @@
 	self.debugLabel.hidden = YES;
 	self.remoteIPLabel.hidden = YES;
 	self.remoteIPTextField.hidden = YES;
+	self.debugReplayFile.hidden = YES;
+	self.clearLogFiles.hidden = YES;
 #endif
 }
 
@@ -157,19 +174,31 @@
 
 - (NSMutableArray*)errorLogData
 {
-	ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains
+	(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSURL* rootURL = [NSURL URLWithString:documentsDirectory];
 	
-	NSUInteger maximumLogFilesToReturn = MIN(delegate.filelogger.logFileManager.maximumNumberOfLogFiles, 10);
-	NSMutableArray *errorLogFiles = [NSMutableArray arrayWithCapacity:maximumLogFilesToReturn];
-	DDFileLogger *logger = delegate.filelogger;
-	NSArray *sortedLogFileInfos = [logger.logFileManager sortedLogFileInfos];
-	for (int i = 0; i < MIN(sortedLogFileInfos.count, maximumLogFilesToReturn); i++) {
-		DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
-		NSData *fileData = [NSData dataWithContentsOfFile:logFileInfo.filePath];
-		[errorLogFiles addObject:fileData];
-		[errorLogFiles addObject:[@"----- Log File Separation -----" dataUsingEncoding:NSUTF8StringEncoding]];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:rootURL
+									includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+													   options:NSDirectoryEnumerationSkipsHiddenFiles
+												  errorHandler:nil];
+	
+	NSMutableArray* logFiles = [NSMutableArray array];
+	
+	for (NSURL *url in dirEnumerator) {
+		NSNumber *isDirectory;
+		[url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+		if (![isDirectory boolValue]) {
+			// log file
+			NSData *fileData = [NSData dataWithContentsOfURL:url];
+			[logFiles addObject:fileData];
+		}
+		[logFiles addObject:[@"----- Log File Separation -----" dataUsingEncoding:NSUTF8StringEncoding]];
 	}
-	return errorLogFiles;
+	
+	return logFiles;
 }
 
 - (IBAction)sendLogFiles:(id)sender
@@ -195,9 +224,102 @@
 	}
 }
 
+- (IBAction)clearLogFiles:(id)sender
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains
+	(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSURL* rootURL = [NSURL URLWithString:documentsDirectory];
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:rootURL
+									includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+													   options:NSDirectoryEnumerationSkipsHiddenFiles
+												  errorHandler:nil];
+	
+	for (NSURL *url in dirEnumerator) {
+		NSNumber *isDirectory;
+		[url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+		if (![isDirectory boolValue]) {
+			// log file, remove it
+			[fm removeItemAtURL:url error:NULL];
+		}
+	}
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cleared log files!"
+													message:nil
+												   delegate:self
+										  cancelButtonTitle:nil
+										  otherButtonTitles:@"Okay", nil];
+	[alert show];
+}
+
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
 	[controller dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (IBAction)debugReplayFile:(id)sender
+{
+	DiceDatabase *database = [[DiceDatabase alloc] init];
+	
+	NSString* username = [database getPlayerName];
+	
+	if ([username length] == 0)
+		username = @"You";
+	
+	NSArray* array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"replay" ofType:@"txt"]];
+	
+	int seed = [[array objectAtIndex:0] intValue];
+	NSArray* playerArrayDict = [array objectAtIndex:1];
+	
+	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate withSeed:seed];
+	NSLock* lock = [[NSLock alloc] init];
+	
+	NSArray* actionsDict = [array subarrayWithRange:NSMakeRange(2, [array count]-2)];
+	NSMutableArray* actions = [NSMutableArray array];
+	
+	for (NSDictionary* dict in actionsDict)
+		 [actions addObject:[[DiceAction alloc] initWithDictionary:dict]];
+	
+	int AICount = 0;
+	int humanCount = 0;
+	int currentHumanCount = 0;
+	
+	for (NSDictionary* dict in playerArrayDict)
+	{
+		if ([[dict objectForKey:@"soarPlayer"] boolValue])
+			++AICount;
+		else if ([[dict objectForKey:@"remotePlayer"] boolValue] ||
+				 [[dict objectForKey:@"localPlayer"] boolValue])
+			++humanCount;
+	}
+	
+	int totalPlayerCount = AICount + humanCount;
+	
+	for (int i = 0;i < totalPlayerCount;i++)
+	{
+		BOOL isAI = (BOOL)([game.randomGenerator randomNumber] % 2);
+		
+		if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
+		{
+			[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
+			
+			AICount--;
+		}
+		else
+		{
+			currentHumanCount++;
+			
+			[game addPlayer:[[DiceReplayPlayer alloc] initWithName:[NSString stringWithFormat:@"ReplayPlayer-%i", currentHumanCount] withPlayerID:i withActions:actions]];
+		}
+	}
+	
+	game.gameLock = lock;
+	game.gameState.currentTurn = 0;
+	
+	UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:self.mainMenu];
+	[self.navigationController pushViewController:gameView animated:YES];
 }
 
 @end

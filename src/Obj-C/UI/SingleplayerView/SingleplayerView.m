@@ -65,7 +65,7 @@
 	[SingleplayerView startGameWithOpponents:opponents withNavigationController:self.navigationController withAppDelegate:self.appDelegate withMainMenu:self.mainMenu];
 }
 
-+ (void) startGameWithOpponents:(int)opponents withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu
++ (void) startGameWithOpponents:(int)AICount withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu
 {
 	DiceDatabase *database = [[DiceDatabase alloc] init];
 
@@ -75,17 +75,34 @@
 		username = @"You";
 
     DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
-
-	[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil] ];
-    //[game addPlayer:[[DiceReplayPlayer alloc] initWithReplayFile:@"replay.txt"]];
-    
+	
+	int humanCount = 1;
+	int currentHumanCount = 0;
+	
 	NSLock* lock = [[NSLock alloc] init];
+	
+	int totalPlayerCount = AICount + humanCount;
+	
+	for (int i = 0;i < totalPlayerCount;i++)
+	{
+		BOOL isAI = (BOOL)([game.randomGenerator randomNumber] % 2);
+		
+		if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
+		{
+			[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
+			
+			AICount--;
+		}
+		else
+		{
+			currentHumanCount++;
+			
+			[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil]];
+		}
+	}
 
-	for (int i = 0;i < opponents;i++)
-		[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
-
-	[game shufflePlayers];
 	game.gameLock = lock;
+	game.gameState.currentTurn = 0;
 
     UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
     [controller pushViewController:gameView animated:YES];

@@ -30,4 +30,7 @@
 - (void)setHandler:(GameKitGameHandler*)handler;
 - (void)removeHandler;
 - (void)setParticipant:(GKTurnBasedParticipant*)participant;
+
+- (NSDictionary*)dictionaryValue;
+
 @end

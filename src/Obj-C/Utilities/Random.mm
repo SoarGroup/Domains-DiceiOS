@@ -56,6 +56,12 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	if (seed)
+		delete seed;
+}
+
 - (uint32_t)randomNumber
 {
 	numbersGenerated++;

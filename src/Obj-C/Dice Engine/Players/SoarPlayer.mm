@@ -348,7 +348,17 @@ static int agentCount = 0;
 
 - (void) cancelThread
 {
-	NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)turnLock]->GetAgentName()];
+	const char* c_String = agents[(unsigned long)turnLock]->GetAgentName();
+	
+	if (!c_String)
+	{
+		for (id key in agent_thread_map)
+			[[agent_thread_map objectForKey:key] cancel];
+		
+		return;
+	}
+	
+	NSString* agentName = [NSString stringWithUTF8String:c_String];
 	
 	NSThread* thread = [agent_thread_map objectForKey:agentName];
 	[thread cancel];
@@ -1223,6 +1233,19 @@ static int agentCount = 0;
 - (void)removeHandler
 {
 	self.handler = nil;
+}
+
+- (NSDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+	[dictionary setValue:[NSNumber numberWithInteger:playerID] forKey:@"playerID"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"localPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:YES] forKey:@"soarPlayer"];
+	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:@"remotePlayer"];
+	[dictionary setValue:[NSNumber numberWithInt:difficulty] forKey:@"difficultySetting"];
+	
+	return dictionary;
 }
 
 @end

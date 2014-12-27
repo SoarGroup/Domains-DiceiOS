@@ -469,8 +469,8 @@
 
 					BOOL isFriend = NO;
 
-					for (NSString* string in self.friends)
-						if ([string isEqualToString:remote.participant.player.playerID])
+					for (GKPlayer* gk in self.friends)
+						if ([gk.playerID isEqualToString:remote.participant.player.playerID])
 						{
 							isFriend = YES;
 							break;

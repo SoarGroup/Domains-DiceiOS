@@ -19,6 +19,8 @@
 
 #import "Random.h"
 
+#define COMPATIBILITY_BUILD 206
+
 @class ApplicationDelegate;
 
 @interface DiceGame : NSObject <NSCoding>
@@ -30,12 +32,13 @@
 @public
 	BOOL shouldNotifyOfNewRound;
 
-	int seed;
+	int compatibility_build;
 }
 
 - (void)endGamePermanently;
 
--(DiceGame*)initWithAppDelegate:(ApplicationDelegate*)appDelegate;
+- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate withSeed:(int)setSeed;
+- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate;
 
 // Encoding
 -(id)initWithCoder:(NSCoder*)decoder;
@@ -74,6 +77,8 @@
 
 -(NSString*)lastTurnInfo;
 
+-(void)logGameToFile;
+
 @property(readwrite, weak) ApplicationDelegate *appDelegate;
 @property(readwrite, strong) DiceGameState *gameState;
 @property(readwrite, strong) NSArray *players;
@@ -85,5 +90,7 @@
 @property(readwrite, strong) NSLock* gameLock;
 
 @property(readwrite, strong) Random* randomGenerator;
+
+@property(readwrite, strong) NSMutableArray* all_actions;
 
 @end

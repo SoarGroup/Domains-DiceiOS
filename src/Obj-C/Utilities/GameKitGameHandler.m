@@ -176,7 +176,7 @@
 
 	DDLogDebug(@"Next Players: %@", nextPlayers);
 
-	[match endTurnWithNextParticipants:nextPlayers turnTimeout:GKTurnTimeoutDefault matchData:updatedMatchData completionHandler:^(NSError* error)
+	[match endTurnWithNextParticipants:nextPlayers turnTimeout:172800 /*2 days*/ matchData:updatedMatchData completionHandler:^(NSError* error)
 	 {
 		 if (error)
 			 DDLogError(@"Error advancing to next player: %@\n", error.description);
@@ -233,7 +233,7 @@
 		};
 
 		if ([[match currentParticipant].player.playerID isEqual:[GKLocalPlayer localPlayer].playerID])
-			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:GKTurnTimeoutDefault matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:completionHandler];
+			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:172800 /* 2 days */ matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:completionHandler];
 		else
 			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:completionHandler];
 	}

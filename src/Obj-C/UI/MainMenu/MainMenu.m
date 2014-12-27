@@ -100,6 +100,30 @@
 		[delegate.listener removeGameKitGameHandler:handler];
 
 	self.removeAllMultiplayerGames.enabled = YES;
+	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains
+	(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSURL* rootURL = [NSURL URLWithString:documentsDirectory];
+	
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:rootURL
+									includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+													   options:NSDirectoryEnumerationSkipsHiddenFiles
+												  errorHandler:nil];
+	
+	for (NSURL *url in dirEnumerator) {
+		NSNumber *isDirectory;
+		[url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+		if (![isDirectory boolValue]) {
+			// log file, remove it
+			NSError* error = nil;;
+			NSDictionary* dict = [fm attributesOfItemAtPath:[url path] error:&error];
+			
+			if ([((NSDate*)[dict objectForKey:NSFileCreationDate]) timeIntervalSinceNow] < -864000 /*10 days ago*/)
+				[fm removeItemAtURL:url error:NULL];
+		}
+	}
 }
 
 - (IBAction)aiOnlyGameButtonPressed:(id)sender
@@ -211,7 +235,7 @@
 
 - (IBAction)settingsButtonPressed:(id)sender
 {
-	[self.navigationController pushViewController:[[SettingsView alloc] init]  animated:YES];
+	[self.navigationController pushViewController:[[SettingsView alloc] init:self]  animated:YES];
 }
 
 - (IBAction)aboutButtonPressed:(id)sender

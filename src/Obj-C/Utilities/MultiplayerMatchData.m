@@ -56,7 +56,7 @@ const int kAI_8 = 0x47;
 		{
 			DiceGame* game = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-			if (!game)
+			if (!game || game->compatibility_build != COMPATIBILITY_BUILD)
 			{
 				// Invalid match so delete it
 				for (GKTurnBasedParticipant* participant in match.participants)

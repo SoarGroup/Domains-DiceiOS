@@ -17,6 +17,9 @@
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withPrefix:(NSString*)prefix;
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count withPrefix:(NSString*)prefix;
 
+- (NSDictionary*)dictionaryValue;
+- (id)initWithDictionary:(NSDictionary*)dictionary;
+
 @property (readonly) int dieValue;
 @property (readonly) BOOL hasBeenPushed;
 @property (readwrite, assign) BOOL markedToPush;

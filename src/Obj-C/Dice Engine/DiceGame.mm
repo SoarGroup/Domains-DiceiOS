@@ -24,36 +24,47 @@
 
 @implementation DiceGame
 
-@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock, randomGenerator;
+@synthesize gameState, players, appDelegate, gameView, started, deferNotification, newRound, gameLock, randomGenerator, all_actions;
 
-- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
+- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate withSeed:(int)setSeed
 {
-    self = [super init];
-
+	self = [super init];
+	
 	if (self)
 	{
 		self.appDelegate = anAppDelegate;
 		self.gameState = nil;
 		started = NO;
-
+		
 		time = [DiceDatabase getCurrentGameTime];
 		nextID = 0;
-
+		
 		self.players = [[NSArray alloc] init];
-
+		
 		shouldNotifyOfNewRound = NO;
 		newRound = NO;
-
-        DDLogGameHistory(@"Start of Match");
-
-		self.randomGenerator = [[Random alloc] init:arc4random_uniform(RAND_MAX)];
-        //self.randomGenerator = [[Random alloc] init:1323730008];
+		
+		DDLogGameHistory(@"Start of Match");
+		
+		self.randomGenerator = [[Random alloc] init:setSeed];
+		
+		self.all_actions = [[NSMutableArray alloc] init];
+		[all_actions addObject:[NSNumber numberWithInt:setSeed]];
+		[all_actions addObject:[NSMutableArray array]];
+		
+		//self.randomGenerator = [[Random alloc] init:1323730008];
 		//self.randomGenerator = [[Random alloc] init:NO_SEED];
+		compatibility_build = COMPATIBILITY_BUILD;
 		
 		transfered = NO;
 	}
+	
+	return self;
+}
 
-    return self;
+- (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate
+{
+	return [self initWithAppDelegate:anAppDelegate withSeed:arc4random_uniform(RAND_MAX)];
 }
 
 - (void)endGamePermanently
@@ -141,8 +152,17 @@
 		self.gameState.game = self;
 
 		self.randomGenerator = [decoder decodeObjectForKey:@"DiceGame:randomGenerator"];
-
+		
+		if ([decoder containsValueForKey:@"DiceGame:all_actions"])
+			self.all_actions = [decoder decodeObjectForKey:@"DiceGame:all_actions"];
+		
 		newRound = [decoder containsValueForKey:@"NewRound"];
+		
+		if ([decoder containsValueForKey:@"DiceGame:compatibility_build"])
+			compatibility_build = [decoder decodeIntForKey:@"DiceGame:compatibility_build"];
+		else
+			compatibility_build = -1;
+		
 		transfered = NO;
 	}
 
@@ -165,6 +185,10 @@
 	[encoder encodeInt:nextID forKey:@"DiceGame:nextID"];
 
 	[encoder encodeObject:gameState forKey:@"DiceGame:gameState"];
+	[encoder encodeObject:all_actions forKey:@"DiceGame:all_actions"];
+	
+	[encoder encodeInt:compatibility_build forKey:@"DiceGame:compatibility_build"];
+	
 	transfered = NO;
 
 	if (newRound)
@@ -177,6 +201,8 @@
 		return;
 
 	DDLogGameKit(@"Recieved update");
+	
+	self.all_actions = remote.all_actions;
 	
 	if (remote->gameLock)
 	{
@@ -278,6 +304,7 @@
 				[(DiceLocalPlayer*)player end:YES];
 		}
 
+		[self logGameToFile];
 		return;
 	}
 
@@ -317,6 +344,8 @@
 		if (next)
 			[handler advanceToRemotePlayer:next];
 	}
+	
+	[self logGameToFile];
 
 	if (newRound && ![currentPlayerID isEqualToString:localPlayerID])
 		return;
@@ -360,6 +389,8 @@
     [mut addObject:player];
     self.players = [[NSArray alloc] initWithArray:mut];
     [player setID:[self getNextID]];
+	
+	[[all_actions objectAtIndex:1] addObject:[player dictionaryValue]];
 }
 
 - (void)shufflePlayers
@@ -455,6 +486,17 @@
     return [self.players objectAtIndex:index];
 }
 
+-(void)logGameToFile
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains
+	(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	
+	NSString *fileName = [NSString stringWithFormat:@"%@/%lu.txt", documentsDirectory, (unsigned long)randomGenerator->integerSeed];
+	
+	[all_actions writeToFile:fileName atomically:YES];
+}
+
 -(void)handleAction:(DiceAction*)action
 {
 	[self handleAction:action notify:YES];
@@ -469,8 +511,31 @@
         });
         return;
     }
-    
+	
+	NSMutableDictionary* replayState = [NSMutableDictionary dictionary];
+	
+	for (PlayerState* state in gameState.playerStates)
+	{
+		NSString* name = state.playerName;
+		
+		if (![state.playerPtr isKindOfClass:SoarPlayer.class])
+			name = [NSString stringWithFormat:@"Player-%i", state.playerID];
+		
+		[replayState setValue:[state dictionaryValue] forKey:name];
+	}
+	
+	if (action.replayState)
+	{
+		// Check the state
+		assert([action.replayState isEqualToDictionary:replayState]);
+	}
+	action.replayState = replayState;
+		
     DDLogGameHistory(@"%@", action);
+	[all_actions addObject:[action dictionaryValue]];
+	
+	[self logGameToFile];
+	
     self.deferNotification = NO;
 
 	self.gameState.game = self;

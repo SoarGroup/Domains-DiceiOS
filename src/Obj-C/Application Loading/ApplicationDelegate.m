@@ -70,11 +70,11 @@
     logger = [DDTTYLogger sharedInstance];
     [logger setLogFormatter:format];
     [DDLog addLogger:logger];
-#endif
 	
 	filelogger = [[DDFileLogger alloc] init];
 	[filelogger setLogFormatter:format];
 	[DDLog addLogger:filelogger];
+#endif
 	
     [[NSNotificationCenter defaultCenter]
      addObserver: self

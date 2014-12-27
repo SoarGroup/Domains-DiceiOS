@@ -11,7 +11,7 @@
 
 @implementation DiceAction
 
-@synthesize actionType, playerID, count, face, push, targetID;
+@synthesize actionType, playerID, count, face, push, targetID, replayState;
 
 - (id)init
 {
@@ -129,6 +129,71 @@
         [pushString appendFormat:@" %i", die.dieValue];
     
 	return [NSString stringWithFormat:@"(ActionType: %u) (PlayerID: %li) (Count: %i) (Face: %i) (Push:%@) (TargetID: %li)", actionType, (long)playerID, count, face, pushString, (long)targetID];
+}
+
+- (NSDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+//	@property (readwrite, assign) ActionType actionType;
+//	@property (readwrite, assign) NSInteger playerID;
+//	@property (readwrite, assign) int count;
+//	@property (readwrite, assign) int face;
+//	@property (readwrite, strong) NSArray *push;
+//	@property (readwrite, assign) NSInteger targetID;
+	
+	[dictionary setValue:[NSNumber numberWithInt:actionType] forKey:@"actionType"];
+	[dictionary setValue:[NSNumber numberWithInteger:playerID] forKey:@"playerID"];
+	[dictionary setValue:[NSNumber numberWithInt:count] forKey:@"count"];
+	[dictionary setValue:[NSNumber numberWithInt:face] forKey:@"face"];
+	
+	if (push)
+	{
+		NSMutableArray* pushDictionary = [NSMutableArray array];
+		
+		for (Die* die in push)
+			[pushDictionary addObject:[die dictionaryValue]];
+		
+		[dictionary setValue:pushDictionary forKey:@"push"];
+	}
+	
+	[dictionary setValue:[NSNumber numberWithInteger:targetID] forKey:@"targetID"];
+	
+	if (replayState)
+		[dictionary setValue:replayState forKey:@"replayState"];
+	
+	return dictionary;
+}
+
+- (id)initWithDictionary:(NSDictionary*)dictionary
+{
+	self = [super init];
+	
+	if (self)
+	{
+		actionType = [[dictionary objectForKey:@"actionType"] intValue];
+		playerID = [[dictionary objectForKey:@"playerID"] integerValue];
+		count = [[dictionary objectForKey:@"count"] intValue];
+		face = [[dictionary objectForKey:@"face"] intValue];
+		
+		push = [dictionary objectForKey:@"push"];
+		
+		if (push)
+		{
+			NSMutableArray* array = [NSMutableArray array];
+			
+			for (NSDictionary* die in push)
+				[array addObject:[[Die alloc] initWithDictionary:die]];
+			
+			push = array;
+		}
+		
+		targetID = [[dictionary objectForKey:@"targetID"] integerValue];
+		
+		replayState = [dictionary objectForKey:@"replayState"];
+	}
+	
+	return self;
 }
 
 @end

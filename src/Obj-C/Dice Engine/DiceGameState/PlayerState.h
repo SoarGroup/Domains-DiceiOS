@@ -83,4 +83,6 @@
 
 - (id<Player>)playerPtr;
 
+- (NSDictionary*)dictionaryValue;
+
 @end

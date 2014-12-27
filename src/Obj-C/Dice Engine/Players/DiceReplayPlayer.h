@@ -20,10 +20,10 @@
 @property (atomic, strong) NSString *name;
 @property (atomic, weak) PlayerState *playerState;
 @property (atomic, strong) NSMutableArray *gameViews;
-@property (atomic, strong) NSMutableArray* actions;
-@property (atomic, strong) NSString* replayFile;
+@property (atomic, strong) NSArray* actions;
+@property (atomic, strong) NSMutableArray* myActions;
 
-- (id)initWithReplayFile:(NSString *)replayFile;
+- (id)initWithName:(NSString *)name withPlayerID:(int)playerID withActions:(NSArray*)actions;
 
 - (NSString*) getDisplayName;
 - (NSString*) getGameCenterName;

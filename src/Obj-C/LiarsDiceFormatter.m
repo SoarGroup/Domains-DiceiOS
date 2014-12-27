@@ -63,6 +63,7 @@
         case LOG_FLAG_GAMEHISTORY   : logLevel = @"GAMEHISTORY"; break;
         case LOG_FLAG_DEBUG         : logLevel = @"DEBUG"; break;
         case LOG_FLAG_SOAR          : logLevel = @"SOAR"; break;
+		case LOG_FLAG_GAMEKIT       : logLevel = @"GAMEKIT"; break;
         default                     : logLevel = @"UNKNOWN"; break;
     }
     

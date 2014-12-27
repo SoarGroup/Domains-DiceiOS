@@ -657,4 +657,31 @@
 	return [NSString stringWithFormat:@"PlayerState: (hasDoneSpecialRules: %@) (PlayerID: %i) (PlayerName: %@) (Lock: %@) (PlayerHasPassed: %@) (PlayerHasExacted: %@) (NumberOfDice: %i) (HasLost: %@) (PlayerHasPushedAllDice: %@) (MaxNumberOfDice: %i) (GameState: %@) (ArrayOfDice: %@)", hasDoneSpecialRules ? @"YES" : @"NO", playerID, playerName, lock, playerHasPassed ? @"YES" : @"NO", playerHasExacted ? @"YES" : @"NO", numberOfDice, hasLost ? @"YES" : @"NO", playerHasPushedAllDice ? @"YES" : @"NO", maxNumberOfDice, gameState, arrayOfDice];
 }
 
+- (NSDictionary*)dictionaryValue
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+	[dictionary setValue:[NSNumber numberWithBool:specialRules] forKey:@"specialRules"];
+	[dictionary setValue:[NSNumber numberWithBool:hasDoneSpecialRules] forKey:@"hasDoneSpecialRules"];
+	[dictionary setValue:[NSNumber numberWithInt:playerID] forKey:@"playerID"];
+	[dictionary setValue:[NSNumber numberWithBool:playerHasPassed] forKey:@"playerHasPassed"];
+	[dictionary setValue:[NSNumber numberWithBool:playerHasExacted] forKey:@"playerHasExacted"];
+	[dictionary setValue:[NSNumber numberWithInt:numberOfDice] forKey:@"numberOfDice"];
+	[dictionary setValue:[NSNumber numberWithBool:hasLost] forKey:@"hasLost"];
+	[dictionary setValue:[NSNumber numberWithBool:playerHasPushedAllDice] forKey:@"playerHasPushedAllDice"];
+	[dictionary setValue:[NSNumber numberWithInt:maxNumberOfDice] forKey:@"maxNumberOfDice"];
+
+	NSMutableArray* dice = [NSMutableArray array];
+	
+	for (Die* die in arrayOfDice)
+	{
+		[dice addObject:[die dictionaryValue]];
+		[[dice lastObject] setValue:[NSNumber numberWithBool:NO] forKey:@"markedToPush"];
+	}
+	
+	[dictionary setValue:dice forKey:@"arrayOfDice"];
+	
+	return dictionary;
+}
+
 @end

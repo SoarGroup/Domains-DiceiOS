@@ -17,22 +17,23 @@
 
 @implementation DiceReplayPlayer
 
-@synthesize name, playerState, gameViews, actions, replayFile;
+@synthesize name, playerState, gameViews, actions, myActions;
 
-- (id)initWithReplayFile:(NSString *)file
+- (id)initWithName:(NSString *)replayName withPlayerID:(int)localID withActions:(NSArray*)newActions
 {
-    self = [super init];
-    if (self) {
-        // Initialization code here.
-        self.name = @"ReplayPlayer";
-        playerID = -1;
+	self = [super init];
+	
+	if (self)
+	{
+		self.name = replayName;
+		self->playerID = localID;
+		self.actions = newActions;
+		
+		myActions = [[NSMutableArray alloc] init];
 		gameViews = [[NSMutableArray alloc] init];
-        
-        actions = [[NSMutableArray alloc] init];
-        replayFile = file;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 - (NSString*) getDisplayName
@@ -64,73 +65,13 @@
     
     self.name = [NSString stringWithFormat:@"ReplayPlayer-%i", playerID];
     
-    [actions removeAllObjects];
+    [myActions removeAllObjects];
     
-    NSError* error;
-    NSString* fileContents = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"replay" ofType:@"txt"]
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-    
-    if (!error)
-    {
-        NSArray* lines = [fileContents componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-        NSRegularExpression *logExpression = [NSRegularExpression regularExpressionWithPattern:@"\\[GAMEHISTORY\\] \\[(.*)\\] \\[(.*)\\] \\[(.*)\\] \\(ActionType: (\\d)\\) \\(PlayerID: (\\d)\\) \\(Count: (\\d*)\\) \\(Face: (\\d)\\) \\(Push:(( \\d)*)\\) \\(TargetID: (\\d)\\)"
-                                                                                       options:0
-                                                                                         error:nil];
-        for (NSString* line in lines)
-        {
-            NSArray *matches = [logExpression matchesInString:line
-                                                      options:0
-                                                        range:NSMakeRange(0, [line length])];
-            for (NSTextCheckingResult *match in matches)
-            {
-                NSRange actionTypeRange, playerIDRange, countRange, faceRange, pushRange, targetRange;
-                NSString* actionTypeString, *playerIDString, *countString, *faceString, *pushString, *targetString;
-                
-                actionTypeRange = [match rangeAtIndex:4];
-                playerIDRange = [match rangeAtIndex:5];
-                countRange = [match rangeAtIndex:6];
-                faceRange = [match rangeAtIndex:7];
-                pushRange = [match rangeAtIndex:8];
-                targetRange = [match rangeAtIndex:match.numberOfRanges-1];
-                
-                actionTypeString = [line substringWithRange:actionTypeRange];
-                playerIDString = [line substringWithRange:playerIDRange];
-                countString = [line substringWithRange:countRange];
-                faceString = [line substringWithRange:faceRange];
-                pushString = [line substringWithRange:pushRange];
-                targetString = [line substringWithRange:targetRange];
-                
-                DiceAction* action = [[DiceAction alloc] init];
-                action.actionType = [actionTypeString intValue];
-                action.playerID = [playerIDString intValue];
-                action.count = [countString intValue];
-                action.face = [faceString intValue];
-                action.targetID = [targetString intValue];
-                
-                NSMutableArray* push = [NSMutableArray array];
-                NSArray* pushSplit = [pushString componentsSeparatedByString:@" "];
-                
-                for (NSString* string in pushSplit)
-                {
-                    if ([string length] == 0)
-                        continue;
-                    
-                    [push addObject:string];
-                }
-                
-                if (action.playerID != playerID)
-                    break;
-                
-                //DDLogDebug(@"Line: %@", line);
-                
-                action.push = push;
-                [actions addObject:action];
-            }
-        }
-    }
-    else
-        DDLogFatal(@"Unable to read replay file!");
+    for (DiceAction* action in actions)
+	{
+		if (action.playerID == playerID)
+			[myActions addObject:action];
+	}
 }
 
 - (void) itsYourTurn
@@ -143,7 +84,7 @@
 									view.gameStateLabel);
 	}
     
-    if (actions.count == 0)
+    if (myActions.count == 0)
         return;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -151,45 +92,18 @@
         DiceGameState* gameState = state.gameState;
         DiceGame* localGame = gameState.game;
         
-        DiceAction* action = [self->actions firstObject];
+        DiceAction* action = [self->myActions firstObject];
         
         BOOL notify = YES;
         if (action.actionType == ACTION_CHALLENGE_BID ||
             action.actionType == ACTION_CHALLENGE_PASS ||
             action.actionType == ACTION_EXACT)
             localGame.gameState.canContinueGame = notify = NO;
-        
-        if ([action.push count] != 0)
-        {
-            NSMutableArray* arrayOfDice = [NSMutableArray arrayWithArray:state.arrayOfDice];
-            NSMutableArray* push = [NSMutableArray array];
-            
-            for (NSString* string in action.push)
-            {
-                int dieValue = [string intValue];
-                
-                for (int i = 0;i < arrayOfDice.count;++i)
-                {
-                    Die* die = [arrayOfDice objectAtIndex:i];
-                    
-                    if (die.dieValue == dieValue && !die.hasBeenPushed)
-                    {
-                        [push addObject:die];
-                        [arrayOfDice removeObjectAtIndex:i];
-                        break;
-                    }
-                }
-            }
-            
-            assert(push.count == action.push.count);
-            
-            action.push = push;
-        }
-        
+				
         DDLogDebug(@"Action: %@", action);
         
         [localGame handleAction:action notify:notify];
-        [self->actions removeObjectAtIndex:0];
+        [self->myActions removeObjectAtIndex:0];
     });
 }
 
@@ -237,5 +151,10 @@
 
 - (void)setHandler:(GameKitGameHandler *)handler
 {}
+
+- (NSDictionary*)dictionaryValue
+{
+	return [NSDictionary dictionary];
+}
 
 @end

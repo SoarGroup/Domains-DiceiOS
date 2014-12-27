@@ -20,6 +20,8 @@
 @property (readwrite, strong) NSArray *push;
 @property (readwrite, assign) NSInteger targetID;
 
+@property (readwrite, strong) NSDictionary* replayState;
+
 + (DiceAction *) bidAction:(NSInteger)playerID count:(int)count face:(int)face push:(NSArray *)push;
 + (DiceAction *) challengeAction:(NSInteger)playerID target:(NSInteger)targetId;
 + (DiceAction *) exactAction:(NSInteger)playerID;
@@ -27,5 +29,8 @@
 + (DiceAction *) acceptAction:(NSInteger)playerID;
 + (DiceAction *) pushAction:(NSInteger)playerID push:(NSArray *)push;
 + (DiceAction *) lost:(NSInteger)playerID;
+
+- (NSDictionary*)dictionaryValue;
+- (id)initWithDictionary:(NSDictionary*)dictionary;
 
 @end

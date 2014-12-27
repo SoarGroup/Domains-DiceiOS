@@ -98,4 +98,33 @@
     return NO;
 }
 
+- (NSDictionary*)dictionaryValue
+{
+//	@property (readonly) int dieValue;
+//	@property (readonly) BOOL hasBeenPushed;
+//	@property (readwrite, assign) BOOL markedToPush;
+	
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	
+	[dictionary setValue:[NSNumber numberWithInt:dieValue] forKey:@"dieValue"];
+	[dictionary setValue:[NSNumber numberWithBool:hasBeenPushed] forKey:@"hasBeenPushed"];
+	[dictionary setValue:[NSNumber numberWithBool:markedToPush] forKey:@"markedToPush"];
+	
+	return dictionary;
+}
+
+- (id)initWithDictionary:(NSDictionary*)dictionary
+{
+	self = [super init];
+	
+	if (self)
+	{
+		dieValue = [[dictionary objectForKey:@"dieValue"] intValue];
+		hasBeenPushed = [[dictionary objectForKey:@"hasBeenPushed"] boolValue];
+		markedToPush = [[dictionary objectForKey:@"markedToPush"] boolValue];
+	}
+	
+	return self;
+}
+
 @end

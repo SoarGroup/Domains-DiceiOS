@@ -245,8 +245,11 @@
 	{
 		if (participant.matchOutcome == GKTurnBasedMatchOutcomeLost ||
 			participant.matchOutcome == GKTurnBasedMatchOutcomeQuit ||
-			participant.matchOutcome == GKTurnBasedMatchOutcomeTimeExpired)
+			participant.timeoutDate)
 		{
+			if (participant.timeoutDate)
+				participant.matchOutcome = GKTurnBasedMatchOutcomeTimeExpired;
+			
 			for (id<Player> player in players)
 			{
 				if ([player isKindOfClass:DiceRemotePlayer.class] &&

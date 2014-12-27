@@ -264,44 +264,6 @@
 					turnInfo.text = [NSString stringWithFormat:@"%@ won!", [game.gameState.gameWinner getDisplayName]];
 
 				frame.origin.y += 30;
-				timeoutInfo.frame = frame;
-				timeoutInfo.text = @"Timeout until Forfeit: ";
-				timeoutInfo.textColor = [UIColor whiteColor];
-
-				NSDate* timeout = [[match currentParticipant] timeoutDate];
-
-				NSTimeInterval timeInterval = [timeout timeIntervalSinceNow];
-
-				double value = -1.0;
-				NSString *type = @"second";
-
-				if (timeInterval > 60*60*24)
-				{
-					value = timeInterval / (60.0*60.0*24.0);
-
-					type = @"day";
-				}
-				else if (timeInterval > 60*60)
-				{
-					value = ceil(timeInterval / (60.0*60.0));
-
-					type = @"hour";
-				}
-				else if (timeInterval > 60)
-				{
-					value = ceil(timeInterval / (60.0));
-
-					type = @"minute";
-				}
-				else
-					value = ceil(timeInterval);
-
-				if (value > 60*60)
-					timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%f %@%@", value, type, value > 1 ? @"s" : @""]];
-				else
-					timeoutInfo.text = [timeoutInfo.text stringByAppendingString:[NSString stringWithFormat:@"%i %@%@", (int)value, type, value > 1 ? @"s" : @""]];
-
-				frame.origin.y += 30;
 				frame.size.width /= 2.0;
 				frame.size.width -= 20;
 				playMatch.frame = frame;
