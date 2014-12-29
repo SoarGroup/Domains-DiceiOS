@@ -56,9 +56,9 @@
 
 -(void) applicationDidFinishLaunching:(UIApplication *)application
 {
-    LiarsDiceFormatter* format = [[LiarsDiceFormatter alloc] init];
-	
 #ifdef DEBUG
+	LiarsDiceFormatter* format = [[LiarsDiceFormatter alloc] init];
+
 	id <DDLogger> logger = [DDNSLoggerLogger sharedInstance];
     [logger setLogFormatter:format];
     [DDLog addLogger:logger];
