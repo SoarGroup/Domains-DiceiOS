@@ -461,7 +461,7 @@
         return;
     }
     
-    DDLogInfo(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
+//    DDLogInfo(@"Notifying current player %@", [[gameState getCurrentPlayer] getGameCenterName]);
 
 	ApplicationDelegate* delegate = self.appDelegate;
 	GameKitGameHandler* handler = [delegate.listener handlerForGame:self];
@@ -516,10 +516,7 @@
 	
 	for (PlayerState* state in gameState.playerStates)
 	{
-		NSString* name = state.playerName;
-		
-		if (![state.playerPtr isKindOfClass:SoarPlayer.class])
-			name = [NSString stringWithFormat:@"Player-%i", state.playerID];
+		NSString* name = [NSString stringWithFormat:@"Player-%i", state.playerID];
 		
 		[replayState setValue:[state dictionaryValue] forKey:name];
 	}
@@ -528,9 +525,58 @@
 	{
 		// Check the state
 		assert([action.replayState isEqualToDictionary:replayState]);
+//		for (NSString* key in action.replayState)
+//		{
+//			if ([replayState objectForKey:key])
+//			{
+//				NSDictionary* a1 = [action.replayState objectForKey:key], *r1 = [replayState objectForKey:key];
+//				
+//				if ([[a1 objectForKey:@"hasLost"] boolValue] != [[r1 objectForKey:@"hasLost"] boolValue])
+//					DDLogError(@"Different hasLost value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"playerHasExacted"] boolValue] != [[r1 objectForKey:@"playerHasExacted"] boolValue])
+//					DDLogError(@"Different playerHasExacted value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"playerHasPushedAllDice"] boolValue] != [[r1 objectForKey:@"playerHasPushedAllDice"] boolValue])
+//					DDLogError(@"Different playerHasPushedAllDice value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"specialRules"] boolValue] != [[r1 objectForKey:@"specialRules"] boolValue])
+//					DDLogError(@"Different specialRules value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"hasDoneSpecialRules"] boolValue] != [[r1 objectForKey:@"hasDoneSpecialRules"] boolValue])
+//					DDLogError(@"Different hasDoneSpecialRules value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"playerHasPassed"] boolValue] != [[r1 objectForKey:@"playerHasPassed"] boolValue])
+//					DDLogError(@"Different playerHasPassed value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"playerID"] intValue] != [[r1 objectForKey:@"playerID"] intValue])
+//					DDLogError(@"Different playerID value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"numberOfDice"] intValue] != [[r1 objectForKey:@"numberOfDice"] intValue])
+//					DDLogError(@"Different hasLost value in observed state.");
+//				
+//				if ([[a1 objectForKey:@"maxNumberOfDice"] boolValue] != [[r1 objectForKey:@"maxNumberOfDice"] boolValue])
+//					DDLogError(@"Different maxNumberOfDice value in observed state.");
+//				
+//				NSArray* arrayOfDice1 = [a1 objectForKey:@"arrayOfDice"], *arrayOfDice2 = [r1 objectForKey:@"arrayOfDice"];
+//				
+//				if ([arrayOfDice1 count] != [arrayOfDice2 count])
+//					DDLogError(@"Different array of dice sizes!");
+//				else
+//					for (int i = 0;i < [arrayOfDice1 count];++i)
+//					{
+//						NSDictionary* d1 = [arrayOfDice1 objectAtIndex:i], *d2 = [arrayOfDice2 objectAtIndex:i];
+//						
+//						if (![d1 isEqualToDictionary:d2])
+//							DDLogError(@"Different dice!");
+//					}
+//			}
+//			else
+//				DDLogError(@"Missing replay key!");
+//		}
 	}
 	action.replayState = replayState;
-		
+	
     DDLogGameHistory(@"%@", action);
 	[all_actions addObject:[action dictionaryValue]];
 	

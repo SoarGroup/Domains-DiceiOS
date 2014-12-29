@@ -63,7 +63,7 @@
 }
 
 - (uint32_t)randomNumber
-{
+{	
 	numbersGenerated++;
 
 	uint32_t result = 0;

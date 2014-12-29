@@ -28,6 +28,8 @@
 
 @public
 	NSUInteger integerSeed;
+	
+	
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder;

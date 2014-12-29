@@ -32,7 +32,7 @@ const int kAI_8 = 0x47;
 
 	if (self)
 	{
-		NSData* data = [NSKeyedArchiver archivedDataWithRootObject:game];
+		NSData* data = [GameKitGameHandler archiveAndCompressObject:game];
 
 		ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 		DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:data]);
@@ -54,7 +54,7 @@ const int kAI_8 = 0x47;
 	{
 		if (data && !request)
 		{
-			DiceGame* game = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+			DiceGame* game = (DiceGame*)[GameKitGameHandler uncompressAndUnarchiveObject:data];
 
 			if (!game || game->compatibility_build != COMPATIBILITY_BUILD)
 			{
@@ -77,7 +77,7 @@ const int kAI_8 = 0x47;
 		{
 			// Just joined but there is a game already in progress!
 
-			DiceGame* game = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+			DiceGame* game = (DiceGame*)[GameKitGameHandler uncompressAndUnarchiveObject:data];
 
 			if (game.gameState)
 			{

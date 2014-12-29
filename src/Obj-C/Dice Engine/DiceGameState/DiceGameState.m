@@ -1270,7 +1270,7 @@
 // Gets the total number of dice in the game
 - (int)countAllDice {
     int ret = 0;
-    DDLogInfo(@"Count all dice");
+//    DDLogInfo(@"Count all dice");
     for (PlayerState *playerState in playerStates) {
         ret += [playerState.arrayOfDice count];
     }

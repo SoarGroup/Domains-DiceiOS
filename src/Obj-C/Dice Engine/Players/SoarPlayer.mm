@@ -24,12 +24,12 @@ void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m
 {
 	[[NSThread currentThread] setName:@"Soar Agent Thread"];
     
-    NSString* message = [NSString stringWithUTF8String:m];
-    
-    NSArray* split = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
-    for (NSString* string in split)
-        DDLogCSoar(@"%@", string);
+//    NSString* message = [NSString stringWithUTF8String:m];
+//	
+//    NSArray* split = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+//
+//    for (NSString* string in split)
+//        DDLogCSoar(@"%@", string);
 }
 
 class DiceSMLData {
@@ -399,8 +399,8 @@ static int agentCount = 0;
 
 	agents[(unsigned long)turnLock]->InitSoar();
 
-    DDLogCSoar(@"Agent do turn");
-    
+//    DDLogCSoar(@"Agent do turn");
+	
     BOOL agentSlept = NO;
     BOOL agentHalted = NO;
 	BOOL agentInterrupted = NO;
@@ -483,7 +483,7 @@ static int agentCount = 0;
 		}
     } while (!agentSlept);
 
-	DDLogCSoar(@"Halting agent");
+//	DDLogCSoar(@"Halting agent");
 	sml::WMElement *halter = NULL;
 	if (!agentHalted)
 	{
@@ -508,7 +508,7 @@ static int agentCount = 0;
 		newData = NULL;
 	}
 
-    DDLogCSoar(@"Agent done");
+//    DDLogCSoar(@"Agent done");
 
     if (newData != NULL)
     {
@@ -531,8 +531,8 @@ static int agentCount = 0;
 {
     using namespace sml;
  
-    DDLogCSoar(@"Beginning GameStateToWM");
-    
+//    DDLogCSoar(@"Beginning GameStateToWM");
+	
     Identifier *idState = NULL;
     Identifier *idPlayers = NULL;
     Identifier *idAffordances = NULL;
@@ -1001,14 +1001,14 @@ static int agentCount = 0;
             }
         }
     }
-        DDLogCSoar(@"Ending GameStateToWM");
+//        DDLogCSoar(@"Ending GameStateToWM");
     return new DiceSMLData(idState, idPlayers, idAffordances, idHistory, idRounds);
 }
 
 // Should only be called if turnLock is locked.
 - (void) handleAgentCommandsWithRefresh:(BOOL *)needsRefresh sleep:(BOOL *)sleep;
 {
-    DDLogCSoar(@"Agent handling agent commands");
+//    DDLogCSoar(@"Agent handling agent commands");
     *sleep = NO;
     DiceAction *action = nil;
     NSArray *diceToPush = nil;
@@ -1017,8 +1017,8 @@ static int agentCount = 0;
         sml::Identifier *ident = agents[(unsigned long)turnLock]->GetCommand(j);
         NSString *attrName = [NSString stringWithUTF8String:ident->GetAttribute()];
 
-        DDLogCSoar(@"Command from output link, j=%d, command=%@", j, attrName);
-        
+//        DDLogCSoar(@"Command from output link, j=%d, command=%@", j, attrName);
+		
         NSString *commandStatus = @"";
         if (ident->GetParameterValue("status") != NULL)
         {
@@ -1166,11 +1166,11 @@ static int agentCount = 0;
 
     if (action != nil)
     {
-        DDLogCSoar(@"Agent performing action: %@", action);
+//        DDLogCSoar(@"Agent performing action: %@", action);
         if (diceToPush != nil)
         {
-            DDLogCSoar(@"Pushing dice: %@", diceToPush);
-            action.push = diceToPush;           
+//            DDLogCSoar(@"Pushing dice: %@", diceToPush);
+            action.push = diceToPush;
         }
 
 		[turnLock unlock];
@@ -1180,7 +1180,7 @@ static int agentCount = 0;
     }
     else if (diceToPush != nil)
     {
-        DDLogCSoar(@"Agent just pushing, %@", diceToPush);
+//        DDLogCSoar(@"Agent just pushing, %@", diceToPush);
         DiceAction *new_action = [DiceAction pushAction:self.playerID push:diceToPush];
 
 		[turnLock unlock];

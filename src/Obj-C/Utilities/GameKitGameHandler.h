@@ -38,4 +38,7 @@
 
 - (GKTurnBasedMatch*)getMatch;
 
++ (NSData*)archiveAndCompressObject:(NSObject*)object;
++ (NSObject*)uncompressAndUnarchiveObject:(NSData*)data;
+
 @end

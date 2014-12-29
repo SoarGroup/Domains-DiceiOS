@@ -52,6 +52,7 @@
 		4D854A101993EAA00039C742 /* LiarsDiceFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A0F1993EAA00039C742 /* LiarsDiceFormatter.m */; };
 		4D854A131993F58F0039C742 /* DiceReplayPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A121993F58F0039C742 /* DiceReplayPlayer.m */; };
 		4D854A151993FF320039C742 /* replay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D854A141993FF320039C742 /* replay.txt */; };
+		4D9CEA0B1A4FA2C3003D8B9B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9CEA0A1A4FA2C3003D8B9B /* libbz2.dylib */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */; };
@@ -183,6 +184,7 @@
 		4D854A121993F58F0039C742 /* DiceReplayPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiceReplayPlayer.m; sourceTree = "<group>"; };
 		4D854A141993FF320039C742 /* replay.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = replay.txt; path = ../../../../replay.txt; sourceTree = "<group>"; };
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
+		4D9CEA0A1A4FA2C3003D8B9B /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -382,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9CEA0B1A4FA2C3003D8B9B /* libbz2.dylib in Frameworks */,
 				4D4BB1D119A285FC00723FC6 /* MessageUI.framework in Frameworks */,
 				4D71B77D199E76FF00F8ADED /* AudioToolbox.framework in Frameworks */,
 				4D71B77B199E76F900F8ADED /* AVFoundation.framework in Frameworks */,
@@ -923,6 +926,7 @@
 		CD86D64613BB9E450005A182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D9CEA0A1A4FA2C3003D8B9B /* libbz2.dylib */,
 				4D4BB1D019A285FC00723FC6 /* MessageUI.framework */,
 				4D71B77C199E76FF00F8ADED /* AudioToolbox.framework */,
 				4D71B77A199E76F900F8ADED /* AVFoundation.framework */,

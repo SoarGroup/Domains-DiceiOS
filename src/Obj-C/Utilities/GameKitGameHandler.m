@@ -12,7 +12,96 @@
 #import "PlayGameView.h"
 #import "ApplicationDelegate.h"
 
+#import "bzlib.h"
+
 @implementation GameKitGameHandler
+
++ (NSData *)bzip2:(NSData*)data
+{
+	int bzret, buffer_size = 1000000;
+	bz_stream stream = { 0 };
+	stream.next_in = (char*)[data bytes];
+	stream.avail_in = (unsigned int)[data length];
+	unsigned int compression = 9; // should be a value between 1 and 9 inclusive
+	
+	NSMutableData * buffer = [NSMutableData dataWithLength:buffer_size];
+	stream.next_out = [buffer mutableBytes];
+	stream.avail_out = buffer_size;
+	
+	NSMutableData * compressed = [NSMutableData data];
+	
+	BZ2_bzCompressInit(&stream, compression, 0, 0);
+	@try {
+		do {
+			bzret = BZ2_bzCompress(&stream, (stream.avail_in) ? BZ_RUN : BZ_FINISH);
+			if (bzret != BZ_RUN_OK && bzret != BZ_STREAM_END)
+				@throw [NSException exceptionWithName:@"bzip2" reason:@"BZ2_bzCompress failed" userInfo:nil];
+			
+			[compressed appendBytes:[buffer bytes] length:(buffer_size - stream.avail_out)];
+			stream.next_out = [buffer mutableBytes];
+			stream.avail_out = buffer_size;
+		} while(bzret != BZ_STREAM_END);
+	}
+	@finally {
+		BZ2_bzCompressEnd(&stream);
+	}
+	
+	return compressed;
+}
+
++ (NSData *)bunzip2:(NSData*)data
+{
+	if ([data length] == 0)
+		return nil;
+	
+	int bzret;
+	bz_stream stream = { 0 };
+	stream.next_in = (char*)[data bytes];
+	stream.avail_in = (unsigned int)[data length];
+	
+	const int buffer_size = 10000;
+	NSMutableData * buffer = [NSMutableData dataWithLength:buffer_size];
+	stream.next_out = [buffer mutableBytes];
+	stream.avail_out = buffer_size;
+	
+	NSMutableData * decompressed = [NSMutableData data];
+	
+	BZ2_bzDecompressInit(&stream, 0, NO);
+	@try {
+		do {
+			bzret = BZ2_bzDecompress(&stream);
+			if (bzret != BZ_OK && bzret != BZ_STREAM_END)
+				@throw [NSException exceptionWithName:@"bzip2" reason:@"BZ2_bzDecompress failed" userInfo:nil];
+			
+			[decompressed appendBytes:[buffer bytes] length:(buffer_size - stream.avail_out)];
+			stream.next_out = [buffer mutableBytes];
+			stream.avail_out = buffer_size;
+		} while(bzret != BZ_STREAM_END);
+	}
+	@finally {
+		BZ2_bzDecompressEnd(&stream);
+	}
+	
+	return decompressed;
+}
+
++ (NSData*)archiveAndCompressObject:(NSObject*)object
+{
+	NSData* archive = [NSKeyedArchiver archivedDataWithRootObject:object];
+	return [GameKitGameHandler bzip2:archive];
+}
+
++ (NSObject*)uncompressAndUnarchiveObject:(NSData*)data
+{
+	NSData* uncompressed;
+	@try {
+		uncompressed = [GameKitGameHandler bunzip2:data];
+	}
+	@catch (NSException *exception) {
+		return nil;
+	}
+	return [NSKeyedUnarchiver unarchiveObjectWithData:uncompressed];
+}
 
 @synthesize localPlayer, remotePlayers, match, participants, localGame;
 
@@ -39,7 +128,7 @@
 	if (matchHasEnded || ![[[match currentParticipant] player].playerID isEqualToString:[[GKLocalPlayer localPlayer] playerID]])
 		return;
 
-	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
+	NSData* updatedMatchData = [GameKitGameHandler archiveAndCompressObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 	DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
@@ -105,7 +194,7 @@
 			 ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 			 DDLogGameKit(@"Updated Match Data Retrieved SHA1 Hash: %@", [delegate sha1HashFromData:matchData]);
 
-			 DiceGame* updatedGame = [NSKeyedUnarchiver unarchiveObjectWithData:matchData];
+			 DiceGame* updatedGame = (DiceGame*)[GameKitGameHandler uncompressAndUnarchiveObject:matchData];
 
 			 [updatedGame.gameState decodePlayers:self->match withHandler:self];
 
@@ -134,7 +223,7 @@
 	if (matchHasEnded)
 		return;
 
-	NSData* updatedMatchData = [NSKeyedArchiver archivedDataWithRootObject:localGame];
+	NSData* updatedMatchData = [GameKitGameHandler archiveAndCompressObject:localGame];
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 	DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
@@ -233,7 +322,7 @@
 		};
 
 		if ([[match currentParticipant].player.playerID isEqual:[GKLocalPlayer localPlayer].playerID])
-			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:172800 /* 2 days */ matchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:completionHandler];
+			[match participantQuitInTurnWithOutcome:outcome nextParticipants:localParticipants turnTimeout:172800 /* 2 days */ matchData:[GameKitGameHandler archiveAndCompressObject:localGame] completionHandler:completionHandler];
 		else
 			[match participantQuitOutOfTurnWithOutcome:outcome withCompletionHandler:completionHandler];
 	}
@@ -265,7 +354,7 @@
 			gktbp.matchOutcome = GKTurnBasedMatchOutcomeQuit;
 	}
 
-	[match endMatchInTurnWithMatchData:[NSKeyedArchiver archivedDataWithRootObject:localGame] completionHandler:^(NSError* error)
+	[match endMatchInTurnWithMatchData:[GameKitGameHandler archiveAndCompressObject:localGame] completionHandler:^(NSError* error)
 	 {
 		 if (error)
 			 DDLogError(@"Error ending match: %@\n", error.description);

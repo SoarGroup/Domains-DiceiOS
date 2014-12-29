@@ -285,11 +285,15 @@
 	int AICount = 0;
 	int humanCount = 0;
 	int currentHumanCount = 0;
+	int AIdiff = -1;
 	
 	for (NSDictionary* dict in playerArrayDict)
 	{
 		if ([[dict objectForKey:@"soarPlayer"] boolValue])
+		{
 			++AICount;
+			AIdiff = [[dict objectForKey:@"difficulty"] intValue];
+		}
 		else if ([[dict objectForKey:@"remotePlayer"] boolValue] ||
 				 [[dict objectForKey:@"localPlayer"] boolValue])
 			++humanCount;
@@ -303,7 +307,7 @@
 		
 		if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
 		{
-			[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
+			[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:AIdiff]];
 			
 			AICount--;
 		}
