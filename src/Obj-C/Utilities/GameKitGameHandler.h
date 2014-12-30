@@ -41,4 +41,6 @@
 + (NSData*)archiveAndCompressObject:(NSObject*)object;
 + (NSObject*)uncompressAndUnarchiveObject:(NSData*)data;
 
++ (NSData *)bzip2:(NSData*)data;
+
 @end

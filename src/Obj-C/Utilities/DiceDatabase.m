@@ -115,14 +115,14 @@
 
 - (void) setDifficulty:(NSInteger)difficulty
 {
-	[defaults setObject:[NSNumber numberWithLong:difficulty] forKey:@"PlayerDifficulty"];
+	[defaults setLongLong:difficulty forKey:@"PlayerDifficulty"];
 
 	[defaults synchronize];
 }
 
 - (NSInteger) getDifficulty
 {
-	return [(NSNumber*)[defaults objectForKey:@"PlayerDifficulty"] integerValue];
+	return [defaults longLongForKey:@"PlayerDifficulty"];
 }
 
 - (void)reload
@@ -147,23 +147,34 @@
 
 - (BOOL)hasSeenTutorial
 {
-	return [(NSNumber*)[defaults objectForKey:@"DoneTutorial"] boolValue];
+	return [defaults boolForKey:@"DoneTutorial"];
 }
 
 - (void)setHasSeenTutorial
 {
-	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"DoneTutorial"];
+	[defaults setBool:YES forKey:@"DoneTutorial"];
 	[defaults synchronize];
 }
 
 - (BOOL)hasVisitedMultiplayerBefore
 {
-	return [(NSNumber*)[defaults objectForKey:@"VisitedMultiplayer"] boolValue];
+	return [defaults boolForKey:@"VisitedMultiplayer"];
 }
 
 - (void)setHasVisitedMultiplayerBefore
 {
-	[defaults setObject:[NSNumber numberWithBool:YES] forKey:@"VisitedMultiplayer"];
+	[defaults setBool:YES forKey:@"VisitedMultiplayer"];
+	[defaults synchronize];
+}
+
+- (BOOL)hasSoarLoggingEnabled
+{
+	return [defaults boolForKey:@"SoarLogging"];
+}
+
+- (void)setSoarLoggingEnabled:(BOOL)logging
+{
+	[defaults setBool:logging forKey:@"SoarLogging"];
 	[defaults synchronize];
 }
 

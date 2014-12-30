@@ -37,4 +37,7 @@
 - (BOOL)hasVisitedMultiplayerBefore;
 - (void)setHasVisitedMultiplayerBefore;
 
+- (BOOL)hasSoarLoggingEnabled;
+- (void)setSoarLoggingEnabled:(BOOL)logging;
+
 @end

@@ -31,6 +31,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton* clearLogFiles;
 @property (strong, nonatomic) IBOutlet UIButton* debugReplayFile;
+@property (strong, nonatomic) IBOutlet UISwitch* logSoarAI;
 
 - (IBAction)nameTextFieldTextFinalize:(id)sender;
 - (IBAction)difficultySelectorValueChanged:(id)sender;
@@ -43,5 +44,6 @@
 - (IBAction)sendLogFiles:(id)sender;
 - (IBAction)clearLogFiles:(id)sender;
 - (IBAction)debugReplayFile:(id)sender;
+- (IBAction)logSoarAIValueChanged:(id)sender;
 
 @end

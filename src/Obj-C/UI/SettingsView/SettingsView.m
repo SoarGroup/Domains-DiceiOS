@@ -19,6 +19,7 @@
 #import "DiceReplayPlayer.h"
 #import "SoarPlayer.h"
 #import "LoadingGameView.h"
+#import "GameKitGameHandler.h"
 
 @interface SettingsView ()
 
@@ -32,7 +33,7 @@
 @synthesize nameTextField;
 @synthesize difficultySelector;
 
-@synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton, clearLogFiles, debugReplayFile, mainMenu;
+@synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton, clearLogFiles, debugReplayFile, mainMenu, logSoarAI;
 
 - (id)init:(MainMenu*)menu
 {
@@ -84,7 +85,8 @@
         self.resetAchievementsButton.hidden = YES;
 
 	self.remoteIPTextField.text = [database valueForKey:@"Debug:RemoteIP"];
-
+	self.logSoarAI.on = [database hasSoarLoggingEnabled];
+	
 #ifndef DEBUG
 	self.debugLabel.hidden = YES;
 	self.remoteIPLabel.hidden = YES;
@@ -150,10 +152,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex != 1)
-		return;
-
-	if ([alertView.title isEqualToString:@"Reset Achievements?"])
+	if (buttonIndex != 1 && [alertView.title isEqualToString:@"Reset Achievements?"])
 	{
 		[GKAchievement resetAchievementsWithCompletionHandler:^(NSError* error)
 		 {
@@ -164,6 +163,14 @@
 		ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
 		
 		delegate.achievements = [[GameKitAchievementHandler alloc] init];
+	}
+	else if ([alertView.title isEqualToString:@"Enable Logging?"])
+	{
+		DiceDatabase* database = [[DiceDatabase alloc] init];
+		[database setSoarLoggingEnabled:buttonIndex == 1];
+		
+		if (buttonIndex != 1)
+			[logSoarAI setOn:NO animated:YES];
 	}
 }
 
@@ -195,7 +202,6 @@
 			NSData *fileData = [NSData dataWithContentsOfURL:url];
 			[logFiles addObject:fileData];
 		}
-		[logFiles addObject:[@"----- Log File Separation -----" dataUsingEncoding:NSUTF8StringEncoding]];
 	}
 	
 	return logFiles;
@@ -207,11 +213,39 @@
 	{
 		MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
 		mailViewController.mailComposeDelegate = self;
-		NSMutableData *errorLogData = [NSMutableData data];
-		for (NSData *errorLogFileData in [self errorLogData]) {
-			[errorLogData appendData:errorLogFileData];
+		
+		NSArray *paths = NSSearchPathForDirectoriesInDomains
+		(NSDocumentDirectory, NSUserDomainMask, YES);
+		NSString *documentsDirectory = [paths objectAtIndex:0];
+		NSURL* rootURL = [NSURL URLWithString:documentsDirectory];
+		
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSDirectoryEnumerator *dirEnumerator = [fm enumeratorAtURL:rootURL
+										includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+														   options:NSDirectoryEnumerationSkipsHiddenFiles
+													  errorHandler:nil];
+		
+		for (NSURL *url in dirEnumerator) {
+			NSNumber *isDirectory;
+			[url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+			if (![isDirectory boolValue]) {
+				// log file
+				NSData *fileData = [NSData dataWithContentsOfURL:url];
+				NSData *compressedData = [GameKitGameHandler bzip2:fileData];
+				NSString *fileName = [[[url path] lastPathComponent] stringByAppendingString:@".bz2"];
+				[mailViewController addAttachmentData:compressedData mimeType:@"text/plain" fileName:fileName];
+			}
 		}
-		[mailViewController addAttachmentData:errorLogData mimeType:@"text/plain" fileName:@"errorLog.txt"];
+		
+		DiceDatabase* database = [[DiceDatabase alloc] init];
+		
+		NSString* messageBody = [NSString stringWithFormat:@"Liar's Dice %@ logs.", [UIApplication versionBuild]];
+		
+		if ([database hasSoarLoggingEnabled])
+			messageBody = [messageBody stringByAppendingString:@"\n\nHas Soar Logging Enabled."];
+		
+		[mailViewController setMessageBody:messageBody isHTML:NO];
+		
 		[mailViewController setSubject:[NSString stringWithFormat:@"Michigan Liar's Dice - %@ - Error Logs", [UIApplication versionBuild]]];
 		[mailViewController setToRecipients:[NSArray arrayWithObject:@"liarsdice@umich.edu"]];
 		
@@ -324,6 +358,18 @@
 	
 	UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:self.mainMenu];
 	[self.navigationController pushViewController:gameView animated:YES];
+}
+
+- (IBAction)logSoarAIValueChanged:(id)sender
+{
+	DiceDatabase *database = [[DiceDatabase alloc] init];
+
+	if (logSoarAI.on == YES)
+	{
+		[[[UIAlertView alloc] initWithTitle:@"Enable Logging?" message:@"Are you sure you want to enable logging?  This will potentially slow down the Soar AI as it writes extensive logging to a file.  This will make it possible to fix any Soar crashes that occur so long as you immediately send the log file after the crash without letting any other AIs play a turn." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+	}
+	else
+		[database setSoarLoggingEnabled:NO];
 }
 
 @end

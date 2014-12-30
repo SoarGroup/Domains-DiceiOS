@@ -70,7 +70,7 @@
     logger = [DDTTYLogger sharedInstance];
     [logger setLogFormatter:format];
     [DDLog addLogger:logger];
-	
+
 	filelogger = [[DDFileLogger alloc] init];
 	[filelogger setLogFormatter:format];
 	[DDLog addLogger:filelogger];

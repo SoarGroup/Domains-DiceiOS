@@ -23,13 +23,35 @@
 void printHandler(sml::smlPrintEventId id, void *d, sml::Agent *a, char const *m)
 {
 	[[NSThread currentThread] setName:@"Soar Agent Thread"];
-    
-//    NSString* message = [NSString stringWithUTF8String:m];
-//	
-//    NSArray* split = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-//
-//    for (NSString* string in split)
-//        DDLogCSoar(@"%@", string);
+	
+	DiceDatabase* database = [[DiceDatabase alloc] init];
+	
+	if ([database hasSoarLoggingEnabled])
+	{
+		NSString* message = [NSString stringWithUTF8String:m];
+		
+//		NSArray* split = [message componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+		
+		NSArray *paths = NSSearchPathForDirectoriesInDomains
+		(NSDocumentDirectory, NSUserDomainMask, YES);
+		NSString *documentsDirectory = [paths objectAtIndex:0];
+		
+		NSString *fileName = [NSString stringWithFormat:@"%@/SoarLog.log", documentsDirectory];
+		
+		if (![[NSFileManager defaultManager] fileExistsAtPath:fileName])
+			[[NSFileManager defaultManager] createFileAtPath:fileName contents:nil attributes:nil];
+		
+		NSString* toWrite = [[NSString alloc] initWithContentsOfFile:fileName encoding:NSUTF8StringEncoding error:nil];
+		toWrite = [toWrite stringByAppendingString:message];
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath:fileName])
+			[[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+		
+		[toWrite writeToFile:fileName atomically:YES encoding:NSUTF8StringEncoding error:nil];
+		
+//		for (NSString* string in split)
+//			DDLogCSoar(@"%@", string);
+	}
 }
 
 class DiceSMLData {
@@ -311,8 +333,11 @@ static int agentCount = 0;
 
 			DDLogCSoar(@"Path: %@", path);
 
-			std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine("watch 0") << std::endl;
-
+			if (![database hasSoarLoggingEnabled])
+				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine("watch 0") << std::endl;
+			else
+				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine("watch 5") << std::endl;
+			
 			agents[(unsigned long)aLock]->InitSoar();
 		}
 
@@ -326,6 +351,20 @@ static int agentCount = 0;
 
 - (void)itsYourTurn
 {
+	DiceDatabase* database = [[DiceDatabase alloc] init];
+	
+	if ([database hasSoarLoggingEnabled])
+	{
+		NSArray *paths = NSSearchPathForDirectoriesInDomains
+		(NSDocumentDirectory, NSUserDomainMask, YES);
+		NSString *documentsDirectory = [paths objectAtIndex:0];
+		
+		NSString *fileName = [NSString stringWithFormat:@"%@/SoarLog.log", documentsDirectory];
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath:fileName])
+			[[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
+	}
+	
     NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)turnLock]->GetAgentName()];
 
     [self performSelector:@selector(doTurn) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:NO];
@@ -339,7 +378,7 @@ static int agentCount = 0;
 		return;
 	}
 
-	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has encountered an error in processing and reasoning.  Please report an issue at github.com/SoarGroup/Domains-DiceiOS/issues.  Please include the seed, the time it occured, what device (including name, iOS Version, and UUID).  Please also attach any error logs to your issue (found via iPhone Configurator)." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
+	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has encountered an error in processing and reasoning.  Please report an issue at github.com/SoarGroup/Domains-DiceiOS/issues.  Please exit the game, go to settings, and tap \"Send Log Files.\"  This will send us the logs for the last game and any additional details, such as the log file for Soar if enabled." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
 
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* delegate = localGame.appDelegate;
@@ -438,7 +477,12 @@ static int agentCount = 0;
 
 			agentInterrupted = agentState == sml::sml_RUNSTATE_INTERRUPTED;
 
-			if (!agentInterrupted && (startTime + 15) < [[NSDate date] timeIntervalSince1970])
+			int timeoutLimit = 15;
+			
+			if ([[[DiceDatabase alloc] init] hasSoarLoggingEnabled])
+				timeoutLimit = 120;
+			
+			if (!agentInterrupted && (startTime + timeoutLimit) < [[NSDate date] timeIntervalSince1970])
 			{
 				[turnLock unlock];
 
@@ -454,9 +498,9 @@ static int agentCount = 0;
 				NSString* printString = [NSString stringWithUTF8String:printResult];
 				NSInteger lines = [[printString componentsSeparatedByCharactersInSet:
 									[NSCharacterSet newlineCharacterSet]] count];
-
-
-				if (lines > 95)
+				
+				DiceDatabase* database = [[DiceDatabase alloc] init];
+				if (lines > 95 && ![database hasSoarLoggingEnabled])
 				{
 					[turnLock unlock];
 
@@ -464,6 +508,8 @@ static int agentCount = 0;
 
 					return [self restartSoar];
 				}
+				else if (lines > 95 && [database hasSoarLoggingEnabled])
+					return [self showErrorAlert];
 			}
 			
 			if ([[NSThread currentThread] isCancelled])
