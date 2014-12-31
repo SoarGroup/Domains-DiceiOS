@@ -162,7 +162,7 @@
 			if ([playerPtr isKindOfClass:DiceLocalPlayer.class] && [GKLocalPlayer localPlayer].isAuthenticated)
 				gkPlayer = [GKLocalPlayer localPlayer];
 			
-			[gkPlayer loadPhotoForSize:GKPhotoSizeNormal withCompletionHandler:^(UIImage* photo, NSError* error)
+			[gkPlayer loadPhotoForSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage* photo, NSError* error)
 			 {
 				 if (photo)
 					 profileImage = photo;
