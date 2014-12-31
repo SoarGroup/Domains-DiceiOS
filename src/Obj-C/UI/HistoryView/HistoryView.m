@@ -41,11 +41,18 @@
 
 @implementation HistoryView
 
-@synthesize history, historyTableView, controller;
+@synthesize history, historyTableView, controller, historyMatchLabel, doneButton;
 
 - (id)initWithHistory:(NSArray *)historyArray
 {
-	self = [super init];
+	NSString* device = [UIDevice currentDevice].model;
+	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+	
+	NSString* nibName = @"HistoryView";
+	if (![device isEqualToString:@"iPhone"])
+		nibName = [nibName stringByAppendingString:@"iPad"];
+	
+	self = [super initWithNibName:nibName bundle:nil];
 	
 	if (self)
 	{
@@ -80,6 +87,8 @@
 	
 	historyTableView.delegate = controller;
 	historyTableView.dataSource = controller;
+	
+	self.navigationItem.title = @"History of Match";
 }
 
 - (void)didReceiveMemoryWarning {

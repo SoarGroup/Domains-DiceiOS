@@ -129,6 +129,7 @@
 		4DF491511A536E0C00EAC818 /* YouPlayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF4914F1A536E0C00EAC818 /* YouPlayer.png */; };
 		4DF491521A536E0C00EAC818 /* SoarPlayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF491501A536E0C00EAC818 /* SoarPlayer.png */; };
 		4DF491541A537B1800EAC818 /* HumanPlayer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DF491531A537B1800EAC818 /* HumanPlayer.png */; };
+		4DF491561A53930E00EAC818 /* HistoryViewiPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DF491551A53930E00EAC818 /* HistoryViewiPad.xib */; };
 		4DFAC8321986A70300B59B26 /* Random.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DFAC8311986A70300B59B26 /* Random.mm */; };
 		CD86D64813BB9E450005A182 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64713BB9E450005A182 /* UIKit.framework */; };
 		CD86D64C13BB9E450005A182 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD86D64B13BB9E450005A182 /* CoreGraphics.framework */; };
@@ -373,12 +374,13 @@
 		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
 		4DF491471A53514E00EAC818 /* HistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryView.h; path = HistoryView/HistoryView.h; sourceTree = "<group>"; };
 		4DF491481A53514E00EAC818 /* HistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryView.m; path = HistoryView/HistoryView.m; sourceTree = "<group>"; };
-		4DF491491A53514E00EAC818 /* HistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryView.xib; path = HistoryView/HistoryView.xib; sourceTree = "<group>"; };
+		4DF491491A53514E00EAC818 /* HistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryView.xib; path = ../HistoryView/HistoryView.xib; sourceTree = "<group>"; };
 		4DF4914C1A53529800EAC818 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewController.h; path = HistoryView/HistoryTableViewController.h; sourceTree = "<group>"; };
 		4DF4914D1A53529800EAC818 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryTableViewController.m; path = HistoryView/HistoryTableViewController.m; sourceTree = "<group>"; };
 		4DF4914F1A536E0C00EAC818 /* YouPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YouPlayer.png; sourceTree = "<group>"; };
 		4DF491501A536E0C00EAC818 /* SoarPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoarPlayer.png; sourceTree = "<group>"; };
 		4DF491531A537B1800EAC818 /* HumanPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HumanPlayer.png; sourceTree = "<group>"; };
+		4DF491551A53930E00EAC818 /* HistoryViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryViewiPad.xib; path = ../HistoryView/HistoryViewiPad.xib; sourceTree = "<group>"; };
 		4DFAC8301986A70300B59B26 /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
 		4DFAC8311986A70300B59B26 /* Random.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Random.mm; sourceTree = "<group>"; };
 		6F437F92BD1543BEB6138317 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -745,6 +747,7 @@
 				4DF394461923C51C00A523FB /* SettingsViewiPad.xib */,
 				4DF394471923C51C00A523FB /* SingleplayerViewiPad.xib */,
 				4D018D7F192657AC007A6FD5 /* JoinMatchViewPopover.xib */,
+				4DF491551A53930E00EAC818 /* HistoryViewiPad.xib */,
 			);
 			path = "iPad-XIBs";
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				4DF394541923C51C00A523FB /* SingleplayerView.xib */,
 				4D48E02B197FFDCB009DA895 /* TutorialView.xib */,
 				4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */,
+				4DF491491A53514E00EAC818 /* HistoryView.xib */,
 			);
 			path = "iPhone-XIBs";
 			sourceTree = "<group>";
@@ -921,7 +925,6 @@
 			children = (
 				4DF491471A53514E00EAC818 /* HistoryView.h */,
 				4DF491481A53514E00EAC818 /* HistoryView.m */,
-				4DF491491A53514E00EAC818 /* HistoryView.xib */,
 				4DF4914C1A53529800EAC818 /* HistoryTableViewController.h */,
 				4DF4914D1A53529800EAC818 /* HistoryTableViewController.m */,
 			);
@@ -1066,6 +1069,7 @@
 				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
+				4DF491561A53930E00EAC818 /* HistoryViewiPad.xib in Resources */,
 				4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */,
 				4DF396391923C51D00A523FB /* MultiplayerView.xib in Resources */,
 				4D17A9F0197DBAF4006C4A64 /* PlayGameView-6iPad.xib in Resources */,

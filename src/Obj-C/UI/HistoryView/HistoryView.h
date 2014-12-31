@@ -18,6 +18,9 @@
 @property (strong, readwrite) NSArray* history;
 @property (strong, readwrite) HistoryTableViewController* controller;
 
+@property (strong, readwrite) IBOutlet UILabel* historyMatchLabel;
+@property (strong, readwrite) IBOutlet UIButton* doneButton;
+
 - (IBAction)donePressed:(id)sender;
 
 @end

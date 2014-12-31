@@ -102,16 +102,43 @@
 	return index;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	HistoryItem* item = [[self.history objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+
+	NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[item asHistoryString]];
+	
+	NSString* device = [UIDevice currentDevice].model;
+	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+	
+	NSInteger width;
+	if ([device isEqualToString:@"iPhone"])
+		width = 120;
+	else
+		width = 9999;
+	
+	CGRect rect = [attributedText boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
+											   options:NSStringDrawingUsesLineFragmentOrigin
+											   context:nil];
+	return rect.size.height + 20;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HistoryTableViewCell"];
     
 	if (cell == nil)
+	{
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HistoryTableViewCell"];
+		cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+		cell.textLabel.numberOfLines = 0;
+		cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
+	}
 	
 	HistoryItem* item = [[self.history objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 	
 	cell.textLabel.attributedText = [item asHistoryString];
 	cell.textLabel.accessibilityLabel = [item accessibleText];
+	[cell.textLabel sizeToFit];
 	
 	__block UIImage* profileImage = [UIImage imageNamed:@"YouPlayer.png"];
 	
@@ -151,10 +178,20 @@
 		profileImage = [UIImage imageNamed:@"SoarPlayer.png"];
 	
 	cell.imageView.image = profileImage;
+	CGRect frame = cell.imageView.frame;
+	frame.size.width = 25;
+	cell.imageView.frame = frame;
 	
 	// set the accessory view:
 	cell.accessoryType =  UITableViewCellAccessoryNone;
-	cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+	
+	NSString* device = [UIDevice currentDevice].model;
+	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+	
+	if ([device isEqualToString:@"iPhone"])
+		cell.backgroundColor = [UIColor umichBlueColor];
+	else
+		cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
 	
     return cell;
 }
