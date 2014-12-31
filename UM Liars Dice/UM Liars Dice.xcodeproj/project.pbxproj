@@ -374,13 +374,13 @@
 		4DF397C91923C9A600A523FB /* dice-medium.soar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "dice-medium.soar"; sourceTree = "<group>"; };
 		4DF491471A53514E00EAC818 /* HistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryView.h; path = HistoryView/HistoryView.h; sourceTree = "<group>"; };
 		4DF491481A53514E00EAC818 /* HistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryView.m; path = HistoryView/HistoryView.m; sourceTree = "<group>"; };
-		4DF491491A53514E00EAC818 /* HistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryView.xib; path = ../HistoryView/HistoryView.xib; sourceTree = "<group>"; };
+		4DF491491A53514E00EAC818 /* HistoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryView.xib; sourceTree = "<group>"; };
 		4DF4914C1A53529800EAC818 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewController.h; path = HistoryView/HistoryTableViewController.h; sourceTree = "<group>"; };
 		4DF4914D1A53529800EAC818 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryTableViewController.m; path = HistoryView/HistoryTableViewController.m; sourceTree = "<group>"; };
 		4DF4914F1A536E0C00EAC818 /* YouPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YouPlayer.png; sourceTree = "<group>"; };
 		4DF491501A536E0C00EAC818 /* SoarPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoarPlayer.png; sourceTree = "<group>"; };
 		4DF491531A537B1800EAC818 /* HumanPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HumanPlayer.png; sourceTree = "<group>"; };
-		4DF491551A53930E00EAC818 /* HistoryViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryViewiPad.xib; path = ../HistoryView/HistoryViewiPad.xib; sourceTree = "<group>"; };
+		4DF491551A53930E00EAC818 /* HistoryViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryViewiPad.xib; sourceTree = "<group>"; };
 		4DFAC8301986A70300B59B26 /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
 		4DFAC8311986A70300B59B26 /* Random.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Random.mm; sourceTree = "<group>"; };
 		6F437F92BD1543BEB6138317 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
