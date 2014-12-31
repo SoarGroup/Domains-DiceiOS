@@ -504,6 +504,9 @@
 
 -(void)handleAction:(DiceAction*)action notify:(BOOL)notify;
 {
+	if (!action)
+		return;
+	
     if ([NSThread isMainThread])
     {
         dispatch_async(dispatch_get_global_queue(0,0), ^{

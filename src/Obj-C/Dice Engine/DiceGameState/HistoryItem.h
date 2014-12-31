@@ -30,12 +30,13 @@ typedef enum HistoryItemType {
 @property (readwrite, assign) int result;
 @property (readwrite, weak) DiceGameState *diceGameState;
 @property (readwrite, strong) Bid *bid;
+@property (readwrite, strong) NSArray* dice;
 @property (readwrite, strong) NSString *state;
 
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)value andResult:(int)result;
 - (id) initWithMetaInformation:(NSString *)meta;
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)newValue;
-- (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType;
+- (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withDice:(NSArray*)dice;
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid;
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid andWithResult:(int)newResult;
 
@@ -51,5 +52,7 @@ typedef enum HistoryItemType {
 
 - (NSString *)asString;
 - (NSString *)asDetailedString;
+- (NSAttributedString*)asHistoryString;
+- (NSString *)accessibleText;
 
 @end

@@ -98,14 +98,6 @@
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUpdateNotification:) name:@"UpdateUINotification" object:nil];
 	
-	DiceDatabase* database = [[DiceDatabase alloc] init];
-	if (![database hasVisitedMultiplayerBefore])
-	{
-		[database setHasVisitedMultiplayerBefore];
-		
-		[[[UIAlertView alloc] initWithTitle:@"New to Multiplayer?" message:@"It appears you are new to multiplayer.  Would you like to read about how the multiplayer works in Liar's Dice?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Okay", nil] show];
-	}
-	
 	self.joinSpinner.hidden = YES;
 }
 
@@ -171,6 +163,10 @@
 					UIButton* quitButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 140, 40)];
 					[quitButton setTitle:@"Delete Match" forState:UIControlStateNormal];
 					[quitButton setTitleColor:[UIColor maizeColor] forState:UIControlStateNormal];
+					
+					UIButton* historyButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 40, 140, 40)];
+					[historyButton setTitle:@"History of Match" forState:UIControlStateNormal];
+					[historyButton setTitleColor:[UIColor maizeColor] forState:UIControlStateNormal];
 
 					UIButton* expandButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 140, 40)];
 					[expandButton setTitle:@"Expand Match" forState:UIControlStateNormal];
@@ -182,10 +178,12 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wselector"
 					[quitButton addTarget:playGameView action:@selector(backPressed:) forControlEvents:UIControlEventTouchUpInside];
+					[historyButton addTarget:playGameView action:@selector(displayHistoryView:) forControlEvents:UIControlEventTouchUpInside];
 #pragma clang diagnostic pop
 
 					[container addSubview:quitButton];
 					[container addSubview:expandButton];
+					[container addSubview:historyButton];
 
 					container.clipsToBounds = YES;
 
@@ -327,6 +325,15 @@
 {
 	[GKTurnBasedMatch loadMatchesWithCompletionHandler:^(NSArray *matches, NSError *error)
 	 {
+		 DiceDatabase* database = [[DiceDatabase alloc] init];
+		 if (![database hasVisitedMultiplayerBefore])
+		 {
+			 [database setHasVisitedMultiplayerBefore];
+			 
+			 if ([matches count] == 0)
+				 [[[UIAlertView alloc] initWithTitle:@"New to Multiplayer?" message:@"It appears you are new to multiplayer.  Would you like to read about how the multiplayer works in Liar's Dice?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Okay", nil] show];
+		 }
+		 
 		 for (int matchNumber = 0;matchNumber < [matches count];matchNumber++)
 		 {
 			 GKTurnBasedMatch* match = [matches objectAtIndex:matchNumber];

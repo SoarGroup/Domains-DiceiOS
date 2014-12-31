@@ -7,12 +7,13 @@
 //
 
 #import "HistoryItem.h"
-
+#import "Die.h"
+#import "PlayGameView.h"
 
 @implementation HistoryItem
 
 @synthesize player, actionType, historyType, value, result, diceGameState;
-@synthesize bid, state;
+@synthesize bid, state, dice;
 
 // Initialize ourself
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)newValue andResult:(int)newResult
@@ -52,11 +53,12 @@
 		self.state = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:state", prefix, count]];
 		playerLosingADie = [decoder decodeInt64ForKey:[NSString stringWithFormat:@"%@%i:playerLosingADie", prefix, count]];
 		playerWinningADie = [decoder decodeInt64ForKey:[NSString stringWithFormat:@"%@%i:playerWinningADie", prefix, count]];
-
+		
 		self.historyType = (HistoryItemType)[decoder decodeIntForKey:[NSString stringWithFormat:@"%@%i:historyType", prefix, count]];
 
 		self.diceGameState = gameState;
 		self.bid = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
+		self.dice = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
     }
 
     return self;
@@ -86,6 +88,7 @@
 
 	[encoder encodeInt:historyType forKey:[NSString stringWithFormat:@"%@%i:historyType", prefix, count]];
 	[encoder encodeObject:bid forKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
+	[encoder encodeObject:dice forKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
 }
 
 - (id) initWithMetaInformation:(NSString *)meta
@@ -104,15 +107,17 @@
     return [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:newType withValue:newValue andResult:newValue];
 }
 
-- (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType
+- (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withDice:(NSArray*)dicePushed;
 {
+	self.dice = dicePushed;
+	
     return [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:newType withValue:-1 andResult:-1];
 }
 
 //Initialize ourself with specialized information
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer withBid:(Bid *)newBid
 {
-    self = [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_BID];
+    self = [self initWithState:gameState andWithPlayer:newPlayer whereTypeIs:ACTION_BID withDice:nil];
 
 	if (self)
         self.bid = newBid;
@@ -319,6 +324,159 @@
 
 	playerState = player;
 	return playerState;
+}
+
+- (NSString*)accessibleText
+{
+	PlayerState* playerLocal = self.player;
+	DiceGameState* gameStateLocal = self.diceGameState;
+	
+	NSString* historyString = nil;
+	NSString *playerName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLocal.playerID]) getDisplayName];
+	
+	if (self.historyType == actionHistoryItem)
+	{
+		switch (self.actionType) {
+			case ACTION_BID:
+				[self.bid setPlayerName:playerName];
+				historyString = [self.bid asString];
+				[self.bid setPlayerName:playerLocal.playerName];
+				break;
+			case ACTION_PUSH:
+				historyString = [NSString stringWithFormat:@"%@ pushed dice: ", playerName];
+				
+				for (Die* die in dice)
+					historyString = [historyString stringByAppendingFormat:@" %i", die.dieValue];
+				
+				break;
+			case ACTION_CHALLENGE_BID:
+			{
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
+				
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+				
+				historyString = [NSString stringWithFormat:@"%@ challenged %@ bid; %@ %@", playerName, valueName, playerName, result == 1 ? @"won" : @"lost"];
+				break;
+			}
+			case ACTION_CHALLENGE_PASS:
+			{
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
+				
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+				
+				historyString = [NSString stringWithFormat:@"%@ challenged %@ pass; %@ %@", playerName, valueName, playerName, result == 1 ? @"won" : @"lost"];
+				break;
+			}
+			case ACTION_EXACT:
+				historyString = [NSString stringWithFormat:@"%@ exacted; they were %@", playerName, result == 1 ? @"correct" : @"incorrect"];
+				break;
+			case ACTION_PASS:
+				historyString = [NSString stringWithFormat:@"%@ passed", playerName];
+				break;
+			case ACTION_ILLEGAL:
+				break;
+			case ACTION_QUIT:
+				historyString = [NSString stringWithFormat:@"%@ quit", playerName];
+				break;
+			case ACTION_LOST:
+				historyString = [NSString stringWithFormat:@"%@ lost", playerName];
+				break;
+			case ACTION_ACCEPT:
+			default:
+				break;
+		}
+	}
+	
+	return historyString;
+}
+
+- (NSAttributedString *)asHistoryString
+{
+	PlayerState* playerLocal = self.player;
+	DiceGameState* gameStateLocal = self.diceGameState;
+	
+	NSAttributedString* historyString = nil;
+	NSString *playerName = [((id<Player>)[gameStateLocal.players objectAtIndex:playerLocal.playerID]) getDisplayName];
+	
+	if (self.historyType == actionHistoryItem)
+	{
+		switch (self.actionType) {
+			case ACTION_BID:
+				[self.bid setPlayerName:playerName];
+				historyString = [[NSAttributedString alloc] initWithString:[self.bid asStringOldStyle] attributes:nil];
+				historyString = [PlayGameView formatTextAttributedString:historyString];
+				[self.bid setPlayerName:playerLocal.playerName];
+				break;
+			case ACTION_PUSH:
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ pushed dice ", playerName]];
+				
+				for (Die* die in dice)
+				{
+					NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+					attachment.image = [PlayGameView imageForDie:die.dieValue];
+					[attachment setBounds:CGRectMake(0, -5, 21, 21)];
+					
+					NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:attachment];
+					
+					[(NSMutableAttributedString*)historyString appendAttributedString:attachmentString];
+					[(NSMutableAttributedString*)historyString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+				}
+				
+				break;
+			case ACTION_CHALLENGE_BID:
+			{
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
+				
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+				
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ challenged %@ bid; %@ %@", playerName, valueName, playerName, result == 1 ? @"won" : @"lost"]];
+				break;
+			}
+			case ACTION_CHALLENGE_PASS:
+			{
+				NSString *valueName = [((id<Player>)[gameStateLocal.players objectAtIndex:value]) getDisplayName];
+				
+				if ([valueName isEqualToString:@"You"])
+					valueName = @"your";
+				else
+					valueName = [valueName stringByAppendingString:@"'s"];
+				
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ challenged %@ pass; %@ %@", playerName, valueName, playerName, result == 1 ? @"won" : @"lost"]];
+				break;
+			}
+			case ACTION_EXACT:
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ exacted; they were %@", playerName, result == 1 ? @"correct" : @"incorrect"]];
+				break;
+			case ACTION_PASS:
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ passed", playerName]];
+				break;
+			case ACTION_ILLEGAL:
+				break;
+			case ACTION_QUIT:
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ quit", playerName]];
+				break;
+			case ACTION_LOST:
+				historyString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ lost", playerName]];
+				break;
+			case ACTION_ACCEPT:
+			default:
+				break;
+		}
+	}
+	
+	NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:historyString];
+	[attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, historyString.length)];
+	
+	return attributedString;
 }
 
 @end

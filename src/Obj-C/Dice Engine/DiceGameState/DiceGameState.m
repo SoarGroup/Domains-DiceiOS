@@ -430,7 +430,8 @@
     item = nil;
     item = [[HistoryItem alloc] initWithState:self 
                                 andWithPlayer:[self getPlayerState:playerID] 
-                                  whereTypeIs:ACTION_PUSH];
+                                  whereTypeIs:ACTION_PUSH
+								  withDice:push];
     [history addObject:item];
     
     // Tell the player to push the dice.

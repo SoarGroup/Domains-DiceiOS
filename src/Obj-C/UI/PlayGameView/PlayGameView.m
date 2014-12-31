@@ -20,6 +20,7 @@
 #import "DiceReplayPlayer.h"
 
 #import "MultiplayerView.h"
+#import "HistoryView.h"
 
 @implementation UIViewController (BackButtonHandler)
 
@@ -485,13 +486,9 @@ NSString *numberName(int number) {
 
 	if (tutorial)
 		self.navigationItem.title = @"Tutorial";
-	else if (AICount > 0 && humanCount == 0)
-		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs - Single Player Match", AICount];
-	else if (humanCount > 0 && AICount == 0 && [self.nibName rangeOfString:@"iPad"].location != NSNotFound)
-		self.navigationItem.title = [NSString stringWithFormat:@"%i Human Opponents - Multiplayer Match", humanCount];
-	else if (AICount > 0 && humanCount > 0 && [self.nibName rangeOfString:@"iPad"].location != NSNotFound)
-		self.navigationItem.title = [NSString stringWithFormat:@"%i AIs, %i Human Opponents - Multiplayer Match", AICount, humanCount];
-	else if ([self.nibName rangeOfString:@"iPad"].location == NSNotFound)
+	else if (humanCount == 0)
+		self.navigationItem.title = [NSString stringWithFormat:@"Single Player Match"];
+	else if (humanCount > 1)
 		self.navigationItem.title = [NSString stringWithFormat:@"Multiplayer Match"];
 
 	if ([[self nibName] rangeOfString:@"iPad"].location == NSNotFound)
@@ -521,6 +518,9 @@ NSString *numberName(int number) {
 
 	if (tutorial)
 		return;
+	
+	UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"History" style:UIBarButtonItemStylePlain target:self action:@selector(displayHistoryView:)];
+	self.navigationItem.rightBarButtonItem = rightButton;
 
 	for (NSUInteger i = [localGame.players count];i < [playerViews count];i++)
 		((UIView*)[playerViews objectAtIndex:i]).hidden = YES;
@@ -592,7 +592,17 @@ NSString *numberName(int number) {
 	}
 }
 
-- (IBAction)backPressed:(id)sender {
+- (IBAction)backPressed:(id)sender
+{
+	NSArray* controllers = self.navigationController.viewControllers;
+	if (!self.navigationController ||
+		[[controllers lastObject] isKindOfClass:MultiplayerView.class] ||
+		[[controllers objectAtIndex:(controllers.count - 2)] isKindOfClass:MultiplayerView.class])
+	{
+		quitHandler();
+		return;
+	}
+	
     NSString *title = [NSString stringWithFormat:@"Leave the game?"];
     NSString *message = nil;
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
@@ -2258,6 +2268,32 @@ NSString *numberName(int number) {
 										  otherButtonTitles:@"Okay", nil];
 	alert.tag = TUTORIAL;
 	[alert show];
+}
+
+- (void)displayHistoryView:(id)sender
+{
+	NSString* device = [UIDevice currentDevice].model;
+	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+	
+	NSMutableArray* array = [NSMutableArray arrayWithArray:[self.game.gameState roundHistory]];
+	[array addObject:[NSArray arrayWithArray:[self.game.gameState history]]];
+	
+	HistoryView* view = [[HistoryView alloc] initWithHistory:array];
+	
+	if ([device isEqualToString:@"iPhone"])
+		[self.navigationController pushViewController:view animated:YES];
+	else
+	{
+		view.modalPresentationStyle = UIModalPresentationFormSheet;
+		
+		if (self.navigationController)
+			[self.navigationController presentViewController:view animated:YES completion:^(){}];
+		else
+		{
+			MultiplayerView* mView = self.multiplayerView;
+			[mView.navigationController presentViewController:view animated:YES completion:^(){}];
+		}
+	}
 }
 
 @end

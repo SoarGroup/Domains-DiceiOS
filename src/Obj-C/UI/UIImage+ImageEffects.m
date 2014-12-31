@@ -351,7 +351,7 @@
 
 + (UIColor*)umichBlueColor
 {
-	return [UIColor colorWithRed:0.0 green:1.0 blue:(float)(55.0/255.0) alpha:1.0];
+	return [UIColor colorWithRed:0.0 green:(float)(27/255.0) blue:(float)(55.0/255.0) alpha:1.0];
 }
 
 @end
