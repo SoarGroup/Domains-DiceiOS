@@ -41,6 +41,7 @@
 }
 
 + (void)initialize;
++ (void)cleanup;
 #ifdef __cplusplus
 + (std::unordered_map<unsigned long, sml::Agent*>&) agents;
 + (sml::Kernel*) kernel;

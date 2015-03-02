@@ -103,10 +103,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	
+		
 	if (((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning)
 	{
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[self soarOnlyGame:nil];
 		});
 	}
@@ -378,6 +378,10 @@
 
 - (IBAction)soarOnlyGame:(id)sender
 {
+	static int soarGameCount = 1;
+	
+	NSLog(@"Soar Game Count: %i", soarGameCount++);
+	
 	DiceDatabase *database = [[DiceDatabase alloc] init];
 	
 	NSString* username = [database getPlayerName];

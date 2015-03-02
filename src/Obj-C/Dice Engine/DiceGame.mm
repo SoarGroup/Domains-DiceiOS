@@ -47,7 +47,7 @@
 		
 		DDLogGameHistory(@"Start of Match");
 		
-		self.randomGenerator = [[Random alloc] init:setSeed];
+		self.randomGenerator = [[Random alloc] init:setSeed];//1188310913];
 		
 		self.all_actions = [[NSMutableArray alloc] init];
 		[all_actions addObject:[NSNumber numberWithInt:setSeed]];

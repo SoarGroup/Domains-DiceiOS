@@ -96,9 +96,49 @@ static NSLock* kernelLock;
 
 static int agentCount = 0;
 
+@interface NSThread (empty)
+
+- (void)empty;
+
+@end
+
+@implementation NSThread (empty)
+
+- (void)empty
+{
+	[[NSThread currentThread] cancel];
+	CFRunLoopStop(CFRunLoopGetCurrent());
+}
+
+@end
+
 @implementation SoarPlayer
 
 @synthesize name, playerState, playerID, game, turnLock, handler, participant, difficulty;
+
++ (void)cleanup
+{	
+	[kernelLock lock];
+
+	for (auto& s : agents)
+	{
+		s.second->StopSelf();
+		kernel->DestroyAgent(s.second);
+	}
+	
+	agents.clear();
+	
+	for (id key in agent_thread_map)
+	{
+		NSThread* thread = [agent_thread_map objectForKey:key];
+		
+		[thread performSelector:@selector(empty) onThread:thread withObject:nil waitUntilDone:YES modes:nil];
+	}
+	
+	[agent_thread_map removeAllObjects];
+	
+	[kernelLock unlock];
+}
 
 + (std::unordered_map<unsigned long, sml::Agent*>&) agents
 {
@@ -317,7 +357,10 @@ static int agentCount = 0;
 			{
 				path = [NSString stringWithFormat:@"source \"%@\"", [[NSBundle mainBundle] pathForResource:ruleFile ofType:@"soar" inDirectory:@""]];
 
-				std::cout << agents[(unsigned long)aLock]->ExecuteCommandLine([path UTF8String]) << std::endl;
+				std::string result = agents[(unsigned long)aLock]->ExecuteCommandLine([path UTF8String]);
+				
+				if ([database hasSoarLoggingEnabled])
+					std::cout << result << std::endl;
 			}
 			else
 			{
@@ -377,6 +420,8 @@ static int agentCount = 0;
 		[self performSelectorOnMainThread:@selector(showErrorAlert) withObject:nil waitUntilDone:YES];
 		return;
 	}
+	
+	NSLog(@"Soar Crash!");
 
 	[[[UIAlertView alloc] initWithTitle:@"Soar Error!" message:@"Unfortunately, Soar has encountered an error in processing and reasoning.  Please report an issue at github.com/SoarGroup/Domains-DiceiOS/issues.  Please exit the game, go to settings, and tap \"Send Log Files.\"  This will send us the logs for the last game and any additional details, such as the log file for Soar if enabled." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil]  show];
 
@@ -414,6 +459,8 @@ static int agentCount = 0;
 
 - (void) restartSoar
 {
+	[self showErrorAlert];
+
 	PlayerState* localState = self.playerState;
 	DiceGameState* state = localState.gameState;
 
@@ -422,8 +469,6 @@ static int agentCount = 0;
 
 	if (state.gameWinner)
 		[state.gameWinner notifyHasWon];
-
-	[self showErrorAlert];
 }
 
 - (void) doTurn
@@ -487,6 +532,9 @@ static int agentCount = 0;
 				[turnLock unlock];
 
 				DDLogDebug(@"Restarting Soar due to timeout");
+				
+				if (((ApplicationDelegate*)[UIApplication sharedApplication].delegate)->isSoarOnlyRunning)
+					return [self showErrorAlert];
 
 				return [self restartSoar];
 			}
@@ -505,6 +553,9 @@ static int agentCount = 0;
 					[turnLock unlock];
 
 					DDLogDebug(@"Restarting Soar due to goal stack depth exceeded");
+					
+					if (((ApplicationDelegate*)[UIApplication sharedApplication].delegate)->isSoarOnlyRunning)
+						return [self showErrorAlert];
 
 					return [self restartSoar];
 				}

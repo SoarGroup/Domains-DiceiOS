@@ -348,7 +348,8 @@
 		return nil;
 
     Bid *previousBid = gameStateLocal.previousBid;
-        // Make sure the current player is us, the previous bid exists, and the previous bid's playerID is not us
+	
+	// Make sure the current player is us, the previous bid exists, and the previous bid's playerID is not us
     
     HistoryItem *item = [gameStateLocal lastHistoryItem];
     if (item != nil)
