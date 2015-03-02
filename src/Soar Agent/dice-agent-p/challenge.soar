@@ -2,13 +2,16 @@ sp {dice*propose*challenge*bid
    (state <s> ^name dice
               ^my-turn true
               ^io.input-link.state.last-bid <last-bid>
-              ^io.input-link.affordances.action <a>)
+              ^io.input-link.affordances.action <a>
+              ^io.input-link.history <h>)
    (<a> ^name challenge
         ^available true
         ^target <t>)
    (<last-bid> ^action << bid push >>
                ^player <t>)
    (<t> ^id <id>)
+   (<h> ^action << bid push >>
+        ^player <t>)
 -->
    (<s> ^operator <op> +)
    (<op> ^name challenge
@@ -24,7 +27,10 @@ sp {dice*propose*challenge*pass-bid
               ^io.input-link.affordances.action <a>
 			  ^io.input-link.players.me <me>)
    (<me> ^id <my-id>)
-   (<h> ^action pass)
+   (<h> ^action pass
+	    ^next <next>)
+   (<next> ^action << bid push >>
+		   ^player <t>)
    (<last-bid> ^action << bid push >>
                ^player <t>)
    (<a> ^name challenge
