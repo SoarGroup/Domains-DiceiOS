@@ -19,6 +19,7 @@
 #import "SoarPlayer.h"
 
 #import "DiceReplayPlayer.h"
+#import "DiceSoarReplayPlayer.h"
 
 #include "NSMutableArrayShuffle.h"
 
@@ -225,7 +226,7 @@
 
 		for (id<Player> p in self.players)
 		{
-			if ([p isKindOfClass:DiceLocalPlayer.class] || [p isKindOfClass:DiceReplayPlayer.class])
+			if ([p isKindOfClass:DiceLocalPlayer.class] || [p isKindOfClass:DiceReplayPlayer.class] || [p isKindOfClass:DiceSoarReplayPlayer.class])
 			{
 				DiceLocalPlayer* player = p;
 				PlayGameView* localView = gameView;
@@ -300,7 +301,7 @@
 		{
 			[player end];
 
-			if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class])
+			if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class] || [player isKindOfClass:DiceSoarReplayPlayer.class])
 				[(DiceLocalPlayer*)player end:YES];
 		}
 
@@ -366,7 +367,7 @@
     gameView = aGameView;
     for (id <Player> player in self.players)
     {
-        if ([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class])
+        if ([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class] || [player isKindOfClass:DiceSoarReplayPlayer.class])
 			[((DiceLocalPlayer*)player).gameViews addObject:self.gameView];
 	}
 }
@@ -381,7 +382,7 @@
     assert(!started);
     assert(players != nil);
 	PlayGameView* localView = self.gameView;
-    if (([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class])
+    if (([player isKindOfClass:[DiceLocalPlayer class]] || [player isKindOfClass:DiceReplayPlayer.class] || [player isKindOfClass:DiceSoarReplayPlayer.class])
         && localView)
 		[((DiceLocalPlayer*)player).gameViews addObject:localView];
     
@@ -660,7 +661,7 @@
 	DiceLocalPlayer* localPlayer = nil;
 
 	for (id<Player> player in players)
-		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class])
+		if ([player isKindOfClass:DiceLocalPlayer.class] || [player isKindOfClass:DiceReplayPlayer.class] || [player isKindOfClass:DiceSoarReplayPlayer.class])
 		{
 			localPlayer = player;
 			break;

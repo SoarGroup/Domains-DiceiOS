@@ -56,6 +56,7 @@
 		4DB773691AA4C3E2007161B2 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB773681AA4C3E2007161B2 /* HistoryTableViewCell.m */; };
 		4DB7736C1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7736A1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m */; };
 		4DB7736F1AA4C7DD007161B2 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7736D1AA4C7DD007161B2 /* NSDate+DateTools.m */; };
+		4DB773721AA4DDAE007161B2 /* DiceSoarReplayPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4DB773701AA4DDAE007161B2 /* DiceSoarReplayPlayer.mm */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */; };
@@ -202,6 +203,8 @@
 		4DB7736B1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ClassMethodPriority.h"; sourceTree = "<group>"; };
 		4DB7736D1AA4C7DD007161B2 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
 		4DB7736E1AA4C7DD007161B2 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
+		4DB773701AA4DDAE007161B2 /* DiceSoarReplayPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DiceSoarReplayPlayer.mm; sourceTree = "<group>"; };
+		4DB773711AA4DDAE007161B2 /* DiceSoarReplayPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiceSoarReplayPlayer.h; sourceTree = "<group>"; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -901,6 +904,8 @@
 			isa = PBXGroup;
 			children = (
 				4D854A141993FF320039C742 /* replay.txt */,
+				4DB773701AA4DDAE007161B2 /* DiceSoarReplayPlayer.mm */,
+				4DB773711AA4DDAE007161B2 /* DiceSoarReplayPlayer.h */,
 				4D854A111993F58F0039C742 /* DiceReplayPlayer.h */,
 				4D854A121993F58F0039C742 /* DiceReplayPlayer.m */,
 				4DF397AF1923C5B800A523FB /* DiceLocalPlayer.m */,
@@ -1219,6 +1224,7 @@
 				4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */,
 				4DF396461923C51D00A523FB /* RulesView.m in Sources */,
 				4DB7736F1AA4C7DD007161B2 /* NSDate+DateTools.m in Sources */,
+				4DB773721AA4DDAE007161B2 /* DiceSoarReplayPlayer.mm in Sources */,
 				4DF396201923C51D00A523FB /* Die.m in Sources */,
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,

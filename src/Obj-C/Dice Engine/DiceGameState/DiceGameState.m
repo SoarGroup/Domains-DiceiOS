@@ -16,6 +16,7 @@
 #import "DiceGame.h"
 #import "SoarPlayer.h"
 #import "DiceReplayPlayer.h"
+#import "DiceSoarReplayPlayer.h"
 
 #import "ApplicationDelegate.h"
 #import "GameKitListener.h"
@@ -1017,7 +1018,8 @@
 
         if (![player hasLost] && ([[player playerPtr] isKindOfClass:DiceLocalPlayer.class] ||
                                   [[player playerPtr] isKindOfClass:DiceRemotePlayer.class] ||
-								  [[player playerPtr] isKindOfClass:DiceReplayPlayer.class]))
+								  [[player playerPtr] isKindOfClass:DiceReplayPlayer.class] ||
+								  [[player playerPtr] isKindOfClass:DiceSoarReplayPlayer.class]))
         {
             hasAllHumansLost = NO;
         }

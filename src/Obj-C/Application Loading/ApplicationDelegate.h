@@ -18,6 +18,9 @@
 @interface ApplicationDelegate : NSObject <UIApplicationDelegate>
 {
 	NSMutableArray* databaseInstances;
+	
+@public
+	BOOL isSoarOnlyRunning;
 }
 
 @property (nonatomic, strong) IBOutlet UIViewController *rootViewController;

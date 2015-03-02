@@ -21,6 +21,7 @@
 #import <unordered_map>
 
 #import "Player.h"
+#import "DiceGame.h"
 #import "GameKitGameHandler.h"
 
 #import <vector>

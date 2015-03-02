@@ -17,6 +17,7 @@
 #import "PlayGameView.h"
 #import "DDFileLogger.h"
 #import "DiceReplayPlayer.h"
+#import "DiceSoarReplayPlayer.h"
 #import "SoarPlayer.h"
 #import "LoadingGameView.h"
 #import "GameKitGameHandler.h"
@@ -34,6 +35,8 @@
 @synthesize difficultySelector;
 
 @synthesize debugLabel, remoteIPLabel, remoteIPTextField, resetAchievementsButton, clearLogFiles, debugReplayFile, mainMenu, logSoarAI;
+
+@synthesize soarOnlyGame;
 
 - (id)init:(MainMenu*)menu
 {
@@ -93,7 +96,20 @@
 	self.remoteIPTextField.hidden = YES;
 	self.debugReplayFile.hidden = YES;
 	self.clearLogFiles.hidden = YES;
+	self.soarOnlyGame.hidden = YES;
 #endif
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	if (((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning)
+	{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[self soarOnlyGame:nil];
+		});
+	}
 }
 
 - (void)nameTextFieldTextFinalize:(id)sender
@@ -357,6 +373,63 @@
 	game.gameState.currentTurn = 0;
 	
 	UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:self.mainMenu];
+	[self.navigationController pushViewController:gameView animated:YES];
+}
+
+- (IBAction)soarOnlyGame:(id)sender
+{
+	DiceDatabase *database = [[DiceDatabase alloc] init];
+	
+	NSString* username = [database getPlayerName];
+	
+	if ([username length] == 0)
+		username = @"You";
+	
+	((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning = YES;
+	
+	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate];
+	
+	int humanCount = 1;
+	int AICount = 1;
+	int currentHumanCount = 0;
+	
+	NSLock* lock = [[NSLock alloc] init];
+	
+	int totalPlayerCount = AICount + humanCount;
+	
+	for (int i = 0;i < totalPlayerCount;i++)
+	{
+		BOOL isAI = (BOOL)([game.randomGenerator randomNumber] % 2);
+		
+		if ((currentHumanCount > 0 && isAI && AICount > 0) || (currentHumanCount == humanCount))
+		{
+			[game addPlayer:[[SoarPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
+			
+			AICount--;
+		}
+		else
+		{
+			currentHumanCount++;
+			[game addPlayer:[[DiceSoarReplayPlayer alloc] initWithGame:game connentToRemoteDebugger:NO lock:lock withGameKitGameHandler:nil difficulty:-1]];
+		}
+	}
+	
+	game.gameLock = lock;
+	game.gameState.currentTurn = 0;
+	
+	void (^quitHandler)(void) =^ {
+		[self.navigationController popToViewController:self animated:YES];
+		
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wselector"
+		[NSThread detachNewThreadSelector:@selector(end) toTarget:game withObject:nil];
+		
+		[game performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
+#pragma clang diagnostic pop
+	};
+	
+	UIViewController *gameView = [[PlayGameView alloc] initWithGame:game withQuitHandler:[quitHandler copy]];
+	
 	[self.navigationController pushViewController:gameView animated:YES];
 }
 

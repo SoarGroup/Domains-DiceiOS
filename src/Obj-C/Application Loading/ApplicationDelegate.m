@@ -40,7 +40,10 @@
     self = [super init];
     
     if (self)
+	{
         databaseInstances = [[NSMutableArray alloc] init];
+		isSoarOnlyRunning = NO;
+	}
     
     return self;
 }

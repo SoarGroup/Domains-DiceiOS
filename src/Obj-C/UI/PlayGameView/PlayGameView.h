@@ -46,6 +46,7 @@ enum UITags
 
 	BOOL tutorial;
 	int step;
+	BOOL isSoarOnlyGame;
 }
 
 // Utility Functions
