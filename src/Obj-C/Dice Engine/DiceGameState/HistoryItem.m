@@ -14,6 +14,7 @@
 
 @synthesize player, actionType, historyType, value, result, diceGameState;
 @synthesize bid, state, dice;
+@synthesize timestamp;
 
 // Initialize ourself
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)newValue andResult:(int)newResult
@@ -28,6 +29,8 @@
         self.state = [gameState stateString:-1];
         playerLosingADie = -1;
         playerWinningADie = -1;
+		
+		self.timestamp = [NSDate date];
     }
     return self;
 }
@@ -59,6 +62,8 @@
 		self.diceGameState = gameState;
 		self.bid = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
 		self.dice = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
+		
+		self.timestamp = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:timestamp", prefix, count]];
     }
 
     return self;
@@ -89,6 +94,7 @@
 	[encoder encodeInt:historyType forKey:[NSString stringWithFormat:@"%@%i:historyType", prefix, count]];
 	[encoder encodeObject:bid forKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
 	[encoder encodeObject:dice forKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
+	[encoder encodeObject:self.timestamp forKey:[NSString stringWithFormat:@"%@%i:timestamp", prefix, count]];
 }
 
 - (id) initWithMetaInformation:(NSString *)meta

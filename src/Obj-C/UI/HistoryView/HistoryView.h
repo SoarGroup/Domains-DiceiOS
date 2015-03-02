@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "HistoryTableViewController.h"
+#import "HistoryTableViewCell.h"
 
 @interface HistoryView : UIViewController
 

@@ -53,6 +53,9 @@
 		4D854A131993F58F0039C742 /* DiceReplayPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D854A121993F58F0039C742 /* DiceReplayPlayer.m */; };
 		4D854A151993FF320039C742 /* replay.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4D854A141993FF320039C742 /* replay.txt */; };
 		4D9CEA0B1A4FA2C3003D8B9B /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9CEA0A1A4FA2C3003D8B9B /* libbz2.dylib */; };
+		4DB773691AA4C3E2007161B2 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB773681AA4C3E2007161B2 /* HistoryTableViewCell.m */; };
+		4DB7736C1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7736A1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m */; };
+		4DB7736F1AA4C7DD007161B2 /* NSDate+DateTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7736D1AA4C7DD007161B2 /* NSDate+DateTools.m */; };
 		4DB7B1DC17EB45C000CA94CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DB7B1DB17EB45C000CA94CE /* Images.xcassets */; };
 		4DDA885B13FDA1F2008D3900 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */; };
 		4DDCDD81199D064700147BE7 /* MultiplayerHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDCDD80199D064700147BE7 /* MultiplayerHelpView.xib */; };
@@ -193,6 +196,12 @@
 		4D956DB9160D0C1400E7A7C2 /* UM Liars Dice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "UM Liars Dice.entitlements"; sourceTree = "<group>"; };
 		4D9CEA0A1A4FA2C3003D8B9B /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		4DA2B8471630B35900E9F8E3 /* UM Liars Dice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UM Liars Dice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DB773671AA4C3E2007161B2 /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewCell.h; path = HistoryView/HistoryTableViewCell.h; sourceTree = "<group>"; };
+		4DB773681AA4C3E2007161B2 /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HistoryTableViewCell.m; path = HistoryView/HistoryTableViewCell.m; sourceTree = "<group>"; };
+		4DB7736A1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+ClassMethodPriority.m"; sourceTree = "<group>"; };
+		4DB7736B1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+ClassMethodPriority.h"; sourceTree = "<group>"; };
+		4DB7736D1AA4C7DD007161B2 /* NSDate+DateTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+DateTools.m"; sourceTree = "<group>"; };
+		4DB7736E1AA4C7DD007161B2 /* NSDate+DateTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+DateTools.h"; sourceTree = "<group>"; };
 		4DB7B1DB17EB45C000CA94CE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4DDA885A13FDA1F2008D3900 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -923,10 +932,16 @@
 		4DF491441A5350FF00EAC818 /* HistoryView */ = {
 			isa = PBXGroup;
 			children = (
+				4DB7736D1AA4C7DD007161B2 /* NSDate+DateTools.m */,
+				4DB7736E1AA4C7DD007161B2 /* NSDate+DateTools.h */,
+				4DB7736A1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m */,
+				4DB7736B1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.h */,
 				4DF491471A53514E00EAC818 /* HistoryView.h */,
 				4DF491481A53514E00EAC818 /* HistoryView.m */,
 				4DF4914C1A53529800EAC818 /* HistoryTableViewController.h */,
 				4DF4914D1A53529800EAC818 /* HistoryTableViewController.m */,
+				4DB773671AA4C3E2007161B2 /* HistoryTableViewCell.h */,
+				4DB773681AA4C3E2007161B2 /* HistoryTableViewCell.m */,
 			);
 			name = HistoryView;
 			sourceTree = "<group>";
@@ -1192,15 +1207,18 @@
 				4DF3961F1923C51D00A523FB /* DiceGameState.m in Sources */,
 				4D1AE1FC1979AA7C00D6F4F5 /* GameKitLeaderboardHandler.m in Sources */,
 				4DF396471923C51D00A523FB /* SettingsView.m in Sources */,
+				4DB7736C1AA4C54E007161B2 /* NSLayoutConstraint+ClassMethodPriority.m in Sources */,
 				4DF3964A1923C51D00A523FB /* UIImage+ImageEffects.m in Sources */,
 				4DF3961C1923C51D00A523FB /* DiceGame.mm in Sources */,
 				4DDCDD84199D0ADA00147BE7 /* MultiplayerHelpView.m in Sources */,
 				4DF3961D1923C51D00A523FB /* Bid.m in Sources */,
 				4DF3961E1923C51D00A523FB /* DiceAction.m in Sources */,
 				4DF397B61923C5B800A523FB /* SoarPlayer.mm in Sources */,
+				4DB773691AA4C3E2007161B2 /* HistoryTableViewCell.m in Sources */,
 				4DF396421923C51D00A523FB /* MainMenu.m in Sources */,
 				4DF396411923C51D00A523FB /* LoadingGameView.m in Sources */,
 				4DF396461923C51D00A523FB /* RulesView.m in Sources */,
+				4DB7736F1AA4C7DD007161B2 /* NSDate+DateTools.m in Sources */,
 				4DF396201923C51D00A523FB /* Die.m in Sources */,
 				4DF396481923C51D00A523FB /* SingleplayerView.m in Sources */,
 				4DF3961B1923C51D00A523FB /* ApplicationDelegate.m in Sources */,

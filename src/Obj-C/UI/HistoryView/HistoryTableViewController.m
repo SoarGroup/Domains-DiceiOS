@@ -23,14 +23,24 @@
 
 @implementation HistoryTableViewController
 
-@synthesize history;
+@synthesize history, sizingCell;
 
 - (id)initWithHistory:(NSArray*)historyArray
 {
 	self = [super init];
 	
 	if (self)
+	{
 		self.history = historyArray;
+		
+		self.sizingCell = [[HistoryTableViewCell alloc] initWithReuseIdentifier:nil];
+		self.sizingCell.autoresizingMask = UIViewAutoresizingFlexibleWidth; // this must be set for the cell heights to be calculated correctly in landscape
+		self.sizingCell.hidden = YES;
+		
+		[self.tableView addSubview:self.sizingCell];
+		
+		self.sizingCell.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 0);
+	}
 	
 	return self;
 }
@@ -38,11 +48,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,6 +80,10 @@
 	return array;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return [HistoryTableViewCell minimumHeight];
+}
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 	NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
@@ -105,95 +114,40 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	HistoryItem* item = [[self.history objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-
-	NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithAttributedString:[item asHistoryString]];
 	
-	NSString* device = [UIDevice currentDevice].model;
-	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
+	CGFloat calculatedHeight = 0;
 	
-	NSInteger width;
-	if ([device isEqualToString:@"iPhone"])
-		width = 120;
-	else
-		width = 9999;
+	// determine which dyanmic height method to use
+	self.sizingCell.message = item;
 	
-	CGRect rect = [attributedText boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
-											   options:NSStringDrawingUsesLineFragmentOrigin
-											   context:nil];
-	return rect.size.height + 20;
+	[self.sizingCell setNeedsLayout];
+	[self.sizingCell layoutIfNeeded];
+	
+	NSAttributedString *cellText = [item asHistoryString];
+	
+	calculatedHeight = [self.sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+	
+	return calculatedHeight + cellText.size.height;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HistoryTableViewCell"];
-    
-	if (cell == nil)
-	{
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HistoryTableViewCell"];
-		cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-		cell.textLabel.numberOfLines = 0;
-		cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
-	}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *autoCellId = @"autoCell";
 	
+	HistoryTableViewCell *cell = nil;
 	HistoryItem* item = [[self.history objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 	
-	cell.textLabel.attributedText = [item asHistoryString];
-	cell.textLabel.accessibilityLabel = [item accessibleText];
-	[cell.textLabel sizeToFit];
-	
-	__block UIImage* profileImage = [UIImage imageNamed:@"YouPlayer.png"];
-	
-	PlayerState* state = item.player;
-	id<Player> playerPtr = state.playerPtr;
-	
-	if ([playerPtr isKindOfClass:DiceLocalPlayer.class] || [playerPtr isKindOfClass:DiceRemotePlayer.class])
-	{
-		if ([playerPtr isKindOfClass:DiceRemotePlayer.class])
-			profileImage = [UIImage imageNamed:@"HumanPlayer.png"];
+	NSString *cellId = autoCellId;
 		
-		// Works for DiceRemotePlayer too
-		DiceLocalPlayer* player = playerPtr;
+	cell = [tableView dequeueReusableCellWithIdentifier:cellId];
 		
-		if (player.handler || ([playerPtr isKindOfClass:DiceLocalPlayer.class] && [GKLocalPlayer localPlayer].isAuthenticated))
-		{
-			dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-			
-			GKPlayer* gkPlayer = player.participant.player;
-			
-			if ([playerPtr isKindOfClass:DiceLocalPlayer.class] && [GKLocalPlayer localPlayer].isAuthenticated)
-				gkPlayer = [GKLocalPlayer localPlayer];
-			
-			[gkPlayer loadPhotoForSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage* photo, NSError* error)
-			 {
-				 if (photo)
-					 profileImage = photo;
-				 
-				 dispatch_semaphore_signal(semaphore);
-			 }];
-			
-			while (dispatch_semaphore_wait(semaphore, DISPATCH_TIME_NOW))
-				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:10]];
-		}
+	if (cell == nil) {
+		cell = [[HistoryTableViewCell alloc] initWithReuseIdentifier:cellId];
 	}
-	else if ([playerPtr isKindOfClass:SoarPlayer.class])
-		profileImage = [UIImage imageNamed:@"SoarPlayer.png"];
 	
-	cell.imageView.image = profileImage;
-	CGRect frame = cell.imageView.frame;
-	frame.size.width = 25;
-	cell.imageView.frame = frame;
+	cell.message = item;
 	
-	// set the accessory view:
-	cell.accessoryType =  UITableViewCellAccessoryNone;
-	
-	NSString* device = [UIDevice currentDevice].model;
-	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
-	
-	if ([device isEqualToString:@"iPhone"])
-		cell.backgroundColor = [UIColor umichBlueColor];
-	else
-		cell.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
-	
-    return cell;
+	return cell;
 }
 
 @end

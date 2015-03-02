@@ -32,6 +32,7 @@ typedef enum HistoryItemType {
 @property (readwrite, strong) Bid *bid;
 @property (readwrite, strong) NSArray* dice;
 @property (readwrite, strong) NSString *state;
+@property (readwrite, strong) NSDate* timestamp;
 
 - (id)initWithState:(DiceGameState *)gameState andWithPlayer:(PlayerState *)newPlayer whereTypeIs:(ActionType)newType withValue:(int)value andResult:(int)result;
 - (id) initWithMetaInformation:(NSString *)meta;
