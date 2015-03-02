@@ -22,7 +22,7 @@
 #ifdef __cplusplus
 	std::seed_seq* seed;
 
-	std::minstd_rand0 random;
+	std::mt19937 random;
 	std::random_device true_random;
 #endif
 

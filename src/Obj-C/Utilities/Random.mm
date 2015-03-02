@@ -22,7 +22,7 @@
 		DDLogDebug(@"Seed:%lu", (unsigned long)integerSeed);
 
 		seed = new std::seed_seq{integerSeed};
-		random = std::minstd_rand0(*seed);
+		random = std::mt19937(*seed);
 
 		for (int i = 0;i < numbersGenerated;i++)
 			random();
@@ -46,9 +46,10 @@
 		integerSeed = intSeed;
 
 		DDLogGameHistory(@"Match Seed %lu", (unsigned long)integerSeed);
+		NSLog(@"Match Seed:%lu", (unsigned long)integerSeed);
 
 		seed = new std::seed_seq{integerSeed};
-		random = std::minstd_rand0(*seed);
+		random = std::mt19937(*seed);
 
 		numbersGenerated = 0;
 	}
