@@ -96,7 +96,7 @@
 	self.remoteIPTextField.hidden = YES;
 	self.debugReplayFile.hidden = YES;
 	self.clearLogFiles.hidden = YES;
-	self.soarOnlyGame.hidden = YES;
+//	self.soarOnlyGame.hidden = YES;
 #endif
 }
 
@@ -168,7 +168,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if (buttonIndex != 1 && [alertView.title isEqualToString:@"Reset Achievements?"])
+	if (buttonIndex == 1 && [alertView.title isEqualToString:@"Reset Achievements?"])
 	{
 		[GKAchievement resetAchievementsWithCompletionHandler:^(NSError* error)
 		 {
@@ -311,13 +311,6 @@
 
 - (IBAction)debugReplayFile:(id)sender
 {
-	DiceDatabase *database = [[DiceDatabase alloc] init];
-	
-	NSString* username = [database getPlayerName];
-	
-	if ([username length] == 0)
-		username = @"You";
-	
 	NSArray* array = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"replay" ofType:@"txt"]];
 	
 	int seed = [[array objectAtIndex:0] intValue];
@@ -381,13 +374,6 @@
 	static int soarGameCount = 1;
 	
 	NSLog(@"Soar Game Count: %i", soarGameCount++);
-	
-	DiceDatabase *database = [[DiceDatabase alloc] init];
-	
-	NSString* username = [database getPlayerName];
-	
-	if ([username length] == 0)
-		username = @"You";
 	
 	((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning = YES;
 	

@@ -634,7 +634,6 @@
 
 	ApplicationDelegate* delegate = self.appDelegate;
 	[delegate.achievements updateAchievements:self];
-	[delegate.leaderboards updateGame:self];
 }
 
 - (BOOL)isMultiplayer

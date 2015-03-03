@@ -33,7 +33,7 @@
 
 @synthesize databaseArrayLock;
 
-@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController, achievements, leaderboards, filelogger;
+@synthesize mainMenu, window, navigationController, listener, gameCenterLoginViewController, achievements, filelogger;
 
 - (id)init
 {
@@ -130,7 +130,6 @@
             self.mainMenu.multiplayerEnabled = YES;
             
             self.achievements = [[GameKitAchievementHandler alloc] init];
-            self.leaderboards = [[GameKitLeaderboardHandler alloc] init];
         }
         else
         {

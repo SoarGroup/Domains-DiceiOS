@@ -217,9 +217,9 @@
         UIAlertView *noMultiplayer;
         
         if (delegate.gameCenterLoginViewController)
-            noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Stats Require Game Center" message:@"Liar's Dice Statistics require Game Center to function.  You are not logged into Game Center.  Would you like to log into Game Center to access Multiplayer?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Achievements Require Game Center" message:@"Liar's Dice Achievements require Game Center to function.  You are not logged into Game Center.  Would you like to log into Game Center to access Achievements?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         else
-            noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Stats Require Game Center" message:@"Liar's Dice Statistics require Game Center to function.  Authentication with Game Center failed.  If you would like to use/have statistics, please make sure that you are connected to the internet and logged into Game Center." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            noMultiplayer = [[UIAlertView alloc] initWithTitle:@"Achievements Require Game Center" message:@"Liar's Dice Achievements require Game Center to function.  Authentication with Game Center failed.  If you would like to use/have statistics, please make sure that you are connected to the internet and logged into Game Center." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         
         [noMultiplayer show];
     }
@@ -228,6 +228,7 @@
 		GKGameCenterViewController* gameCenterController = [[GKGameCenterViewController alloc] init];
 		gameCenterController.delegate = self;
 		gameCenterController.gameCenterDelegate = self;
+		gameCenterController.viewState = GKGameCenterViewControllerStateAchievements;
 
 		[self.navigationController presentViewController:gameCenterController animated:YES completion:nil];
 	}

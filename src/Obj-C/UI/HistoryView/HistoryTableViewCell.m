@@ -48,8 +48,6 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 	
 	self.loadTime = [NSDate date];
-	NSString* device = [UIDevice currentDevice].model;
-	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
 	
 	self.accessoryType = UITableViewCellAccessoryNone;
 	self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -69,20 +67,14 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 	self.messageTextLabel.numberOfLines = 0;
 	self.messageTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
 	
-//	if ([device isEqualToString:@"iPhone"])
-		self.messageTextLabel.backgroundColor = [UIColor umichBlueColor];
-//	else
-//		self.messageTextLabel.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+	self.messageTextLabel.backgroundColor = [UIColor umichBlueColor];
 	
 	[self.contentView addSubview:self.messageTextLabel];
 	
 	self.timestampLabel = [[UILabel alloc] init];
 	self.timestampLabel.font = [UIFont systemFontOfSize:HistoryTableViewCellTimestampFontSize];
 	
-//	if ([device isEqualToString:@"iPhone"])
-		self.timestampLabel.textColor = [UIColor lightGrayColor];
-//	else
-//		self.timestampLabel.textColor = [UIColor whiteColor];
+	self.timestampLabel.textColor = [UIColor lightGrayColor];
 	
 	self.timestampLabel.textAlignment = NSTextAlignmentRight;
 	self.timestampLabel.backgroundColor = [UIColor clearColor];
@@ -93,10 +85,7 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 	self.messageTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	self.timestampLabel.translatesAutoresizingMaskIntoConstraints = NO;
 	
-//	if ([device isEqualToString:@"iPhone"])
-		self.backgroundColor = [UIColor umichBlueColor];
-//	else
-//		self.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+	self.backgroundColor = [UIColor umichBlueColor];
 	
 	self.rightGutterConstraints = [NSMutableArray array];
 	[self applyConstraints];
