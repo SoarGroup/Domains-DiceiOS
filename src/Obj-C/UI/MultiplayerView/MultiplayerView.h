@@ -29,7 +29,6 @@
 @property (atomic, strong) NSMutableArray* miniGamesViewArray;
 @property (atomic, strong) NSMutableArray* handlerArray; // One-To-One Correspondence with miniGamesViewArray
 @property (atomic, strong) NSMutableArray* playGameViews; // One-To-One Correspondence with miniGamesViewArray
-@property (atomic, strong) NSMutableArray* containers; // One-To-One Correspondence with miniGamesViewArray
 
 @property (nonatomic, strong) JoinMatchView* joinMatchPopoverViewController;
 @property (nonatomic, strong) UIPopoverController* popoverController;

@@ -27,7 +27,7 @@
 
 @implementation MultiplayerView
 
-@synthesize joinMatchButton, gamesScrollView, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner, containers;
+@synthesize joinMatchButton, gamesScrollView, mainMenu, appDelegate, popoverController, joinMatchPopoverViewController, joinSpinner;
 
 @synthesize miniGamesViewArray, playGameViews, handlerArray;
 
@@ -49,7 +49,6 @@
 		self.handlerArray = [[NSMutableArray alloc] init];
 		self.miniGamesViewArray = [[NSMutableArray alloc] init];
 		self.playGameViews = [[NSMutableArray alloc] init];
-		self.containers = [[NSMutableArray alloc] init];
 
 		if (iPad)
 			self.joinMatchPopoverViewController = [[JoinMatchView alloc] initWithMainMenu:menu withAppDelegate:delegate isPopOver:YES withMultiplayerView:self];
@@ -84,7 +83,6 @@
 		[delegate.listener removeGameKitGameHandler:handler];
 	
 	[handlerArray removeAllObjects];
-	[containers removeAllObjects];
 }
 
 - (void)viewDidLoad
@@ -131,8 +129,6 @@
 
 	for (UIView* view in self.gamesScrollView.subviews)
 		[(PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"] viewWillDisappear:animated];
-	
-	[self destroy];
 }
 
 - (void)handleUpdateNotification:(NSNotification*)notification
@@ -564,8 +560,9 @@
 		 } completion:^(BOOL finished) {
 			 if (finished)
 			 {
-				 [((UIView*)[self->playGameViews objectAtIndex:handlerIndex]) removeFromSuperview];
-				 [((PlayGameView*)[self->playGameViews objectAtIndex:handlerIndex]) quit];
+				 UIView* view = ((UIView*)[self->playGameViews objectAtIndex:handlerIndex]);
+				 [view removeFromSuperview];
+				 [((PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"]) quit];
 				 [self->playGameViews removeObjectAtIndex:handlerIndex];
 				 
 				 [self->miniGamesViewArray removeObjectAtIndex:handlerIndex];
