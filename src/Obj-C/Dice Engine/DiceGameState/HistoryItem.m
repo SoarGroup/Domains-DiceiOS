@@ -63,6 +63,13 @@
 		self.bid = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
 		self.dice = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
 		
+		NSMutableArray* diceMutable = [[NSMutableArray alloc] init];
+		int countOfDice = [decoder decodeIntForKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
+		
+		for (int i = 0;i < countOfDice;++i)
+			[diceMutable addObject:[[Die alloc] initWithCoder:decoder withCount:i withPrefix:[NSString stringWithFormat:@"HistoryItem%@%i:", prefix, count]]];
+		self.dice = diceMutable;
+		
 		self.timestamp = [decoder decodeObjectForKey:[NSString stringWithFormat:@"%@%i:timestamp", prefix, count]];
     }
 
@@ -93,7 +100,12 @@
 
 	[encoder encodeInt:historyType forKey:[NSString stringWithFormat:@"%@%i:historyType", prefix, count]];
 	[encoder encodeObject:bid forKey:[NSString stringWithFormat:@"%@%i:bid", prefix, count]];
-	[encoder encodeObject:dice forKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
+	
+	[encoder encodeInt:(int)[dice count] forKey:[NSString stringWithFormat:@"%@%i:dice", prefix, count]];
+	
+	for (int i = 0;i < [dice count];i++)
+		[((Die*)[dice objectAtIndex:i]) encodeWithCoder:encoder withCount:i withPrefix:[NSString stringWithFormat:@"HistoryItem%@%i:", prefix, count]];
+	
 	[encoder encodeObject:self.timestamp forKey:[NSString stringWithFormat:@"%@%i:timestamp", prefix, count]];
 }
 

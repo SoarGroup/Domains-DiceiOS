@@ -377,7 +377,7 @@
 	
 	((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning = YES;
 	
-	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate];
+	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate withSeed:1172919707];
 	
 	int humanCount = 1;
 	int AICount = 1;
@@ -413,8 +413,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wselector"
 		[NSThread detachNewThreadSelector:@selector(end) toTarget:game withObject:nil];
-		
-		[game performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
 #pragma clang diagnostic pop
 	};
 	

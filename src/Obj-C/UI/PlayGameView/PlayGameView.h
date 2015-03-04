@@ -118,6 +118,7 @@ enum UITags
 + (NSAttributedString*)formatTextAttributedString:(NSAttributedString*)nameLabelText;
 
 - (void)displayHistoryView:(id)sender;
+- (void)quit;
 
 @end
 

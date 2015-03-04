@@ -47,14 +47,12 @@
 		
 		DDLogGameHistory(@"Start of Match");
 		
-		self.randomGenerator = [[Random alloc] init:setSeed];//1188310913];
+		self.randomGenerator = [[Random alloc] init:setSeed];
 		
 		self.all_actions = [[NSMutableArray alloc] init];
 		[all_actions addObject:[NSNumber numberWithInt:setSeed]];
 		[all_actions addObject:[NSMutableArray array]];
 		
-		//self.randomGenerator = [[Random alloc] init:1323730008];
-		//self.randomGenerator = [[Random alloc] init:NO_SEED];
 		compatibility_build = COMPATIBILITY_BUILD;
 		
 		transfered = NO;
@@ -68,29 +66,15 @@
 	return [self initWithAppDelegate:anAppDelegate withSeed:arc4random_uniform(RAND_MAX)];
 }
 
-- (void)endGamePermanently
-{
-	for (id<Player> p in players)
-		if ([p isKindOfClass:SoarPlayer.class])
-			[((SoarPlayer*)p) cancelThread];
-	
-	if (gameLock && !transfered)
-	{
-		auto agents = [SoarPlayer agents];
-		
-		auto it = agents.find((unsigned long)gameLock);
-		
-		if (it != agents.end())
-		{
-			[SoarPlayer kernel]->DestroyAgent(it->second);
-			agents.erase(it);
-		}
-	}
-}
-
 -(DiceGame*)init
 {
 	return [self initWithAppDelegate:nil];
+}
+
+- (void)dealloc
+{
+	if (!transfered)
+		[SoarPlayer destroyThread:gameLock];
 }
 
 -(NSString*)gameNameString
@@ -137,6 +121,14 @@
 
 	if (self)
 	{
+		if ([decoder containsValueForKey:@"DiceGame:compatibility_build"])
+			compatibility_build = [decoder decodeIntForKey:@"DiceGame:compatibility_build"];
+		else
+			compatibility_build = -1;
+		
+		if (compatibility_build != COMPATIBILITY_BUILD)
+			return nil;
+		
 		self.started = [decoder decodeBoolForKey:@"DiceGame:started"];
 		self.deferNotification = [decoder decodeBoolForKey:@"DiceGame:deferNotification"];
 
@@ -158,11 +150,6 @@
 			self.all_actions = [decoder decodeObjectForKey:@"DiceGame:all_actions"];
 		
 		newRound = [decoder containsValueForKey:@"NewRound"];
-		
-		if ([decoder containsValueForKey:@"DiceGame:compatibility_build"])
-			compatibility_build = [decoder decodeIntForKey:@"DiceGame:compatibility_build"];
-		else
-			compatibility_build = -1;
 		
 		transfered = NO;
 	}

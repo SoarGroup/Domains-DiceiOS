@@ -41,13 +41,11 @@
 }
 
 + (void)initialize;
-+ (void)cleanup;
++ (void)destroyThread:(NSLock*)lock;
 #ifdef __cplusplus
 + (std::unordered_map<unsigned long, sml::Agent*>&) agents;
 + (sml::Kernel*) kernel;
 #endif
-
-- (void) cancelThread;
 
 - (id)initWithGame:(DiceGame*)game connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)lock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff;
 

@@ -19,7 +19,7 @@
 
 #import "Random.h"
 
-#define COMPATIBILITY_BUILD 206
+#define COMPATIBILITY_BUILD 209
 
 @class ApplicationDelegate;
 
@@ -34,8 +34,6 @@
 
 	int compatibility_build;
 }
-
-- (void)endGamePermanently;
 
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate withSeed:(int)setSeed;
 - (id)initWithAppDelegate:(ApplicationDelegate*)anAppDelegate;

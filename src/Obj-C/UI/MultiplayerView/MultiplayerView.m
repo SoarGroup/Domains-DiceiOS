@@ -61,6 +61,30 @@
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
+	[self destroy];
+}
+
+- (void) destroy
+{
+	for (UIView* view in playGameViews)
+	{
+		[((PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"]) quit];
+		[((PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"]) removeFromParentViewController];
+		[((PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"]).view removeFromSuperview];
+		[view.LDContext removeAllObjects];
+		[view removeFromSuperview];
+	}
+	
+	[playGameViews removeAllObjects];
+	[self->miniGamesViewArray removeAllObjects];
+	
+	ApplicationDelegate* delegate = self.appDelegate;
+	for (GameKitGameHandler* handler in handlerArray)
+		[delegate.listener removeGameKitGameHandler:handler];
+	
+	[handlerArray removeAllObjects];
+	[containers removeAllObjects];
 }
 
 - (void)viewDidLoad
@@ -107,6 +131,8 @@
 
 	for (UIView* view in self.gamesScrollView.subviews)
 		[(PlayGameView*)[view.LDContext objectForKey:@"PlayGameView"] viewWillDisappear:animated];
+	
+	[self destroy];
 }
 
 - (void)handleUpdateNotification:(NSNotification*)notification
@@ -447,11 +473,6 @@
 			void (^quitHandler)(void) =^
 			{
 				[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
-				
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wselector"
-				[localGame performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
-#pragma clang diagnostic pop
 			};
 			
 			PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
@@ -477,8 +498,6 @@
 		void (^quitHandler)(void) =^
 		{
 			[multiplayerView.navigationController popToViewController:multiplayerView animated:YES];
-			
-			[localGame performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
 		};
 
 		PlayGameView *bigView = [[PlayGameView alloc] initWithGame:localGame withQuitHandler:quitHandler withCustomMainView:NO];
@@ -546,10 +565,9 @@
 			 if (finished)
 			 {
 				 [((UIView*)[self->playGameViews objectAtIndex:handlerIndex]) removeFromSuperview];
+				 [((PlayGameView*)[self->playGameViews objectAtIndex:handlerIndex]) quit];
 				 [self->playGameViews removeObjectAtIndex:handlerIndex];
 				 
-				 [[self->miniGamesViewArray objectAtIndex:handlerIndex] performSelectorInBackground:@selector(endGamePermanently) withObject:nil];
-
 				 [self->miniGamesViewArray removeObjectAtIndex:handlerIndex];
 
 				 [delegate.listener removeGameKitGameHandler:[self->handlerArray objectAtIndex:handlerIndex]];

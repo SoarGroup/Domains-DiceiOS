@@ -342,10 +342,19 @@ NSString *numberName(int number) {
 	
 	if (isSoarOnlyGame && [localGame.gameState hasAPlayerWonTheGame])
 	{
+		[self quit];
+
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			self->quitHandler();
 		});
 	}
+}
+
+- (void)quit
+{
+	PlayerState* localState = self.state;
+	id<Player> playerPtr = localState.playerPtr;
+	[((DiceLocalPlayer*)playerPtr).gameViews removeAllObjects];
 }
 
 - (BOOL) roundBeginning
@@ -1615,6 +1624,8 @@ NSString *numberName(int number) {
 	{
 		if (tutorial && alertView.tag == TUTORIAL)
 		{
+			[self quit];
+
 			if ((step == 5 || step == 7 || step == 10) && ![alertView.title isEqualToString:@"Done!"])
 				[self dismissViewControllerAnimated:YES completion:^{
 					self->quitHandler();
@@ -1680,6 +1691,8 @@ NSString *numberName(int number) {
 			
 			return;
 		case ACTION_QUIT:
+			[self quit];
+			
 			quitHandler();
 		default:
 			return;

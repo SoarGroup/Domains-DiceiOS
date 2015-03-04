@@ -98,13 +98,13 @@ static int agentCount = 0;
 
 @interface NSThread (empty)
 
-- (void)empty;
++ (void)stopThread;
 
 @end
 
 @implementation NSThread (empty)
 
-- (void)empty
++ (void)stopThread
 {
 	[[NSThread currentThread] cancel];
 	CFRunLoopStop(CFRunLoopGetCurrent());
@@ -116,26 +116,24 @@ static int agentCount = 0;
 
 @synthesize name, playerState, playerID, game, turnLock, handler, participant, difficulty;
 
-+ (void)cleanup
-{	
++ (void)destroyThread:(NSLock*)lock
+{
 	[kernelLock lock];
-
-	for (auto& s : agents)
+	
+	sml::Agent* agent = agents[(unsigned long)lock];
+	
+	if (!agent)
 	{
-		s.second->StopSelf();
-		kernel->DestroyAgent(s.second);
+		[kernelLock unlock];
+		return;
 	}
 	
-	agents.clear();
+	NSString* agentName = [NSString stringWithUTF8String:agent->GetAgentName()];
+	agents.erase(agents.find((unsigned long)lock));
 	
-	for (id key in agent_thread_map)
-	{
-		NSThread* thread = [agent_thread_map objectForKey:key];
-		
-		[thread performSelector:@selector(empty) onThread:thread withObject:nil waitUntilDone:YES modes:nil];
-	}
-	
-	[agent_thread_map removeAllObjects];
+	[NSThread performSelector:@selector(stopThread) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:YES];
+	[agent_thread_map removeObjectForKey:agentName];
+	kernel->DestroyAgent(agent);
 	
 	[kernelLock unlock];
 }
@@ -257,8 +255,6 @@ static int agentCount = 0;
     
     while (![[NSThread currentThread] isCancelled])
         [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-	
-	[NSThread exit];
 }
 
 - (id)initWithGame:(DiceGame*)aGame connentToRemoteDebugger:(BOOL)connect lock:(NSLock *)aLock withGameKitGameHandler:(GameKitGameHandler*)gkgHandler difficulty:(int)diff name:(NSString*)aName;
@@ -428,33 +424,6 @@ static int agentCount = 0;
 	DiceGame* localGame = self.game;
 	ApplicationDelegate* delegate = localGame.appDelegate;
 	[delegate.achievements updateAchievements:nil];
-}
-
-- (void) cancelThread
-{
-	const char* c_String = agents[(unsigned long)turnLock]->GetAgentName();
-	
-	if (!c_String)
-	{
-		for (id key in agent_thread_map)
-			[[agent_thread_map objectForKey:key] cancel];
-		
-		return;
-	}
-	
-	NSString* agentName = [NSString stringWithUTF8String:c_String];
-	
-	NSThread* thread = [agent_thread_map objectForKey:agentName];
-	[thread cancel];
-	
-	[turnLock lock];
-	DDLogSoar(@"Canceled Soar Thread");
-	[turnLock unlock];
-}
-
-- (void)_stop
-{
-	CFRunLoopStop(CFRunLoopGetCurrent());
 }
 
 - (void) restartSoar
