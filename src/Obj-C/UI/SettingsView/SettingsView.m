@@ -96,7 +96,7 @@
 	self.remoteIPTextField.hidden = YES;
 	self.debugReplayFile.hidden = YES;
 	self.clearLogFiles.hidden = YES;
-	self.soarOnlyGame.hidden = YES;
+//	self.soarOnlyGame.hidden = YES;
 #endif
 }
 
@@ -377,7 +377,7 @@
 	
 	((ApplicationDelegate*)[[UIApplication sharedApplication] delegate])->isSoarOnlyRunning = YES;
 	
-	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate withSeed:1172919707];
+	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate];
 	
 	int humanCount = 1;
 	int AICount = 1;

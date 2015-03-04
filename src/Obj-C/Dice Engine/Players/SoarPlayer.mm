@@ -445,7 +445,7 @@ static int agentCount = 0;
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
 	DiceGame* localGame = self.game;
-	if ([[NSThread currentThread] isCancelled] || localGame.gameState.currentTurn != self.playerID)
+	if ([[NSThread currentThread] isCancelled] || localGame.gameState.currentTurn != self.playerID || localGame.gameState.hasAPlayerWonTheGame)
 		return;
 	
     [turnLock lock];
@@ -483,6 +483,12 @@ static int agentCount = 0;
 		double startTime = [[NSDate date] timeIntervalSince1970];
 
         do {
+			if (localGame.gameState.hasAPlayerWonTheGame)
+			{
+				[turnLock unlock];
+				return;
+			}
+			
 			if (!agentInterrupted)
 				agents[(unsigned long)turnLock]->RunSelfTilOutput();
             
