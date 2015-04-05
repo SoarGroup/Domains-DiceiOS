@@ -276,9 +276,6 @@ NSString *numberName(int number) {
 	else
 	{
 		showAllDice = YES;
-		[self updateUI:finalString];
-		canContinueRound = NO;
-		showAllDice = NO;
 		
 		for (UIView* player in playerViews)
 		{
@@ -298,6 +295,13 @@ NSString *numberName(int number) {
 		self.bidCountMinusButton.enabled = NO;
 		self.bidFacePlusButton.enabled = NO;
 		self.bidFaceMinusButton.enabled = NO;
+		
+		canContinueRound = NO;
+		showAllDice = NO;
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self updateUI:finalString];
+		});
 	}
 }
 
@@ -1163,7 +1167,9 @@ NSString *numberName(int number) {
 					[diceFramesToAnimate addObject:[NSValue valueWithCGRect:dieFrame]];
 				}
 				else
+				{
 					dieButton.frame = dieFrame;
+				}
 			}
 			else
 			{
