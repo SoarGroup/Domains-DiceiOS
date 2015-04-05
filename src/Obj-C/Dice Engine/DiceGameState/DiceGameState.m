@@ -479,9 +479,11 @@
 
 	PlayerState* playerLocal = item.player;
 	PlayerState* secondPlayerLocal = secondLast.player;
-    
+		
     //Make sure its a valid challenge
-    if (self.previousBid && [self.previousBid playerID] == targetID) {
+    if (((item.actionType == ACTION_BID && playerLocal.playerID == targetID) ||
+		(secondLast.actionType == ACTION_BID && secondPlayerLocal.playerID == targetID)) &&
+		self.previousBid && [self.previousBid playerID] == targetID) {
         if ([self isBidCorrect:self.previousBid]) {
             [self playerLosesRound:playerID];
             HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
