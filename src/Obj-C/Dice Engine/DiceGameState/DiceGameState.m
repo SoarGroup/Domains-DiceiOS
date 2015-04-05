@@ -475,7 +475,13 @@
     HistoryItem *secondLast = nil;
     
     if ([[self history] count] >= 2)
+	{
         secondLast = [[self history] objectAtIndex:[[self history] count] - 2];
+		
+		if (secondLast.actionType == ACTION_PUSH &&
+			[[self history] count] >= 3)
+			secondLast = [[self history] objectAtIndex:[[self history] count] - 3];
+	}
 
 	PlayerState* playerLocal = item.player;
 	PlayerState* secondPlayerLocal = secondLast.player;
@@ -520,80 +526,49 @@
     } else if (((item && (item.actionType == ACTION_PASS && playerLocal.playerID == targetID)) ||
                (secondLast && secondLast.actionType == ACTION_PASS && secondPlayerLocal.playerID == targetID)))
 	{
+		HistoryItem* challenged = nil;
+		
         if (playerLocal.playerID == targetID)
-        {
-            if (item.result == 1) // Pass was legal
-            {
-                [self playerLosesRound:playerID];
-                HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
-                                                            andWithPlayer:player
-                                                              whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:(int)targetID
-                                                                andResult:0];
-                [newItem setLosingPlayer:playerID];
-                [history addObject:newItem];
-                *didTheChallengerWin = NO;
-                
-                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar lost challenge (challenger) (pass)");
-                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar won challenge (challengee) (pass)");
-            } else {
-                [self playerLosesRound:targetID];
-                HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
-                                                            andWithPlayer:player
-                                                              whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:(int)targetID
-                                                                andResult:1];
-                [newItem setLosingPlayer:targetID];
-                [history addObject:newItem];
-                *didTheChallengerWin = YES;
-                
-                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar won challenge (challenger) (pass)");
-                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar lost challenge (challengee) (pass)");
-            }
-        }
-        else
-        {
-            if (secondLast && secondLast.result == 1) // Pass was legal
-            {
-                [self playerLosesRound:playerID];
-                HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
-                                                            andWithPlayer:player
-                                                              whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:(int)targetID
-                                                                andResult:0];
-                [newItem setLosingPlayer:playerID];
-                [history addObject:newItem];
-                *didTheChallengerWin = NO;
-                
-                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar lost challenge (challenger) (pass)");
-                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar won challenge (challengee) (pass)");
-            } else {
-                [self playerLosesRound:targetID];
-                HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
-                                                            andWithPlayer:player
-                                                              whereTypeIs:ACTION_CHALLENGE_PASS
-                                                                withValue:(int)targetID
-                                                                andResult:1];
-                [newItem setLosingPlayer:targetID];
-                [history addObject:newItem];
-                *didTheChallengerWin = YES;
-                
-                if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar won challenge (challenger) (pass)");
-                else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
-                    DDLogSoar(@"Soar lost challenge (challengee) (pass)");
-            } 
-        }
+			challenged = item;
+		else if (secondPlayerLocal.playerID == targetID)
+			challenged = secondLast;
+		
+		if (challenged.result == 1) // Pass was legal
+		{
+			[self playerLosesRound:playerID];
+			HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
+														andWithPlayer:player
+														  whereTypeIs:ACTION_CHALLENGE_PASS
+															withValue:(int)targetID
+															andResult:0];
+			[newItem setLosingPlayer:playerID];
+			[history addObject:newItem];
+			*didTheChallengerWin = NO;
+			
+			if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+				DDLogSoar(@"Soar lost challenge (challenger) (pass)");
+			else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+				DDLogSoar(@"Soar won challenge (challengee) (pass)");
+		} else {
+			[self playerLosesRound:targetID];
+			HistoryItem *newItem = [[HistoryItem alloc] initWithState:self
+														andWithPlayer:player
+														  whereTypeIs:ACTION_CHALLENGE_PASS
+															withValue:(int)targetID
+															andResult:1];
+			[newItem setLosingPlayer:targetID];
+			[history addObject:newItem];
+			*didTheChallengerWin = YES;
+			
+			if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
+				DDLogSoar(@"Soar won challenge (challenger) (pass)");
+			else if ([[[self playerStateForPlayerID:targetID] playerPtr] isKindOfClass:SoarPlayer.class])
+				DDLogSoar(@"Soar lost challenge (challengee) (pass)");
+		}
     } else {
         return NO;
     }
-    
+	
     if (*didTheChallengerWin)
     {
         int targetIndex = [self getIndexOfPlayerWithId:targetID];
