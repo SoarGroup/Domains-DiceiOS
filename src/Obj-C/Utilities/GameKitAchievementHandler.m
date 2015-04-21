@@ -12,6 +12,8 @@
 #import "SoarPlayer.h"
 #import "PlayGameView.h"
 #import "ApplicationDelegate.h"
+#import "Player.h"
+#import "DiceGameState.h"
 
 @implementation GameKitAchievementHandler
 
@@ -161,14 +163,15 @@
 				 DDLogError(@"Error: %@", error.description);
 		 }];
 	
-	if (game.gameState.gameWinner)
+	id<Player> winner = game.gameState.gameWinner;
+	if (winner)
 	{
 		int matchesWon = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Achievement-Win1000Matches"] intValue];
 		
 		if (matchesWon > 1000)
 			return;
 		
-		if ([game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+		if ([winner isKindOfClass:DiceLocalPlayer.class])
 			matchesWon++;
 		
 		ApplicationDelegate* delegate = [[UIApplication sharedApplication] delegate];
@@ -348,9 +351,11 @@
 			break;
 		}
 		case 7:
+		{
 			// Win a match with at least one AI in it
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasAI = NO;
 
@@ -370,10 +375,13 @@
 				return YES;
 			}
 			break;
+		}
 		case 8:
+		{
 			// Win a match that has at least one AI on the hardest difficulty in it.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasAI = NO;
 
@@ -394,10 +402,13 @@
 				return YES;
 			}
 			break;
+		}
 		case 9:
+		{
 			// Win a match that has at least one human opponent in it.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasHuman = NO;
 
@@ -417,6 +428,7 @@
 				return YES;
 			}
 			break;
+		}
 		case 10:
 			// In a match, survive a challenge against you without losing a die.
 			for (HistoryItem* item in game.gameState.flatHistory)
@@ -440,8 +452,9 @@
 		case 11:
 		{
 			// Win a match that has 7 AI opponents.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				int AIcount = 0;
 
@@ -485,9 +498,11 @@
 			}
 			break;
 		case 13:
+		{
 			// Win a multiplayer match that has at least one friend in it.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasFriend = NO;
 
@@ -519,6 +534,7 @@
 				return YES;
 			}
 			break;
+		}
 		case 14:
 			// Play a multiplayer match that has at least one AI and one human opponent.
 			{
@@ -541,9 +557,11 @@
 			}
 			break;
 		case 15:
+		{
 			// Win a multiplayer match that has at least one AI and one human opponent.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasHuman = NO;
 				BOOL hasAI = NO;
@@ -563,6 +581,7 @@
 				return YES;
 			}
 			break;
+		}
 		default:
 			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
@@ -578,14 +597,17 @@
 	switch (achievementID)
 	{
 		case 1:
+		{
 			// Win 20 matches either non-consecutively or consecutively.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				striveAchievement.percentComplete += 5.0;
 				return YES;
 			}
 			break;
+		}
 		case 2:
 		{
 			int challengeCount = 0;
@@ -618,7 +640,8 @@
 		case 3:
 			// In three consecutive matches, use your exact to win a die each time.
 		{
-			if (!game.gameState.gameWinner)
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (!gameWinner)
 				return NO;
 
 			int exactCount = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Achievement-ExactsInARow"] intValue];
@@ -657,9 +680,11 @@
 			break;
 		}
 		case 4:
+		{
 			// Win a match without losing a single die.
-			if (game.gameState.gameWinner &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				for (HistoryItem* item in game.gameState.flatHistory)
 				{
@@ -687,15 +712,17 @@
 				return YES;
 			}
 			break;
+		}
 		case 5:
 			// Win 5 matches in a row.
 		{
-			if (!game.gameState.gameWinner)
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (!gameWinner)
 				return NO;
 
 			int matchesWon = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Achievement-Win5Matches"] intValue];
 
-			if ([game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			if ([gameWinner isKindOfClass:DiceLocalPlayer.class])
 				matchesWon++;
 			else
 				matchesWon = 0;
@@ -725,14 +752,17 @@
 	switch (achievementID)
 	{
 		case 1:
+		{
 			// Win 100 matches, either non-consecutively or consecutively.
-			if (game.gameState.gameWinner != nil &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				hardAchievement.percentComplete += 1.0;
 				return YES;
 			}
 			break;
+		}
 		case 2:
 		{
 			int challengeCount = 0;
@@ -763,8 +793,10 @@
 			break;
 		}
 		case 3:
-			if (game.gameState.gameWinner &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+		{
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				// In a match, be the only person to eliminate people, either via them challenging you and losing, them exacting your bids and losing, or you challenging them and winning.
 				for (HistoryItem* item in game.gameState.flatHistory)
@@ -772,7 +804,7 @@
 					if ([item actionType] != ACTION_LOST)
 						continue;
 
-					if ([item value] != [game.gameState.gameWinner getID])
+					if ([item value] != [gameWinner getID])
 						return NO;
 				}
 
@@ -780,6 +812,7 @@
 				return YES;
 			}
 			break;
+		}
 		case 4:
 			// In a match with at least five starting players, until there only four players remaining, only have one turn per round.  This means that the turn will never “get back” to you.
 			if ([game.players count] >= 5 &&
@@ -810,7 +843,8 @@
 		case 5:
 			// Win 10 matches in a row against the hardest AI.
 		{
-			if (!game.gameState.gameWinner)
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (!gameWinner)
 				return NO;
 
 			int matchesWon = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Achievement-Win10Matches"] intValue];
@@ -822,7 +856,7 @@
 					((SoarPlayer*)player).difficulty == 4)
 					hasHardAI = YES;
 
-			if ([game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class] &&
+			if ([gameWinner isKindOfClass:DiceLocalPlayer.class] &&
 				hasHardAI)
 				matchesWon++;
 			else
@@ -839,9 +873,11 @@
 			break;
 		}
 		case 6:
+		{
+			id <Player> gameWinner = game.gameState.gameWinner;
 			// In a match with at least four starting players, never bid ones in the match and still win the match.
-			if (game.gameState.gameWinner &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class] &&
+			if (gameWinner &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class] &&
 				[game.players count] >= 4)
 			{
 				for (HistoryItem* item in game.gameState.flatHistory)
@@ -851,7 +887,7 @@
 
 					PlayerState* itemState = [item player];
 
-					if ([itemState playerPtr] != game.gameState.gameWinner)
+					if ([itemState playerPtr] != gameWinner)
 						continue;
 
 					if ([item bid].rankOfDie == 1)
@@ -862,6 +898,7 @@
 				return YES;
 			}
 			break;
+		}
 		default:
 			DDLogDebug(@"Unknown achievement ID! %i", achievementID);
 			break;
@@ -877,12 +914,14 @@
 	switch (achievementID)
 	{
 		case 1:
+		{
 			if (!game || (unsigned int)game == 0xDEADBEEF)
 				break;
 			
 			// Win a match that has at least one developer playing in it.
-			if (game.gameState.gameWinner &&
-				[game.gameState.gameWinner isKindOfClass:DiceLocalPlayer.class])
+			id <Player> gameWinner = game.gameState.gameWinner;
+			if (gameWinner != nil &&
+				[gameWinner isKindOfClass:DiceLocalPlayer.class])
 			{
 				BOOL hasDeveloper = NO;
 
@@ -903,6 +942,7 @@
 				}
 			}
 			break;
+		}
 		case 2:
 		{
 			// Be a beta tester for Liar’s Dice.

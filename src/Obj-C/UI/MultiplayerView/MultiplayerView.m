@@ -280,8 +280,9 @@
 
 				turnInfo.text = [turnInfo.text stringByAppendingString:@" turn!"];
 
-				if (game.gameState.gameWinner)
-					turnInfo.text = [NSString stringWithFormat:@"%@ won!", [game.gameState.gameWinner getDisplayName]];
+				id <Player> gameWinner = game.gameState.gameWinner;
+				if (gameWinner)
+					turnInfo.text = [NSString stringWithFormat:@"%@ won!", [gameWinner getDisplayName]];
 
 				frame.origin.y += 30;
 				frame.size.width /= 2.0;

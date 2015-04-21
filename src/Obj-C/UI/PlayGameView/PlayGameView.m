@@ -384,9 +384,12 @@ NSString *numberName(int number) {
 			message = @"For this round: 1s aren't wild. Only players with one die may change the bid face.";
 		}
 		else if ([localState hasWon])
-			title = [NSString stringWithFormat:@"You Win!"];
+			title = [[NSString stringWithFormat:@"You Win!"] uppercaseString];
 		else if ([localGame.gameState hasAPlayerWonTheGame])
-			title = [NSString stringWithFormat:@"%@ Wins!", [localGame.gameState.gameWinner getDisplayName]];
+		{
+			id<Player> gameWinner = localGame.gameState.gameWinner;
+			title = [[NSString stringWithFormat:@"%@ Wins!", [gameWinner getDisplayName]] uppercaseString];
+		}
 		else if ([localState hasLost] && !self.hasPromptedEnd)
 		{
 			self.hasPromptedEnd = YES;
@@ -924,7 +927,8 @@ NSString *numberName(int number) {
 	// Player UI
 	BOOL canBid = [localState canBid];
 	
-	if (localGame.gameState.gameWinner)
+	id<Player> gameWinner = localGame.gameState.gameWinner;
+	if (gameWinner)
 		canBid = NO;
 	
 	// Enable the buttons if we actually can do those actions at this update cycle
@@ -1076,7 +1080,7 @@ NSString *numberName(int number) {
 			Die *die = [playerState getDie:dieIndex];
 			
 			int dieFace = DIE_UNKNOWN;
-			if (die.hasBeenPushed || z == 0 || showAllDice || localGame.gameState.gameWinner)
+			if (die.hasBeenPushed || z == 0 || showAllDice || gameWinner)
 				dieFace = die.dieValue;
 			
 			UIImage *dieImage = [PlayGameView imageForDie:dieFace];
@@ -1095,7 +1099,7 @@ NSString *numberName(int number) {
 			NSString* accessibleName = [NSString stringWithFormat:@"%@%@", playerName, [playerName isEqualToString:@"You"] ? @"r" : @"'s"];
 			NSString* faceValue = @"Unknown Face Value";
 			
-			if (die.hasBeenPushed || z == 0 || showAllDice || localGame.gameState.gameWinner)
+			if (die.hasBeenPushed || z == 0 || showAllDice || gameWinner)
 				faceValue = [NSString stringWithFormat:@"Face Value of %i", die.dieValue];
 			
 			if (die.hasBeenPushed)
@@ -1104,7 +1108,7 @@ NSString *numberName(int number) {
 			{
 				dieButton.accessibilityLabel = [NSString stringWithFormat:@"%@ Die, %@, unpushed", accessibleName, faceValue];
 				
-				if (z == 0 && !die.hasBeenPushed && !showAllDice && !localGame.gameState.gameWinner)
+				if (z == 0 && !die.hasBeenPushed && !showAllDice && !gameWinner)
 					dieButton.accessibilityHint = @"Tap to push this die";
 			}
 			

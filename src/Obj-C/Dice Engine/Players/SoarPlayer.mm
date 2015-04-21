@@ -436,8 +436,9 @@ static int agentCount = 0;
 	[state playerLosesRound:self.playerID];
 	[state createNewRound];
 
-	if (state.gameWinner)
-		[state.gameWinner notifyHasWon];
+	id <Player> gameWinner = state.gameWinner;
+	if (gameWinner)
+		[gameWinner notifyHasWon];
 }
 
 - (void) doTurn
@@ -628,7 +629,8 @@ static int agentCount = 0;
     BOOL playerHasWon = [gameState hasAPlayerWonTheGame];
     if (playerHasWon)
     {
-        victorID = [[gameState gameWinner] getID];
+		id <Player> gameWinner = gameState.gameWinner;
+        victorID = [gameWinner getID];
     }
     
     NSString *status = nil;

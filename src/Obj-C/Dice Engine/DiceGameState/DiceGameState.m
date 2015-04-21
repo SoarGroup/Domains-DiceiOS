@@ -28,6 +28,7 @@
 @synthesize playerStates;
 @synthesize players, currentTurn, previousBid;
 @synthesize playersLeft, theNewRoundListeners, game, losers, canContinueGame;
+@synthesize rounds, history, playersArrayToDecode, gameWinner;
 
 -(id)initWithCoder:(NSCoder*)decoder
 {
@@ -43,7 +44,7 @@
 
 		int roundCount = [decoder decodeIntForKey:@"DiceGameState:rounds"];
 
-		rounds = [[NSMutableArray alloc] init];
+		self.rounds = [[NSMutableArray alloc] init];
 
 		for (int i = 0;i < roundCount;i++)
 		{
@@ -57,7 +58,6 @@
 			[rounds addObject:historyFromRounds];
 		}
 
-		rounds = [decoder decodeObjectForKey:@"DiceGameState:rounds"];
 		inSpecialRules = [decoder decodeBoolForKey:@"DiceGameState:inSpecialRules"];
 		currentTurn = [decoder decodeIntForKey:@"DiceGameState:currentTurn"];
 		playersLeft = [decoder decodeIntegerForKey:@"DiceGameState:playersLeft"];
@@ -216,9 +216,10 @@
 
 	self.players = finalPlayersArray;
 
-	if ([gameWinner isKindOfClass:NSString.class])
+	id <Player> winner = self.gameWinner;
+	if ([winner isKindOfClass:NSString.class])
 	{
-		NSString* gameWinnerString = (NSString*)gameWinner;
+		NSString* gameWinnerString = (NSString*)winner;
 		for (id<Player> player in self.players)
 		{
 			if ((![player isKindOfClass:SoarPlayer.class] &&
@@ -275,6 +276,8 @@
 			}
 		}
 	}
+	
+	playersArrayToDecode = nil;
 }
 
 -(void)encodeWithCoder:(NSCoder*)encoder
@@ -331,8 +334,9 @@
 	for (int i = 0;i < [losers count];i++)
 		[encoder encodeInt:[(NSNumber*)[losers objectAtIndex:i] intValue] forKey:[NSString stringWithFormat:@"DiceGameState:losers%i", i]];
 
-	if (gameWinner)
-		[encoder encodeObject:[gameWinner getGameCenterName] forKey:@"DiceGameState:GameWinner"];
+	id <Player> winner = gameWinner;
+	if (winner)
+		[encoder encodeObject:[winner getGameCenterName] forKey:@"DiceGameState:GameWinner"];
 }
 
 /*** DiceGameState
@@ -580,9 +584,10 @@
 	[self goToNextPlayerWhoHasntLost];
 	[self createNewRound];
 
-	if (gameWinner)
+	id<Player> winner = gameWinner;
+	if (winner)
 	{
-		[gameWinner notifyHasWon];
+		[winner notifyHasWon];
 		return YES;
 	}
 
@@ -639,8 +644,9 @@
 
 	[self createNewRound];
 
-	if (gameWinner)
-		[gameWinner notifyHasWon];
+	id<Player> winner = gameWinner;
+	if (winner)
+		[winner notifyHasWon];
 
 	return YES;
 }
@@ -695,10 +701,6 @@
 }
 
 // Return the history array which contains the history items for the *current* round
-- (NSArray *)history
-{
-    return history;
-}
 
 // Return an array of the history of *all* the rounds
 - (NSArray *)roundHistory
@@ -1118,8 +1120,9 @@
     {
 		[self goToNextPlayerWhoHasntLost];
 
-		gameWinner = [self getCurrentPlayer];
-        DDLogInfo(@"%@ won!", [gameWinner getGameCenterName]);
+		id <Player> winner = [self getCurrentPlayer];
+		gameWinner = winner;
+        DDLogInfo(@"%@ won!", [winner getGameCenterName]);
     }
 }
 
@@ -1380,17 +1383,24 @@
 
 - (id<Player>) gameWinner
 {
-	if ([self->gameWinner isKindOfClass:NSString.class])
+	id<Player> winner = self->gameWinner;
+	
+	if ([winner isKindOfClass:NSString.class])
 	{
 		for (id<Player> player in self.players)
-			if ([[player getGameCenterName] isEqualToString:(NSString*)self->gameWinner])
+			if ([[player getGameCenterName] isEqualToString:(NSString*)winner])
 			{
 				self->gameWinner = player;
 				break;
 			}
 	}
 
-	return self->gameWinner;
+	return winner;
+}
+
+- (void)setGameWinner:(id<Player>)winner
+{
+	self->gameWinner = winner;
 }
 
 @end

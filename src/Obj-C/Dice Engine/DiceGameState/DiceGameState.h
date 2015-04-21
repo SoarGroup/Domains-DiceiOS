@@ -22,13 +22,7 @@
 @end
 
 @interface DiceGameState : NSObject {
-@private
-    id <Player> gameWinner;
-    
-    NSMutableArray *history;
-    NSMutableArray *rounds;
-	NSArray* playersArrayToDecode;
-
+@private	
     BOOL inSpecialRules;
 
 @public
@@ -62,11 +56,15 @@
 @property (readwrite, weak) DiceGame *game;
 @property (readwrite, atomic, assign) BOOL canContinueGame;
 
+@property (nonatomic, weak) id <Player> gameWinner;
+@property (readwrite, strong) NSMutableArray* history;
+@property (readwrite, strong) NSMutableArray* rounds;
+@property (readwrite, strong) NSArray* playersArrayToDecode;
+
 - (id <Player>)getCurrentPlayer;
 - (id <Player>)getPlayerWithID:(NSInteger)playerID;
 - (PlayerState *)getCurrentPlayerState;
 - (BOOL)hasAPlayerWonTheGame;
-- (id <Player>)gameWinner;
 - (BOOL)usingSpecialRules;
 - (BOOL)isGameInProgress;
 - (NSArray *)history;
