@@ -589,6 +589,11 @@ NSString *numberName(int number) {
 	return [DiceGraphics imageWithType:(DiceImageType)die];
 }
 
++ (UIImage *)greyDie:(NSInteger)die
+{
+	return [DiceGraphics greyImageWithType:(DiceImageType)die];
+}
+
 + (NSInteger)dieForImage:(UIImage*)image
 {
 	NSData *data1 = UIImagePNGRepresentation(image);
@@ -847,6 +852,35 @@ NSString *numberName(int number) {
 	[self updateUI:nil];
 }
 
+- (BOOL)hasDieBeenPushedInLastCycle:(Die*)die withPlayer:(PlayerState*)playerState
+{
+	int count = 0;
+	
+	for (HistoryItem* item in self.game.gameState.history)
+	{
+		PlayerState* itemState = item.player;
+		if (itemState.playerID == playerState.playerID && item.actionType == ACTION_PUSH)
+		{
+			for (Die* d in item.dice)
+			{
+				if (d.dieValue == die.dieValue && d.hasBeenPushed == die.hasBeenPushed && d.hasBeenPushed == YES)
+					return YES;
+			}
+			
+			return NO;
+		}
+		
+		if (item.actionType != ACTION_PUSH)
+			++count;
+		
+		if (count >= 2)
+			return NO;
+	}
+	
+	return NO;
+}
+
+
 - (void)updateUI:(NSString*)stateLabel
 {
 	if (![NSThread isMainThread])
@@ -1083,7 +1117,11 @@ NSString *numberName(int number) {
 			if (die.hasBeenPushed || z == 0 || showAllDice || gameWinner)
 				dieFace = die.dieValue;
 			
-			UIImage *dieImage = [PlayGameView imageForDie:dieFace];
+			UIImage *dieImage = nil;
+			if (die.hasBeenPushed && ![self hasDieBeenPushedInLastCycle:die withPlayer:playerState])
+				dieImage = [PlayGameView greyDie:dieFace];
+			else
+				dieImage = [PlayGameView imageForDie:dieFace];
 			
 			UIButton* dieButton = (UIButton*)[diceView viewWithTag:dieIndex];
 			dieButton.enabled = YES;

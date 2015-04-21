@@ -23,5 +23,6 @@ typedef enum DiceImageType {
 @interface DiceGraphics : NSObject
 
 + (UIImage *) imageWithType:(DiceImageType) type;
++ (UIImage *) greyImageWithType:(DiceImageType) type;
 
 @end

@@ -30,6 +30,13 @@
 		4D4E584E1982E9A000710625 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDA885813FD9C35008D3900 /* SystemConfiguration.framework */; };
 		4D4E584F1982E9A700710625 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDDFBB81982B54200CAC998 /* CFNetwork.framework */; };
 		4D4E58551982EA8F00710625 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D4E58541982EA8F00710625 /* libPods.a */; };
+		4D5A4D4C1AE6AA1C00D7B97B /* grey-die-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D451AE6AA1C00D7B97B /* grey-die-1.png */; };
+		4D5A4D4D1AE6AA1C00D7B97B /* grey-die-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D461AE6AA1C00D7B97B /* grey-die-2.png */; };
+		4D5A4D4E1AE6AA1C00D7B97B /* grey-die-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D471AE6AA1C00D7B97B /* grey-die-3.png */; };
+		4D5A4D4F1AE6AA1C00D7B97B /* grey-die-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D481AE6AA1C00D7B97B /* grey-die-4.png */; };
+		4D5A4D501AE6AA1C00D7B97B /* grey-die-5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D491AE6AA1C00D7B97B /* grey-die-5.png */; };
+		4D5A4D511AE6AA1C00D7B97B /* grey-die-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D4A1AE6AA1C00D7B97B /* grey-die-6.png */; };
+		4D5A4D521AE6AA1C00D7B97B /* grey-die-unknown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D5A4D4B1AE6AA1C00D7B97B /* grey-die-unknown.png */; };
 		4D6B2B37194111C900B4F0AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6B2B36194111C900B4F0AA /* GameKit.framework */; };
 		4D71B768199E524C00F8ADED /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B75F199E524C00F8ADED /* 29.png */; };
 		4D71B769199E524C00F8ADED /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D71B760199E524C00F8ADED /* 40.png */; };
@@ -165,6 +172,13 @@
 		4D48E037198184E3009DA895 /* HelpViewiPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewiPad.xib; sourceTree = "<group>"; };
 		4D4BB1D019A285FC00723FC6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4D4E58541982EA8F00710625 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		4D5A4D451AE6AA1C00D7B97B /* grey-die-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-1.png"; sourceTree = "<group>"; };
+		4D5A4D461AE6AA1C00D7B97B /* grey-die-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-2.png"; sourceTree = "<group>"; };
+		4D5A4D471AE6AA1C00D7B97B /* grey-die-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-3.png"; sourceTree = "<group>"; };
+		4D5A4D481AE6AA1C00D7B97B /* grey-die-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-4.png"; sourceTree = "<group>"; };
+		4D5A4D491AE6AA1C00D7B97B /* grey-die-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-5.png"; sourceTree = "<group>"; };
+		4D5A4D4A1AE6AA1C00D7B97B /* grey-die-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-6.png"; sourceTree = "<group>"; };
+		4D5A4D4B1AE6AA1C00D7B97B /* grey-die-unknown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grey-die-unknown.png"; sourceTree = "<group>"; };
 		4D5B8150191C238900BAC1D1 /* UM Liars Dice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UM Liars Dice-Prefix.pch"; sourceTree = "<group>"; };
 		4D5B8151191C23E300BAC1D1 /* UM Liars Dice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "UM Liars Dice-Info.plist"; sourceTree = "<group>"; };
 		4D6B2B36194111C900B4F0AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -493,6 +507,13 @@
 				4DF3938B1923C4F400A523FB /* die-4.png */,
 				4DF3938C1923C4F400A523FB /* die-5.png */,
 				4DF3938D1923C4F400A523FB /* die-6.png */,
+				4D5A4D451AE6AA1C00D7B97B /* grey-die-1.png */,
+				4D5A4D461AE6AA1C00D7B97B /* grey-die-2.png */,
+				4D5A4D471AE6AA1C00D7B97B /* grey-die-3.png */,
+				4D5A4D481AE6AA1C00D7B97B /* grey-die-4.png */,
+				4D5A4D491AE6AA1C00D7B97B /* grey-die-5.png */,
+				4D5A4D4A1AE6AA1C00D7B97B /* grey-die-6.png */,
+				4D5A4D4B1AE6AA1C00D7B97B /* grey-die-unknown.png */,
 				4DF3938E1923C4F400A523FB /* die-unknown.png */,
 				4DF3938F1923C4F400A523FB /* ScrollRightArrow.png */,
 				4DF4914F1A536E0C00EAC818 /* YouPlayer.png */,
@@ -1080,9 +1101,11 @@
 				4D854A151993FF320039C742 /* replay.txt in Resources */,
 				4DF3963E1923C51D00A523FB /* SingleplayerView.xib in Resources */,
 				4D71B76F199E524C00F8ADED /* iTunesArtwork.png in Resources */,
+				4D5A4D4D1AE6AA1C00D7B97B /* grey-die-2.png in Resources */,
 				4DF396321923C51D00A523FB /* SingleplayerViewiPad.xib in Resources */,
 				4DF393A91923C4F400A523FB /* die-5.png in Resources */,
 				4DF396341923C51D00A523FB /* AboutView.xib in Resources */,
+				4D5A4D4F1AE6AA1C00D7B97B /* grey-die-4.png in Resources */,
 				4DF3963B1923C51D00A523FB /* RoundOverView.xib in Resources */,
 				4DF491561A53930E00EAC818 /* HistoryViewiPad.xib in Resources */,
 				4D018D80192657AC007A6FD5 /* JoinMatchViewPopover.xib in Resources */,
@@ -1108,10 +1131,14 @@
 				4DF396371923C51D00A523FB /* LoadingGameView.xib in Resources */,
 				4DF396141923C51D00A523FB /* about.html in Resources */,
 				4DF393A81923C4F400A523FB /* die-4.png in Resources */,
+				4D5A4D501AE6AA1C00D7B97B /* grey-die-5.png in Resources */,
+				4D5A4D4C1AE6AA1C00D7B97B /* grey-die-1.png in Resources */,
 				4DF396151923C51D00A523FB /* rules.html in Resources */,
 				4D48E038198184E3009DA895 /* HelpViewiPad.xib in Resources */,
 				4DF393A61923C4F400A523FB /* die-2.png in Resources */,
+				4D5A4D511AE6AA1C00D7B97B /* grey-die-6.png in Resources */,
 				4DF3963C1923C51D00A523FB /* RulesView.xib in Resources */,
+				4D5A4D4E1AE6AA1C00D7B97B /* grey-die-3.png in Resources */,
 				4D71B76A199E524C00F8ADED /* 58.png in Resources */,
 				4D3B4E67197D8AC40018F5C7 /* PlayGameView-2iPad.xib in Resources */,
 				4D17A9EA197DB935006C4A64 /* PlayGameView-3iPad.xib in Resources */,
@@ -1135,6 +1162,7 @@
 				4D71B768199E524C00F8ADED /* 29.png in Resources */,
 				4DF397DE1923C9A600A523FB /* dice-harder.soar in Resources */,
 				4D07AB661976EC0800EC955E /* InviteFriendsView.xib in Resources */,
+				4D5A4D521AE6AA1C00D7B97B /* grey-die-unknown.png in Resources */,
 				4D71B779199E525700F8ADED /* Wolverines.png in Resources */,
 				4DF396351923C51D00A523FB /* Application.xib in Resources */,
 				4DF3962C1923C51D00A523FB /* MainMenuiPad.xib in Resources */,
