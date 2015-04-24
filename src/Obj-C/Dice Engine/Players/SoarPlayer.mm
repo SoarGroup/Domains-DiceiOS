@@ -94,8 +94,6 @@ static NSLock* kernelLock;
 
 @end
 
-static int agentCount = 0;
-
 @interface NSThread (empty)
 
 + (void)stopThread;
@@ -148,61 +146,24 @@ static int agentCount = 0;
 	return kernel;
 }
 
+NSMutableArray* usedNames = [NSMutableArray array];
+NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker", @"Erin", @"Maize", @"Rosie", @"Sarah", @"Thomas", @"Watson", @"Athena", @"Blue", @"Carter", @"Nyx", @"Ellie", @"Floyd", @"Jane", @"Kirk", @"Hemera", @"Ares", @"Zeus", @"Hades", @"Hera", @"Erebus", @"Sol", @"Vesta", @"Ceres", @"Scylla", @"Vox", @"Aura", @"Angela", @"Jarvis", @"Auto",  nil];
+
 + (NSString*) makePlayerName
 {
-	agentCount++;
-
-	if (agentCount > 20)
-		agentCount = 1;
-    
-    //  Alice   Bob Carol   Decker  Erin    Maize   Rosie   Sarah   Thomas  Watson
-    //  1       2   3       4       5       6       7       8       9       10
-    //  Athena  Blue    Carter  Deunan  Ellie   Floyd   Hal     Jane    Kirk    Mr. Anderson
-    //  1       2       3       4       5       6       7       8       9       10
-
-    switch (agentCount) {
-		default:
-        case 1:
-            return @"Alice";
-        case 2:
-            return @"Bob";
-        case 3:
-            return @"Carol";
-		case 4:
-			return @"Decker";
-		case 5:
-			return @"Erin";
-        case 6:
-			return @"Maize";
-		case 7:
-			return @"Rosie";
-		case 8:
-			return @"Sarah";
-		case 9:
-			return @"Thomas";
-		case 10:
-			return @"Watson";
-		case 11:
-			return @"Athena";
-		case 12:
-			return @"Blue";
-		case 13:
-			return @"Carter";
-		case 14:
-			return @"Nyx";
-		case 15:
-			return @"Ellie";
-		case 16:
-			return @"Floyd";
-		case 17:
-			return @"Hal";
-        case 18:
-            return @"Jane";
-        case 19:
-            return @"Kirk";
-        case 20:
-            return @"Hemera";
-    }
+	if ([usedNames count] >= [names count])
+		[usedNames removeAllObjects];
+	
+	NSString* playerName = nil;
+	
+	do {
+		NSUInteger randomIndex = arc4random() % [names count];
+		playerName = [names objectAtIndex:randomIndex];
+	} while ([usedNames containsObject:playerName]);
+	
+	[usedNames addObject:playerName];
+	
+	return playerName;
 }
 
 + (void)initialize
