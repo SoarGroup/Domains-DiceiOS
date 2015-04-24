@@ -998,13 +998,21 @@
 
         if (![player hasLost] && ([[player playerPtr] isKindOfClass:DiceLocalPlayer.class] ||
                                   [[player playerPtr] isKindOfClass:DiceRemotePlayer.class] ||
-								  [[player playerPtr] isKindOfClass:DiceReplayPlayer.class] ||
-								  [[player playerPtr] isKindOfClass:DiceSoarReplayPlayer.class]))
+								  [[player playerPtr] isKindOfClass:DiceReplayPlayer.class]))
         {
             hasAllHumansLost = NO;
         }
     }
-    
+	
+	for (PlayerState* player in self.playerStates)
+	{
+		if ([[player playerPtr] isKindOfClass:DiceSoarReplayPlayer.class])
+		{
+			hasAllHumansLost = NO;
+			break;
+		}
+	}
+		
     if (hasAllHumansLost)
     {
 		NSMutableArray* array = [NSMutableArray array];
