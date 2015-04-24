@@ -12,7 +12,7 @@
 
 @implementation Die
 
-@synthesize dieValue, hasBeenPushed, markedToPush;
+@synthesize dieValue, hasBeenPushed, markedToPush, identifier;
 
 -(id)initWithCoder:(NSCoder*)decoder withCount:(int)count withPrefix:(NSString *)prefix
 {
@@ -22,6 +22,7 @@
 	{
 		dieValue = [decoder decodeIntForKey:[NSString stringWithFormat:@"%@Die%i:dieValue", prefix, count]];
 		hasBeenPushed = [decoder decodeBoolForKey:[NSString stringWithFormat:@"%@Die%i:hasBeenPushed", prefix, count]];
+		identifier = [decoder decodeIntForKey:[NSString stringWithFormat:@"%@Die%i:identifier", prefix, count]];
 		markedToPush = [decoder decodeBoolForKey:[NSString stringWithFormat:@"%@Die%i:markedToPush", prefix, count]];
 	}
 
@@ -31,6 +32,7 @@
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count withPrefix:(NSString *)prefix
 {
 	[encoder encodeInt:dieValue forKey:[NSString stringWithFormat:@"%@Die%i:dieValue", prefix, count]];
+	[encoder encodeInt:identifier forKey:[NSString stringWithFormat:@"%@Die%i:identifier", prefix, count]];
 	[encoder encodeBool:hasBeenPushed forKey:[NSString stringWithFormat:@"%@Die%i:hasBeenPushed", prefix, count]];
 	[encoder encodeBool:markedToPush forKey:[NSString stringWithFormat:@"%@Die%i:markedToPush", prefix, count]];
 }
@@ -47,7 +49,7 @@
 }
 
 // Initialize ourself with a value
-- (id)initWithNumber:(int)dieValueToSet
+- (id)initWithNumber:(int)dieValueToSet withIdentifier:(int)i
 {
         //Call our own initialization routine then set our dieValue
     self = [self init];
@@ -56,6 +58,7 @@
         dieValue = dieValueToSet;
         hasBeenPushed = NO;
         markedToPush = NO;
+		self->identifier = i;
     }
 
     return self;
@@ -64,6 +67,7 @@
 - (void)roll:(DiceGame*)game
 {
 	dieValue = [game.randomGenerator randomNumber] % NUMBER_OF_SIDES + 1;
+	identifier = [game.randomGenerator randomNumber];
 }
 
 - (void)push

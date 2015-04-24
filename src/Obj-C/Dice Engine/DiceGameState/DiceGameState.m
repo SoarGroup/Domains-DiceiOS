@@ -433,15 +433,16 @@
     // Set the item to nil so we can reuse it for creating a new history item,
     // the original variable will be autoreleased.
     item = nil;
-    item = [[HistoryItem alloc] initWithState:self 
+	NSArray* itemDice = [player pushDice:push];
+
+    item = [[HistoryItem alloc] initWithState:self
                                 andWithPlayer:[self getPlayerState:playerID] 
                                   whereTypeIs:ACTION_PUSH
-								  withDice:push];
+								  withDice:itemDice];
     [history addObject:item];
     
     // Tell the player to push the dice.
-    [player pushDice:push];
-    
+	
     return YES;
 }
 

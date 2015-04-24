@@ -23,9 +23,10 @@
 @property (readonly) int dieValue;
 @property (readonly) BOOL hasBeenPushed;
 @property (readwrite, assign) BOOL markedToPush;
+@property (readonly) int identifier;
 
 - (id)init:(DiceGame*)game;
-- (id)initWithNumber:(int)dieValue;
+- (id)initWithNumber:(int)dieValue withIdentifier:(int)identifier;
 - (void)roll:(DiceGame*)game;
 - (void)push;
 

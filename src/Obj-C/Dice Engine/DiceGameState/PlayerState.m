@@ -221,9 +221,10 @@
 }
 
 // Method for pushing our dice
-- (void)pushDice:(NSArray *)diceToPush
+- (NSArray*)pushDice:(NSArray *)diceToPush
 {
     [self.lock lock];
+	NSMutableArray* pushedDice = [NSMutableArray array];
     playerHasPassed = NO;
 	for (Die* die in diceToPush)
 	{
@@ -233,6 +234,7 @@
 			{
 				[arrayDie push];
 				arrayDie.markedToPush = YES;
+				[pushedDice addObject:arrayDie];
 				break;
 			}
 		}
@@ -253,6 +255,8 @@
 	//Set whether the player has pushed all their dice to the opposite of isThereDiceLeft
     playerHasPushedAllDice = NO;
     [self.lock unlock];
+	
+	return pushedDice;
 }
 
     //return a non-modifiable array of unpushed dice

@@ -399,7 +399,7 @@ NSString *numberName(int number) {
 		hasDisplayedRoundBeginning = YES;
 	}
 	
-	if (title)
+	if (title && !isSoarOnlyGame)
 		[[[UIAlertView alloc] initWithTitle:title
 									message:message
 								   delegate:nil
@@ -648,8 +648,7 @@ NSString *numberName(int number) {
 										  cancelButtonTitle:@"Cancel"
 										  otherButtonTitles:@"Leave", nil];
 	alert.tag = ACTION_QUIT;
-	if (!isSoarOnlyGame)
-		[alert show];
+	[alert show];
 }
 
 - (bool) canChallengePlayer:(int)otherPlayerID {
@@ -715,7 +714,7 @@ NSString *numberName(int number) {
 		NSArray* subviews = [player1View viewWithTag:DiceViewTag].subviews;
 		for (UIButton* dieButton in subviews)
 		{
-			Die* dieObject = [[Die alloc] initWithNumber:(int)[PlayGameView dieForImage:dieButton.imageView.image]];
+			Die* dieObject = [[Die alloc] initWithNumber:(int)[PlayGameView dieForImage:dieButton.imageView.image] withIdentifier:(int)[PlayGameView dieForImage:dieButton.imageView.image]];
 			
 			if (dieButton.frame.origin.y == 0)
 				dieObject.markedToPush = YES;
@@ -856,24 +855,22 @@ NSString *numberName(int number) {
 {
 	int count = 0;
 	
-	for (HistoryItem* item in self.game.gameState.history)
+	for (HistoryItem* item in [self.game.gameState.history reverseObjectEnumerator])
 	{
 		PlayerState* itemState = item.player;
 		if (itemState.playerID == playerState.playerID && item.actionType == ACTION_PUSH)
 		{
 			for (Die* d in item.dice)
 			{
-				if (d.dieValue == die.dieValue && d.hasBeenPushed == die.hasBeenPushed && d.hasBeenPushed == YES)
+				if (d.identifier == die.identifier)
 					return YES;
 			}
-			
-			return NO;
 		}
 		
-		if (item.actionType != ACTION_PUSH)
+		if (itemState.playerID == playerState.playerID && item.actionType != ACTION_PUSH)
 			++count;
 		
-		if (count >= 2)
+		if (count >= 1)
 			return NO;
 	}
 	

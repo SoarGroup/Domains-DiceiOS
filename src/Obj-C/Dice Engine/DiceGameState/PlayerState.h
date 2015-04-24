@@ -41,7 +41,7 @@
 -(void)encodeWithCoder:(NSCoder*)encoder withCount:(int)count;
 
 - (void)isNewRound;
-- (void)pushDice:(NSArray *)diceToPush;
+- (NSArray*)pushDice:(NSArray *)diceToPush;
 
 - (NSArray *)unPushedDice;
 - (NSArray *)pushedDice;

@@ -446,7 +446,8 @@ static int agentCount = 0;
 	[[NSThread currentThread] setName:@"Soar Agent Turn Thread"];
 
 	DiceGame* localGame = self.game;
-	if ([[NSThread currentThread] isCancelled] || localGame.gameState.currentTurn != self.playerID || localGame.gameState.hasAPlayerWonTheGame)
+	PlayerState* localState = self.playerState;
+	if ([[NSThread currentThread] isCancelled] || localGame.gameState.currentTurn != self.playerID || localGame.gameState.hasAPlayerWonTheGame || localState.hasLost)
 		return;
 	
     [turnLock lock];
@@ -484,7 +485,7 @@ static int agentCount = 0;
 		double startTime = [[NSDate date] timeIntervalSince1970];
 
         do {
-			if (localGame.gameState.hasAPlayerWonTheGame)
+			if (localGame.gameState.hasAPlayerWonTheGame || localState.hasLost)
 			{
 				[turnLock unlock];
 				return;
@@ -1180,7 +1181,7 @@ static int agentCount = 0;
                         NSNumber *number = [NSNumber numberWithInt:faces[i]];
 
                         if ([number isKindOfClass:[NSNumber class]])
-                            [mut addObject:[[Die alloc] initWithNumber:[number intValue]] ];
+                            [mut addObject:[[Die alloc] initWithNumber:[number intValue] withIdentifier:-1]];
                     }
                     
                     diceToPush = [[NSArray alloc] initWithArray:mut];

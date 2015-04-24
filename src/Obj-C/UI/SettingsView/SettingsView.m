@@ -380,7 +380,7 @@
 	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:[UIApplication sharedApplication].delegate];
 	
 	int humanCount = 1;
-	int AICount = 1;
+	int AICount = 2;
 	int currentHumanCount = 0;
 	
 	NSLock* lock = [[NSLock alloc] init];
@@ -409,7 +409,7 @@
 	
 	void (^quitHandler)(void) =^ {
 		[self.navigationController popToViewController:self animated:YES];
-		
+			
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wselector"
 		[NSThread detachNewThreadSelector:@selector(end) toTarget:game withObject:nil];
