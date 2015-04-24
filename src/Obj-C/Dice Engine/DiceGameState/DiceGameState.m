@@ -642,6 +642,9 @@
         if ([[player playerPtr] isKindOfClass:SoarPlayer.class])
             DDLogSoar(@"Soar lost exact");
     }
+	
+	if ([self playerStateForPlayerID:playerID].hasLost && !*wasTheExactRight)
+		[self goToNextPlayerWhoHasntLost];
 
 	[self createNewRound];
 
