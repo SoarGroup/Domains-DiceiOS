@@ -189,7 +189,7 @@ static int agentCount = 0;
 		case 13:
 			return @"Carter";
 		case 14:
-			return @"Deunan";
+			return @"Nyx";
 		case 15:
 			return @"Ellie";
 		case 16:
@@ -201,7 +201,7 @@ static int agentCount = 0;
         case 19:
             return @"Kirk";
         case 20:
-            return @"Mr. Anderson";
+            return @"Hemera";
     }
 }
 
