@@ -578,8 +578,19 @@
 	ApplicationDelegate* delegate = self.appDelegate;
     
     [delegate.achievements updateAchievements:self];
+	
+	BOOL soarOnly = NO;
+	
+	for (id <Player> player in self.players)
+	{
+		if ([player isKindOfClass:DiceSoarReplayPlayer.class])
+		{
+			soarOnly = YES;
+			break;
+		}
+	}
 
-	if (gameState.gameWinner || ([localState hasLost] && [delegate.listener handlerForGame:self] != nil))
+	if (gameState.gameWinner || (!soarOnly && [localState hasLost] && [delegate.listener handlerForGame:self] != nil))
 		return;
 
 	if (notify)
