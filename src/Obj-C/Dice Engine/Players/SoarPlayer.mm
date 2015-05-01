@@ -449,11 +449,25 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 			if (localGame.gameState.hasAPlayerWonTheGame || localState.hasLost)
 			{
 				[turnLock unlock];
+				if (newData != NULL)
+				{
+					newData->idState->DestroyWME();
+					newData->idPlayers->DestroyWME();
+					newData->idAffordances->DestroyWME();
+					newData->idHistory->DestroyWME();
+					newData->idRounds->DestroyWME();
+					delete newData;
+					newData = NULL;
+				}
 				return;
 			}
 			
 			if (!agentInterrupted)
+			{
+				DDLogDebug(@"Input Link: %s", agents[(unsigned long)turnLock]->ExecuteCommandLine("p -d 100 s1"));
 				agents[(unsigned long)turnLock]->RunSelfTilOutput();
+				DDLogDebug(@"Awesome");
+			}
             
             sml::smlRunState agentState = agents[(unsigned long)turnLock]->GetRunState();
             agentHalted = agentState == sml::sml_RUNSTATE_HALTED;
@@ -470,6 +484,17 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 				[turnLock unlock];
 
 				DDLogDebug(@"Restarting Soar due to timeout");
+				
+				if (newData != NULL)
+				{
+					newData->idState->DestroyWME();
+					newData->idPlayers->DestroyWME();
+					newData->idAffordances->DestroyWME();
+					newData->idHistory->DestroyWME();
+					newData->idRounds->DestroyWME();
+					delete newData;
+					newData = NULL;
+				}
 				
 				if (((ApplicationDelegate*)[UIApplication sharedApplication].delegate)->isSoarOnlyRunning)
 					return [self showErrorAlert];
@@ -489,6 +514,17 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 				if (lines > 95 && ![database hasSoarLoggingEnabled])
 				{
 					[turnLock unlock];
+					
+					if (newData != NULL)
+					{
+						newData->idState->DestroyWME();
+						newData->idPlayers->DestroyWME();
+						newData->idAffordances->DestroyWME();
+						newData->idHistory->DestroyWME();
+						newData->idRounds->DestroyWME();
+						delete newData;
+						newData = NULL;
+					}
 
 					DDLogDebug(@"Restarting Soar due to goal stack depth exceeded");
 					
@@ -504,6 +540,16 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 			if ([[NSThread currentThread] isCancelled])
 			{
 				[turnLock unlock];
+				if (newData != NULL)
+				{
+					newData->idState->DestroyWME();
+					newData->idPlayers->DestroyWME();
+					newData->idAffordances->DestroyWME();
+					newData->idHistory->DestroyWME();
+					newData->idRounds->DestroyWME();
+					delete newData;
+					newData = NULL;
+				}
 				return;
 			}
         } while (!agentHalted && (agents[(unsigned long)turnLock]->GetNumberCommands() == 0));
@@ -514,6 +560,16 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 		if ([[NSThread currentThread] isCancelled])
 		{
 			[turnLock unlock];
+			if (newData != NULL)
+			{
+				newData->idState->DestroyWME();
+				newData->idPlayers->DestroyWME();
+				newData->idAffordances->DestroyWME();
+				newData->idHistory->DestroyWME();
+				newData->idRounds->DestroyWME();
+				delete newData;
+				newData = NULL;
+			}
 			return;
 		}
     } while (!agentSlept);

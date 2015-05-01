@@ -129,6 +129,7 @@
 		return;
 
 	NSData* updatedMatchData = [GameKitGameHandler archiveAndCompressObject:localGame];
+	DDLogDebug(@"Data Size: %lul", (unsigned long)[updatedMatchData length]);
 
 	ApplicationDelegate* delegate = [UIApplication sharedApplication].delegate;
 	DDLogGameKit(@"Updated Match Data SHA1 Hash: %@", [delegate sha1HashFromData:updatedMatchData]);
@@ -136,6 +137,7 @@
 	[match saveCurrentTurnWithMatchData:updatedMatchData completionHandler:^(NSError* error)
 	{
 		DDLogGameKit(@"Sent match data!");
+		DDLogDebug(@"Data Size: %lul", (unsigned long)[updatedMatchData length]);
 
 		if (error)
 			DDLogError(@"Error upon saving match data: %@\n", error.description);

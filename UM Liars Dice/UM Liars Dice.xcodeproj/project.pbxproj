@@ -551,7 +551,7 @@
 				4DF393BF1923C51C00A523FB /* HTML */,
 				4DF393C21923C51C00A523FB /* Libraries */,
 				4DF394171923C51C00A523FB /* Obj-C */,
-				4DF3947F1923C51C00A523FB /* Soar Agent */,
+				4DF3947F1923C51C00A523FB /* SoarAgent */,
 			);
 			name = src;
 			path = ../src;
@@ -901,7 +901,7 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		4DF3947F1923C51C00A523FB /* Soar Agent */ = {
+		4DF3947F1923C51C00A523FB /* SoarAgent */ = {
 			isa = PBXGroup;
 			children = (
 				4D0161DF19254154000827C6 /* default */,
@@ -913,7 +913,7 @@
 				4DF397C81923C9A600A523FB /* dice-hardest.soar */,
 				4DF397C91923C9A600A523FB /* dice-medium.soar */,
 			);
-			path = "Soar Agent";
+			path = SoarAgent;
 			sourceTree = "<group>";
 		};
 		4DF397AD1923C5B800A523FB /* Players */ = {
