@@ -890,9 +890,6 @@ NSString *numberName(int number) {
 	if (tutorial)
 		return;
 	
-	if (!canContinueRound)
-		return;
-	
 	self.exactButton.enabled = NO;
 	self.passButton.enabled = NO;
 	self.bidButton.enabled = NO;
