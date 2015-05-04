@@ -96,7 +96,7 @@
 	self.remoteIPTextField.hidden = YES;
 	self.debugReplayFile.hidden = YES;
 	self.clearLogFiles.hidden = YES;
-//	self.soarOnlyGame.hidden = YES;
+	self.soarOnlyGame.hidden = YES;
 #endif
 }
 
