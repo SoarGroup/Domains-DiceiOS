@@ -113,7 +113,7 @@
                         <action selector="aboutButtonPressed:" destination="-1" eventType="touchUpInside" id="7Pl-1V-11P"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnq-4b-4Kn">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnq-4b-4Kn">
                     <rect key="frame" x="354" y="330" width="316" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -121,7 +121,7 @@
                         <constraint firstAttribute="width" constant="316" id="Ny5-eC-u7Q"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F09-2K-eOh">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F09-2K-eOh">
                     <rect key="frame" x="354" y="402" width="316" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -129,7 +129,7 @@
                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="ab5-Qf-lv2"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrX-5d-Iha">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrX-5d-Iha">
                     <rect key="frame" x="354" y="482" width="316" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -137,7 +137,7 @@
                         <constraint firstAttribute="width" constant="316" id="fRS-e4-OaN"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhw-Vd-om1">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vhw-Vd-om1">
                     <rect key="frame" x="354" y="562" width="316" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>

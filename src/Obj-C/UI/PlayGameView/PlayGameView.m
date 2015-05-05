@@ -285,9 +285,6 @@ NSString *numberName(int number) {
 				spinner.hidden = YES;
 		}
 		
-		self.continueRoundButton.hidden = NO;
-		self.continueRoundButton.enabled = YES;
-		
 		self.exactButton.enabled = NO;
 		self.passButton.enabled = NO;
 		self.bidButton.enabled = NO;
@@ -299,9 +296,9 @@ NSString *numberName(int number) {
 		canContinueRound = NO;
 		showAllDice = NO;
 		
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[self updateUI:finalString];
-		});
+		[self updateUI:finalString];
+		
+		self.continueRoundButton.hidden = NO;
 	}
 }
 
@@ -898,6 +895,8 @@ NSString *numberName(int number) {
 	self.bidFacePlusButton.enabled = NO;
 	self.bidFaceMinusButton.enabled = NO;
 	
+	self.continueRoundButton.hidden = YES;
+	
 	// State initialization
 	DiceGame* localGame = self.game;
 	PlayerState* localState = self.state;
@@ -967,9 +966,7 @@ NSString *numberName(int number) {
 	self.bidFacePlusButton.enabled = canBid;
 	self.bidFaceMinusButton.enabled = canBid;
 	self.exactButton.enabled = canBid && [localState canExact];
-	
-	continueRoundButton.hidden = YES;
-	
+		
 	hasTouchedBidCounterThisTurn = NO;
 	
 	// Check if our previous bid is nil, if it is then we're starting and set the default dice to be bidding 1 two.
