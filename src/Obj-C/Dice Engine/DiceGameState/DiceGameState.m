@@ -944,7 +944,10 @@
 {
 	if ([NSThread isMainThread] && !canContinueGame)
 	{
-		[self performSelectorInBackground:@selector(createNewRound) withObject:nil];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self createNewRound:newRound];
+		});
+
 		return;
 	}
 

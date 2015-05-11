@@ -218,7 +218,9 @@ NSString *numberName(int number) {
 	hasDisplayedRoundOverview = YES;
 	hasDisplayedRoundBeginning = NO;
 	
-	[self performSelectorOnMainThread:@selector(realRoundEnding) withObject:nil waitUntilDone:YES];
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		[self realRoundEnding];
+	});
 	
 	return YES;
 }
@@ -362,7 +364,9 @@ NSString *numberName(int number) {
 {
 	if (![NSThread isMainThread])
 	{
-		[self performSelectorOnMainThread:@selector(roundBeginning) withObject:nil waitUntilDone:YES];
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self roundBeginning];
+		});
 		return NO;
 	}
 	
@@ -879,7 +883,9 @@ NSString *numberName(int number) {
 {
 	if (![NSThread isMainThread])
 	{
-		[self performSelectorOnMainThread:@selector(updateUI) withObject:nil waitUntilDone:YES];
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self updateUI:nil];
+		});
 		
 		return;
 	}
@@ -1737,10 +1743,9 @@ NSString *numberName(int number) {
 			return;
 	}
 	
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wselector"
-	[localGame performSelectorInBackground:@selector(handleAction:) withObject:action];
-#pragma clang diagnostic pop
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[localGame handleAction:action];
+	});
 }
 
 -(NSArray*)makePushedDiceArray

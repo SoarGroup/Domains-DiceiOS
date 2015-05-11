@@ -82,7 +82,7 @@ typedef enum {
 } Predicate;
 
 std::unordered_map<unsigned long, sml::Agent*> agents;
-NSMutableDictionary* agent_thread_map;
+dispatch_queue_t agent_queue;
 
 static sml::Kernel* kernel;
 static NSLock* kernelLock;
@@ -126,11 +126,8 @@ static NSLock* kernelLock;
 		return;
 	}
 	
-	NSString* agentName = [NSString stringWithUTF8String:agent->GetAgentName()];
 	agents.erase(agents.find((unsigned long)lock));
 	
-	[NSThread performSelector:@selector(stopThread) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:YES];
-	[agent_thread_map removeObjectForKey:agentName];
 	kernel->DestroyAgent(agent);
 	
 	[kernelLock unlock];
@@ -190,7 +187,7 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 		kernel = sml::Kernel::CreateKernelInNewThread(sml::Kernel::kSuppressListener);
 #endif
         
-        agent_thread_map = [[NSMutableDictionary alloc] init];
+		agent_queue = dispatch_queue_create("edu.umich.Soar", NULL);
 
 		if (kernel->HadError())
 		{
@@ -249,13 +246,6 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 				[turnLock unlock];
 				return nil;
 			}
-            
-            NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)aLock]->GetAgentName()];
-
-            NSThread* thread = [[NSThread alloc] initWithTarget:self selector:@selector(runLoop) object:nil];
-            [thread start];
-            [agent_thread_map setObject:thread forKey:agentName];
-
             
 			agents[(unsigned long)aLock]->RegisterForPrintEvent(sml::smlEVENT_PRINT, printHandler, NULL);
 
@@ -365,16 +355,19 @@ NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker"
 			[[NSFileManager defaultManager] removeItemAtPath:fileName error:nil];
 	}
 	
-    NSString* agentName = [NSString stringWithUTF8String:agents[(unsigned long)turnLock]->GetAgentName()];
-
-    [self performSelector:@selector(doTurn) onThread:[agent_thread_map objectForKey:agentName] withObject:nil waitUntilDone:NO];
+	dispatch_async(agent_queue, ^{
+		[self doTurn];
+	});
 }
 
 - (void)showErrorAlert
 {
 	if (![NSThread isMainThread])
 	{
-		[self performSelectorOnMainThread:@selector(showErrorAlert) withObject:nil waitUntilDone:YES];
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[self showErrorAlert];
+		});
+
 		return;
 	}
 	
