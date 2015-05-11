@@ -87,7 +87,7 @@
                         <action selector="aboutButtonPressed:" destination="-1" eventType="touchUpInside" id="ris-XV-Pjz"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 2.0 RC 11" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTR-jq-1GM">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 2.0 RC 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTR-jq-1GM">
                     <rect key="frame" x="20" y="515" width="155" height="51"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="155" id="vLc-xG-3BB"/>
@@ -123,7 +123,7 @@
                         <constraint firstAttribute="height" constant="50" id="kcZ-UP-sEH"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="AI Only Game">
+                    <state key="normal" title="Play">
                         <color key="titleColor" cyan="0.0" magenta="0.17999999999999999" yellow="1" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                     </state>
                     <connections>
