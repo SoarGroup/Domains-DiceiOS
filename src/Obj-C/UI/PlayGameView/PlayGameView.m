@@ -2305,7 +2305,7 @@ NSString *numberName(int number) {
 	else if (step == 10)
 	{
 		title = @"Done!";
-		message = @"Congratulations on finishing the tutorial!  Now you are all set for playing Liar's Dice on your own against the AI, your friends, and/or random opponents.";
+		message = @"Congratulations on finishing the tutorial!  Now you are all set for playing Liar's Dice on your own against the AI.";
 		
 		UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
 														message:message
