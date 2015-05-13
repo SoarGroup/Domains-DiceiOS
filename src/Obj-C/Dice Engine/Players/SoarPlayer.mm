@@ -144,7 +144,7 @@ static NSLock* kernelLock;
 }
 
 NSMutableArray* usedNames = [NSMutableArray array];
-NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker", @"Erin", @"Maize", @"Rosie", @"Sarah", @"Thomas", @"Watson", @"Athena", @"Blue", @"Carter", @"Nyx", @"Ellie", @"Floyd", @"Jane", @"Kirk", @"Hemera", @"Ares", @"Zeus", @"Hades", @"Hera", @"Erebus", @"Sol", @"Vesta", @"Ceres", @"Scylla", @"Vox", @"Aura", @"Angela", @"Jarvis", @"Auto",  nil];
+NSArray* names = [NSArray arrayWithObjects:@"Alice", @"Bob", @"Carol", @"Decker", @"Erin", @"Maize", @"Rosie", @"Sarah", @"Thomas", @"Watson", @"Athena", @"Blue", @"Carter", @"Nyx", @"Ellie", @"Floyd", @"Jane", @"Kirk", @"Hemera", @"Ares", @"Zeus", @"Hades", @"Hera", @"Erebus", @"Sol", @"Vesta", @"Ceres", @"Scylla", @"Vox", @"Aura", @"Angela", @"Jarvis", @"Auto", @"The Bard",  nil];
 
 + (NSString*) makePlayerName
 {
