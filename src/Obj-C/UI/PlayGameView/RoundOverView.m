@@ -236,18 +236,15 @@
 
 		CABasicAnimation* pulse = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
 		pulse.fromValue = (id)[UIColor clearColor].CGColor;
-		pulse.toValue = (id)[UIColor clearColor].CGColor;
+		pulse.toValue = (id)[UIColor redColor].CGColor;
 		pulse.duration = 2.0;
 		pulse.autoreverses = YES;
 		pulse.removedOnCompletion = NO;
 		//pulse.fillMode = kCAFillModeBoth;
 		pulse.repeatCount = HUGE_VALF;
 
-		for (UIView* view in views)
-		{
-			[view.layer setCornerRadius:5.0f];
-			[view.layer addAnimation:pulse forKey:@"backgroundColor"];
-		}
+		[doneButton.layer setCornerRadius:5.0f];
+		[doneButton.layer addAnimation:pulse forKey:@"backgroundColor"];
 
 		return;
 	}
