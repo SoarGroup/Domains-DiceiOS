@@ -297,12 +297,12 @@ NSString *numberName(int number) {
 		self.bidFaceMinusButton.enabled = NO;
 		
 		canContinueRound = NO;
-		showAllDice = NO;
 		
 		[self updateUI:finalString];
 		
 		self.continueRoundButton.hidden = NO;
 		self.continueRoundButton.enabled = YES;
+		showAllDice = NO;
 	}
 }
 
