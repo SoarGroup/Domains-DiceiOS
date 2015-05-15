@@ -163,6 +163,7 @@ NSString *numberName(int number) {
 		hasPromptedEnd = NO;
 		hasDisplayedRoundOverview = NO;
 		hasDisplayedRoundBeginning = NO;
+		hasDisplayedWinner = NO;
 		canContinueRound = YES;
 	}
 	return self;
@@ -429,7 +430,8 @@ NSString *numberName(int number) {
 		for (id<Player> player in localGame.players)
 			if ([player isKindOfClass:DiceLocalPlayer.class])
 			{
-				[(DiceLocalPlayer*)player end:YES];
+				[(DiceLocalPlayer*)player end:!hasDisplayedWinner];
+				hasDisplayedWinner = YES;
 				break;
 			}
 	

@@ -39,6 +39,7 @@ enum UITags
 	BOOL hasDisplayedRoundOverview;
 	BOOL showAllDice;
 	BOOL hasDisplayedRoundBeginning;
+	BOOL hasDisplayedWinner;
 @public
 	BOOL shouldNotifyCurrentPlayer;
 
