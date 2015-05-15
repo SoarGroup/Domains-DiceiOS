@@ -301,6 +301,7 @@ NSString *numberName(int number) {
 		[self updateUI:finalString];
 		
 		self.continueRoundButton.hidden = NO;
+		self.continueRoundButton.enabled = YES;
 	}
 }
 
