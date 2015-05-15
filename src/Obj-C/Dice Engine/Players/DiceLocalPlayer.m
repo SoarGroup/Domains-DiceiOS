@@ -113,27 +113,23 @@
 {
 	if (![NSThread isMainThread] || !showAlert)
 		return;
+	
+	PlayGameView* localView = [self.gameViews firstObject];
 
-	for (PlayGameView* localView in self.gameViews)
-	{
-		if (localView == nil || localView.navigationController.visibleViewController != localView)
-			return;
-
-		id<Player> gameWinner = localView.game.gameState.gameWinner;
-		NSString* winner = [gameWinner getDisplayName];
-		NSString* winString = @"Wins";
-
-		if ([winner isEqualToString:@"You"])
-			winString = @"Win";
-
-		NSString *title = [NSString stringWithFormat:@"%@ %@!", winner, winString];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-														message:nil
-													   delegate:self
-											  cancelButtonTitle:nil
-											  otherButtonTitles:@"Okay", nil];
-		[alert show];
-	}
+	id<Player> gameWinner = localView.game.gameState.gameWinner;
+	NSString* winner = [gameWinner getDisplayName];
+	NSString* winString = @"Wins";
+	
+	if ([winner isEqualToString:@"You"])
+		winString = @"Win";
+	
+	NSString *title = [NSString stringWithFormat:@"%@ %@!", winner, winString];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+													message:nil
+												   delegate:self
+										  cancelButtonTitle:nil
+										  otherButtonTitles:@"Okay", nil];
+	[alert show];
 }
 
 - (void)removeHandler
