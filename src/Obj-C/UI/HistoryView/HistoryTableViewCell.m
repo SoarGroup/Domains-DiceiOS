@@ -39,7 +39,7 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 
 + (CGFloat)minimumHeight
 {
-	return HistoryTableViewCellAvatarHeight + HistoryTableViewCellPadding*2;
+	return HistoryTableViewCellAvatarHeight + HistoryTableViewCellPadding;
 }
 
 #pragma mark - View lifecycle
@@ -106,7 +106,7 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 	self.messageTextLabel.accessibilityLabel = [message accessibleText];
 	
 	self.timestampLabel.text = [message.timestamp timeAgoSinceDate:self.loadTime];
-	
+		
 	__block UIImage* profileImage = [UIImage imageNamed:@"YouPlayer.png"];
 	
 	if ([playerPtr isKindOfClass:DiceLocalPlayer.class] || [playerPtr isKindOfClass:DiceRemotePlayer.class])
@@ -244,6 +244,16 @@ const CGFloat HistoryTableViewCellMediaIconHeight = 24.0f;
 																 attribute:NSLayoutAttributeBottom
 																multiplier:1
 																  constant:0]];
+	
+	[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.messageTextLabel
+																	 attribute:NSLayoutAttributeBottom
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:self.timestampLabel
+																	 attribute:NSLayoutAttributeTop
+																	multiplier:1
+																	  constant:0]];
+	
+	
 	
 	[self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.timestampLabel
 																 attribute:NSLayoutAttributeLeft
