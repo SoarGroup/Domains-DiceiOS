@@ -964,7 +964,7 @@ NSString *numberName(int number) {
 	BOOL canBid = [localState canBid];
 	
 	id<Player> gameWinner = localGame.gameState.gameWinner;
-	if (gameWinner)
+	if (gameWinner || showAllDice)
 		canBid = NO;
 	
 	// Enable the buttons if we actually can do those actions at this update cycle
