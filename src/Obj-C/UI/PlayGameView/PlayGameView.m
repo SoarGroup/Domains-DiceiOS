@@ -1880,7 +1880,7 @@ NSString *numberName(int number) {
 	if (step == 0)
 	{
 		title = @"Bidding";
-		message = @"In Liar's Dice, players bid using knowledge of their current dice and opponents revealed dice.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
+		message = @"In Liar's Dice, players bid using knowledge of their current dice and opponents' revealed dice.  Your current dice are highlighted in flashing red.  Tap on one of them to continue.";
 		[views addObject:[player1View viewWithTag:DiceViewTag]];
 		
 		((UIButton*)[[player1View viewWithTag:DiceViewTag].subviews objectAtIndex:0]).enabled = YES;
@@ -1904,7 +1904,7 @@ NSString *numberName(int number) {
 	else if (step == 1)
 	{
 		title = @"Bidding";
-		message = @"Great! Now that you know where your dice are, you can see that you have four Fives.  You have two natural fives and two wildcards (ones).  Let's bid 5 Fives to start.  Highlighted in red are the bid selectors.  The selector on the left represents the die count you will bid.  The one on the right represents the die face you will bid.  Change these to be 5 Fives to continue.";
+		message = @"Great! You can see that you have 4 Fives.  You have two natural fives and two wildcards (ones).  Let's bid 5 Fives.  Highlighted in red are the bid selectors.  The selector on the left represents the number of dice you will bid.  The one on the right represents the die face you will bid.  Change these to be 5 Fives to continue.";
 		
 		bidFaceLabelHint.hidden = NO;
 		bidCountLabelHint.hidden = NO;
@@ -1934,7 +1934,7 @@ NSString *numberName(int number) {
 		bidFaceLabel.image = [PlayGameView imageForDie:DIE_5];
 		
 		title = @"Bidding";
-		message = @"Now that you have selected 5 Fives, let's bid this.  Highlighted in red is the bid button, tap this to bid 5 Fives.";
+		message = @"Now that you have selected 5 Fives, bid this.  Highlighted in red is the bid button, tap this to bid 5 Fives.";
 		[views addObject:bidButton];
 		
 		bidButton.enabled = YES;
@@ -1963,7 +1963,7 @@ NSString *numberName(int number) {
 		myLabel.attributedText = [PlayGameView formatTextString:@"You bid 5 5s."];
 		
 		title = @"Challenging";
-		message = @"Woah! Alice bid 6 threes.  We know that is unlikely, so let's challenge her.  Highlighted in red is the challenge button, tap this to challenge her.";
+		message = @"Woah! Alice bid 6 Threes.  Let's challenge her.  Highlighted in red is the challenge button, tap this to challenge her.";
 		
 		UIButton* challengeButton = (UIButton*)[player2View viewWithTag:ChallengeButtonTag];
 		challengeButton.hidden = NO;
@@ -1974,7 +1974,7 @@ NSString *numberName(int number) {
 	}
 	else if (step == 4)
 	{
-		message = @"The round ended!  In this screen you can see all the dice your opponents had.  Also, this screen contains info about the last round including who did what to end the round.  ";
+		message = @"The round ended!  In this screen you can see all the dice your opponents had.  This screen also contains info about the last round including what happened to end the round.";
 		
 		if ([self.nibName rangeOfString:@"iPad"].location != NSNotFound)
 		{
@@ -2060,7 +2060,7 @@ NSString *numberName(int number) {
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 		
 		title = @"Passes";
-		message = @"It looks like you have a rare hand, all five dice of the same face.  Let's pass since we haven't already passed this round.  Tap the pass button, highlighted in red.";
+		message = @"You have all five dice of the same face.  Let's pass.  Tap the pass button, highlighted in red.";
 		
 		[views addObject:passButton];
 		
@@ -2159,7 +2159,7 @@ NSString *numberName(int number) {
 		((UILabel*)[player1View viewWithTag:PlayerLabelTag]).text = @"You";
 		
 		title = @"Pushing";
-		message = @"Pushing is when you reveal your dice to your opponents as a way of increasing the confidence in your bid.  When you push, your unpushed dice are rerolled.  Let's push all our sixes, highlighted in red.";
+		message = @"Pushing is when you reveal your dice to your opponents as a way of increasing the confidence in your bid.  When you push, your unpushed dice are rerolled.  Push all your sixes, highlighted in red.";
 		
 		[views addObject:[myDice.subviews objectAtIndex:0]];
 		((UIButton*)[myDice.subviews objectAtIndex:0]).accessibilityHint = @"Tap to push";
