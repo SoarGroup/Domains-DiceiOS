@@ -1554,7 +1554,7 @@ NSString *numberName(int number) {
 	{
 		messageString = [previousItem asString];
 		if (tutorial)
-			messageString = @"Alice bid 6 threes";
+			messageString = @"Alice bid 6 Threes";
 		
 		buttonTitle = [NSString stringWithFormat:@"%@'s bid", buttonTitle];
 	}
