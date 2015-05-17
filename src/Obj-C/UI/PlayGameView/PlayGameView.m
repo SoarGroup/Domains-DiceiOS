@@ -617,17 +617,17 @@ NSString *numberName(int number) {
 	switch (die)
 	{
 		case 1:
-			return [@"one" stringByAppendingString:(plural ? @"s" : @"")];
+			return [@"One" stringByAppendingString:(plural ? @"s" : @"")];
 		case 2:
-			return [@"two" stringByAppendingString:(plural ? @"s" : @"")];
+			return [@"Two" stringByAppendingString:(plural ? @"s" : @"")];
 		case 3:
-			return [@"three" stringByAppendingString:(plural ? @"s" : @"")];
+			return [@"Three" stringByAppendingString:(plural ? @"s" : @"")];
 		case 4:
-			return [@"four" stringByAppendingString:(plural ? @"s" : @"")];
+			return [@"Four" stringByAppendingString:(plural ? @"s" : @"")];
 		case 5:
-			return [@"five" stringByAppendingString:(plural ? @"s" : @"")];
+			return [@"Five" stringByAppendingString:(plural ? @"s" : @"")];
 		case 6:
-			return [@"six" stringByAppendingString:(plural ? @"es" : @"")];
+			return [@"Six" stringByAppendingString:(plural ? @"es" : @"")];
 		default:
 			return [@"unknown" stringByAppendingString:(plural ? @"s" : @"")];
 	}
