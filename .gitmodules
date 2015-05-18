@@ -1,0 +1,24 @@
+[submodule "Liar's Dice/Dependencies/ExSwift"]
+	path = Liar's Dice/Dependencies/ExSwift
+	url = https://github.com/pNre/ExSwift.git
+[submodule "Liar's Dice/Dependencies/CleanroomLogger"]
+	path = Liar's Dice/Dependencies/CleanroomLogger
+	url = https://github.com/emaloney/CleanroomLogger.git
+[submodule "Liar's Dice/Dependencies/RandomColorSwift"]
+	path = Liar's Dice/Dependencies/RandomColorSwift
+	url = https://github.com/onevcat/RandomColorSwift.git
+[submodule "Liar's Dice/Dependencies/DKChainableAnimationKit"]
+	path = Liar's Dice/Dependencies/DKChainableAnimationKit
+	url = https://github.com/Draveness/DKChainableAnimationKit.git
+[submodule "Liar's Dice/Dependencies/hex-kit"]
+	path = Liar's Dice/Dependencies/hex-kit
+	url = https://github.com/aleclarson/hex-kit.git
+[submodule "Liar's Dice/Dependencies/Dollar.swift"]
+	path = Liar's Dice/Dependencies/Dollar.swift
+	url = https://github.com/ankurp/Dollar.swift.git
+[submodule "Liar's Dice/Dependencies/PromiseKit"]
+	path = Liar's Dice/Dependencies/PromiseKit
+	url = https://github.com/mxcl/PromiseKit.git
+[submodule "Liar's Dice/Dependencies/SwiftAutoLayout"]
+	path = Liar's Dice/Dependencies/SwiftAutoLayout
+	url = https://github.com/indragiek/SwiftAutoLayout.git
