@@ -7,9 +7,6 @@
 [submodule "Liar's Dice/Dependencies/RandomColorSwift"]
 	path = Liar's Dice/Dependencies/RandomColorSwift
 	url = https://github.com/onevcat/RandomColorSwift.git
-[submodule "Liar's Dice/Dependencies/DKChainableAnimationKit"]
-	path = Liar's Dice/Dependencies/DKChainableAnimationKit
-	url = https://github.com/Draveness/DKChainableAnimationKit.git
 [submodule "Liar's Dice/Dependencies/hex-kit"]
 	path = Liar's Dice/Dependencies/hex-kit
 	url = https://github.com/aleclarson/hex-kit.git
