@@ -30,34 +30,51 @@
 {
 	NSString* device = [UIDevice currentDevice].model;
 	device = [[[device componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]] objectAtIndex:0];
-
+	
 	if ([device isEqualToString:@"iPhone"])
 		device = @"";
-
+	
 	self = [super initWithNibName:[@"SingleplayerView" stringByAppendingString:device] bundle:nil];
-
+	
 	if (self)
 	{
-        self.appDelegate = anAppDelegate;
+		self.appDelegate = anAppDelegate;
 		self.mainMenu = aMainMenu;
-
+		
 		self.title = @"AI Only Game";
 	}
-
-    return self;
+	
+	return self;
 }
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-
+	[super viewDidLoad];
+	
 	self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.title = @"AI Only Game";
+	self.navigationItem.title = @"AI Only Game";
+	
+	DiceDatabase* database = [[DiceDatabase alloc] init];
+	if ([database hasSoarLoggingEnabled])
+	{
+		UIAlertController* controller = [UIAlertController alertControllerWithTitle:@"Soar Logging Enabled!" message:@"You have Soar Logging enabled.  This will slow down the Soar agent.  Unless you meant to have it turned on (ie. for debug purposes) you probably should turn this off.  You can turn it off in Settings." preferredStyle:UIAlertControllerStyleAlert];
+		
+		UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK"
+													 style:UIAlertActionStyleDefault
+												   handler:^(UIAlertAction * action)
+		{
+			//Do some thing here
+			[self dismissViewControllerAnimated:YES completion:nil];
+		}];
+		[controller addAction:ok]; // add action to uialertcontroller
+		
+		[self presentViewController:controller animated:YES completion:nil];
+	}
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 - (void) startGameWithOpponents:(int)opponents
@@ -68,13 +85,13 @@
 + (void) startGameWithOpponents:(int)AICount withNavigationController:(UINavigationController*)controller withAppDelegate:(ApplicationDelegate*)delegate withMainMenu:(MainMenu*)mainMenu
 {
 	DiceDatabase *database = [[DiceDatabase alloc] init];
-
+	
 	NSString* username = [database getPlayerName];
-
+	
 	if ([username length] == 0)
 		username = @"You";
-
-    DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
+	
+	DiceGame *game = [[DiceGame alloc] initWithAppDelegate:delegate];
 	
 	int humanCount = 1;
 	int currentHumanCount = 0;
@@ -100,12 +117,12 @@
 			[game addPlayer:[[DiceLocalPlayer alloc] initWithName:username withHandler:nil withParticipant:nil]];
 		}
 	}
-
+	
 	game.gameLock = lock;
 	game.gameState.currentTurn = 0;
-
-    UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
-    [controller pushViewController:gameView animated:YES];
+	
+	UIViewController *gameView = [[LoadingGameView alloc] initWithGame:game mainMenu:mainMenu];
+	[controller pushViewController:gameView animated:YES];
 }
 
 - (IBAction)playButtonPressed:(id)sender
